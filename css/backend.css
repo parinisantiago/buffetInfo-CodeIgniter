@@ -1,14 +1,44 @@
+*{
+	margin:0;
+	padding:0;
+	font-family: Arial;
+}
+h1{font-size: 30px;}
+h2{font-size: 25px;}
+h3{font-size: 18px}
+
+aside{
+	width: 10%;
+	float: left;
+	margin-left: 0em;
+	height: 100%;
+    background: skyblue; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(skyblue, aqua); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(skyblue, aqua); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(skyblue, aqua); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(skyblue, aqua); /* Standard syntax (must be last) */ 
+}
+
+aside h1{
+	clear:both;
+	margin-left: 0.9em;
+}
+
 aside a{
 	float: left;
 	direction: rtl;
-	margin-left: 0.9em;
+	margin: 0.1em;
+	margin-left: 0.3em;
+	width: 87%;
+	clear:both;
 	list-style: none;
-	color: white;
+	color: red;
 	border: solid;
 	border-color: black;
 	padding: 1.2%;
 	text-decoration: none;
 	cursor: pointer;
+	text-align: center;
 }
 aside a:hover{
 	border-color: #ECC01C;
