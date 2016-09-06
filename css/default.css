@@ -13,6 +13,8 @@ header{
 }
 
 .navbar{
+    text-decoration: none;
+    text-align: center;
     list-style-type: none;
     background-color: #333;
     margin: 0;
@@ -22,17 +24,22 @@ header{
 .navbar li{
     display: inline-block;
     padding: 1%;
+    height: 100%;
+}
+
+.textNavbar{
+    color: #fff;
+    text-decoration: none;
 }
 
 .linkNavbar{
-    text-decoration: none;
-    text-align: center;
-    color: #fff;
+    float: left;
 }
 
 .linkNavbar:hover{
-    color: #333;
-    background-color: #fff;
+    background-color: #5e5c5c;
+    height: 100%;
+
 }
 
 
