@@ -9,19 +9,28 @@
 </head>
 <body>
     <header>
-        <img src="images/headder.jpg" alt="ingreo a la facultad de informática">
+        <h1 class="headerTitle" id="headerTitle"> Buffet de la Facultad de Informática UNLP</h1>
+        <img class="imageHeader" id="imageHeader" src="images/headder.jpg" alt="ingreo a la facultad de informática">
     </header>
     <nav>
-        <a href="index.html">Inicio</a>
-        <a href="">Menu del día</a>
-        <form method="post" action="" name="login">
-            <label for="username">Nombre de usuario:</label>
-            <input type="text" id="username" name="username"  placeholder="nombre de usuario" required>
-            <label for="pass"></label>
-            <input type="password" id="pass" name="pass" placeholder="contraseña" required>
-            <label for="submit" hidden></label>
-            <input type="submit" id="submit" name="submit" value="acceder">
-        </form>
+        <ul class="navbar" id="navbar">
+            <li>
+                <a class="linkNavbar" href="index.html">Inicio</a>
+            </li>
+            <li>
+                 <a class="linkNavbar">Menu del día</a>
+            </li>
+            <li>
+                 <form class="login" id="login" method="post" action="backend.html" name="login">
+                     <label class="loginInput" for="username">Nombre de usuario:</label>
+                     <input type="text" id="username" name="username"  placeholder="nombre de usuario" required>
+                     <label class="loginInput" for="pass"></label>
+                     <input type="password" id="pass" name="pass" placeholder="contraseña" required>
+                     <label for="submit" hidden></label>
+                     <input type="submit" id="submit" name="submit" value="acceder">
+            </form>
+            </li>
+        </ul>
     </nav>
     <main>
         <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vulputate tortor ut augue consectetur viverra. Sed auctor molestie justo eget finibus. Morbi ut ultricies diam. Etiam at sapien mauris. Vestibulum non elit eget ligula porta posuere. In leo ex, porttitor a tellus quis, pretium ornare augue. In eleifend nec lacus at semper. Proin vel dolor porttitor, ultrices nulla ut, suscipit ligula. Fusce rutrum iaculis tortor, vitae egestas lacus cursus eget. Sed pulvinar leo non magna consequat, quis congue nisi finibus. Ut mi eros, finibus eu ligula ac, interdum interdum lacus. Aenean at feugiat dui, vitae varius ante. Nam ultrices molestie est, vel sollicitudin libero pharetra sit amet. </p>
