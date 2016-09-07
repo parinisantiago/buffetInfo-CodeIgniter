@@ -9,8 +9,10 @@
 </head>
 <body>
     <header>
+        <a href="index.html">
+            <img class="imageHeader" src="images/headder.jpg" alt="Entrada de la facultad de informática">
+        </a>
         <h1 class="headerTitle" id="headerTitle"> Buffet de la Facultad de Informática UNLP</h1>
-        <img class="imageHeader" id="imageHeader" src="images/headder.jpg" alt="ingreo a la facultad de informática">
     </header>
     <nav>
         <ul class="navbar" id="navbar">
@@ -18,17 +20,17 @@
                 <a class="textNavbar" href="index.html">Inicio</a>
             </li>
             <li class="linkNavbar">
-                 <a class="textNavbar">Menu del día</a>
+                <a class="textNavbar">Menu del día</a>
             </li>
-            <li>
-                 <form class="login" id="login" method="post" action="backend.html" name="login">
-                     <label class="loginInput" for="username">Nombre de usuario:</label>
-                     <input type="text" id="username" name="username"  placeholder="nombre de usuario" required>
-                     <label class="loginInput" for="pass"></label>
-                     <input type="password" id="pass" name="pass" placeholder="contraseña" required>
-                     <label for="submit" hidden></label>
-                     <input type="submit" id="submit" name="submit" value="acceder">
-            </form>
+            <li class="loginNavbar">
+                <form class="login" id="login" method="post" action="backend.html" name="login">
+                    <label class="loginInputText" for="username">Nombre de usuario:</label>
+                    <input type="text" id="username" name="username"  placeholder="nombre de usuario" required>
+                    <label class="loginInputText" for="pass"></label>
+                    <input type="password" id="pass" name="pass" placeholder="contraseña" required>
+                    <label for="submit" hidden></label>
+                    <input type="submit" id="submit" name="submit" value="acceder">
+                </form>
             </li>
         </ul>
     </nav>
