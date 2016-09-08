@@ -31,28 +31,22 @@
 
 /*defaul css */
 
-body{
-    background-image:url("../images/background.png");
+/* --- LOGIN --- */
+
+.logout{
+    margin-left: 65%;
 }
 
-header{
-    margin-top: 5%;
-    width: 100%;
+.logout:hover{
+    background-color: #5e5c5c;
+    height: 100%;
 }
 
-.headerTitle{
-    text-align: center;
-    position: absolute;
-    margin-top: -15%;
-    margin-left: 25%;
+.loginInputText{
+    color: #fff;
 }
 
-.imageHeader{
-    display: block;
-    width: 110%;
-    margin-top: -5%;
-    margin-left: -5%;
-}
+/* --- BARRA NAVEGACION --- */
 
 nav{
     position: fixed;
@@ -68,30 +62,6 @@ nav{
     background-color: #333;
     margin: 0;
     padding: 0;
-}
-
-aside{
-    float: left;
-    width: 25%;
-}
-
-.aside{
-    padding: 1%;
-    list-style-type: none;
-    background-color: #333;
-}
-
-.asideItem{
-    display: block;
-}
-
-.asideItem:hover{
-    background-color: #5e5c5c;
-}
-.asideItem a{
-    text-decoration: none;
-    color: #fff;
-    text-align: center;
 }
 
 .navbar li{
@@ -114,18 +84,73 @@ aside{
     height: 100%;
 }
 
-.logout{
-    margin-left: 65%;
+/* --- BARRA LATERAL --- */
+
+aside{
+    float: left;
+    width: 25%;
 }
 
-.logout:hover{
+.aside{
+    padding: 1%;
+    list-style-type: none;
+    background-color: #333;
+}
+
+.asideItem{
+    display: block;
+}
+
+.asideItem:hover{
     background-color: #5e5c5c;
-    height: 100%;
 }
 
-.loginInputText{
+.asideItem a{
+    text-decoration: none;
     color: #fff;
+    text-align: center;
 }
+
+/* --- CABEZARA --- */
+
+header{
+    margin-top: 5%;
+    width: 100%;
+}
+
+.headerTitle{
+    text-align: center;
+    position: absolute;
+    margin-top: -65%;
+    margin-left: 35%;
+    font-family: verdana ;
+}
+
+.imageHeader{
+    display: block;
+    width: 110%;
+    margin-top: -5%;
+    margin-left: -5%;
+}
+
+/* --- CUERPO --- */
+
+main{
+    position: absolute;
+    margin-top: -60%;
+}
+
+body{
+    background-image:url("../images/background.png");
+}   
+
+#textoIndex{
+    margin-left: 10%;
+    margin-right: 10%;
+    font-size: 1.2em;
+}
+
+/* --- PIE DE PAGINA --- */
 
 footer {
     position: fixed;
@@ -137,21 +162,3 @@ footer {
     color: #fff;
     text-align: center;
 }
-
-main{
-    padding-left: 1%;
-    padding-right: 1%;
-    text-align: justify;
-}
-
-/*aside a:hover{
-    border-color: #ECC01C;
-    color:#ECC01C;
-    text-decoration: none;
-    -webkit-transition: border-color 1000ms linear;
-    -moz-transition: border-color 1000ms linear;
-    -o-transition: border-color 1000ms linear;
-    -ms-transition: border-color 1000ms linear;
-    transition: border-color 1000ms linear;
-
-}*/
