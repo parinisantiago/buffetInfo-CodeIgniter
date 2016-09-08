@@ -95,6 +95,8 @@ aside{
     padding: 1%;
     list-style-type: none;
     background-color: #333;
+    position: absolute;
+    margin-top: -60%;
 }
 
 .asideItem{
