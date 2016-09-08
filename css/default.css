@@ -1,7 +1,11 @@
 
 
 /*media query*/
-
+@media screen and (min-width: 1281px){
+    .loginNavbar{
+        margin-left: 40%;
+    }
+}
 
 @media screen and (max-width: 1280px) {
     .loginNavbar{
