@@ -75,34 +75,39 @@
 </aside>
 
 	<main>
-	<form action="productos.html">
+	<form name="formProduc" class="formProduc" action="productos.html" method="post">
 		<label for="nombre">Nombre:</label>
-	    <input type="text" name="nombre" id="nombre" placeholder="Alfajor, Barra de cereal" required>
+	    <input type="text" name="nombre" id="nombre" placeholder="Alfajor, Barra de cereal" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" autofocus required>
 
+		<!-- esto en un futuro podría ser una lista -->
 	    <label for="marca">Marca:</label>
-	    <input type="text" name="marca" id="marca" placeholder="Terrabusi, Arcor" required>
+	    <input type="text" name="marca" id="marca" placeholder="Terrabusi, Arcor" maxlength="25" pattern="^[A-Z|a-z]{1,25}$"required>
 
 	    <label for="codigoBarras">Codigo de barras:</label>
-	    <input type="text" name="codigoBarras" id="codigoBarras" placeholder="456123546543213" required>
+	    <input type="text" name="codigoBarras" id="codigoBarras" placeholder="456123546543213" maxlength="25" pattern="^[0-9]{1,25}$" required>
 
 	    <label for="cantidadStock">Cantidad de stock:</label>
-	    <input type="number" name="cantidadStock" placeholder="N" id="cantidadStock">
+	    <input type="number" name="cantidadStock" id="cantidadStock" placeholder="Un número entre 1 y 99" min="1" max="99" maxlength="2">
 
 	    <label for="cantidadMinimaStock">Cantidad minima stock:</label>
-	    <input type="number" name="cantidadMinimaStock" id="cantidadMinimaStock" required>
+	    <input type="number" name="cantidadMinimaStock" id="cantidadMinimaStock" placeholder="Un número entre 1 y 99" min="1" max="99" maxlength="2" required>
 	    
 	    <label for="categoria">Categoria:</label>
-	    <input type="text" name="categoria" id="categoria" required>
+		<!-- esto seguramente en un futuro sea un listado -->
+	    <input type="text" name="categoria" id="categoria" placeholder="Surtido, Golosinas" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required>
 
 	    <label for="proveedor">Proveedor:</label>
-	    <input type="text" name="proveedor" id="proveedor" required>
+		<!-- esto tambien podria ser una lista en un futuro -->
+	    <input type="text" name="proveedor" id="proveedor" placeholder="Un proveedor" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required>
 
 	    <label for="precioUnitario">Precio Unitario:</label>
-	    <input type="number" name="precioUnitario" id="precioUnitario" step="0.01" required>
+	    <input type="number" name="precioUnitario" id="precioUnitario" step="0.01" placeholder="2,50" maxlength="5" required>
 
+		<!-- esto en un futuro puede ser que no esté ya que se hace en el servidor -->
 	    <label for="fechaAlta">Fecha de alta en el sistema:</label>
-	    <input type="date" name="fechaAlta" id="fechaAlta" required>
-	    <input type="submit" class="boton" value="Entrar">
+	    <input type="date" name="fechaAlta" id="fechaAlta" maxlength="8" min="1900-01-01" max="2016-15-15" required>
+
+	    <input type="submit" name="submit" class="submit" value="Entrar">
 	</form>
 	</main>
 
