@@ -1,82 +1,118 @@
 <!DOCTYPE html>
 <html lang ="es">
 <head>
-	
+
 	<meta charset ="utf-8"/>
 	<title> Buffet UNLP Informatica</title>
 	<meta name= "description" content= "Proyecto de software" />
 	<meta name= "author" content= "Grupo 64: Alvarez Ferretti, parini"/>
-	<link rel="stylesheet" type="text/css" href="css/default.css">
+	<link rel="stylesheet" type="text/css" href="css/default.css" id="linkEstilo">
 <body>
-		
-	<header>
-		<span>Bienvenido <span class="usuario">Admin</span></span>
-		<a class="boton" href="index.html">Salir</a>
-	</header>
-	
 
-	<aside>
-		<a href="">Productos</a>
+<header>
+	<img class="imageHeader" src="images/headderBuffet2.png" alt="Entrada de la facultad de informática">
+	<h1 class="headerTitle" id="headerTitle"> Buffet de la Facultad de Informática UNLP</h1>
+</header>
+<nav>
+	<ul class="navbar" id="navbar">
+		<li class="linkNavbar">
+			<a class="textNavbar" href="index.html">Inicio</a>
+		</li>
+		<li class="linkNavbar">
+			<a class="textNavbar">Menu del día</a>
+		</li>
+		<li class="logout">
+			<a class="textNavbar" href="index.html">Cerrar Sesión</a>
+		</li>
+	</ul>
+</nav>
+
+
+<aside>
+	<ul class="aside">
+		<li class="asideItem">
+			<a href="productos.html">Productos</a>
+		</li><li class="asideItem">
 		<a href="">Ventas de productos</a>
+	</li>	<li class="asideItem">
 		<a href="">Gastos</a>
+	</li><li class="asideItem">
 		<a href="">Menu</a>
+	</li><li class="asideItem">
 		<a href="">Usuarios</a>
+	</li><li class="asideItem">
 		<a href="">Pedidos On-line</a>
-		<a href="">Listado de productos</a>
-		<h1>Balance</h1>
+	</li><li class="asideItem">
+		<a href="listadoProductos.html">Listado de productos</a>
+	</li><li class="asideItem">
+		<p>Balance</p>
+	</li><li class="asideItem">
 		<a href="">Productos faltantes</a>
+	</li><li class="asideItem">
 		<a href="">Productos con stock minimo</a>
+	</li><li class="asideItem">
 		<a href="">Ingresos entre fechas</a>
-		<a href="">Gastos entre fechas</a>
-		<a href="">Configuracion del sitio</a>
-	</aside>
+	</li>
+		<li class="asideItem">
+			<a href="">Gastos entre fechas</a>
+		</li>
+		<li class="asideItem">
+			<a href="">Configuracion del sitio</a>
+		</li>
+	</ul>
+</aside>
 
-	<table style="width:100%">
+<main>
+	<div>
+	<table>
 		<tr>
 			<th>Nombre</th>
 		    <th>Marca</th>
 		    <th>Stock</th>
 		    <th>Vencimiento</th>
-		    <th>Acciones</th>
+			<th>Ver</th>
+			<th>Editar</th>
+			<th>Eliminar</th>
 		</tr>
 		<tr>
 			<td>Yerba</td>
 			<td>La Merced</td>
 			<td>50</td>
 			<td>1/01/2017</td>
-			<td><img id="ver" src="images/ver.jpg" alt= "ver mas informacion" /></td>
-			<td><img id="ver" src="images/editar.png" alt= "editar la informacion" /></td>
-			<td><img id="ver" src="images/eliminar.jpg" alt= "eliminar" /></td>
+			<td><img class="ver" src="images/ver.jpg" alt= "ver mas informacion" /></td>
+			<td><img class="editar" src="images/editar.png" alt= "editar la informacion" /></td>
+			<td><img class="eliminar" src="images/eliminar.jpg" alt= "eliminar" /></td>
 		</tr>
 		<tr>
 			<td>Yerba</td>
 			<td>Taragui</td>
 			<td>20</td>
 			<td>27/11/2016</td>
-			<td><img id="ver" src="images/ver.jpg" alt= "ver mas informacion" /></td>
-			<td><img id="ver" src="images/editar.png" alt= "editar la informacion" /></td>
-			<td><img id="ver" src="images/eliminar.jpg" alt= "eliminar" /></td>
+			<td><img class="ver" src="images/ver.jpg" alt= "ver mas informacion" /></td>
+			<td><img class="ver" src="images/editar.png" alt= "editar la informacion" /></td>
+			<td><img class="ver" src="images/eliminar.jpg" alt= "eliminar" /></td>
 		</tr>
 		<tr>
 			<td>Yerba</td>
 			<td>Nobleza Gaucha</td>
 			<td>30</td>
 			<td>30/06/2017</td>
-			<td><img id="ver" src="images/ver.jpg" alt= "ver mas informacion" /></td>
-			<td><img id="ver" src="images/editar.png" alt= "editar la informacion" /></td>
-			<td><img id="ver" src="images/eliminar.jpg" alt= "eliminar" /></td>
+			<td><img class="ver" src="images/ver.jpg" alt= "ver mas informacion" /></td>
+			<td><img class="ver" src="images/editar.png" alt= "editar la informacion" /></td>
+			<td><img class="ver" src="images/eliminar.jpg" alt= "eliminar" /></td>
 		</tr>
 		<tr>
 			<td>Yerba</td>
 			<td>Amanda</td>
 			<td>10</td>
 			<td>10/12/2017</td>
-			<td><img id="ver" src="images/ver.jpg" alt= "ver mas informacion" /></td>
-			<td><img id="ver" src="images/editar.png" alt= "editar la informacion" /></td>
-			<td><img id="ver" src="images/eliminar.jpg" alt= "eliminar" /></td>
+			<td><img class="ver" src="images/ver.jpg" alt= "ver mas informacion" /></td>
+			<td><img class="ver" src="images/editar.png" alt= "editar la informacion" /></td>
+			<td><img class="ver" src="images/eliminar.jpg" alt= "eliminar" /></td>
 		</tr>
 	</table>
-
+	</div>
+</main>
 	<footer> Página desarrollado por el grupo 64 para la cátedra de Proyecto de Software UNLP cursada 2016 </footer>
 
 	
