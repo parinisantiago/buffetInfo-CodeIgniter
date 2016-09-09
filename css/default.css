@@ -113,6 +113,15 @@ aside{
     text-align: center;
 }
 
+.asideTitleItem{
+    display: block;
+}
+
+.asideTitleItem p{
+    text-align: center;
+    color: #A8A7A7;
+}
+
 /* --- CABEZARA --- */
 
 header{
