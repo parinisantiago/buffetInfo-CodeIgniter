@@ -6,20 +6,17 @@
     <meta name="author" content="Grupo 64: Alvarez Ferretti, Santiago Parini" />
     <title>Buffet UNLP informática</title>
     <link rel="stylesheet" type="text/css" href="css/default.css" id="linkEstilo">
+    <link rel="stylesheet" type="text/css" href="css/barrasNavegacion.css" id="linkEstilo">
 </head>
 <body>
+    <img class="imageHeader" src="images/headderBuffet2.png" alt="Entrada de la facultad de informática">
     <header>
-        <img class="imageHeader" src="images/headderBuffet2.png" alt="Entrada de la facultad de informática">
         <h1 class="headerTitle" id="headerTitle"> Buffet de la Facultad de Informática UNLP</h1>
     </header>
     <nav>
         <ul class="navbar" id="navbar">
-            <li class="linkNavbar">
-                <a class="textNavbar" href="index.html">Inicio</a>
-            </li>
-            <li class="linkNavbar">
-                <a class="textNavbar">Menu del día</a>
-            </li>
+            <li class="boton" href="index.html">Inicio</li>
+            <li class="boton">Menu del día</li>
             <li class="loginNavbar">
                 <form class="login" id="login" method="post" action="backend.html" name="login">
                     <label class="loginInputText" for="username">Nombre de usuario:</label>
@@ -27,7 +24,7 @@
                     <label class="loginInputText" for="pass">Contraseña: </label>
                     <input type="password" id="pass" name="pass" placeholder="contraseña" required>
                     <label for="submit" hidden></label>
-                    <input type="submit" id="submit" name="submit" value="acceder">
+                    <input type="submit" id="submit" name="submit" class="boton"value="acceder">
                 </form>
             </li>
         </ul>

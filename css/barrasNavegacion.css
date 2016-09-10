@@ -1,0 +1,129 @@
+
+/* --- LOGIN --- */
+
+.logout{
+    margin-left: 65%;
+}
+
+.logout:hover{
+    background-color: #5e5c5c;
+    height: 100%;
+}
+
+.loginInputText{
+    color: #fff;
+}
+.loginNavbar{
+    float: right;
+    margin-right: 5%;
+    padding-top:1%;
+    width: 33%;
+    z-index: 10;
+}
+#submit{
+    float: right;
+    margin-top: -1%;
+    margin-right: 5%;
+}
+
+/* --- BARRA NAVEGACION --- */
+
+nav{
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+
+.navbar{
+    text-decoration: none;
+    list-style-type: none;
+    background-color: #333;
+    margin: 0;
+    padding: 0;
+    height: 3.5em;
+}
+
+.boton{
+    float: left;
+    direction: rtl;
+    margin-top: 0.3%;
+    margin-left: 0.8em;
+    list-style: none;
+    color: white;
+    border: solid;
+    border-color: #5F5F5F;
+    border-radius: 10%;
+    box-shadow: -1px -2px #939393;
+    padding: 0.5%;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #5F5F5F;
+    font-weight: bold;
+    font-size: 15px;
+}
+.boton:hover{
+    box-shadow:none;
+    /*color de la sombra*/
+    border-color: #6666ff;
+    color:#6666ff;
+    text-decoration: none;
+    -webkit-transition: border-color 1000ms linear;
+    -moz-transition: border-color 1000ms linear;
+    -o-transition: border-color 1000ms linear;
+    -ms-transition: border-color 1000ms linear;
+    transition: border-color 1000ms linear;
+}
+
+
+/* --- BARRA LATERAL --- */
+
+aside{
+    float: left;
+    width: 25%;
+}
+
+.aside{
+    padding: 1%;
+    list-style-type: none;
+    background-color: #333;
+    position: absolute;
+    margin-top: -60%;
+}
+
+.asideItem{
+    display: block;
+    padding: 1%;
+}
+
+.asideItem:hover{
+    background-color: #5e5c5c;
+}
+
+.asideItem a{
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+}
+
+.asideTitleItem{
+    display: block;
+}
+
+.asideTitleItem p{
+    text-align: center;
+    color: #A8A7A7;
+}
+
+/* --- PIE DE PAGINA --- */
+
+footer {
+    margin-top: 30%;
+    position: absolute;
+    width: 100%;
+    margin-left: -1%;
+    padding: 1%;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+}

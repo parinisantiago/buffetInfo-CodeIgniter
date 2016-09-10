@@ -31,127 +31,38 @@
 
 /*defaul css */
 
-/* --- LOGIN --- */
-
-.logout{
-    margin-left: 65%;
-}
-
-.logout:hover{
-    background-color: #5e5c5c;
-    height: 100%;
-}
-
-.loginInputText{
-    color: #fff;
-}
-
-/* --- BARRA NAVEGACION --- */
-
-nav{
-    position: fixed;
-    right: 0;
-    left: 0;
-    top: 0;
-}
-
-.navbar{
-    text-decoration: none;
-    text-align: center;
-    list-style-type: none;
-    background-color: #333;
-    margin: 0;
-    padding: 0;
-}
-
-.navbar li{
-    display: inline-block;
-    padding: 1%;
-    height: 100%;
-}
-
-.textNavbar{
-    color: #fff;
-    text-decoration: none;
-}
-
-.linkNavbar{
-    float: left;
-}
-
-.linkNavbar:hover{
-    background-color: #5e5c5c;
-    height: 100%;
-}
-
-/* --- BARRA LATERAL --- */
-
-aside{
-    float: left;
-    width: 25%;
-}
-
-.aside{
-    padding: 1%;
-    list-style-type: none;
-    background-color: #333;
-    position: absolute;
-    margin-top: -60%;
-}
-
-.asideItem{
-    display: block;
-    padding: 1%;
-}
-
-.asideItem:hover{
-    background-color: #5e5c5c;
-}
-
-.asideItem a{
-    text-decoration: none;
-    color: #fff;
-    text-align: center;
-}
-
-.asideTitleItem{
-    display: block;
-}
-
-.asideTitleItem p{
-    text-align: center;
-    color: #A8A7A7;
-}
-
 /* --- CABEZARA --- */
 
 header{
-    margin-top: 5%;
     width: 100%;
 }
 
 .headerTitle{
     text-align: center;
     position: absolute;
-    margin-top: -65%;
-    margin-left: 35%;
+    margin-top: -55%;
+    margin-left: 25%;
     font-family: verdana ;
 }
 
 .imageHeader{
+    position: relative;
     display: block;
     width: 110%;
     margin-top: -5%;
     margin-left: -5%;
+    z-index: -2;
+
 }
 
 /* --- CUERPO --- */
 
 main{
-    position: absolute;
-    margin-top: -60%;
-    margin-left: 25%;
+    position: relative;
+    margin-top: -50%;
+    margin-left: 10%;
     width: 75%;
+    z-index: -1;
 }
 
 body{
@@ -159,22 +70,10 @@ body{
 }   
 
 #textoIndex{
+    width: 80%;
     margin-left: 10%;
     margin-right: 10%;
     font-size: 1.2em;
-}
-
-/* --- PIE DE PAGINA --- */
-
-footer {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 1%;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
 }
 
 /* --- FORMULARIO PRODUCTO --- */
@@ -220,3 +119,4 @@ footer {
     height: auto;
     position: relative;
 }
+
