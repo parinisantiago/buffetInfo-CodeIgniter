@@ -101,6 +101,7 @@ aside{
 
 .asideItem{
     display: block;
+    padding: 1%;
 }
 
 .asideItem:hover{
@@ -149,6 +150,8 @@ header{
 main{
     position: absolute;
     margin-top: -60%;
+    margin-left: 25%;
+    width: 75%;
 }
 
 body{
@@ -164,7 +167,7 @@ body{
 /* --- PIE DE PAGINA --- */
 
 footer {
-    position: absolute;
+    position: fixed;
     right: 0;
     bottom: 0;
     left: 0;
@@ -172,4 +175,48 @@ footer {
     background-color: #333;
     color: #fff;
     text-align: center;
+}
+
+/* --- FORMULARIO PRODUCTO --- */
+
+.formProduc{
+    background-color: #333;
+    padding: 3% 1% 1% 5%;
+    width: 50%;
+    margin-left: 10%;
+}
+
+.formProduc input{
+    display: block;
+    width:75%;
+    padding: 1%;
+    margin: 1%;
+}
+
+.submit{
+    width: 10% !important;
+    display: block;
+    margin-left: 40%;
+    margin-top:3%;
+}
+
+.formProducText{
+    padding: 1%;
+    color: #fff;
+    display: block;
+}
+
+
+/* --- TABLA PRODUCTOS --- */
+
+.tablaProductos{
+    color: #fff;
+    background-color: #333;
+    padding: 5%;
+}
+
+.ver{
+    width: 25%;
+    height: auto;
+    position: relative;
 }
