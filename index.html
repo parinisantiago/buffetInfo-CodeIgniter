@@ -18,11 +18,11 @@
             <li class="loginNavbar">
                 <form class="login" id="login" method="post" action="backend.html" name="login">
                     <label class="loginInputText" for="username">Nombre de usuario:</label>
-                    <input type="text" id="username" name="username"  placeholder="nombre de usuario" required>
+                    <input type="text" id="username" name="username"  placeholder="nombre de usuario" pattern="^[a-zA-Z]+" required>
                     <label class="loginInputText" for="pass">Contraseña: </label>
-                    <input type="password" id="pass" name="pass" placeholder="contraseña" required>
+                    <input type="password" id="pass" name="pass" placeholder="contraseña" pattern="^[a-zA-Z0-9]+" required>
                     <label for="submit" hidden></label>
-                    <input type="submit" id="submit" name="submit" class="boton"value="acceder">
+                    <input type="submit" id="submit" name="submit" class="boton" value="acceder">
                 </form>
             </li>
         </ul>
@@ -35,7 +35,7 @@
         </div>
         <div class="textoIndex">
             <p class="titleComida">Milanesa de vaca Veggie</p>
-            <img src="images/51668.jpeg" alt="milanesa de vaca Veggie">
+            <img class="imageComida" src="images/51668.jpeg" alt="milanesa de vaca Veggie">
             <p class="textoComida">Proin id luctus ipsum, quis iaculis lacus. Proin tortor ex, bibendum at vehicula quis, consequat eget quam. Aenean a tincidunt ipsum. Praesent cursus nulla id laoreet commodo. Proin tempus, lacus sed fermentum volutpat, ipsum metus tempus enim, lobortis gravida est urna sit amet sem. Vivamus rutrum tellus urna, id tempor augue molestie ac. Nunc finibus leo vitae ex porta ultricies. Nullam faucibus neque sed turpis pretium, ac venenatis lectus congue. Nam auctor sapien eget massa faucibus venenatis. Vivamus iaculis luctus ligula at tempus. Sed ultricies elit nunc, ut posuere orci vestibulum sed. Fusce ultricies velit eget risus fermentum varius. Vestibulum ut euismod lorem. Aliquam eu dui dictum, bibendum nibh a, dictum purus.</p>
         </div>
     </main>
