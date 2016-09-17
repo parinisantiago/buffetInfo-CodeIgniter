@@ -60,16 +60,32 @@ background-image:url("../images/headderBuffet2.png");
 }
 
 /* --- TABLA PRODUCTOS --- */
+.tablaProductos tbody tr td{
+    margin-top: 1%;
+    font-size: 1.1em;
+    text-align: center;
+    width: 2%;
+}
 
 .tablaProductos{
     color: #fff;
     background-color: #333;
     padding: 5%;
+    margin-left: 10%;
 }
 
-.ver{
-    width: 25%;
-    height: auto;
+.icono {
+    width: 2em;
+    margin: 1%;
     position: relative;
+}
+
+@media screen and (max-width: 851px) {
+   .icono {
+    width: 1.5em;
+    }
+    .tablaProductos tbody tr td{
+    font-size: 0.9em;
+    }
 }
 
