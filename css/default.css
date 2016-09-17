@@ -1,36 +1,3 @@
-
-
-/*media query*/
-@media screen and (min-width: 1281px){
-    .loginNavbar{
-        margin-left: 40%;
-    }
-}
-
-@media screen and (max-width: 1280px) {
-    .loginNavbar{
-        margin-left: 30%;
-    }
-}
-
-@media screen and (max-width: 1024px) {
-    .loginNavbar{
-        margin-left: 13%;
-    }
-}
-
-@media screen and (max-width: 800px) {
-    .loginInputText{
-        display: none;
-    }
-    .loginNavbar{
-        margin-left: 22%;
-    }
-}
-
-
-/*defaul css */
-
 /* --- CABEZARA --- */
 
 

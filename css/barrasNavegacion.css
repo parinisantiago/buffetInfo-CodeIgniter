@@ -1,30 +1,39 @@
 
 /* --- LOGIN --- */
 
+.loginNavbar{
+    padding-top: 1%;
+    height: 2em;
+    margin-right: 2%;
+    width: 38em;
+    float: right;
+}
+/*.login{
+    width: 128%;
+    margin-right: -4%;
+    float: right;
+    height: 2em;
+}*/
+.loginInputText{
+    color: #fff;
+    margin-left: 1%;
+}
+
+#submit{
+    margin-top: -1%;
+    float: right;
+}
 .logout{
     margin-left: 65%;
 }
-
 .logout:hover{
     background-color: #5e5c5c;
     height: 100%;
 }
 
-.loginInputText{
-    color: #fff;
-}
-.loginNavbar{
-    float: right;
-    margin-right: 5%;
-    padding-top:1%;
-    width: 33%;
-    z-index: 10;
-}
-#submit{
-    float: right;
-    margin-top: -1%;
-    margin-right: 5%;
-}
+
+
+
 
 /* --- BARRA NAVEGACION --- */
 
@@ -41,13 +50,14 @@ nav{
     background-color: #333;
     margin: 0;
     padding: 0;
+    padding-top: 0.1em; 
     height: 3.5em;
 }
 
 .boton{
     float: left;
     direction: rtl;
-    margin-top: 0.3%;
+    margin-top: 0.5%;
     margin-left: 0.8em;
     list-style: none;
     color: white;
@@ -129,4 +139,33 @@ footer {
    position:fixed;
     bottom:0;
 
+}
+
+/*media query*/
+@media screen and (min-width: 850px){
+    /*.loginNavbar{
+        width: 38em;
+    }*/
+    .loginInputText{
+        display: inline;
+    }
+    .boton{
+        padding:0.5%;
+        font-size: 15px;
+    }
+}
+
+@media screen and (max-width: 851px) {
+    .loginNavbar{
+        width: 22.5em;
+        margin-top: 1%;     
+    }
+     .loginInputText{
+        display: none;
+    }
+    .boton{
+        padding:0.3%;
+        font-size: 12px;
+        margin-top: 1em;
+    }
 }
