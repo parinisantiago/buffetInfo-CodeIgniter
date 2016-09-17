@@ -12,6 +12,7 @@
     <header>
         <h1 class="headerTitle" id="headerTitle"> Buffet de la Facultad de Informática UNLP</h1>
     </header>
+	<nav>
 	<ul class="navbar" id="navbar">
 		<li id="textoBienvida">Bienvenido Admin-oniisan</li>
 		<li class="boton"><a class="botonLink" href="index.html">Cerrar Sesion</a></li>
@@ -68,7 +69,7 @@
 	<main>
 	<form name="formProduc" class="formProduc" action="productos.html" method="post">
 		<label for="nombre" class="formProducText">Nombre:</label>
-	    <input type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="Alfajor, Barra de cereal" maxlength="25" pattern="^[A-Z|a-z|]| {1,25}$" autofocus required>
+	    <input type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="Alfajor, Barra de cereal" maxlength="25" pattern="^\pL+[\pL\pZ\pP]{0,25}$" autofocus required>
 
 		<!-- esto en un futuro podría ser una lista -->
 	    <label for="marca" class="formProducText">Marca:</label>
