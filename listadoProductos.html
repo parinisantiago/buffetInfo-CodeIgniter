@@ -1,31 +1,33 @@
 <!DOCTYPE html>
-<html lang ="es">
+<html lang="es">
 <head>
-
-	<meta charset ="utf-8"/>
-	<title> Buffet UNLP Informatica</title>
-	<meta name= "description" content= "Proyecto de software" />
-	<meta name= "author" content= "Grupo 64: Alvarez Ferretti, parini"/>
-	<link rel="stylesheet" type="text/css" href="css/default.css" id="linkEstilo">
+    <meta charset="utf-8"/>
+    <meta name="description" content="Proyecto de software" />
+    <meta name="author" content="Grupo 64: Alvarez Ferretti, Santiago Parini" />
+    <title>Buffet UNLP informática</title>
+    <link rel="stylesheet" type="text/css" href="css/default.css" id="linkEstilo">
+    <link rel="stylesheet" type="text/css" href="css/barrasNavegacion.css" id="linkEstilo">
+</head>
 <body>
-
-<header>
-	<img class="imageHeader" src="images/headderBuffet2.png" alt="Entrada de la facultad de informática">
-	<h1 class="headerTitle" id="headerTitle"> Buffet de la Facultad de Informática UNLP</h1>
-</header>
-<nav>
-	<ul class="navbar" id="navbar">
-		<li class="linkNavbar">
-			<a class="textNavbar" href="index.html">Inicio</a>
-		</li>
-		<li class="linkNavbar">
-			<a class="textNavbar">Menu del día</a>
-		</li>
-		<li class="logout">
-			<a class="textNavbar" href="index.html">Cerrar Sesión</a>
-		</li>
-	</ul>
-</nav>
+    <header>
+        <h1 class="headerTitle" id="headerTitle"> Buffet de la Facultad de Informática UNLP</h1>
+    </header>
+    <nav>
+        <ul class="navbar" id="navbar">
+            <li class="boton" href="index.html">Inicio</li>
+            <li class="boton">Menu del día</li>
+            <li class="loginNavbar">
+                <form class="login" id="login" method="post" action="backend.html" name="login">
+                    <label class="loginInputText" for="username">Nombre de usuario:</label>
+                    <input type="text" id="username" name="username"  placeholder="nombre de usuario" required>
+                    <label class="loginInputText" for="pass">Contraseña: </label>
+                    <input type="password" id="pass" name="pass" placeholder="contraseña" required>
+                    <label for="submit" hidden></label>
+                    <input type="submit" id="submit" name="submit" class="boton"value="acceder">
+                </form>
+            </li>
+        </ul>
+    </nav>
 
 
 <aside>
@@ -92,36 +94,36 @@
 			<td>La Merced</td>
 			<td>50</td>
 			<td>1/01/2017</td>
-			<td><img class="ver" src="images/ver.jpg" alt= "ver mas informacion" /></td>
+			<td><img class="ver" src="images/ver.png" alt= "ver mas informacion" /></td>
 			<td><img class="editar" src="images/editar.png" alt= "editar la informacion" /></td>
-			<td><img class="eliminar" src="images/eliminar.jpg" alt= "eliminar" /></td>
+			<td><img class="eliminar" src="images/eliminar.png" alt= "eliminar" /></td>
 		</tr>
 		<tr>
 			<td>Yerba</td>
 			<td>Taragui</td>
 			<td>20</td>
 			<td>27/11/2016</td>
-			<td><img class="ver" src="images/ver.jpg" alt= "ver mas informacion" /></td>
+			<td><img class="ver" src="images/ver.png" alt= "ver mas informacion" /></td>
 			<td><img class="editar" src="images/editar.png" alt= "editar la informacion" /></td>
-			<td><img class="eliminar" src="images/eliminar.jpg" alt= "eliminar" /></td>
+			<td><img class="eliminar" src="images/eliminar.png" alt= "eliminar" /></td>
 		</tr>
 		<tr>
 			<td>Yerba</td>
 			<td>Nobleza Gaucha</td>
 			<td>30</td>
 			<td>30/06/2017</td>
-			<td><img class="ver" src="images/ver.jpg" alt= "ver mas informacion" /></td>
+			<td><img class="ver" src="images/ver.png" alt= "ver mas informacion" /></td>
 			<td><img class="editar" src="images/editar.png" alt= "editar la informacion" /></td>
-			<td><img class="eliminar" src="images/eliminar.jpg" alt= "eliminar" /></td>
+			<td><img class="eliminar" src="images/eliminar.png" alt= "eliminar" /></td>
 		</tr>
 		<tr>
 			<td>Yerba</td>
 			<td>Amanda</td>
 			<td>10</td>
 			<td>10/12/2017</td>
-			<td><img class="ver" src="images/ver.jpg" alt= "ver mas informacion" /></td>
+			<td><img class="ver" src="images/ver.png" alt= "ver mas informacion" /></td>
 			<td><img class="editar" src="images/editar.png" alt= "editar la informacion" /></td>
-			<td><img class="eliminar" src="images/eliminar.jpg" alt= "eliminar" /></td>
+			<td><img class="eliminar" src="images/eliminar.png" alt= "eliminar" /></td>
 		</tr>
 	</table>
 	</div>
