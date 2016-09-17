@@ -39,28 +39,25 @@ background-image:url("../images/headderBuffet2.png");
     width: 50%;
     margin-left: 25%;
     margin-bottom: 10%;
+    height:50em;
 }
 
-.formProduc input{
+.formProducinput{
     display: block;
-    width:80%;
+    width: 90%;
     padding: 1%;
     margin: 1%;
 }
 
-.submit{
-    width: 10% !important;
-    display: block;
-    margin-left: 40%;
-    margin-top:3%;
-}
 
 .formProducText{
     padding: 1%;
     color: #fff;
     display: block;
 }
-
+#enviar{
+    margin-top: 3%;
+}
 
 /* --- TABLA PRODUCTOS --- */
 
