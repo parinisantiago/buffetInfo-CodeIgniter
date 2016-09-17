@@ -16,6 +16,14 @@
     margin-top: -1%;
     float: right;
 }
+#textoBienvida{
+    color: white;
+    margin-right: 20%;
+}
+.botonLink{
+    text-decoration:none;
+    color: white; 
+}
 .logout{
     margin-left: 65%;
 }
