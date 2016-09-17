@@ -18,20 +18,18 @@
 }
 #textoBienvida{
     color: white;
-    margin-right: 20%;
+    margin-right: 50%;
+    width: auto;
 }
 .botonLink{
     text-decoration:none;
     color: white; 
 }
-.logout{
-    margin-left: 65%;
+#logout{
+    float: right;
+    margin-top: -2.3%;
+    margin-right: 43%;
 }
-.logout:hover{
-    background-color: #5e5c5c;
-    height: 100%;
-}
-
 /* --- BARRA NAVEGACION --- */
 
 nav{

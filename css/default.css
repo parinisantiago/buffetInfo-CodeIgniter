@@ -30,7 +30,15 @@ background-image:url("../images/headderBuffet2.png");
 #textoIndex{
     font-size: 1.2em;
 }
-
+.imageComida{
+    border-radius: 15px;
+    width: 350px;
+    height: auto;
+}
+.textoComida{
+    width: 70%;
+    float: right;
+}
 /* --- FORMULARIO PRODUCTO --- */
 
 .formProduc{
