@@ -6,6 +6,8 @@
     margin-top: 10%;
     margin-left: 10%;
     font-family: verdana ;
+    font-size: 50px;
+    text-shadow: 3px 3px gray;
 }
 
 /* --- CUERPO --- */
@@ -16,10 +18,6 @@ main{
     width: 75%;
     z-index: -1;
 }
-/*html{
-       background-image:url("../images/background.png"); 
-
-}   */
 body{
         
 background-image:url("../images/headderBuffet2.png");
@@ -27,18 +25,45 @@ background-image:url("../images/headderBuffet2.png");
 
 }   
 
-#textoIndex{
-    font-size: 1.2em;
+.titleComida{
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    clear: both;
 }
 .imageComida{
     border-radius: 15px;
     width: 350px;
     height: auto;
+    display: inline-block;
+    clear: right;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }
 .textoComida{
+    font-size: 1.1em;
     width: 70%;
+    clear: both;
+    display: inline-block;
     float: right;
+    margin-left: 2%;
+    clear: both;
+    overflow: visible;
 }
+@media screen and (max-width: 851px) {
+   .imageComida {
+    margin-left: 20%;
+    display: block;
+    }
+    .textoComida{
+    margin-left: 20%;
+    display: block;
+    width: 100%;
+    }
+}
+
+
 /* --- FORMULARIO PRODUCTO --- */
 
 .formProduc{
@@ -47,7 +72,24 @@ background-image:url("../images/headderBuffet2.png");
     width: 50%;
     margin-left: 25%;
     margin-bottom: 10%;
-    height:50em;
+    display: block;
+    clear: both;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+@media screen and (max-width: 851px) {
+   .formProduc{
+    height:35em;
+    }
+}
+.clearfix:before,
+.clearfix:after {
+content: " ";
+display: block;
+}
+.clearfix:after {
+clear: both;
 }
 
 .formProducinput{
@@ -56,8 +98,6 @@ background-image:url("../images/headderBuffet2.png");
     padding: 1%;
     margin: 1%;
 }
-
-
 .formProducText{
     padding: 1%;
     color: #fff;
@@ -66,6 +106,7 @@ background-image:url("../images/headderBuffet2.png");
 #enviar{
     margin-top: 3%;
 }
+
 
 /* --- TABLA PRODUCTOS --- */
 .tablaProductos tbody tr td{
@@ -80,6 +121,9 @@ background-image:url("../images/headderBuffet2.png");
     background-color: #333;
     padding: 5%;
     margin-left: 10%;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }
 
 .icono {

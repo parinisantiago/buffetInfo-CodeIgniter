@@ -14,8 +14,10 @@
     </header>
     <nav>
         <ul class="navbar" id="navbar">
-            <li class="loginNavbar" id="textoBienvida">Bienvenido Admin-oniisan</li>
-            <li class="boton" id="logout"><a class="botonLink" href="index.html">Cerrar Sesion</a></li>
+            <div id="logout">
+                <li class="loginNavbar" id="textoBienvida">Bienvenido Admin-oniisan</li>
+                <li class="boton" id="logoutBoton"><a class="botonLink" href="index.html">Cerrar Sesion</a></li>
+            </div>
         </ul>
     </nav>
 
@@ -67,7 +69,7 @@
 </aside>
 
 	<main>
-	<form name="formProduc" class="formProduc" action="productos.html" method="post">
+	<form name="formProduc" class="formProduc clearfix" action="productos.html" method="post">
 		<label for="nombre" class="formProducText">Nombre:</label>
 	    <input type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" autofocus required>
 
