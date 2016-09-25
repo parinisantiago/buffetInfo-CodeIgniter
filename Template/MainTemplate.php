@@ -4,9 +4,9 @@
     </header>
     <nav>
         <ul class="navbar" id="navbar">
-            <li class="boton"><a class="botonLink" href="index.html"> Inicio</a></li>
+            <li class="boton"><a class="botonLink" href="index.php"> Inicio</a></li>
             <li class="loginNavbar">
-                <form class="login" id="login" method="post" action="backend.html" name="login">
+                <form class="login" id="login" method="post" action="Loader.php?controller=MainController&method=login" name="login">
                     <label class="loginInputText" for="username">Nombre de usuario:</label>
                     <input type="text" id="username" name="username"  placeholder="nombre de usuario" pattern="^[a-zA-Z]+" required>
                     <label class="loginInputText" for="pass">Contraseña: </label>
