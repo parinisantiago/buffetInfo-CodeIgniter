@@ -18,6 +18,15 @@ class MainController extends Controller
         $this->dispatcher->render("MainTemplate.php");
 
     }
+
+
+    public function login(){
+
+        echo "FUNCIONA";
+
+    }
+
+
 }
 
 ?>
