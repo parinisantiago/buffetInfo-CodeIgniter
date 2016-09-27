@@ -46,13 +46,15 @@ try {
     if (! $controller->getpermission ()) {
         throw new Exception ( "el usuario no tiene permisos" );
     }
-    $controller->$method ();
+    
+    
+    $controller->$method (); // si todo funciona llama al método 
 
-    //si exise algún error redirecciona al index.
+   
 
-} catch ( Exception $e ) {
+} catch ( Exception $e ) {  //si exise algún error redirecciona al index.
 
-    $mainController = new MainController ();
+    $mainController = new MainUserController ();
     $mainController->login ();
 
 }
