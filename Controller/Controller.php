@@ -7,7 +7,7 @@ include_once(dirname(__DIR__)."/Dispatcher.php");
 
 class Controller
 {
-    public $dispatcher;
+    protected $dispatcher;
 
     public function __contruct(){
 
@@ -20,7 +20,6 @@ class Controller
         return (true);
 
     }
-
 }
 
 ?>
