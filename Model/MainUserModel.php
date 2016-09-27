@@ -10,18 +10,17 @@ class MainUserModel extends Model
 
     public function userExist($username)
     {
-        return $this->queryPreparadaSQL('SELECT name FROM user WHERE username = :username', array('username'=> $username));
+        return $this->queryPreparadaSQL('SELECT usuario FROM usuario WHERE usuario = :username', array('username'=> $username));
     }
 
     public function passDontMissmatch($pass)
     {
-        return $this -> queryPreparadaSQL('SELECT pass FROM user WHERE pass = :pass', array('pass' => $pass));
+        return $this -> queryPreparadaSQL('SELECT clave FROM usuario WHERE clave = :pass', array('pass' => $pass));
     }
 
     public function getUser($username, $pass)
     {
-        $user = $this -> queryPreparadaSQL('SELECT * FROM user WHERE username = :username AND pass = :pass', array('username' => $username, 'pass' => $pass ));
-
+        return $this -> queryPreparadaSQL('SELECT * FROM usuario WHERE usuario = :username AND clave = :pass', array('username' => $username, 'pass' => $pass ));
     }
 
 }
