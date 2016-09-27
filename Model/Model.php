@@ -4,27 +4,37 @@ class Model
 {
 
     private $db;
+	private $stmnt;
     
-    public function _construct(){
+    public function __construct()
+	{
         try {
-        	$this->base = new PDO ( "mysql:host=" . host . ";dbname=" . db, user, pass ); //las constantes estan definidas en Utils/const.php
-			$this->base->setAttribute ( PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ ); // para retornar objetos
+
+        	$this->db = new PDO ( "mysql:host=" . host . ";dbname=" . db, user, pass ); //las constantes estan definidas en Utils/const.php
+			$this->db->setAttribute ( PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ ); // para retornar objetos
+			$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);//Para retornar PDOExecption (creo)
+
 		}
 		catch (PDOException $e) {
 			print "¡Error!: " . $e->getMessage() . "<br/>";
 			die();
 		}
     }
+	
 	public function querySQL($sql){
 		$conexion = $this-> _construct();
 		return $conexion->query($sql);
 	}
+	
+
+	protected function queryPreparadaSQL($sql, $parametros)
+	{
+
+	    $this -> stmnt = $this -> db -> prepare($sql);
+
+		$this -> stmnt -> execute($parametros);
 		
-	public function queryPreparadaSQL($sql, $parametros){
-		$conexion = $this-> _construct();
-	    $resultado = $conexion->prepare($sql);
-	    $resultado->execute($parametros);
-	    return $resultado;
+		return $this -> stmnt -> fetch(); //retorna el valor de la consulta como un objeto
 	}
 }
 
