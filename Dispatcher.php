@@ -7,21 +7,13 @@ include_once 'twig/lib/Twig/Autoloader.php';
 
 class Dispatcher
 {
-
-    private $template;
-
-    public function _construct(){
-        $this->template="perro";
-    }
-
+    
     //renderisa el template, se le pasan 3 argumentos en el controlodar, primero la vista, luego el header y luego el footer.
 
     public function render( $template ){
 
-        require_once ("Template/metaTemplate.php");
         $this -> loadByTwig("Template/".$template);
-        require_once  ("Template/FooterTemplate.php");
-        
+    
     }
 
     //renderisa con Twig
