@@ -4,6 +4,8 @@ class MainUserController extends Controller
 {
     private $model;
     private $user;
+    private $usernamePOST;
+    private $passPOST;
 
     public function __construct(){
 
@@ -23,39 +25,51 @@ class MainUserController extends Controller
     public function login(){
 
 
-        //if( ! isset($_POST['submit']) ) throw new Exception("Apreta el botón de logeo macho");
+        $this->validateLogin();
+        //si se logueo de forma correcta setea la sesion del usuario y llama al controllador correspondiente
+        $this -> user = $this -> model -> getUser($this -> usernamePOST, $this -> passPOST);
+        $this -> setSession();
 
-        if (isset ($_POST['username'])) $user = $_POST['username'];
+        $this->callUserRolController();
+    }
+
+    public function validateLogin()
+    {
+        if (!isset($_POST['submit'])) throw new Exception("Apreta el botón de logeo macho");
+
+        if (isset ($_POST['username'])) $this->usernamePOST = $_POST['username'];
         else throw new Exception("No se ha ingresado ningun usuario");
 
-        if (isset ($_POST['pass'])) $pass = $_POST['pass'];
+        if (isset ($_POST['pass'])) $this->passPOST = $_POST['pass'];
         else throw new Exception("No se ha ingresado ninguna contraseña");
-        
-        if ( ! $this->model-> userExist($user)) throw new Exception("El usuario no existe");
 
-        elseif( ! $this->model->passDontMissmatch($pass)) throw new Exception("Contraseña incorrecta");
-        
-        else
-        {
-            die();
-            $this -> user = $this -> model -> getUser($user, $pass);
-            $this.setSession();
+        if (!$this->model->userExist($this->usernamePOST)) throw new Exception("El usuario no existe");
 
-            switch ( $this -> user -> rol ){
-
-
-
-            }
-
-        }
+        elseif (!$this->model->passDontMissmatch($this->passPOST)) throw new Exception("Contraseña incorrecta");
     }
 
     private function setSession()
     {
 
-        Session::setValue( $this -> user -> username, 'username');
-        Session::setValue( $this -> user -> rol, 'rol');
+        Session::setValue( $this -> user -> usuario, 'username');
+        Session::setValue( $this -> user -> idRol, 'rol');
 
+    }
+
+    public function callUserRolController()
+    {
+        switch ($this->user->rol) {
+            //dependiendo del idRol del usuario, instanciamos el rol correspondiente y llamamos a su index();
+            case '0':
+                $controller = new AdminController();
+                break;
+            case '1':
+                break;
+            default:
+                throw new Exception("usuario no valido");
+
+        }
+        $controller -> init();
     }
 
 
