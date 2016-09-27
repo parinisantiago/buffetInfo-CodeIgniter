@@ -1,0 +1,50 @@
+ {# layaout.twig #}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    {% block head %}
+
+    <meta charset="utf-8"/>
+    <meta name="description" content="Proyecto de software" />
+    <meta name="author" content="Grupo 64: Alvarez Ferretti, Santiago Parini" />
+    <title> {% block title %} Buffet UNLP informática {% endblock %} </title>
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <link rel="stylesheet" type="text/css" href="css/barrasNavegacion.css">
+
+    {% endblock %}
+
+</head>
+
+<body>
+
+<header>
+    {% block header %} <h1 class="headerTitle" id="headerTitle"> Buffet de la Facultad de Informática UNLP</h1> {% endblock %}
+</header>
+
+<nav>
+    {% block nav %}
+
+
+    {% endblock %}
+</nav>
+
+<main>
+    {% block main %} {% endblock %}
+</main>
+
+<aside>
+
+    {% block aside %} {% endblock %}
+
+</aside>
+
+<footer> {% block footer%} Página desarrollado por el grupo 64 para la cátedra de Proyecto de Software UNLP cursada 2016 {% endblock %}  </footer>
+
+
+</body>
+
+
+</html>
