@@ -121,7 +121,7 @@ class Twig_Tests_Loader_FilesystemTest extends PHPUnit_Framework_TestCase
         $namedSource = $loader->getSource('@named/index.html');
         $this->assertEquals("named path\n", $namedSource);
 
-        // get index.html from the main namespace
+        // get index.html from the Main namespace
         $this->assertEquals("path\n", $loader->getSource('index.html'));
     }
 
