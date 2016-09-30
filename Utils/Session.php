@@ -14,6 +14,10 @@ class Session
        if ( isset($_SESSION[$key])) return($_SESSION[$key]);
     }
 
+    public static function userLogged(){
+        return isset($_SESSION['rol']);
+    }
+
     public static function destroy(){
         session_distroy();
     }
