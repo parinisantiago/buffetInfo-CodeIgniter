@@ -18,8 +18,9 @@ class MainUserController extends Controller
     public function init(){
 
         Session::init();
-        $this->dispatcher->render("Main/MainTemplate.twig");
 
+        if( Session::userLogged() )$this->callUserRolController();
+        else $this->dispatcher->render("Main/MainTemplate.twig");
     }
 
     public function login(){
@@ -58,7 +59,7 @@ class MainUserController extends Controller
 
     public function callUserRolController()
     {
-        switch ($this->user->rol) {
+        switch ($this->user->idRol) {
             //dependiendo del idRol del usuario, instanciamos el rol correspondiente y llamamos a su index();
             case '0':
                 $controller = new AdminController();
