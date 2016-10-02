@@ -58,7 +58,7 @@ class MainUserController extends Controller
     }
 
     public function initError($error){
-        $mensajeError = $error;
+        $this->dispatcher->mensajeError = $error;
         $this->init();
     }
 
