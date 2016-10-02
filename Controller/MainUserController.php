@@ -57,6 +57,11 @@ class MainUserController extends Controller
 
     }
 
+    public function initError($error){
+        $mensajeError = $error;
+        $this->init();
+    }
+
     public function callUserRolController()
     {
         switch ($this->user->idRol) {

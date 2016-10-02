@@ -30,7 +30,13 @@
 
     {% endblock %}
 </nav>
-
+<div id="mensajeError">
+    <p>
+        {%  if mensajeError %}
+        {{ mensajeError }}
+        {% endif %}
+    </p>1
+</div>
 <main>
     {% block main %} {% endblock %}
 </main>
