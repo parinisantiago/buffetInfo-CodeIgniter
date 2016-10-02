@@ -2,7 +2,7 @@
 
 {% block nav %}
 
-    {{ include('Template/Main/MainNavTemplate.twig') }}
+    {{ include('Template/Backend/BackendNavTemplate.twig') }}
 
 {% endblock %}
 
@@ -43,4 +43,10 @@
 	    <input type="submit" name="submit"  id="enviar" class="boton" value="Entrar">
 	</form>
 	
+{% endblock %}
+
+{% block aside %}
+
+    {{ include('Template/Backend/BackendAsideTemplate.twig') }}
+
 {% endblock %}
