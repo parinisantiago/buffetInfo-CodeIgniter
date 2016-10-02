@@ -9,11 +9,19 @@ class AdminController extends Controller{
     }
 
 	public function init(){
-		$this->dispatcher->render("/Backend/adminIndexTemplate.twig");
+		$this->dispatcher->render("Backend/adminIndexTemplate.twig");
 	}
 
 	public function abmUsuario(){
 
+	}
+
+	public function productos(){
+		$this->dispatcher->render("Backend/ProductosTemplate.twig");
+	}
+
+	public function productosA(){
+		
 	}
 }
 ?>
