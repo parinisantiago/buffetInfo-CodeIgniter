@@ -141,3 +141,10 @@ clear: both;
     }
 }
 
+/* --- MENSAJE DE ERROR --- */
+.mensajeError{
+    display: block;
+    width: 80%;
+    background-color: yellow;
+}
+
