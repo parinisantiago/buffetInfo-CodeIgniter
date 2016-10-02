@@ -7,6 +7,7 @@
 {% endblock %}
 
 {% block main %}
+	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=AdminController&method=productosA" method="post">
 		<label for="nombre" class="formProducText">Nombre:</label>
 	    <input type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" autofocus required>
 
