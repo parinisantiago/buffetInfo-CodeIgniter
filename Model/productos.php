@@ -11,6 +11,7 @@ Twig_Autoloader::register ();
 foreach ( glob ( "Controller/*Controller.php" ) as $app ) {
     require_once $app;
 }
+require_once 'Controller/AdminController.php';
 
 
 //idem anterior
