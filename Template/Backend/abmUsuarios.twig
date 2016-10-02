@@ -1,0 +1,59 @@
+{% extends 'Template/Backend/adminIndexTemplate.twig' %}
+
+{% block main %}
+
+    <div>
+        <table class="tablaProductos" summary="detallas de cada producto">
+            <thead>
+            <tr>
+                <th id="nombre">Nombre</th>
+                <th id="marca">Mearca</th>
+                <th id="stock">Stock</th>
+                <th id="vencimiento">Vencimiento</th>
+                <th id="ver">Ver</th>
+                <th id="editar">Editar</th>
+                <th id="eliminar">Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td headers="nombre">Yerba</td>
+                <td headers="marca">La Merced</td>
+                <td headers="stock">50</td>
+                <td headers="vencimiento">1/01/2017</td>
+                <td headers="ver"><img class="icono" src="images/ver.png" alt= "ver mas informacion" /></td>
+                <td headers="editar"><img class="icono" src="images/editar.png" alt= "editar la informacion" /></td>
+                <td headers="eliminar"><img class="icono" src="images/eliminar.png" alt= "eliminar" /></td>
+            </tr>
+            <tr>
+                <td headers="nombre">Yerba</td>
+                <td headers="marca">Taragui</td>
+                <td headers="stock">20</td>
+                <td headers="vencimiento">27/11/2016</td>
+                <td headers="ver"><img class="icono" src="images/ver.png" alt= "ver mas informacion" /></td>
+                <td headers="editar"><img class="icono" src="images/editar.png" alt= "editar la informacion" /></td>
+                <td headers="eliminar"><img class="icono" src="images/eliminar.png" alt= "eliminar" /></td>
+            </tr>
+            <tr>
+                <td headers="nombre">Yerba</td>
+                <td headers="marca">Nobleza Gaucha</td>
+                <td headers="stock">30</td>
+                <td headers="vencimiento">30/06/2017</td>
+                <td headers="ver"><img class="icono" src="images/ver.png" alt= "ver mas informacion" /></td>
+                <td headers="editar"><img class="icono" src="images/editar.png" alt= "editar la informacion" /></td>
+                <td headers="eliminar"><img class="icono" src="images/eliminar.png" alt= "eliminar" /></td>
+            </tr>
+            <tr>
+                <td headers="nombre">Yerba</td>
+                <td headers="marca">Amanda</td>
+                <td headers="stock">10</td>
+                <td headers="vencimiento">10/12/2017</td>
+                <td headers="ver"><img class="icono" src="images/ver.png" alt= "ver mas informacion" /></td>
+                <td headers="editar"><img class="icono" src="images/editar.png" alt= "editar la informacion" /></td>
+                <td headers="eliminar"><img class="icono" src="images/eliminar.png" alt= "eliminar" /></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
