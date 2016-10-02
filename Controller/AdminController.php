@@ -6,7 +6,7 @@ class AdminController extends Controller{
     }
 
 	public function init(){
-		$this->dispatcher->render("Backend/ProductosTemplate.twig");
+		$this->dispatcher->render("/Backend/adminIndexTemplate.twig");
 
 	}
 }
