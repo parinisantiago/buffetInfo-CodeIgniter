@@ -12,14 +12,15 @@ class Session
 
     public static function getValue($key){
        if ( isset($_SESSION[$key])) return($_SESSION[$key]);
+       else return false;
     }
 
     public static function userLogged(){
-        return isset($_SESSION['rol']);
+        return (isset($_SESSION['logged']));
     }
 
     public static function destroy(){
-        session_distroy();
+        session_destroy();
     }
 }
 ?>
