@@ -53,7 +53,6 @@ try {
    
 
 } catch ( Exception $e ) {  //si exise algún error redirecciona al index.
-
    $mainController = new MainUserController ();
    $mainController->initError($e->getMessage());
 
