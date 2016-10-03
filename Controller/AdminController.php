@@ -6,6 +6,7 @@ class AdminController extends Controller{
 
 	public function __construct(){
 		parent::__contruct();
+		$this->model = new MainUserModel();
     }
 
 	public function init(){
@@ -13,7 +14,8 @@ class AdminController extends Controller{
 	}
 
 	public function abmUsuario(){
-
+		$this->dispatcher->users = $this->model->getAllUser();
+		$this->dispatcher->render('Backend/abmUsuarios.twig');
 	}
 
 	public function productos(){
