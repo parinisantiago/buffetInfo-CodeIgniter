@@ -6,52 +6,51 @@
         <table class="tablaProductos" summary="detallas de cada producto">
             <thead>
             <tr>
+                <th id="nombreUsuario">Nombre Usuario</th>
                 <th id="nombre">Nombre</th>
-                <th id="marca">Mearca</th>
-                <th id="stock">Stock</th>
-                <th id="vencimiento">Vencimiento</th>
-                <th id="ver">Ver</th>
+                <th id="apellido">Apellido</th>
+                <th id="documento">Documento</th>
+                <th id="email">email</th>
+                <th id="telefono">telefon</th>
+                <th id="rol">rol</th>
+                <th id="ubicacion">ubicacion</th>
                 <th id="editar">Editar</th>
                 <th id="eliminar">Eliminar</th>
             </tr>
             </thead>
             <tbody>
+
+            {% for user in users %}
             <tr>
-                <td headers="nombre">Yerba</td>
-                <td headers="marca">La Merced</td>
-                <td headers="stock">50</td>
-                <td headers="vencimiento">1/01/2017</td>
-                <td headers="ver"><img class="icono" src="images/ver.png" alt= "ver mas informacion" /></td>
-                <td headers="editar"><img class="icono" src="images/editar.png" alt= "editar la informacion" /></td>
-                <td headers="eliminar"><img class="icono" src="images/eliminar.png" alt= "eliminar" /></td>
+                <td headers="nombreUsuario">{{ user.usuario }}</td>
+                <td headers="nombre"> {{ user.nombre }}</td>
+                <td headers="apellido"> {{ user.apellido }}</td>
+                <td headers="documento">{{ user.documento }}</td>
+                <td headers="email">{{ user.email }}</td>
+                <td headers="telefono">{{ user.telefono }}</td>
+                <td headers="rol">{{ user.rol.nombre }}</td>
+                <td headers="ubicacion">{{ user.ubicacion.nombre }}</td>
+                <td headers="editar">
+                    <form method="post" action="Loader.php?controller=AdminController&method=modificarUsuario">
+                        <label for="idUsuario" hidden></label>
+                        <input id="idUsuario" name="idUsuario" type="hidden" value={{ user.idUsuario }}>
+                        <button type="submit">
+                            <img class="icono" src="images/editar.png" alt= "editar la informacion" />
+                        </button>
+                    </form>
+                </td>
+                <td headers="eliminar">
+                    <form method="post" action="Loader.php?controller=AdminController&method=eliminarUsuario">
+                        <label for="idUsuario" hidden></label>
+                        <input id="idUsuario" name="idUsuario" type="hidden" value={{ user.idUsuario }}>
+                        <button type="submit">
+                            <img class="icono" src="images/eliminar.png" alt= "eliminar" />
+                        </button>
+                    </form>
+                </td>
             </tr>
-            <tr>
-                <td headers="nombre">Yerba</td>
-                <td headers="marca">Taragui</td>
-                <td headers="stock">20</td>
-                <td headers="vencimiento">27/11/2016</td>
-                <td headers="ver"><img class="icono" src="images/ver.png" alt= "ver mas informacion" /></td>
-                <td headers="editar"><img class="icono" src="images/editar.png" alt= "editar la informacion" /></td>
-                <td headers="eliminar"><img class="icono" src="images/eliminar.png" alt= "eliminar" /></td>
-            </tr>
-            <tr>
-                <td headers="nombre">Yerba</td>
-                <td headers="marca">Nobleza Gaucha</td>
-                <td headers="stock">30</td>
-                <td headers="vencimiento">30/06/2017</td>
-                <td headers="ver"><img class="icono" src="images/ver.png" alt= "ver mas informacion" /></td>
-                <td headers="editar"><img class="icono" src="images/editar.png" alt= "editar la informacion" /></td>
-                <td headers="eliminar"><img class="icono" src="images/eliminar.png" alt= "eliminar" /></td>
-            </tr>
-            <tr>
-                <td headers="nombre">Yerba</td>
-                <td headers="marca">Amanda</td>
-                <td headers="stock">10</td>
-                <td headers="vencimiento">10/12/2017</td>
-                <td headers="ver"><img class="icono" src="images/ver.png" alt= "ver mas informacion" /></td>
-                <td headers="editar"><img class="icono" src="images/editar.png" alt= "editar la informacion" /></td>
-                <td headers="eliminar"><img class="icono" src="images/eliminar.png" alt= "eliminar" /></td>
-            </tr>
+           {% endfor %}
+
             </tbody>
         </table>
     </div>
