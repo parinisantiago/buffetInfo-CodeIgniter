@@ -26,5 +26,14 @@ class MainUserModel extends Model
     public function getAllUSer(){
         return $this -> queryTodasLasFilas('SELECT * FROM usuario INNER JOIN rol ON (usuario.idRol = rol.idRol ) INNER JOIN ubicacion ON (usuario.idUbicacion = ubicacion.idUbicacion)', array());
     }
+
+    public function deleteUser($idUsuario)
+    {
+        $this -> query('UPDATE usuario SET eliminado= 1 WHERE idUsuario = :idUsuario', array('idUsuario' =>$idUsuario));
+    }
     
+    public function isDeleted($username){
+        return $this->queryPreparadaSQL('SELECT eliminado FROM usuario WHERE usuario = :username AND eliminado = 1', array('username' => $username));
+    }
+
 }
