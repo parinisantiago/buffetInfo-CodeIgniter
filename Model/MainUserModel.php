@@ -23,4 +23,8 @@ class MainUserModel extends Model
         return $this -> queryPreparadaSQL('SELECT * FROM usuario WHERE usuario = :username AND clave = :pass', array('username' => $username, 'pass' => $pass ));
     }
 
+    public function getAllUSer(){
+        return $this -> queryTodasLasFilas('SELECT * FROM usuario INNER JOIN rol ON (usuario.idRol = rol.idRol ) INNER JOIN ubicacion ON (usuario.idUbicacion = ubicacion.idUbicacion)', array());
+    }
+    
 }
