@@ -21,6 +21,7 @@
             <tbody>
 
             {% for user in users %}
+                {% if not user.eliminado == 1 %}
             <tr>
                 <td headers="nombreUsuario">{{ user.usuario }}</td>
                 <td headers="nombre"> {{ user.nombre }}</td>
@@ -34,7 +35,7 @@
                     <form method="post" action="Loader.php?controller=AdminController&method=modificarUsuario">
                         <label for="idUsuario" hidden></label>
                         <input id="idUsuario" name="idUsuario" type="hidden" value={{ user.idUsuario }}>
-                        <button type="submit">
+                        <button type="submit" id="submitButton" name="submitButton">
                             <img class="icono" src="images/editar.png" alt= "editar la informacion" />
                         </button>
                     </form>
@@ -43,12 +44,13 @@
                     <form method="post" action="Loader.php?controller=AdminController&method=eliminarUsuario">
                         <label for="idUsuario" hidden></label>
                         <input id="idUsuario" name="idUsuario" type="hidden" value={{ user.idUsuario }}>
-                        <button type="submit">
+                        <button type="submit" id="submitButton" name="submitButton">
                             <img class="icono" src="images/eliminar.png" alt= "eliminar" />
                         </button>
                     </form>
                 </td>
             </tr>
+               {% endif %}
            {% endfor %}
 
             </tbody>
