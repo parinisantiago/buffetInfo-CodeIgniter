@@ -30,11 +30,24 @@ class Model
 	protected function queryPreparadaSQL($sql, $parametros)
 	{
 
-	    $this -> stmnt = $this -> db -> prepare($sql);
-
-		$this -> stmnt -> execute($parametros);
+		$this->query($sql, $parametros);
 		
 		return $this -> stmnt -> fetch(); //retorna el valor de la consulta como un objeto
+	}
+
+	protected function queryTodasLasFilas($sql, $parametros)
+	{
+
+		$this->query($sql, $parametros);
+
+		return $this -> stmnt -> fetchAll(); //retorna el valor de la consulta como un objeto
+	}
+	
+	private function query($sql, $parametros)
+	{
+		$this->stmnt = $this->db->prepare($sql);
+
+		$this->stmnt->execute($parametros);
 	}
 }
 
