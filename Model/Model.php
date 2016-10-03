@@ -17,15 +17,9 @@ class Model
 		}
 		catch (PDOException $e) {
 			print "¡Error!: " . $e->getMessage() . "<br/>";
-			die();
 		}
     }
-	
-	public function querySQL($sql){
-		$conexion = $this-> _construct();
-		return $conexion->query($sql);
-	}
-	
+
 
 	protected function queryPreparadaSQL($sql, $parametros)
 	{
@@ -33,6 +27,7 @@ class Model
 		$this->query($sql, $parametros);
 		
 		return $this -> stmnt -> fetch(); //retorna el valor de la consulta como un objeto
+
 	}
 
 	protected function queryTodasLasFilas($sql, $parametros)
@@ -43,7 +38,7 @@ class Model
 		return $this -> stmnt -> fetchAll(); //retorna el valor de la consulta como un objeto
 	}
 	
-	private function query($sql, $parametros)
+	protected function query($sql, $parametros)
 	{
 		$this->stmnt = $this->db->prepare($sql);
 
