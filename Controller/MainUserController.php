@@ -16,9 +16,7 @@ class MainUserController extends Controller
 
     //carga el index para usuarios no logueados
     public function init(){
-
         Session::init();
-
         if( Session::userLogged() )$this->callUserRolController();
         else $this->dispatcher->render("Main/MainTemplate.twig");
     }
@@ -41,20 +39,23 @@ class MainUserController extends Controller
         if (isset ($_POST['username'])) $this->usernamePOST = $_POST['username'];
         else throw new Exception("No se ha ingresado ningun usuario");
 
+        if ($this->model->isDeleted($this->usernamePOST)) throw new Exception("El usuario a sido eliminado");
+
         if (isset ($_POST['pass'])) $this->passPOST = $_POST['pass'];
         else throw new Exception("No se ha ingresado ninguna contraseña");
 
         if (!$this->model->userExist($this->usernamePOST)) throw new Exception("El usuario no existe");
 
         elseif (!$this->model->passDontMissmatch($this->passPOST)) throw new Exception("Contraseña incorrecta");
+        return true;
     }
 
     private function setSession()
     {
-
         Session::setValue( $this -> user -> usuario, 'username');
         Session::setValue( $this -> user -> idRol, 'rol');
-
+        Session::setValue(true, 'logged');
+        return true;
     }
 
     public function initError($error){
@@ -64,7 +65,7 @@ class MainUserController extends Controller
 
     public function callUserRolController()
     {
-        switch ($this->user->idRol) {
+        switch (Session::getValue('rol')) {
             //dependiendo del idRol del usuario, instanciamos el rol correspondiente y llamamos a su index();
             case '0':
                 $controller = new AdminController();
@@ -76,8 +77,14 @@ class MainUserController extends Controller
 
         }
         $controller -> init();
+        return true;
     }
 
+
+    public function cerrarSesion(){
+        Session::destroy();
+        $this->init();
+    }
 
 }
 
