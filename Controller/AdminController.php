@@ -43,6 +43,13 @@ class AdminController extends Controller
             $this->abmUsuario();
 
     }
+
+	public function registroUsuario()
+	{
+		
+		$this->dispatcher->render("Backend/registroUsuariosTemplate.twig");
+
+	}
 /*aiiiuuuuddaaaaa 
 * que hago con el modelo? lo cambio en cada funcion?
 */

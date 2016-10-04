@@ -11,6 +11,7 @@ class Controller
 
     public function __contruct(){
 
+        Session::init();
         $this->dispatcher = new Dispatcher();
 
     }

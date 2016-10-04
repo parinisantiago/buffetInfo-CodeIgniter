@@ -16,7 +16,6 @@ class MainUserController extends Controller
 
     //carga el index para usuarios no logueados
     public function init(){
-        Session::init();
         if( Session::userLogged() )$this->callUserRolController();
         else $this->dispatcher->render("Main/MainTemplate.twig");
     }
