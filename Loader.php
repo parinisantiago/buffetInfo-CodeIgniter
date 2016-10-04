@@ -4,6 +4,7 @@
 
 include_once 'Utils/Const.php';
 include_once 'Utils/Session.php';
+include_once 'Controller/Controller.php';
 foreach ( glob ( "Controller/*Controller.php" ) as $app ) {
 include_once $app;
 }
@@ -43,7 +44,8 @@ try {
     $controller = new $classController ();
 
     //Se fija si el usuario que inicio sesion tiene permisos para acceder a las funciones del controlador
-    if (! $controller->getpermission ()) {
+
+    if (! $controller->getPermission ()) {
         throw new Exception ( "el usuario no tiene permisos" );
     }
     

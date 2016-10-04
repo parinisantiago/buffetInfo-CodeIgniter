@@ -8,7 +8,7 @@ class Model
     
     public function __construct()
 	{
-        try {
+		try {
 
         	$this->db = new PDO ( "mysql:host=" . host . ";dbname=" . db, user, pass ); //las constantes estan definidas en Utils/const.php
 			$this->db->setAttribute ( PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ ); // para retornar objetos
