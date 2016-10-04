@@ -1,10 +1,4 @@
-{% extends 'Template/layaout.twig' %}
-
-{% block nav %}
-
-    {{ include('Template/Backend/BackendNavTemplate.twig') }}
-
-{% endblock %}
+{% extends 'Template/Backend/adminIndexTemplate.twig' %}
 
 {% block main %}
 	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=AdminController&method=productosAM" method="post">
@@ -44,10 +38,4 @@
 	    <input type="submit" name="submit"  id="enviar" class="boton" value="Entrar">
 	</form>
 	
-{% endblock %}
-
-{% block aside %}
-
-    {{ include('Template/Backend/BackendAsideTemplate.twig') }}
-
 {% endblock %}
