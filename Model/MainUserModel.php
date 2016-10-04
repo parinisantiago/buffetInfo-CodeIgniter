@@ -24,7 +24,7 @@ class MainUserModel extends Model
     }
 
     public function getAllUSer(){
-        return $this -> queryTodasLasFilas('SELECT * FROM usuario INNER JOIN rol ON (usuario.idRol = rol.idRol ) INNER JOIN ubicacion ON (usuario.idUbicacion = ubicacion.idUbicacion)', array());
+        return $this -> queryTodasLasFilas('SELECT usuario.idUsuario,usuario.usuario, usuario.clave, usuario.nombre, usuario.apellido, usuario.documento, usuario.email, usuario.telefono, rol.nombre AS rol, ubicacion.nombre AS ubicacion  FROM usuario INNER JOIN rol ON (usuario.idRol = rol.idRol ) INNER JOIN ubicacion ON (usuario.idUbicacion = ubicacion.idUbicacion)', array());
     }
 
     public function deleteUser($idUsuario)
