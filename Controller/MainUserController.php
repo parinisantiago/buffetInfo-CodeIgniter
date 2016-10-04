@@ -23,12 +23,10 @@ class MainUserController extends Controller
 
     public function login(){
 
-
         $this->validateLogin();
         //si se logueo de forma correcta setea la sesion del usuario y llama al controllador correspondiente
         $this -> user = $this -> model -> getUser($this -> usernamePOST, $this -> passPOST);
         $this -> setSession();
-
         $this->callUserRolController();
     }
 
@@ -43,7 +41,6 @@ class MainUserController extends Controller
 
         if (isset ($_POST['pass'])) $this->passPOST = $_POST['pass'];
         else throw new Exception("No se ha ingresado ninguna contraseña");
-
         if (!$this->model->userExist($this->usernamePOST)) throw new Exception("El usuario no existe");
 
         elseif (!$this->model->passDontMissmatch($this->passPOST)) throw new Exception("Contraseña incorrecta");
@@ -59,8 +56,13 @@ class MainUserController extends Controller
     }
 
     public function initError($error){
-        $this->selectRol(); //llama al controlador de la sesion correspondiente
-        $this->controller->setMensajeError($error); //sete el mensaje de error en ese controlador, porque el dispatcher depende del controlador
+        if (Session::userLogged()) {
+            $this->selectRol(); //llama al controlador de la sesion correspondiente
+            $this->controller->setMensajeError($error); //sete el mensaje de error en ese controlador, porque el dispatcher depende del controlador
+        } else {
+            $this->dispatcher->mensajeError= $error;
+            $this->dispatcher->render("Main/MainTemplate.twig");
+        }
     }
 
     public function callUserRolController()
