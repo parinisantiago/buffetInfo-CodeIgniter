@@ -23,6 +23,11 @@ class AdminController extends Controller
     {
             $this->dispatcher->render("Backend/adminIndexTemplate.twig");
     }
+    
+    public function setMensajeError($error){
+        $this->dispatcher->mensajeError = $error;
+        $this->init();
+    }
 
     public function abmUsuario()
     {

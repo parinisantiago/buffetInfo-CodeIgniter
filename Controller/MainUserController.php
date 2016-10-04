@@ -6,6 +6,7 @@ class MainUserController extends Controller
     private $user;
     private $usernamePOST;
     private $passPOST;
+    private $controller;
 
     public function __construct(){
 
@@ -58,16 +59,30 @@ class MainUserController extends Controller
     }
 
     public function initError($error){
-        $this->dispatcher->mensajeError = $error;
-        $this->init();
+        $this->selectRol(); //llama al controlador de la sesion correspondiente
+        $this->controller->setMensajeError($error); //sete el mensaje de error en ese controlador, porque el dispatcher depende del controlador
     }
 
     public function callUserRolController()
     {
+        $this->selectRol();
+        $this->controller -> init();
+        return true;
+    }
+
+
+    public function cerrarSesion()
+    {
+        Session::destroy();
+        $this->init();
+    }
+
+    protected function selectRol()
+    {
         switch (Session::getValue('rol')) {
             //dependiendo del idRol del usuario, instanciamos el rol correspondiente y llamamos a su index();
             case '0':
-                $controller = new AdminController();
+                $this->controller = new AdminController();
                 break;
             case '1':
                 break;
@@ -75,14 +90,6 @@ class MainUserController extends Controller
                 throw new Exception("usuario no valido");
 
         }
-        $controller -> init();
-        return true;
-    }
-
-
-    public function cerrarSesion(){
-        Session::destroy();
-        $this->init();
     }
 
 }

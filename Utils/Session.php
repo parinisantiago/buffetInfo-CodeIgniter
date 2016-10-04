@@ -3,7 +3,13 @@
 class Session
 {
     public static function init(){
-        session_start();
+
+        if (! isset($_SESSION['on'])) {
+
+            session_start();
+            $_SESSION['on'] = true;
+        }
+        return true;
     }
 
     public static function setValue($value, $key){
@@ -21,6 +27,7 @@ class Session
 
     public static function destroy(){
         session_destroy();
+        unset($_SESSION);
     }
 }
 ?>
