@@ -65,7 +65,7 @@ class AdminController extends Controller
     }
     public function productosAM(){
         $this->model = new ProductosModel();
-        if ($_POST["idProducto"] != null){
+        if (isset($_POST["idProducto"])){
             $this->dispatcher->producto =$this ->model->searchIdProducto($_POST["idProducto"]);
             // VER no le manda el id al parecer
         }
