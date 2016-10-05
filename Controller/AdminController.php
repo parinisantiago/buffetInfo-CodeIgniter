@@ -25,13 +25,15 @@ class AdminController extends Controller
             $this->dispatcher->render("Backend/adminIndexTemplate.twig");
     }
 
-/* usuarios */
-
     public function setMensajeError($error){
         $this->dispatcher->mensajeError = $error;
         $this->index();
     }
 
+
+    /* usuarios */
+
+   
     public function abmUsuario()
     {
             $this->dispatcher->users = $this->model->getAllUser();
