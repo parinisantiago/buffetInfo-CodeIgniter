@@ -4,12 +4,13 @@ class AdminController extends Controller
 {
 
     public $model;
-
+    public $rolModel;
 
     public function __construct()
     {
             parent::__contruct();
             $this->model = new MainUserModel();
+            $this->rolModel = new RolModel();
     }
 
 
@@ -23,7 +24,9 @@ class AdminController extends Controller
     {
             $this->dispatcher->render("Backend/adminIndexTemplate.twig");
     }
-    
+
+/* usuarios */
+
     public function setMensajeError($error){
         $this->dispatcher->mensajeError = $error;
         $this->init();
@@ -51,8 +54,8 @@ class AdminController extends Controller
 
 	public function registroUsuario()
 	{
-		
-		$this->dispatcher->render("Backend/registroUsuariosTemplate.twig");
+        $this->dispatcher->rol = $this->rolModel->getAllRols();
+        $this->dispatcher->render("Backend/registroUsuariosTemplate.twig");
 
 	}
 
@@ -60,11 +63,16 @@ class AdminController extends Controller
     {
         if (! isset($_POST['submitButton'])) throw new Exception('Apreta el boton de modificar macho');
         if (! isset($_POST['idUsuario'])) throw new Exception('Como vas a modificar un usuario sin ID?');
-        var_dump( $this->model->getUserById($_POST['idUsuario']));
+
         $this->dispatcher->user = $this->model->getUserById($_POST['idUsuario']);
-        $this->dispatcher->render('Backend/registroUsuariosTemplate.twig');
+        $this->registroUsuario();
     }
+
+
+
 /* ---Productos---*/
+
+
     public function productosListar(){
         $this->model = new ProductosModel();
         $this->dispatcher->producto =$this ->model->getAllProducto();
@@ -79,7 +87,7 @@ class AdminController extends Controller
     }
     public function productosAMPost(){
         $this->model = new ProductosModel();
-        if (isset($_POST["idProducto"])){
+        if (isset($_POST["idProducto"])){}
     }
     public function productosE(){
      $this->dispatcher->render("Backend/ProductosAMTemplate.twig");
