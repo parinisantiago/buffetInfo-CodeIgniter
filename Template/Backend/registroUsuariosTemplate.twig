@@ -32,7 +32,16 @@
         <label for="telefono" class="formProducText">Telefono:</label>
         <input {% if user.telefono %} value="{{ user.telefono }}" {% endif %} type="text" name="telefono" id="telefono" class="formProducinput"  placeholder="Solo se admiten numeros" maxlength="25" pattern="^[0-9]+$" required >
 
-        
+        <label for="rol" class="formProducText">Rol: </label>
+        <select id="rol" name="rol" class="formProducinput" required>
+        {% for rol in rols %}
+            {% if user.idRol == rol.idRol %}
+            <option value="{{ rol.idRol }}" selected>{{ rol.nombre }}</option>
+            {% else %}
+                <option value="{{ rol.idRol }}" >{{ rol.nombre }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
 
         <label for="submitButton" hidden>Boton de envio:</label>
         <input type="submit" id="submitButton" name="submitButton">
