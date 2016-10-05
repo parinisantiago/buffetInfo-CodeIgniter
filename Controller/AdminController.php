@@ -38,6 +38,44 @@ class AdminController extends Controller
             $this->dispatcher->render('Backend/abmUsuarios.twig');
     }
 
+    public function usuarioAM(){
+
+            $this->validarUsuario(); //realiza validaciones mediante expresiones regulares
+
+            if (! isset($_POST['idUsuario'])) $this->model->addUser();
+            else if ($this->model->getUserById($_POST['idUsuario'])) $this->model->modUser();
+
+            $this->abmUsuario();
+
+    }
+
+    private function validarUsuario(){
+        var_dump($_POST);
+
+        if (!isset($_POST['submitButton'])) throw new Exception("Apreta el botón de eliminar macho");
+
+        if (! isset($_POST['nombreUsuario'])) throw new Exception('Falta escribir el nombreUsuarip');
+        elseif (! preg_match("/^[a-zA-Z0-9]+$/", $_POST['nombreUsuario'])) throw new Exception('Valor del nombreUsuario no valido');
+
+        if (! isset($_POST['nombre'])) throw new Exception('Falta escribir el nombre');
+        elseif (! preg_match("/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$/", $_POST['nombre'])) throw new Exception('Valor del nombre no valido');
+
+        if (! isset($_POST['apellido'])) throw new Exception('Falta escribir el apellido');
+        elseif (! preg_match("/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$/", $_POST['apellido'])) throw new Exception('Valor del apellido no valido');
+
+        if (! isset($_POST['dni'])) throw new Exception('Falta escribir el dni');
+        elseif (! preg_match("/^[0-9]+$/", $_POST['dni'])) throw new Exception('Valor del dni no valido');
+
+        if (! isset($_POST['email'])) throw new Exception('Falta escribir el email');
+        elseif (! preg_match("/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/", $_POST['email'])) throw new Exception('Valor del email no valido');
+
+        if (! isset($_POST['telefono'])) throw new Exception('Falta escribir el telefono');
+        elseif (! preg_match("/^[0-9]+$/", $_POST['telefono'])) throw new Exception('Valor del telefono no valido');
+
+        if (!isset($_POST['rol'])) throw new Exception("Falta el rol");
+        elseif (! $this->rolModel->getRolById($_POST['rol'])) throw new Exception('Rol invalido');
+    }
+
     public function eliminarUsuario()
     {
 
@@ -63,7 +101,8 @@ class AdminController extends Controller
     {
         if (! isset($_POST['submitButton'])) throw new Exception('Apreta el boton de modificar macho');
         if (! isset($_POST['idUsuario'])) throw new Exception('Como vas a modificar un usuario sin ID?');
-
+        if (! $this->model->getUserById($_POST['idUsuario'])) throw new Exception('Id invalido');
+        Session::setValue('modUserId', $this->model->getUserById($_POST['idUsuario'])->idUsuario);
         $this->dispatcher->user = $this->model->getUserById($_POST['idUsuario']);
         $this->registroUsuario();
     }
