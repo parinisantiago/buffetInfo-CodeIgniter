@@ -36,4 +36,8 @@ class MainUserModel extends Model
         return $this->queryPreparadaSQL('SELECT eliminado FROM usuario WHERE usuario = :username AND eliminado = 1', array('username' => $username));
     }
 
+    public function getUserById($idUsuario){
+        return $this -> queryPreparadaSQL('SELECT * FROM usuario WHERE idUsuario = :idUsuario', array('idUsuario' => $idUsuario));
+    }
+
 }
