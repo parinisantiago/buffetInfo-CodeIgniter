@@ -1,0 +1,43 @@
+{% extends 'Template/Gestor/GestorIndexTemplate.twig' %}
+
+{% block main %}
+
+    <div>
+        <table class="tablaProductos" summary="detallas de cada producto">
+            <thead>
+            <tr>
+                <th id="nombre">Nombre</th>
+                <th id="marca">Marca</th>
+                <th id="stock">Stock</th>
+                <th id="stockMinimo">Stock Minimo</th>
+                <th id="categoria">Categoria</th>
+                <th id="proveedor">Proveedor</th>
+                <th id="precioVentaUnitario">Precio de Venta Unitario</th>
+                <th id="descripcion">Descripcion</th>
+                <th id="fechaAlta">Fecha de Alta</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for prod in producto %}
+                {% if producto.eliminado == 0 %}
+                    <tr>
+                        <td headers="nombre">{{ prod.nombre }}</td>
+                        <td headers="marca"> {{ prod.marca }}</td>
+                        <td headers="stock"> {{ prod.stock }}</td>
+                        <td headers="stockMinimo">{{ prod.stockMinimo }}</td>
+                        <td headers="categoria">{{ prod.categoria }}</td>
+                        <td headers="proveedor">{{ prod.proveedor }}</td>
+                        <td headers="precioVentaUnitario">{{ prod.precioVentaUnitario }}</td>
+                        <td headers="descripcion">{{ prod.descripcion }}</td>
+                        <td headers="fechaAlta">{{ prod.fechaAlta }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
