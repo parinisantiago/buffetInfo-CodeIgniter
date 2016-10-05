@@ -37,7 +37,19 @@ class MainUserModel extends Model
     }
 
     public function getUserById($idUsuario){
-        return $this -> queryPreparadaSQL('SELECT * FROM usuario WHERE idUsuario = :idUsuario', array('idUsuario' => $idUsuario));
+        return $this -> queryPreparadaSQL('SELECT * FROM usuario WHERE idUsuario = :idUsuario AND eliminado = 0', array('idUsuario' => $idUsuario));
+    }
+
+    public function getUserRol($idUsuario){
+        return $this -> queryPreparadaSQL('SELECT idRol FROM usuario WHere idUsuario = :idUsuario', array('idUsuario' => $idUsuario));
+    }
+
+    public function addUser(){
+        return true;
+    }
+
+    public function modUser(){
+        return true;
     }
 
 }
