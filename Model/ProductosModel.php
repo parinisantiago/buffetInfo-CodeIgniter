@@ -63,7 +63,7 @@ VALUES ("valor1", "valor2", ...);
         return $this -> queryTodasLasFilas(
                 "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.proveedor, p.precioVentaUnitario, p.descripcion, p.fechaAlta, p.idProducto
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
-                 WHERE p.eliminado = 0 and p.stock < p.stockMinimo ", array());
+                 WHERE p.eliminado = 0 and p.stock = 0 ", array());
     }
 }
 
