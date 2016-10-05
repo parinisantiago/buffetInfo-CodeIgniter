@@ -54,7 +54,7 @@ class AdminController extends Controller
 
 	public function registroUsuario()
 	{
-        $this->dispatcher->rol = $this->rolModel->getAllRols();
+        $this->dispatcher->rols = $this->rolModel->getAllRols();
         $this->dispatcher->render("Backend/registroUsuariosTemplate.twig");
 
 	}
