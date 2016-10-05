@@ -12,4 +12,9 @@ class RolModel extends Model
     {
         return $this -> queryTodasLasFilas("SELECT * FROM rol", array());
     }
+
+    public function getRolById($id)
+    {
+        return $this ->queryPreparadaSQL("SELECT * FROM rol WHERE idRol = :id", array('id' => $id));
+    }
 }
