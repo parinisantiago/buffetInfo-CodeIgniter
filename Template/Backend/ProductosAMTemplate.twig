@@ -1,7 +1,7 @@
 {% extends 'Template/Backend/adminIndexTemplate.twig' %}
 
 {% block main %}
-	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=AdminController&method=productosAM" method="post">
+	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=AdminController&method=productosAMPost" method="post">
             <input type='hidden' name='idProducto' id="idProducto" value={{producto.idProducto}}>
             
             <label for="nombre" class="formProducText">Nombre:</label>
