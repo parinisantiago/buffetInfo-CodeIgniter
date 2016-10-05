@@ -60,7 +60,7 @@ class AdminController extends Controller
     {
         if (! isset($_POST['submitButton'])) throw new Exception('Apreta el boton de modificar macho');
         if (! isset($_POST['idUsuario'])) throw new Exception('Como vas a modificar un usuario sin ID?');
-
+        var_dump( $this->model->getUserById($_POST['idUsuario']));
         $this->dispatcher->user = $this->model->getUserById($_POST['idUsuario']);
         $this->dispatcher->render('Backend/registroUsuariosTemplate.twig');
     }
