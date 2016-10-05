@@ -41,16 +41,15 @@ class AdminController extends Controller
     public function usuarioAM(){
 
             $this->validarUsuario(); //realiza validaciones mediante expresiones regulares
+            if (! isset($_POST['idUsuario'])) $this->model->addUser($_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'], $_POST['telefono'],$_POST['rol']);
 
-            if (! isset($_POST['idUsuario'])) $this->model->addUser();
-            else if ($this->model->getUserById($_POST['idUsuario'])) $this->model->modUser();
-
+            else if (Session::getValue('modUserId') == $_POST['idUsuario']) $this->model->modUser($_POST['idUsuario'],$_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'],$_POST['telefono'], $_POST['rol']); //si es el usaurio guardado, lo modifica
+            else throw new Exception('El id de usuario se vio modificado durante la operacion');
             $this->abmUsuario();
 
     }
 
     private function validarUsuario(){
-        var_dump($_POST);
 
         if (!isset($_POST['submitButton'])) throw new Exception("Apreta el botón de eliminar macho");
 
@@ -59,6 +58,9 @@ class AdminController extends Controller
 
         if (! isset($_POST['nombre'])) throw new Exception('Falta escribir el nombre');
         elseif (! preg_match("/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$/", $_POST['nombre'])) throw new Exception('Valor del nombre no valido');
+
+        if (! isset($_POST['pass'])) throw new Exception('Falta escribir la contraseaña');
+        elseif (! preg_match("/^[a-zA-Z0-9]+$/", $_POST['pass'])) throw new Exception('Valor de la contraseña no valido');
 
         if (! isset($_POST['apellido'])) throw new Exception('Falta escribir el apellido');
         elseif (! preg_match("/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$/", $_POST['apellido'])) throw new Exception('Valor del apellido no valido');
@@ -102,7 +104,7 @@ class AdminController extends Controller
         if (! isset($_POST['submitButton'])) throw new Exception('Apreta el boton de modificar macho');
         if (! isset($_POST['idUsuario'])) throw new Exception('Como vas a modificar un usuario sin ID?');
         if (! $this->model->getUserById($_POST['idUsuario'])) throw new Exception('Id invalido');
-        Session::setValue('modUserId', $this->model->getUserById($_POST['idUsuario'])->idUsuario);
+        Session::setValue($this->model->getUserById($_POST['idUsuario'])->idUsuario, 'modUserId'); //se guarda el usuario a modificar, para validar que no se cambie el valor del input del id.
         $this->dispatcher->user = $this->model->getUserById($_POST['idUsuario']);
         $this->registroUsuario();
     }
