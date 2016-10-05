@@ -42,7 +42,11 @@ class Model
 	{
 		$this->stmnt = $this->db->prepare($sql);
 
+$this->stmnt->debugDumpParams();
+		var_dump($parametros);
 		$this->stmnt->execute($parametros);
+
+		return true;
 	}
 }
 
