@@ -91,6 +91,7 @@ class MainUserController extends Controller
                 $this->controller = new AdminController();
                 break;
             case '1':
+                $this->controller = new GestorController();
                 break;
             default:
                 throw new Exception("usuario no valido");
