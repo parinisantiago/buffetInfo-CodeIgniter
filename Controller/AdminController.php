@@ -38,7 +38,7 @@ class AdminController extends Controller
     public function eliminarUsuario()
     {
 
-            if (!isset($_POST['submitButton'])) throw new Exception("Apreta el botón de envío macho");
+            if (!isset($_POST['submitButton'])) throw new Exception("Apreta el botón de eliminar macho");
 
             if (!isset($_POST['idUsuario'])) throw new Exception("Faltan datos para poder eliminar el usuario");
             else $idUsuario = $_POST['idUsuario'];
@@ -55,6 +55,14 @@ class AdminController extends Controller
 		$this->dispatcher->render("Backend/registroUsuariosTemplate.twig");
 
 	}
+
+    public function modificarUsuario()
+    {
+        if (! isset($_POST['submitButton'])) throw new Exception('Apreta el boton de modificar macho');
+        if (! isset($_POST['idUsuario'])) throw new Exception('Como vas a modificar un usuario sin ID?');
+
+        $this->dispatcher->user = $this->model->getUserById($_POST['idUsuario']);
+    }
 /*aiiiuuuuddaaaaa 
 * que hago con el modelo? lo cambio en cada funcion?
 */
