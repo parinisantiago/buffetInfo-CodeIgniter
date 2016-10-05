@@ -21,7 +21,7 @@
         <input {% if user.documento %} value="{{ user.documento }}" {% endif %} type="text" name="dni" id="dni" class="formProducinput"  placeholder="Solo se admiten numeros" maxlength="8" pattern="^[0-9]+$" required >
 
         <label for="email" class="formProducText">Email:</label>
-        <input {% if user.email %} value="{{ user.email }}" {% endif %} type="email" name="email" id="email" class="formProducinput"  placeholder="ejemplo@email.com" maxlength="25" required >
+        <input {% if user.email %} value="{{ user.email }}" {% endif %} type="email" name="email" id="email" class="formProducinput"  placeholder="ejemplo@email.com" maxlength="25" pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required >
 
         <label for="pass" class="formProducText">Contraseña:</label>
         <input {% if user.clave %} value="{{ user.clave }}" {% endif %} type="password" name="pass" id="pass" class="formProducinput"  placeholder="Solo se admiten numeros o letras simples" maxlength="25" pattern="^[a-zA-Z0-9]+$" required >
