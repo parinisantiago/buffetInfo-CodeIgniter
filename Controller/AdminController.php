@@ -62,6 +62,7 @@ class AdminController extends Controller
         if (! isset($_POST['idUsuario'])) throw new Exception('Como vas a modificar un usuario sin ID?');
 
         $this->dispatcher->user = $this->model->getUserById($_POST['idUsuario']);
+        $this->dispatcher->render('Backend/registroUsuariosTemplate.twig');
     }
 /*aiiiuuuuddaaaaa 
 * que hago con el modelo? lo cambio en cada funcion?
