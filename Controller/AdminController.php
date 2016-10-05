@@ -64,9 +64,7 @@ class AdminController extends Controller
         $this->dispatcher->user = $this->model->getUserById($_POST['idUsuario']);
         $this->dispatcher->render('Backend/registroUsuariosTemplate.twig');
     }
-/*aiiiuuuuddaaaaa 
-* que hago con el modelo? lo cambio en cada funcion?
-*/
+/* ---Productos---*/
     public function productosListar(){
         $this->model = new ProductosModel();
         $this->dispatcher->producto =$this ->model->getAllProducto();
@@ -76,9 +74,12 @@ class AdminController extends Controller
         $this->model = new ProductosModel();
         if (isset($_POST["idProducto"])){
             $this->dispatcher->producto =$this ->model->searchIdProducto($_POST["idProducto"]);
-            // VER no le manda el id al parecer
         }
         $this->dispatcher->render("Backend/ProductosAMTemplate.twig");
+    }
+    public function productosAMPost(){
+        $this->model = new ProductosModel();
+        if (isset($_POST["idProducto"])){
     }
     public function productosE(){
      $this->dispatcher->render("Backend/ProductosAMTemplate.twig");
