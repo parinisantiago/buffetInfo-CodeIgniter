@@ -1,53 +1,43 @@
-{% extends 'Template/layaout.twig' %}
-
-{% block nav %}
-
-    {{ include('Template/Backend/BackendNavTemplate.twig') }}
-
-{% endblock %}
+{% extends 'Template/Backend/adminIndexTemplate.twig' %}
 
 {% block main %}
-    <form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=AdminController&method=productosAM" method="post">
-        <input type='hidden' name='idProducto' value={{producto.idProducto}}>
+    <form name="formUser" class="formProduc clearfix" action="Loader.php?controller=AdminController&method=usuarioAM" method="post">
+
+        {% if user.idUsuario %}
+            <input type='hidden' name='idUsuaro' value={{user.idUsuario}}>
+        {% endif %}
+
+
+        <label for="nombreUsuario" class="formProducText">Nombre de Usuario:</label>
+        <input {% if user.usuario %} value="{{ user.usuario }}" {% endif %} type="text" name="nombreUsuario" id="nombreUsuario" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="25" pattern="^[a-zA-Z0-9]+$" autofocus required >
 
         <label for="nombre" class="formProducText">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" autofocus required>
+        <input {% if user.nombre %} value="{{ user.nombre }}" {% endif %} type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" required >
 
-        <label for="marca" class="formProducText">Marca:</label>
-        <input type="text" name="marca" id="marca" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+" required>
+        <label for="apellido" class="formProducText">Apellido:</label>
+        <input {% if user.apellido %} value="{{ user.apellido }}" {% endif %} type="text" name="apellido" id="apellido" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" required >
 
-        <label for="stock" class="formProducText">Stock:</label>
-        <input type="number" name="stock" id="stock" class="formProducinput" placeholder="Un número entre 1 y 99" min="1" max="99" maxlength="2">
+        <label for="dni" class="formProducText">Dni:</label>
+        <input {% if user.documento %} value="{{ user.documento }}" {% endif %} type="text" name="dni" id="dni" class="formProducinput"  placeholder="Solo se admiten numeros" maxlength="8" pattern="^[0-9]+$" required >
 
-        <label for="stockMinimo" class="formProducText">Stock Minimo:</label>
-        <input type="number" name="stockMinimo" id="stockMinimo" class="formProducinput" placeholder="Un número entre 1 y 99" min="1" max="99" maxlength="2" required>
+        <label for="dni" class="formProducText">Dni:</label>
+        <input {% if user.documento %} value="{{ user.documento }}" {% endif %} type="text" name="dni" id="dni" class="formProducinput"  placeholder="Solo se admiten numeros" maxlength="8" pattern="^[0-9]+$" required >
 
-        <label for="categoria" class="formProducText">Categoria:</label>
-        <!-- esto seguramente en un futuro sea un listado -->
-        <input type="text" name="categoria" id="categoria" class="formProducinput" placeholder="Surtido, Golosinas" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required>
+        <label for="email" class="formProducText">Email:</label>
+        <input {% if user.email %} value="{{ user.email }}" {% endif %} type="email" name="email" id="email" class="formProducinput"  placeholder="ejemplo@email.com" maxlength="25" required >
 
-        <label for="proveedor" class="formProducText">Proveedor:</label>
-        <!-- esto tambien podria ser una lista en un futuro -->
-        <input type="text" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un proveedor" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required>
+        <label for="pass" class="formProducText">Contraseña:</label>
+        <input {% if user.clave %} value="{{ user.clave }}" {% endif %} type="password" name="dni" id="dni" class="formProducinput"  placeholder="Solo se admiten numeros o letras simples" maxlength="25" pattern="^[a-zA-Z0-9]+$" required >
 
-        <label for="precioVentaUnitario" class="formProducText">Precio Venta Unitario:</label>
-        <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" maxlength="5" required>
+        <label for="telefono" class="formProducText">Telefono:</label>
+        <input {% if user.telefono %} value="{{ user.telefono }}" {% endif %} type="text" name="telefono" id="telefono" class="formProducinput"  placeholder="Solo se admiten numeros" maxlength="25" pattern="^[0-9]+$" required >
 
-        <label for="descripcion" class="formProducText">Descripcion:</label>
-        <input type="text" name="descripcion" id="descripcion" class="formProducinput" placeholder="descripcion del producto?" required>
+        
 
-        <!-- esto en un futuro puede ser que no esté ya que se hace en el servidor -->
-        <label for="fechaAlta" class="formProducText">Fecha de alta en el sistema:</label>
-        <input type="date" name="fechaAlta" id="fechaAlta" class="formProducinput" maxlength="8" min="1900-01-01" max="2016-15-15" required>
+        <label for="submitButton" hidden>Boton de envio:</label>
+        <input type="submit" id="submitButton" name="submitButton">
 
-        <label for="enviar" class="formProducTextHidden" hidden>Botón de envío</label>
-        <input type="submit" name="submit"  id="enviar" class="boton" value="Entrar">
     </form>
 
 {% endblock %}
 
-{% block aside %}
-
-    {{ include('Template/Backend/BackendAsideTemplate.twig') }}
-
-{% endblock %}
