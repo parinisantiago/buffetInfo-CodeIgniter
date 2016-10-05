@@ -20,7 +20,7 @@ class AdminController extends Controller
             return strcmp(Session::getValue('rol'), 'admin');
     }
 
-    public function init()
+    public function index()
     {
             $this->dispatcher->render("Backend/adminIndexTemplate.twig");
     }
@@ -29,7 +29,7 @@ class AdminController extends Controller
 
     public function setMensajeError($error){
         $this->dispatcher->mensajeError = $error;
-        $this->init();
+        $this->index();
     }
 
     public function abmUsuario()
@@ -132,6 +132,32 @@ class AdminController extends Controller
     }
     public function productosE(){
      $this->dispatcher->render("Backend/ProductosAMTemplate.twig");
+    }
+
+/* ---Configuracion--- */
+
+    public function configuracionSitio(){
+        $this->dispatcher->render("Backend/ConfiguracionTemplate.twig");
+    }
+
+    public function changeConf(){
+        $this->validarConf();
+        if (isset($_POST['habilitado'])) echo 'bien';
+    }
+
+    private function validarConf(){
+        var_dump($_POST);
+        if (! isset($_POST['submitButton'])) throw new Exception('Apreta el boton de modificar macho');
+        if (! isset($_POST['titulo'])) throw new Exception('Falta escribir el titulo');
+        elseif (! preg_match("/^[a-zA-Z0-9 ]+$/", $_POST['titulo'])) throw new Exception('Valor del titulo no valido');
+        if (! isset($_POST['descripcion'])) throw new Exception('Falta escribir el descripcion');
+        elseif (! preg_match("/^[a-zA-Z0-9 .;,]+$/", $_POST['descripcion'])) throw new Exception('Valor de la  descripcion no valido');
+        if (! isset($_POST['mensaje'])) throw new Exception('Falta escribir el mensaje');
+        elseif (! preg_match("/^[a-zA-Z]+$/", $_POST['mensaje'])) throw new Exception('Valor del mensaje no valido');
+        if (! isset($_POST['lista'])) throw new Exception('Falta escribir el numero de la lista');
+        elseif (! preg_match("/^[0-9]+$/", $_POST['lista'])) throw new Exception('Valor del numero de la lista no valido');
+
+
     }
 }
 ?>

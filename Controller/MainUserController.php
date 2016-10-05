@@ -18,7 +18,11 @@ class MainUserController extends Controller
     //carga el index para usuarios no logueados
     public function init(){
         if( Session::userLogged() )$this->callUserRolController();
-        else $this->dispatcher->render("Main/MainTemplate.twig");
+        else $this->index();
+    }
+
+    public function index(){
+        $this->dispatcher->render("Main/MainTemplate.twig");
     }
 
     public function login(){
@@ -61,14 +65,14 @@ class MainUserController extends Controller
             $this->controller->setMensajeError($error); //sete el mensaje de error en ese controlador, porque el dispatcher depende del controlador
         } else {
             $this->dispatcher->mensajeError= $error;
-            $this->dispatcher->render("Main/MainTemplate.twig");
+            $this->index();
         }
     }
 
     public function callUserRolController()
     {
         $this->selectRol();
-        $this->controller -> init();
+        $this->controller -> index();
         return true;
     }
 
@@ -76,7 +80,7 @@ class MainUserController extends Controller
     public function cerrarSesion()
     {
         Session::destroy();
-        $this->init();
+        $this->index();
     }
 
     protected function selectRol()
