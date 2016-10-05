@@ -30,8 +30,8 @@
                 <td headers="documento">{{ user.documento }}</td>
                 <td headers="email">{{ user.email }}</td>
                 <td headers="telefono">{{ user.telefono }}</td>
-                <td headers="rol">{{ user.rol.nombre }}</td>
-                <td headers="ubicacion">{{ user.ubicacion.nombre }}</td>
+                <td headers="rol">{{ user.rol }}</td>
+                <td headers="ubicacion">{{ user.ubicacion }}</td>
                 <td headers="editar">
                     <form method="post" action="Loader.php?controller=AdminController&method=modificarUsuario">
                         <label for="idUsuario" hidden></label>
