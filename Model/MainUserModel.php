@@ -23,7 +23,8 @@ class MainUserModel extends Model
         return $this -> queryPreparadaSQL('SELECT * FROM usuario WHERE usuario = :username AND clave = :pass', array('username' => $username, 'pass' => $pass ));
     }
 
-    public function getAllUSer(){
+    public function getAllUSer()
+    {
         return $this -> queryTodasLasFilas('SELECT usuario.idUsuario,usuario.usuario, usuario.clave, usuario.nombre, usuario.apellido, usuario.documento, usuario.email, usuario.telefono, rol.nombre AS rol, ubicacion.nombre AS ubicacion  FROM usuario INNER JOIN rol ON (usuario.idRol = rol.idRol ) INNER JOIN ubicacion ON (usuario.idUbicacion = ubicacion.idUbicacion)', array());
     }
 
@@ -44,12 +45,48 @@ class MainUserModel extends Model
         return $this -> queryPreparadaSQL('SELECT idRol FROM usuario WHere idUsuario = :idUsuario', array('idUsuario' => $idUsuario));
     }
 
-    public function addUser(){
-        return true;
+    public function modUser($id, $nombreUsuario, $nombre, $apellido,$pass, $dni, $email,$telefono,$rol){
+        return $this -> query('
+              UPDATE usuario 
+              SET 
+                 usuario= :nombreUsuario, 
+                 clave= :pass,
+                 nombre= :nombre,
+                 apellido= :apellido,
+                 documento= :dni,
+                 email= :email,
+                 telefono= :telefono,
+                 idRol= :rol
+              WHERE 
+                 idUsuario= :id',
+            array(
+                'nombreUsuario' => $nombreUsuario,
+                'pass' => $pass,
+                'nombre' => $nombre,
+                'apellido' => $apellido,
+                'dni' => $dni,
+                'email' => $email,
+                'telefono' => $telefono,
+                'rol' => $rol,
+                'id' => $id
+            )
+            );
     }
 
-    public function modUser(){
-        return true;
+    public function addUser($nombreUsuario, $nombre, $apellido,$pass, $dni, $email,$telefono,$rol){
+        return $this -> query(
+            'INSERT INTO usuario (usuario, clave, nombre, apellido, documento, email, telefono, idRol, idUbicacion, eliminado) VALUES (:nombreUsuario, :pass, :nombre, :apellido, :dni, :email, :telefono, :rol, 1, 0)',
+            array(
+                'nombreUsuario' => $nombreUsuario,
+                'pass' => $pass,
+                'nombre' => $nombre,
+                'apellido' => $apellido,
+                'dni' => $dni,
+                'email' => $email,
+                'telefono' => $telefono,
+                'rol' => $rol
+            )
+        );
     }
 
 }
