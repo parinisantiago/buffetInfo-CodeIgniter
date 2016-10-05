@@ -30,7 +30,14 @@ class GestorController extends Controller
     public function listadoFaltantes(){
 
         $this->dispatcher->producto = $this->modelProductos->listarProductosFaltantes();
-        $this->dispatcher->render("Gestor/ProductosFaltantesTemplate.twig");
+        $this->dispatcher->render("Gestor/ProductosTemplate.twig");
+
+    }
+
+    public function listadoStockMinimo(){
+
+        $this->dispatcher->producto = $this->modelProductos->listarProductosStockMinimo();
+        $this->dispatcher->render("Gestor/ProductosTemplate.twig");
 
     }
     
