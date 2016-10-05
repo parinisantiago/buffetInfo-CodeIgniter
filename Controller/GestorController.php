@@ -3,10 +3,12 @@ require_once 'Controller/Controller.php';
 class GestorController extends Controller
 {
 
+    public $modelProductos;
+
     public function __construct()
     {
         parent::__contruct();
-
+        $this->modelProductos = new ProductosModel();
     }
 
     public function getPermission()
@@ -24,6 +26,12 @@ class GestorController extends Controller
         $this->dispatcher->mensajeError = $error;
         $this->index();
     }
-    
+
+    public function listadoFaltantes(){
+
+        $this->dispatcher->producto = $this->modelProductos->listarProductosFaltantes();
+        $this->render("Gestor/ProductosFaltantesTemplate.twig");
+
+    }
     
 }
