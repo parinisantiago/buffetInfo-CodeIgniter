@@ -40,12 +40,12 @@ class ProductosModel extends Model{
                     descripcion => $Prod["descripcion"], 
                     fechaAlta => $Prod["fechaAlt"]));
     }
-    public function actualizarProducto($Prod){
+    //public function actualizarProducto($Prod){
        /* return $this -> query(
     INSERT INTO "nombre_tabla" ("columna1", "columna2", ...)
 VALUES ("valor1", "valor2", ...);
         ));*/
-    }
+   // }
     public function deleteProducto($idProd){
         return $this -> query(
                 "UPDATE producto p 
