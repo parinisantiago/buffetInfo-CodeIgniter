@@ -11,8 +11,6 @@ class AdminController extends Controller
             parent::__contruct();
             $this->model = new MainUserModel();
             $this->rolModel = new RolModel();
-            $this->productoModel = new ProductosModel();
-            $this->categoriaModel = new CategoriaModel();
     }
 
 
@@ -119,22 +117,20 @@ class AdminController extends Controller
 
 
     public function productosListar(){
-        $this->dispatcher->producto =$this ->productoModel->getAllProducto();
+        $this->model = new ProductosModel();
+        $this->dispatcher->producto =$this ->model->getAllProducto();
         $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
     }
     public function productosAM(){
+        $this->model = new ProductosModel();
         if (isset($_POST["idProducto"])){
-            $this->dispatcher->producto =$this ->productoModel->searchIdProducto($_POST["idProducto"]);
+            $this->dispatcher->producto =$this ->model->searchIdProducto($_POST["idProducto"]);
         }
-        $this->dispatcher->categoria =$this ->categoriaModel->getAllCategorias();
         $this->dispatcher->render("Backend/ProductosAMTemplate.twig");
     }
     public function productosAMPost(){
-        if ($_POST["idProducto"] != ""){
-           $this->dispatcher->producto =$this ->productoModel->actualizarProducto($_POST); 
-        }else{
-            $this->dispatcher->producto =$this ->productoModel->insertarProducto($_POST);
-        }
+        $this->model = new ProductosModel();
+        if (isset($_POST["idProducto"])){}
     }
     public function productosE(){
      $this->dispatcher->render("Backend/ProductosAMTemplate.twig");

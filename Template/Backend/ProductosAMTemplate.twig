@@ -33,16 +33,12 @@
             {% endif %}
 	    
             <label for="categoria" class="formProducText">Categoria:</label>
-            <select id="categoria" name="categoria" class="formProducinput" required>
-                {% for cat in categoria %}
-                    {% if producto.idCategoria == cat.idCategoria %}
-                        <option value="{{ cat.idCategoria }}" selected>{{ cat.nombre }}</option>
-                    {% else %}
-                        <option value="{{ cat.idCategoria }}" >{{ cat.nombre }}</option>
-                    {% endif %}
-                {% endfor %}
-            </select>
-           	    
+            {% if (producto.categoria is empty)  %}
+                <input type="text" name="categoria" id="categoria" class="formProducinput" placeholder="Surtido, Golosinas" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required>
+            {% else %}
+                <input type="text" name="categoria" id="categoria" class="formProducinput" placeholder="Surtido, Golosinas" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required value={{producto.categoria}}>
+            {% endif %}
+	    
             <label for="proveedor" class="formProducText">Proveedor:</label>
             {% if (producto.proveedor is empty)  %}
                 <input type="text" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un proveedor" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required>
@@ -66,9 +62,9 @@
 
 	    <label for="fechaAlta" class="formProducText">Fecha de alta en el sistema:</label>
 	    {% if (producto.fechaAlta is empty)  %}
-                <input type="date" name="fechaAlta" id="fechaAlta" class="formProducinput" maxlength="8" min="1900-01-01" max="2116-12-31" required>
+                <input type="date" name="fechaAlta" id="fechaAlta" class="formProducinput" maxlength="8" min="1900-01-01" max="2016-15-15" required>
             {% else %}
-                <input type="date" name="fechaAlta" id="fechaAlta" class="formProducinput" maxlength="8" min="1900-01-01" max="2116-12-31" required value={{producto.fechaAlta}}>
+                <input type="date" name="fechaAlta" id="fechaAlta" class="formProducinput" maxlength="8" min="1900-01-01" max="2016-15-15" required value={{producto.fechaAlta}}>
             {% endif %}
             <label for="enviar" class="formProducTextHidden" hidden>Botón de envío</label>
 	    <input type="submit" name="submit"  id="enviar" class="boton" value="Entrar">
