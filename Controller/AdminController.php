@@ -135,9 +135,11 @@ class AdminController extends Controller
         }else{
             $this->dispatcher->producto =$this ->productoModel->insertarProducto($_POST);
         }
+        $this->productosListar();
     }
     public function productosE(){
-     $this->dispatcher->render("Backend/ProductosAMTemplate.twig");
+     $this->dispatcher->producto =$this ->productoModel->deleteProducto($_POST["idProducto"]);
+     $this->productosListar();
     }
 
 /* ---Configuracion--- */

@@ -43,10 +43,11 @@
                             </form>
                         </td>
                         <td headers="eliminar">
+                            
                             <form method="post" action="Loader.php?controller=AdminController&method=productosE">
                                 <label for="idProducto" hidden></label>
-                                <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }}>
-                                <button type="submit" id="submitButton" name="submitButton">
+                                <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }} >
+                                <button type="submit" id="submitButton" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" role="button">
                                     <img class="icono" src="images/eliminar.png" alt= "eliminar" />
                                 </button>
                             </form>

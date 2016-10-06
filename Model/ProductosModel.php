@@ -26,25 +26,26 @@ class ProductosModel extends Model{
                     marca = :marca,
                     stock = :stock,
                     stockMinimo = :stockMinimo,
+                    idCategoria = :categoria,
                     proveedor = :proveedor,
                     precioVentaUnitario = :precioVentaUnitario,
                     descripcion = :descripcion, 
-                    fechaAlta = :fechaAlta,",
+                    fechaAlta = :fechaAlta
+                WHERE idProducto= :idProducto",
                 array('nombre' => $Prod["nombre"],
                     'marca' => $Prod["marca"],
                     'stock' => $Prod["stock"],
                     'stockMinimo' => $Prod["stockMinimo"],
-                    
+                    'categoria' => $Prod["categoria"],
                     'proveedor' => $Prod["proveedor"],
                     'precioVentaUnitario' => $Prod["precioVentaUnitario"],
                     'descripcion'=> $Prod["descripcion"], 
-                   'fechaAlta' => $today['year']."-".$today['mon']."-".$today['mday']." ".$today['hours'].":".$today['minutes'].":".$today['seconds']
+                   'fechaAlta' => $today['year']."-".$today['mon']."-".$today['mday']." ".$today['hours'].":".$today['minutes'].":".$today['seconds'],
+                    'idProducto' => $Prod["idProducto"]
                 ));
     }
     public function insertarProducto($Prod){
         $today=getDate();
-        var_dump($Prod);
-        die();
         return $this -> query("
             INSERT INTO producto (
                     nombre,
@@ -55,21 +56,23 @@ class ProductosModel extends Model{
                     proveedor,
                     precioVentaUnitario,
                     descripcion, 
-                    fechaAlta)
+                    fechaAlta,
+                    eliminado)
             VALUES (:nombre,
                     :marca,
                     :stock,
                     :stockMinimo,
-                    :proveedor,
                     :idCategoria,
+                    :proveedor,
                     :precioVentaUnitario,
                     :descripcion, 
-                    :fechaAlta)",
+                    :fechaAlta,
+                    0)",
             array('nombre' => $Prod["nombre"],
                     'marca' => $Prod["marca"],
                     'stock' => $Prod["stock"],
                     'stockMinimo' => $Prod["stockMinimo"],
-                    'idCategoria' => $Prod["idCategoria"],
+                    'idCategoria' => $Prod["categoria"],
                     'proveedor' => $Prod["proveedor"],
                     'precioVentaUnitario' => $Prod["precioVentaUnitario"],
                     'descripcion' => $Prod["descripcion"], 
@@ -79,8 +82,8 @@ class ProductosModel extends Model{
     public function deleteProducto($idProd){
         return $this -> query(
                 "UPDATE producto p 
-                SET p.eliminado=1
-                WHERE p.eliminado = 0 and p.idProducto = :idProd" , array(idProd => $idProd));
+                SET p.eliminado =1 
+                WHERE p.eliminado = 0 and p.idProducto = :idProd" , array('idProd' => $idProd));
     }
     
     public function listarProductosStockMinimo(){
