@@ -43,6 +43,8 @@ class ProductosModel extends Model{
     }
     public function insertarProducto($Prod){
         $today=getDate();
+        var_dump($Prod);
+        die();
         return $this -> query("
             INSERT INTO producto (
                     nombre,
@@ -59,7 +61,7 @@ class ProductosModel extends Model{
                     :stock,
                     :stockMinimo,
                     :proveedor,
-                    :idCategoria
+                    :idCategoria,
                     :precioVentaUnitario,
                     :descripcion, 
                     :fechaAlta)",

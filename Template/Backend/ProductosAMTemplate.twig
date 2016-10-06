@@ -64,13 +64,7 @@
                 <input type="text" name="descripcion" id="descripcion" class="formProducinput" placeholder="descripcion del producto?" required value={{producto.descripcion}}>
             {% endif %}
 
-	    <label for="fechaAlta" class="formProducText">Fecha de alta en el sistema:</label>
-	    {% if (producto.fechaAlta is empty)  %}
-                <input type="date" name="fechaAlta" id="fechaAlta" class="formProducinput" maxlength="8" min="1900-01-01" max="2116-12-31" required>
-            {% else %}
-                <input type="date" name="fechaAlta" id="fechaAlta" class="formProducinput" maxlength="8" min="1900-01-01" max="2116-12-31" required value={{producto.fechaAlta}}>
-            {% endif %}
-            <label for="enviar" class="formProducTextHidden" hidden>Botón de envío</label>
+	    <label for="enviar" class="formProducTextHidden" hidden>Botón de envío</label>
 	    <input type="submit" name="submit"  id="enviar" class="boton" value="Entrar">
 	</form>
            
