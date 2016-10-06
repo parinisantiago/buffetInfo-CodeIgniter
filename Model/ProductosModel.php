@@ -14,38 +14,66 @@ class ProductosModel extends Model{
     }
     public function searchIdProducto($idProd){
         return $this ->queryPreparadaSQL(
-                "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.proveedor, p.precioVentaUnitario, p.descripcion, p.fechaAlta, p.idProducto
+                "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, p.proveedor, p.precioVentaUnitario, p.descripcion, p.fechaAlta, p.idProducto,c.nombre as categoria
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
                 WHERE p.eliminado = 0 and p.idProducto = :idProd" , array(idProd => $idProd));
     }
     public function actualizarProducto($Prod){
-        return $this -> query(
-                "UPDATE producto p 
-                SET p.nombre = :nombre,
-                    p.marca = :marca,
-                    p.stock = :stock,
-                    p.stockMinimo = :stockMinimo,
-                    c.nombre as categoria = :categoria,
-                    p.proveedor = :proveedor,
-                    p.precioVentaUnitario = :precioVentaUnitario,
-                    p.descripcion = :descripcion, 
-                    p.fechaAlta = :fechaAlta,",
-                array(nombre => $Prod["nombre"],
-                    marca => $Prod["marca"],
-                    stock => $Prod["stock"],
-                    stockMinimo => $Prod["stockMinimo"],
-                    categoria => $Prod["categoria"],
-                    proveedor => $Prod["proveedor"],
-                    precioVentaUnitario => $Prod["precioVentaUnitario"],
-                    descripcion => $Prod["descripcion"], 
-                    fechaAlta => $Prod["fechaAlt"]));
+        $today=getDate();
+        return $this -> query("
+                UPDATE producto 
+                SET nombre = :nombre,
+                    marca = :marca,
+                    stock = :stock,
+                    stockMinimo = :stockMinimo,
+                    proveedor = :proveedor,
+                    precioVentaUnitario = :precioVentaUnitario,
+                    descripcion = :descripcion, 
+                    fechaAlta = :fechaAlta,",
+                array('nombre' => $Prod["nombre"],
+                    'marca' => $Prod["marca"],
+                    'stock' => $Prod["stock"],
+                    'stockMinimo' => $Prod["stockMinimo"],
+                    
+                    'proveedor' => $Prod["proveedor"],
+                    'precioVentaUnitario' => $Prod["precioVentaUnitario"],
+                    'descripcion'=> $Prod["descripcion"], 
+                   'fechaAlta' => $today['year']."-".$today['mon']."-".$today['mday']." ".$today['hours'].":".$today['minutes'].":".$today['seconds']
+                ));
     }
-    //public function actualizarProducto($Prod){
-       /* return $this -> query(
-    INSERT INTO "nombre_tabla" ("columna1", "columna2", ...)
-VALUES ("valor1", "valor2", ...);
-        ));*/
-   // }
+    public function insertarProducto($Prod){
+        $today=getDate();
+        return $this -> query("
+            INSERT INTO producto (
+                    nombre,
+                    marca,
+                    stock,
+                    stockMinimo,
+                    idCategoria,
+                    proveedor,
+                    precioVentaUnitario,
+                    descripcion, 
+                    fechaAlta)
+            VALUES (:nombre,
+                    :marca,
+                    :stock,
+                    :stockMinimo,
+                    :proveedor,
+                    :idCategoria
+                    :precioVentaUnitario,
+                    :descripcion, 
+                    :fechaAlta)",
+            array('nombre' => $Prod["nombre"],
+                    'marca' => $Prod["marca"],
+                    'stock' => $Prod["stock"],
+                    'stockMinimo' => $Prod["stockMinimo"],
+                    'idCategoria' => $Prod["idCategoria"],
+                    'proveedor' => $Prod["proveedor"],
+                    'precioVentaUnitario' => $Prod["precioVentaUnitario"],
+                    'descripcion' => $Prod["descripcion"], 
+                    'fechaAlta' => $today['year']."-".$today['mon']."-".$today['mday']." ".$today['hours'].":".$today['minutes'].":".$today['seconds']
+                ));    
+    }
     public function deleteProducto($idProd){
         return $this -> query(
                 "UPDATE producto p 
@@ -55,7 +83,7 @@ VALUES ("valor1", "valor2", ...);
     
     public function listarProductosStockMinimo(){
         return $this -> queryTodasLasFilas(
-                "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.proveedor, p.precioVentaUnitario, p.descripcion, p.fechaAlta, p.idProducto
+                "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.proveedor, p.precioVentaUnitario, p.descripcion, p.fechaAlta, p.idProducto, c.idCategoria
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
                 WHERE p.eliminado = 0 and p.stock <= p.stockMinimo ", array());
     }
