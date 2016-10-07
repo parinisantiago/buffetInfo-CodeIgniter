@@ -11,8 +11,6 @@ class Dispatcher
     //renderisa el template, se le pasan 3 argumentos en el controlodar, primero la vista, luego el header y luego el footer.
 
     public function render( $template ){
-        var_dump($this->config);
-        var_dump($this->rol);
         $this -> loadByTwig("Template/".$template);
         
     }

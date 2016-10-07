@@ -3,7 +3,11 @@
         <p> General </p>
     </li>
     <li class="asideItem">
-        <a href="Loader.php?controller=adminController&method=productosAM">Productos</a>
+        {% if rol == "0" %}
+            <a href="Loader.php?controller=adminController&method=productosAM">Productos</a>
+        {%else%}
+            <a href="Loader.php?controller=GestorController&method=productosAM">Productos</a>
+        {%endif%}
     </li>
     <li class="asideItem">
 	<a href="">Ventas de productos</a>
@@ -14,19 +18,25 @@
     <li class="asideItem">
         <a href="">Menu</a>
     </li>
-    <li class="asideItem">
-        <a href="Loader.php?controller=adminController&method=abmUsuario&pag=0">Usuarios</a>
-    </li>
+    {% if rol == "0" %}
+        <li class="asideItem">
+            <a href="Loader.php?controller=adminController&method=abmUsuario&pag=0">Usuarios</a>
+        </li>
+    {%endif%}
     <li class="asideItem">
             <a href="">Pedidos On-line</a>
     </li>
     <li class="asideItem">
-            <a href="Loader.php?controller=BackendController&method=productosListar&pag=0">Listado de productos</a>
+        {% if rol == "1" %}
+            <a href="Loader.php?controller=AdminController&method=productosListar&pag=0">Listado de productos</a>
+        {%else%}
+            <a href="Loader.php?controller=GestorController&method=productosListar&pag=0">Listado de productos</a>
+        {%endif%}
     </li>
     <li class="asideTitleItem">
             <p>Balance</p>
     </li>
-    {% if rol == "1" %}
+    {% if rol == "0" %}
         <li class="asideItem">
             <a href="Loader.php?controller=GestorController&method=listadoFaltantes">Productos faltantes</a>
         </li>
@@ -40,7 +50,9 @@
     <li class="asideItem">
         <a href="">Gastos entre fechas</a>
     </li>
-    <li class="asideItem">
-        <a href="Loader.php?controller=adminController&method=configuracionSitio">Configuracion del sitio</a>
-    </li>
+    {% if rol == "0" %}
+        <li class="asideItem">
+            <a href="Loader.php?controller=adminController&method=configuracionSitio">Configuracion del sitio</a>
+        </li>
+    {%endif%}
 </ul>

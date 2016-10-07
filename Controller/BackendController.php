@@ -1,6 +1,5 @@
 <?php
 require_once 'Controller/Controller.php';
-require_once 'Controller/Validador.php';
 /*
  * Esta clase encapsula el comportamiento comun de los 2 tipos de usuario que 
  * pueden llegar al backend Admin y Gestion
@@ -70,9 +69,6 @@ class BackendController extends Controller{
 
     public function paginaCorrecta($total)
     {
-        var_dump($total->total);
-        var_dump($_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina);
-
         if (! isset($_GET['pag'])) throw new Exception('No hay una página que mostrar');
 
         elseif ($total->total < $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina + $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
