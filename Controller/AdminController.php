@@ -3,7 +3,8 @@
 require_once 'Controller/BackendController.php';
 class AdminController extends BackendController{
     
-    public function getPermission(){
+    public function getPermission()
+    {
         Session::init();
         return strcmp(Session::getValue('rol'), 'admin');
     }
@@ -17,11 +18,14 @@ class AdminController extends BackendController{
    
     public function abmUsuario()
     {
-            $this->dispatcher->users = $this->model->getAllUser();
+            $this->paginaCorrecta();
+            $this->dispatcher->users = $this->model->getAllUser($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+            $this->dispatcher->pag = $_GET['pag'];
             $this->dispatcher->render('Backend/abmUsuarios.twig');
     }
 
-    public function usuarioAM(){
+    public function usuarioAM()
+    {
 
             $this->validarUsuario(); //realiza validaciones mediante expresiones regulares
             if (! isset($_POST['idUsuario'])) $this->model->addUser($_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'], $_POST['telefono'],$_POST['rol']);
@@ -62,7 +66,8 @@ class AdminController extends BackendController{
         $this->registroUsuario();
     }
     
-    private function validarUsuario(){
+    private function validarUsuario()
+    {
 
         if (!isset($_POST['submitButton'])) throw new Exception("Apreta el botón de eliminar macho");
 
@@ -100,20 +105,32 @@ class AdminController extends BackendController{
   
     /* ---Configuracion--- */
 
-    public function configuracionSitio(){
+    public function paginaCorrecta()
+    {
+
+        if (! isset($_GET['pag'])) throw new Exception('No hay una página que mostrar');
+        elseif ($this->model->totalUsuario()->total < $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina)  $_GET['offset'] = $this->model->totalUsuario()->total - $this->conf->getConfiguracion()->cantPagina;
+        else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
+        if ($_GET['offset'] < 0) $_GET['offset'] = 0;
+        $_GET['offset'] .= "";
+
+    }
+
+    public function configuracionSitio()
+    {
         $this->dispatcher->render("Backend/ConfiguracionTemplate.twig");
     }
 
-    public function changeConf(){
+    public function changeConf()
+    {
         $this->validarConf();
         $this->conf->updateConf($_POST);
         $this->dispatcher->config = $this->conf->getConfiguracion();
-        var_dump($this->conf->getConfiguracion());
         $this->dispatcher->render("Backend/ConfiguracionTemplate.twig");
     }
 
-    private function validarConf(){
-        var_dump($_POST);
+    private function validarConf()
+    {
         if (! isset($_POST['submitButton'])) throw new Exception('Apreta el boton de modificar macho');
         if (! isset($_POST['titulo'])) throw new Exception('Falta escribir el titulo');
         elseif (! preg_match("/^[a-zA-Z0-9 ]+$/", $_POST['titulo'])) throw new Exception('Valor del titulo no valido');
@@ -123,7 +140,6 @@ class AdminController extends BackendController{
         elseif (! preg_match("/^[a-zA-Z ]+$/", $_POST['mensaje'])) throw new Exception('Valor del mensaje no valido');
         if (! isset($_POST['lista'])) throw new Exception('Falta escribir el numero de la lista');
         elseif (! preg_match("/^[0-9]+$/", $_POST['lista'])) throw new Exception('Valor del numero de la lista no valido');
-
 
     }
 }
