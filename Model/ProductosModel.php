@@ -102,8 +102,18 @@ class ProductosModel extends Model{
     }
 
     public function totalProductos(){
-        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM producto');
+        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM producto', array());
     }
+    
+    public function venderProductos($var){
+        return $this -> query(
+                "UPDATE producto p 
+                SET p.stock = :cant 
+                WHERE p.idProducto = :idProd",
+        array('cant' => $var["idProducto"],
+              'idProd' =>["cant"]));
+    }
+
 }
 
 ?>

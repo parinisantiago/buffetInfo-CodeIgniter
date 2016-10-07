@@ -27,17 +27,18 @@
                         <td headers="stockMinimo">{{ prod.stockMinimo }}</td>
                         <td headers="precioVentaUnitario">{{ prod.precioVentaUnitario }}</td>
                         <td headers="descripcion">{{ prod.descripcion }}</td>
-                        <td headers="Vender">
-                        <select id="cantVenta" name="cantVenta" class="formProducinput" required>
-                            {% for i  0 .. prod.stock %}
-                                <option value="{{ i}}" >{{ i }}</option>
-                            {% endfor %}
-                        </select>
                         {% if rol == "0" %}
                             <form method="post" action="Loader.php?controller=AdminController&method=venta">
                         {%else%}
                             <form method="post" action="Loader.php?controller=GestorController&method=venta">
                         {%endif%}
+                        <td headers="Vender">
+                        <select id="cant" name="cant" class="formProducinput" required>
+                            {% for i in  1 .. prod.stock %}
+                                <option value="{{i}}" >{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                        
                         <label for="idProducto" hidden></label>
                         <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }} >
                         <button type="submit" id="submitButton" name="submitButton">
