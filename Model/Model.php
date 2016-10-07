@@ -23,8 +23,6 @@ class Model
 
 	protected function queryPreparadaSQL($sql, $parametros)
 	{
-            var_dump($parametros);
-            die();
 		$this->query($sql, $parametros);
 		return $this -> stmnt -> fetch(); //retorna el valor de la consulta como un objeto
 
