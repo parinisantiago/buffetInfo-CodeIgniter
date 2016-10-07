@@ -55,7 +55,10 @@
                     </tr>
                {% endif %}
            {% endfor %}
-
+            {% if pag != 0 %}
+                <a href="/Loader.php?controller=BackendController&method=productosListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
+            {% endif %}
+            <a href="/Loader.php?controller=BackendController&method=productosListar&pag={{ pag + 1 }}">Página Siguiente --></a>
             </tbody>
         </table>
     </div>

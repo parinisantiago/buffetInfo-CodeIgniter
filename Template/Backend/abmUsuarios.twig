@@ -53,7 +53,7 @@
             </tr>
                {% endif %}
            {% endfor %}
-            {% if pag != 0 %} }
+            {% if pag != 0 %} 
             <a href="/Loader.php?controller=AdminController&method=abmUsuario&pag={{ pag - 1 }}"> <-- Página anterior</a>
             {% endif %}
             <a href="/Loader.php?controller=AdminController&method=abmUsuario&pag={{ pag + 1 }}">Página Siguiente --></a>
