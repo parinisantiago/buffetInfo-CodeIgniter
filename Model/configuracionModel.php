@@ -10,7 +10,7 @@ class configuracionModel extends Model
     }
 
     public function getConfiguracion(){
-        return $this->queryPreparadaSQL("SELECT * FROM configuracion");
+        return $this->queryPreparadaSQL("SELECT * FROM configuracion", array());
     }
 
     public function updateConf($Prod){
