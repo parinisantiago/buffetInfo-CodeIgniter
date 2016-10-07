@@ -31,7 +31,9 @@ class BackendController extends Controller{
     /* ---Productos---*/
     
     public function productosListar(){
-        $this->dispatcher->producto =$this ->productoModel->getAllProducto();
+        $this->paginaCorrecta();
+        $this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
     }
     public function productosAM(){
@@ -54,7 +56,9 @@ class BackendController extends Controller{
      $this->dispatcher->producto =$this ->productoModel->deleteProducto($_POST["idProducto"]);
      $this->productosListar();
     }
-    
+
+
+
     /*validar productos en el serverrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
      * public function validarProductos($var){
          if (! isset($var['nombre'])) throw new Exception('Falta escribir el telefono');
@@ -62,4 +66,18 @@ class BackendController extends Controller{
             validarNumeros($_POST['telefono']);
         }
     }*/
+
+    /*--- paginacion ---*/
+
+    public function paginaCorrecta()
+    {
+
+        if (! isset($_GET['pag'])) throw new Exception('No hay una página que mostrar');
+        elseif ($this->model->totalUsuario()->total < $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina)  $_GET['offset'] = $this->model->totalUsuario()->total - $this->conf->getConfiguracion()->cantPagina;
+        else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
+        if ($_GET['offset'] < 0) $_GET['offset'] = 0;
+        $_GET['offset'] .= "";
+
+    }
+
 }

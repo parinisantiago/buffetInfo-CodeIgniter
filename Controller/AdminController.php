@@ -105,16 +105,7 @@ class AdminController extends BackendController{
   
     /* ---Configuracion--- */
 
-    public function paginaCorrecta()
-    {
 
-        if (! isset($_GET['pag'])) throw new Exception('No hay una página que mostrar');
-        elseif ($this->model->totalUsuario()->total < $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina)  $_GET['offset'] = $this->model->totalUsuario()->total - $this->conf->getConfiguracion()->cantPagina;
-        else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
-        if ($_GET['offset'] < 0) $_GET['offset'] = 0;
-        $_GET['offset'] .= "";
-
-    }
 
     public function configuracionSitio()
     {
