@@ -20,7 +20,6 @@ class BackendController extends Controller{
     }
     
     public function index(){
-        $this->dispatcher->rol = parent::getRol();
         $this->dispatcher->render("Backend/IndexTemplate.twig");
     }
     

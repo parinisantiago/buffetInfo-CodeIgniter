@@ -83,6 +83,7 @@ class MainUserController extends Controller
     public function cerrarSesion()
     {
         Session::destroy();
+        $this->rol();
         $this->index();
     }
 

@@ -16,6 +16,7 @@ class Controller
         $this->dispatcher = new Dispatcher();
         $this->conf = new ConfiguracionModel();
         $this->dispatcher->config = $this->conf->getConfiguracion();
+        $this->rol();
     }
 
     public function getPermission(){
@@ -24,7 +25,13 @@ class Controller
 
     }
     public function getRol(){
-        return get_class ($this);
+        return Session::getValue('rol');
+    }
+
+    protected function rol()
+    {
+        if (Session::userLogged()) $this->dispatcher->rol = Session::getValue('rol');
+        else  $this->dispatcher->rol = "NaN";
     }
 }
 
