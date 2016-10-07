@@ -13,7 +13,6 @@ class Controller
 
         Session::init();
         $this->dispatcher = new Dispatcher();
-
     }
 
     public function getPermission(){
@@ -21,7 +20,9 @@ class Controller
         return (true);
 
     }
-    
+    public function getRol(){
+        return get_class ($this);
+    }
 }
 
 ?>

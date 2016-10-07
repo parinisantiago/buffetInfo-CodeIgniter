@@ -1,30 +1,10 @@
 <?php
-require_once 'Controller/Controller.php';
-class AdminController extends Controller
-{
-
-    public $model;
-    public $rolModel;
-
-    public function __construct()
-    {
-            parent::__contruct();
-            $this->model = new MainUserModel();
-            $this->rolModel = new RolModel();
-            $this->productoModel = new ProductosModel();
-            $this->categoriaModel = new CategoriaModel();
-    }
-
-
-    public function getPermission()
-    {
-            Session::init();
-            return strcmp(Session::getValue('rol'), 'admin');
-    }
-
-    public function index()
-    {
-            $this->dispatcher->render("Backend/adminIndexTemplate.twig");
+require_once 'Controller/BackendController.php';
+class AdminController extends BackendController{
+    
+    public function getPermission(){
+        Session::init();
+        return strcmp(Session::getValue('rol'), 'admin');
     }
 
     public function setMensajeError($error){
@@ -32,9 +12,7 @@ class AdminController extends Controller
         $this->index();
     }
 
-
     /* usuarios */
-
    
     public function abmUsuario()
     {
@@ -52,36 +30,7 @@ class AdminController extends Controller
             $this->abmUsuario();
 
     }
-
-    private function validarUsuario(){
-
-        if (!isset($_POST['submitButton'])) throw new Exception("Apreta el botón de eliminar macho");
-
-        if (! isset($_POST['nombreUsuario'])) throw new Exception('Falta escribir el nombreUsuarip');
-        elseif (! preg_match("/^[a-zA-Z0-9]+$/", $_POST['nombreUsuario'])) throw new Exception('Valor del nombreUsuario no valido');
-
-        if (! isset($_POST['nombre'])) throw new Exception('Falta escribir el nombre');
-        elseif (! preg_match("/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$/", $_POST['nombre'])) throw new Exception('Valor del nombre no valido');
-
-        if (! isset($_POST['pass'])) throw new Exception('Falta escribir la contraseaña');
-        elseif (! preg_match("/^[a-zA-Z0-9]+$/", $_POST['pass'])) throw new Exception('Valor de la contraseña no valido');
-
-        if (! isset($_POST['apellido'])) throw new Exception('Falta escribir el apellido');
-        elseif (! preg_match("/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$/", $_POST['apellido'])) throw new Exception('Valor del apellido no valido');
-
-        if (! isset($_POST['dni'])) throw new Exception('Falta escribir el dni');
-        elseif (! preg_match("/^[0-9]+$/", $_POST['dni'])) throw new Exception('Valor del dni no valido');
-
-        if (! isset($_POST['email'])) throw new Exception('Falta escribir el email');
-        elseif (! preg_match("/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/", $_POST['email'])) throw new Exception('Valor del email no valido');
-
-        if (! isset($_POST['telefono'])) throw new Exception('Falta escribir el telefono');
-        elseif (! preg_match("/^[0-9]+$/", $_POST['telefono'])) throw new Exception('Valor del telefono no valido');
-
-        if (!isset($_POST['rol'])) throw new Exception("Falta el rol");
-        elseif (! $this->rolModel->getRolById($_POST['rol'])) throw new Exception('Rol invalido');
-    }
-
+    
     public function eliminarUsuario()
     {
 
@@ -95,13 +44,12 @@ class AdminController extends Controller
             $this->abmUsuario();
 
     }
-
-	public function registroUsuario()
-	{
+    
+    public function registroUsuario()
+    {
         $this->dispatcher->rols = $this->rolModel->getAllRols();
         $this->dispatcher->render("Backend/registroUsuariosTemplate.twig");
-
-	}
+    }
 
     public function modificarUsuario()
     {
@@ -112,37 +60,44 @@ class AdminController extends Controller
         $this->dispatcher->user = $this->model->getUserById($_POST['idUsuario']);
         $this->registroUsuario();
     }
+    
+    private function validarUsuario(){
 
+        if (!isset($_POST['submitButton'])) throw new Exception("Apreta el botón de eliminar macho");
 
-
-/* ---Productos---*/
-
-
-    public function productosListar(){
-        $this->dispatcher->producto =$this ->productoModel->getAllProducto();
-        $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
-    }
-    public function productosAM(){
-        if (isset($_POST["idProducto"])){
-            $this->dispatcher->producto =$this ->productoModel->searchIdProducto($_POST["idProducto"]);
+        if (! isset($_POST['nombreUsuario'])) throw new Exception('Falta escribir el nombreUsuarip');
+        else{
+            validarString($_POST['nombreUsuario']);
         }
-        $this->dispatcher->categoria =$this ->categoriaModel->getAllCategorias();
-        $this->dispatcher->render("Backend/ProductosAMTemplate.twig");
-    }
-    public function productosAMPost(){
-        if ($_POST["idProducto"] != ""){
-           $this->dispatcher->producto =$this ->productoModel->actualizarProducto($_POST); 
-        }else{
-            $this->dispatcher->producto =$this ->productoModel->insertarProducto($_POST);
+        if (! isset($_POST['nombre'])) throw new Exception('Falta escribir el nombre');
+        else{
+            validarStringEspeciales($_POST['nombre']);
         }
-        $this->productosListar();
+        if (! isset($_POST['pass'])) throw new Exception('Falta escribir la contraseaña');
+        else{
+            validarString($_POST['pass']);
+        }
+        if (! isset($_POST['apellido'])) throw new Exception('Falta escribir el apellido');
+        else{
+            validarStringEspeciales($_POST['apellido']);
+        }
+        if (! isset($_POST['dni'])) throw new Exception('Falta escribir el dni');
+        else{
+            validarNumero($_POST['dni']);
+        }
+        if (! isset($_POST['email'])) throw new Exception('Falta escribir el email');
+        else{
+            validarMail($_POST['email']);
+        }
+        if (! isset($_POST['telefono'])) throw new Exception('Falta escribir el telefono');
+        else{
+            validarNumeros($_POST['telefono']);
+        }
+        if (!isset($_POST['rol'])) throw new Exception("Falta el rol");
+        elseif (! $this->rolModel->getRolById($_POST['rol'])) throw new Exception('Rol invalido');
     }
-    public function productosE(){
-     $this->dispatcher->producto =$this ->productoModel->deleteProducto($_POST["idProducto"]);
-     $this->productosListar();
-    }
-
-/* ---Configuracion--- */
+  
+    /* ---Configuracion--- */
 
     public function configuracionSitio(){
         $this->dispatcher->render("Backend/ConfiguracionTemplate.twig");
