@@ -70,37 +70,15 @@ class AdminController extends BackendController{
     {
 
         $this->validator->varSet($_POST['submitButton']);
-        
-        if (! isset($_POST['nombreUsuario'])) throw new Exception('Falta escribir el nombreUsuarip');
-        else{
-            validarString($_POST['nombreUsuario']);
-        }
-        if (! isset($_POST['nombre'])) throw new Exception('Falta escribir el nombre');
-        else{
-            validarStringEspeciales($_POST['nombre']);
-        }
-        if (! isset($_POST['pass'])) throw new Exception('Falta escribir la contraseaña');
-        else{
-            validarString($_POST['pass']);
-        }
-        if (! isset($_POST['apellido'])) throw new Exception('Falta escribir el apellido');
-        else{
-            validarStringEspeciales($_POST['apellido']);
-        }
-        if (! isset($_POST['dni'])) throw new Exception('Falta escribir el dni');
-        else{
-            validarNumero($_POST['dni']);
-        }
-        if (! isset($_POST['email'])) throw new Exception('Falta escribir el email');
-        else{
-            validarMail($_POST['email']);
-        }
-        if (! isset($_POST['telefono'])) throw new Exception('Falta escribir el telefono');
-        else{
-            validarNumeros($_POST['telefono']);
-        }
-        if (!isset($_POST['rol'])) throw new Exception("Falta el rol");
-        elseif (! $this->rolModel->getRolById($_POST['rol'])) throw new Exception('Rol invalido');
+        $this->validator->validarString( $_POST['nombreUsuario'], 'Error en nombreUsuarip', 15 );
+        $this->validator->validarStringEspeciales( $_POST['nombre'], 'Error en nombreUsuarip', 25 );
+        $this->validator->validarString( $_POST['pass'], 'Error en nombreUsuarip', 15 );
+        $this->validator->validarStringEspeciales( $_POST['apellido'], 'Error en nombreUsuarip', 25 );
+        $this->validator->validarNumero( $_POST['dni'], 'Error en nombreUsuarip', 8 );
+        $this->validator->validarMail( $_POST['email'], 'Error en nombreUsuarip', 15 );
+        $this->validator->validarNumero( $_POST['telefono'],'Error en nombreUsuarip', 15 );
+        $this->validator->varSet($_POST['rol']);
+
     }
   
     /* ---Configuracion--- */
