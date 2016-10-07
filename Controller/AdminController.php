@@ -5,6 +5,8 @@ class AdminController extends Controller
 
     public $model;
     public $rolModel;
+    public $productoModel;
+    public $categoriaModel;
 
     public function __construct()
     {
@@ -150,10 +152,10 @@ class AdminController extends Controller
 
     public function changeConf(){
         $this->validarConf();
-        if (isset($_POST['habilitado'])) $_POST['habilitado'] = 1;
-        else $_POST['habilitado'] = 1;
-
         $this->conf->updateConf($_POST);
+        $this->dispatcher->config = $this->conf->getConfiguracion();
+        var_dump($this->conf->getConfiguracion());
+        $this->dispatcher->render("Backend/ConfiguracionTemplate.twig");
     }
 
     private function validarConf(){
@@ -162,9 +164,9 @@ class AdminController extends Controller
         if (! isset($_POST['titulo'])) throw new Exception('Falta escribir el titulo');
         elseif (! preg_match("/^[a-zA-Z0-9 ]+$/", $_POST['titulo'])) throw new Exception('Valor del titulo no valido');
         if (! isset($_POST['descripcion'])) throw new Exception('Falta escribir el descripcion');
-        elseif (! preg_match("/^[a-zA-Z0-9 .;,]+$/", $_POST['descripcion'])) throw new Exception('Valor de la  descripcion no valido');
+        elseif (! preg_match("/^[a-zA-Z0-9 ;.,àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ]+$/", $_POST['descripcion'])) throw new Exception('Valor de la  descripcion no valido');
         if (! isset($_POST['mensaje'])) throw new Exception('Falta escribir el mensaje');
-        elseif (! preg_match("/^[a-zA-Z]+$/", $_POST['mensaje'])) throw new Exception('Valor del mensaje no valido');
+        elseif (! preg_match("/^[a-zA-Z ]+$/", $_POST['mensaje'])) throw new Exception('Valor del mensaje no valido');
         if (! isset($_POST['lista'])) throw new Exception('Falta escribir el numero de la lista');
         elseif (! preg_match("/^[0-9]+$/", $_POST['lista'])) throw new Exception('Valor del numero de la lista no valido');
 

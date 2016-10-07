@@ -16,7 +16,6 @@ class Controller
         $this->dispatcher = new Dispatcher();
         $this->conf = new ConfiguracionModel();
         $this->dispatcher->config = $this->conf->getConfiguracion();
-
     }
 
     public function getPermission(){
