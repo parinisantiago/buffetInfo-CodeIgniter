@@ -42,10 +42,14 @@
     </p>
 </div>
 {% endif %}
+
+{% if config.habilitado == 'true' %}
 <main>
     {% block main %} {% endblock %}
 </main>
-
+{% else %}
+<main><p> {{ config.mensajeHabilitado }}</p></main>
+{% endif %}
 <aside>
 
     {% block aside %} {% endblock %}

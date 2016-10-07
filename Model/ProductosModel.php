@@ -100,6 +100,10 @@ class ProductosModel extends Model{
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
                  WHERE p.eliminado = 0 and p.stock = 0 ", array());
     }
+
+    public function totalProductos(){
+        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM producto');
+    }
 }
 
 ?>

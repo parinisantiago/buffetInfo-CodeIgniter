@@ -18,7 +18,7 @@ class AdminController extends BackendController{
    
     public function abmUsuario()
     {
-            $this->paginaCorrecta();
+            $this->paginaCorrecta($this->model->totalUsuario());
             $this->dispatcher->users = $this->model->getAllUser($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
             $this->dispatcher->pag = $_GET['pag'];
             $this->dispatcher->render('Backend/abmUsuarios.twig');

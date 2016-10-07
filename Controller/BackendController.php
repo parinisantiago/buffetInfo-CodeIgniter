@@ -31,7 +31,7 @@ class BackendController extends Controller{
     /* ---Productos---*/
     
     public function productosListar(){
-        $this->paginaCorrecta();
+        $this->paginaCorrecta($this->productoModel->totalProductos());
         $this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
@@ -69,11 +69,14 @@ class BackendController extends Controller{
 
     /*--- paginacion ---*/
 
-    public function paginaCorrecta()
+    public function paginaCorrecta($total)
     {
+        var_dump($total->total);
+        var_dump($_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina);
 
         if (! isset($_GET['pag'])) throw new Exception('No hay una página que mostrar');
-        elseif ($this->model->totalUsuario()->total < $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina)  $_GET['offset'] = $this->model->totalUsuario()->total - $this->conf->getConfiguracion()->cantPagina;
+
+        elseif ($total->total < $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina + $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
         else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
         if ($_GET['offset'] < 0) $_GET['offset'] = 0;
         $_GET['offset'] .= "";

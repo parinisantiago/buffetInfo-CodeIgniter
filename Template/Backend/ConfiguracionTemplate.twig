@@ -13,7 +13,7 @@
         <input value="{{ config.mail }}" type="email" name="email" id="email" class="formProducinput"  placeholder="ejemplo@email.com" maxlength="25" pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required >
 
         <label for="lista" class="formProducText">Cantidad de elementos por lista:</label>
-        <input value="{{ config.cantPagina }}" type="number" name="lista" id="lista" class="formProducinput" placeholder="Un número entre 1 y 99" min="5" max="20" maxlength="2" pattern="^[0-9]+$">
+        <input value="{{ config.cantPagina }}" type="number" name="lista" id="lista" class="formProducinput" placeholder="Un número entre 1 y 99" min="1" max="99" maxlength="2" pattern="^[0-9]+$">
 
         <label for="habilitado" class="formProducText">Frontend: </label>
         {% if config.habilitado == 'true' %}
