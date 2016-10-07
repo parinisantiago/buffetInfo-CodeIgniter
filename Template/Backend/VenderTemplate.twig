@@ -4,56 +4,60 @@
 
     <div>
         <p> Página: {{ pag }} <p>
-        <table class="tablaProductos" summary="detallas de cada producto">
+        <table class="tablaProductos" summary="detallas de cada producto a vender">
             <thead>
-            <tr>
-                <th id="nombre">Nombre</th>
-                <th id="marca">Marca</th>
-                <th id="stock">Stock</th>
-                <th id="stockMinimo">Stock Minimo</th>
-                <th id="precioVentaUnitario">Precio de Venta Unitario</th>
-                <th id="descripcion">Descripcion</th>
-                <th id="vender">Vender</th>
-            </tr>
+                <tr>
+                    <th id="nombre">Nombre</th>
+                    <th id="marca">Marca</th>
+                    <th id="stock">Stock</th>
+                    <th id="stockMinimo">Stock Minimo</th>
+                    <th id="precioVentaUnitario">Precio de Venta Unitario</th>
+                    <th id="descripcion">Descripcion</th>
+                    <th id="vender">Vender</th>
+                </tr>
             </thead>
             <tbody>
+                {% for prod in producto %}
+                    {% if producto.eliminado == 0 %}
+                        <tr>
+                            <td headers="nombre">{{ prod.nombre }}</td>
+                            <td headers="marca"> {{ prod.marca }}</td>
+                            <td headers="stock"> {{ prod.stock }}</td>
+                            <td headers="stockMinimo">{{ prod.stockMinimo }}</td>
+                            <td headers="precioVentaUnitario">{{ prod.precioVentaUnitario }}</td>
+                            <td headers="descripcion">{{ prod.descripcion }}</td>
+                            {% if rol == "0" %}
+                                <form method="post" action="Loader.php?controller=AdminController&method=modificarVenta">
+                            {%else%}
+                                <form method="post" action="Loader.php?controller=GestorController&method=modificarVenta">
+                            {%endif%}
+                            <td headers="Vender">
+                            <select id="cant" name="cant" class="formProducinput" required>
+                                {% for i in  1 .. prod.stock %}
+                                    <option value="{{i}}" >{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="idProducto" hidden></label>
+                            <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }} >
+                            <button type="submit" id="submitButton" name="submitButton">
+                                <img class="icono" src="images/vender.png" alt= "vender" />
+                            </button>
+                                </form>
+                            </td>
+                        </tr>
+                   {% endif %}
+                {% endfor %}
+                {% if pag != 0 %}
+                    <a href="/Loader.php?controller=BackendController&method=productosListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                {% endif %}
+                <a href="/Loader.php?controller=BackendController&method=productosListar&pag={{ pag + 1 }}">Página Siguiente --></a>
 
-            {% for prod in producto %}
-                {% if producto.eliminado == 0 %}
-                    <tr>
-                        <td headers="nombre">{{ prod.nombre }}</td>
-                        <td headers="marca"> {{ prod.marca }}</td>
-                        <td headers="stock"> {{ prod.stock }}</td>
-                        <td headers="stockMinimo">{{ prod.stockMinimo }}</td>
-                        <td headers="precioVentaUnitario">{{ prod.precioVentaUnitario }}</td>
-                        <td headers="descripcion">{{ prod.descripcion }}</td>
-                        {% if rol == "0" %}
-                            <form method="post" action="Loader.php?controller=AdminController&method=venta">
-                        {%else%}
-                            <form method="post" action="Loader.php?controller=GestorController&method=venta">
-                        {%endif%}
-                        <td headers="Vender">
-                        <select id="cant" name="cant" class="formProducinput" required>
-                            {% for i in  1 .. prod.stock %}
-                                <option value="{{i}}" >{{ i }}</option>
-                            {% endfor %}
-                        </select>
-                        
-                        <label for="idProducto" hidden></label>
-                        <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }} >
-                        <button type="submit" id="submitButton" name="submitButton">
-                            <img class="icono" src="images/vender.png" alt= "vender" />
-                        </button>
-                            </form>
-                        </td>
-                    </tr>
-               {% endif %}
-            {% endfor %}
-            {% if pag != 0 %}
-                <a href="/Loader.php?controller=BackendController&method=productosListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
-            {% endif %}
-            <a href="/Loader.php?controller=BackendController&method=productosListar&pag={{ pag + 1 }}">Página Siguiente --></a>
-            </tbody>
+                {% if rol == "0" %}
+                    <a href="Loader.php?controller=adminController&method=venderListar&pag=0">Productos vendidos</a>
+                {%else%}
+                    <a href="Loader.php?controller=GestorController&method=venderListar&pag=0">Productos vendidos</a>
+                {%endif%}    
+        </tbody>
         </table>
     </div>
 

@@ -24,6 +24,7 @@ class BackendController extends Controller{
     
     /* ---Compra Venta---*/
     public function vender(){
+    /*****************ver el template que el boton tiene caca*/
         $this->paginaCorrecta($this->productoModel->totalProductos());
         $this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
         $this->dispatcher->pag = $_GET['pag'];
@@ -31,6 +32,7 @@ class BackendController extends Controller{
         $this->dispatcher->render("Backend/VenderTemplate.twig"); 
     }
     public function venta(){
+        /********************************/
         var_dump($_POST);
         die();
         $this->dispatcher->producto =$this ->productoModel->insertarProducto($_POST);
@@ -43,7 +45,16 @@ class BackendController extends Controller{
         die();
     }
 
-
+    public function ventaListar(){
+        /*botones de pasar pagina=caca*/
+        /*****************************/
+    }
+    public function ventaModificar(){
+        /*****************************/
+    }
+    public function ventaEliminar(){
+        /*****************************/
+    }
 
     /* ---Productos---*/
     
@@ -61,6 +72,7 @@ class BackendController extends Controller{
         $this->dispatcher->render("Backend/ProductosAMTemplate.twig");
     }
     public function productosAMPost(){
+        /*ver botones de venta, solo son del admin*/
         validarProductos($_POST);
         if ($_POST["idProducto"] != ""){
            $this->dispatcher->producto =$this ->productoModel->actualizarProducto($_POST); 
