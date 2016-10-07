@@ -25,16 +25,23 @@ class Model
 	{
 
 		$this->query($sql, $parametros);
-		
 		return $this -> stmnt -> fetch(); //retorna el valor de la consulta como un objeto
 
+	}
+
+	protected function queryOFFSET($sql, $limit, $offset){
+		$this->stmnt = $this->db->prepare($sql);
+		$this->stmnt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+		$this->stmnt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+		$this->stmnt->execute();
+		return $this->stmnt ->fetchAll();
 	}
 
 	protected function queryTodasLasFilas($sql, $parametros)
 	{
 
-		$this->query($sql, $parametros);
-
+		$this->stmnt = $this->db->prepare($sql);
+		$this->stmnt->execute($parametros);
 		return $this -> stmnt -> fetchAll(); //retorna el valor de la consulta como un objeto
 	}
 	

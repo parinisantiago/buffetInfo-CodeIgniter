@@ -23,9 +23,15 @@ class MainUserModel extends Model
         return $this -> queryPreparadaSQL('SELECT * FROM usuario WHERE usuario = :username AND clave = :pass', array('username' => $username, 'pass' => $pass ));
     }
 
-    public function getAllUSer()
+    public function getAllUSer($limit, $offset)
     {
-        return $this -> queryTodasLasFilas('SELECT usuario.idUsuario,usuario.usuario, usuario.clave, usuario.nombre, usuario.apellido, usuario.documento, usuario.email, usuario.telefono, rol.nombre AS rol, ubicacion.nombre AS ubicacion  FROM usuario INNER JOIN rol ON (usuario.idRol = rol.idRol ) INNER JOIN ubicacion ON (usuario.idUbicacion = ubicacion.idUbicacion)', array());
+        return $this -> queryOFFSET('
+            SELECT usuario.idUsuario,usuario.usuario, usuario.clave, usuario.nombre, usuario.apellido, usuario.documento, usuario.email, usuario.telefono, rol.nombre AS rol, ubicacion.nombre AS ubicacion  
+            FROM usuario 
+            INNER JOIN rol ON (usuario.idRol = rol.idRol ) 
+            INNER JOIN ubicacion ON (usuario.idUbicacion = ubicacion.idUbicacion)
+            LIMIT :limit  
+            OFFSET :offset ', $limit, $offset);
     }
 
     public function deleteUser($idUsuario)
@@ -34,7 +40,7 @@ class MainUserModel extends Model
     }
     
     public function isDeleted($username){
-        return $this->queryPreparadaSQL('SELECT eliminado FROM usuario WHERE usuario = :username AND eliminado = 1', array('username' => $username));
+        return $this->queryPreparadaSQL('SELECT eliminado FROM usuario WHERE usuario = :username AND eliminado = 1 ', array('username' => $username));
     }
 
     public function getUserById($idUsuario){
@@ -87,6 +93,10 @@ class MainUserModel extends Model
                 'rol' => $rol
             )
         );
+    }
+
+    public function totalUsuario(){
+        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM usuario');
     }
 
 }

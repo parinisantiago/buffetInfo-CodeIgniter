@@ -14,7 +14,7 @@ class configuracionModel extends Model
     }
 
     public function updateConf($Prod){
-        return $this -> query("
+         $this -> query("
             UPDATE configuracion
             SET titulo = :titulo,
                 descripcion = :descripcion,
