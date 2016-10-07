@@ -150,7 +150,10 @@ class AdminController extends Controller
 
     public function changeConf(){
         $this->validarConf();
-        if (isset($_POST['habilitado'])) echo 'bien';
+        if (isset($_POST['habilitado'])) $_POST['habilitado'] = 1;
+        else $_POST['habilitado'] = 1;
+
+        $this->conf->updateConf($_POST);
     }
 
     private function validarConf(){
