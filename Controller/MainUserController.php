@@ -39,18 +39,16 @@ class MainUserController extends Controller
 
     public function validateLogin()
     {
-        if (!isset($_POST['submit'])) throw new Exception("Apreta el botón de logeo macho");
+        $this->validator->varSet($_POST['submit'], "apreta el boton de submit");
 
-        if (isset ($_POST['username'])) $this->usernamePOST = $_POST['username'];
-        else throw new Exception("No se ha ingresado ningun usuario");
+        $this->validator->validarString($_POST['username'], "error en usuario", 15);
+        if ($this->model->isDeleted($_POST['username'])) throw new Exception("El usuario a sido eliminado");
 
-        if ($this->model->isDeleted($this->usernamePOST)) throw new Exception("El usuario a sido eliminado");
+        $this->validator->validarString($_POST['pass'], "escribi una contraseña", 15);
 
-        if (isset ($_POST['pass'])) $this->passPOST = $_POST['pass'];
-        else throw new Exception("No se ha ingresado ninguna contraseña");
-        if (!$this->model->userExist($this->usernamePOST)) throw new Exception("El usuario no existe");
+        if (!$this->model->userExist($_POST['username'])) throw new Exception("El usuario no existe");
 
-        elseif (!$this->model->passDontMissmatch($this->passPOST)) throw new Exception("Contraseña incorrecta");
+        elseif (!$this->model->passDontMissmatch($_POST['pass'])) throw new Exception("Contraseña incorrecta");
         return true;
     }
 
@@ -83,7 +81,6 @@ class MainUserController extends Controller
     public function cerrarSesion()
     {
         Session::destroy();
-        $this->rol();
         $this->index();
     }
 

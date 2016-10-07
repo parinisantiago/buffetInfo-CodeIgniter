@@ -69,8 +69,8 @@ class AdminController extends BackendController{
     private function validarUsuario()
     {
 
-        if (!isset($_POST['submitButton'])) throw new Exception("Apreta el botón de eliminar macho");
-
+        $this->validator->varSet($_POST['submitButton']);
+        
         if (! isset($_POST['nombreUsuario'])) throw new Exception('Falta escribir el nombreUsuarip');
         else{
             validarString($_POST['nombreUsuario']);
