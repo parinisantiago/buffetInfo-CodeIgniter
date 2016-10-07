@@ -1,0 +1,66 @@
+{% extends 'Template/Backend/IndexTemplate.twig' %}
+
+{% block main %}
+
+    <div>
+        <p> Página: {{ pag }} <p>
+        <table class="tablaProductos" summary="detallas de cada compra realizada">
+            <thead>
+            <tr>
+                <th id="nombre">Nombre</th>
+                <th id="marca">Marca</th>
+                <th id="cantidad">Cantidad</th>
+                <th id="precioUnitario">Precio Unitario</th>
+                <th id="egresoTipo">Tipo de Egreso</th>
+                <th id="proveedor">Proveedor</th>
+                <th id="proveedorCUIT">CUIT Proveedor</th>
+                <th id="fechaCompra">Fecha Compra</th>
+                <th id="editar">Editar</th>
+                <th id="eliminar">Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for compra in compras %}
+                {% if producto.eliminado == 0 %}
+                    <tr>
+                        <td headers="nombre">{{ prod.nombre }}</td>
+                        <td headers="marca"> {{ prod.marca }}</td>
+                        <td headers="stock"> {{ prod.stock }}</td>
+                        <td headers="stockMinimo">{{ prod.cantidad }}</td>
+                        <td headers="categoria">{{ prod.precioUnitario }}</td>
+                        <td headers="proveedor">{{ prod.tipoDeEgreso }}</td>
+                        <td headers="precioVentaUnitario">{{ prod.proveedor }}</td>
+                        <td headers="descripcion">{{ prod.proveedorCuit }}</td>
+                        <td headers="fechaAlta">{{ prod.fechaCompra }}</td>
+                        <td headers="editar">
+                            <form method="post" action="Loader.php?controller=AdminController&method=productosAM">
+                                <label for="idProducto" hidden></label>
+                                <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }}>
+                                <button type="submit" id="submitButton" name="submitButton">
+                                    <img class="icono" src="images/editar.png" alt= "editar la informacion" />
+                                </button>
+                            </form>
+                        </td>
+                        <td headers="eliminar">
+                            
+                            <form method="post" action="Loader.php?controller=AdminController&method=productosE">
+                                <label for="idProducto" hidden></label>
+                                <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }} >
+                                <button type="submit" id="submitButton" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" role="button">
+                                    <img class="icono" src="images/eliminar.png" alt= "eliminar" />
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+               {% endif %}
+           {% endfor %}
+            {% if pag != 0 %}
+                <a href="/Loader.php?controller=BackendController&method=productosListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
+            {% endif %}
+            <a href="/Loader.php?controller=BackendController&method=productosListar&pag={{ pag + 1 }}">Página Siguiente --></a>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

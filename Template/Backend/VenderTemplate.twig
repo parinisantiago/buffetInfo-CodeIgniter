@@ -27,9 +27,9 @@
                             <td headers="precioVentaUnitario">{{ prod.precioVentaUnitario }}</td>
                             <td headers="descripcion">{{ prod.descripcion }}</td>
                             {% if rol == "0" %}
-                                <form method="post" action="Loader.php?controller=AdminController&method=modificarVenta">
+                                <form method="post" action="Loader.php?controller=AdminController&method=venta">
                             {%else%}
-                                <form method="post" action="Loader.php?controller=GestorController&method=modificarVenta">
+                                <form method="post" action="Loader.php?controller=GestorController&method=venta">
                             {%endif%}
                             <td headers="Vender">
                             <select id="cant" name="cant" class="formProducinput" required>

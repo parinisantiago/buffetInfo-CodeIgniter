@@ -5,6 +5,12 @@ class ProductosModel extends Model{
     public function __construct(){
         parent::__construct();
     }
+    /*************************
+     * campos eliminados MODIFICA A TODAS LAS CONSULTAS :C
+     *
+     * fechaAlta
+     * provedor
+     */
 
     public function getAllProducto($limit, $offset){
         return $this -> queryOFFSET(

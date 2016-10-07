@@ -22,8 +22,9 @@ class BackendController extends Controller{
         $this->dispatcher->render("Backend/IndexTemplate.twig");
     }
     
-    /* ---Compra Venta---*/
+    /* ---Venta---*/
     public function vender(){
+        /*muestra productos a vender
     /*****************ver el template que el boton tiene caca*/
         $this->paginaCorrecta($this->productoModel->totalProductos());
         $this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
@@ -32,7 +33,7 @@ class BackendController extends Controller{
         $this->dispatcher->render("Backend/VenderTemplate.twig"); 
     }
     public function venta(){
-        /********************************/
+        /***** actualizar ganancias***************************/
         var_dump($_POST);
         die();
         $this->dispatcher->producto =$this ->productoModel->insertarProducto($_POST);
@@ -47,15 +48,22 @@ class BackendController extends Controller{
 
     public function ventaListar(){
         /*botones de pasar pagina=caca*/
-        /*****************************/
+        /******muestra todos los productos vendidos***********************/
     }
     public function ventaModificar(){
         /*****************************/
     }
     public function ventaEliminar(){
         /*****************************/
-    }
+    
+    /* ---Compra ---*/ }
 
+    public function compraListar(){
+        /*botones de pasar pagina=caca*/
+        /******muestra todos los productos comprados***********************/
+    }
+    
+    
     /* ---Productos---*/
     
     public function productosListar(){
