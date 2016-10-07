@@ -67,8 +67,8 @@ class BackendController extends Controller{
 
     /*--- paginacion ---*/
 
-    public function paginaCorrecta($total)
-    {
+    public function paginaCorrecta($total){
+
         if (! isset($_GET['pag'])) throw new Exception('No hay una página que mostrar');
 
         elseif ($total->total < $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina + $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
