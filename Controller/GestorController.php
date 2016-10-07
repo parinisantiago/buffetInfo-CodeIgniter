@@ -3,8 +3,8 @@ require_once 'Controller/BackendController.php';
 class GestorController extends BackendController{
     
     public function getPermission(){
-        Session::init();
-        return strcmp(Session::getValue('rol'), 'Proveedor');
+        Session::init();  
+        return strcmp(Session::getValue('rol'), '1');
     }
 
     public function setMensajeError($error){

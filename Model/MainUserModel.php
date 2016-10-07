@@ -96,7 +96,7 @@ class MainUserModel extends Model
     }
 
     public function totalUsuario(){
-        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM usuario');
+        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM usuario',array());
     }
 
 }

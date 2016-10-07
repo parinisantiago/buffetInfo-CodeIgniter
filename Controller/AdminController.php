@@ -6,7 +6,7 @@ class AdminController extends BackendController{
     public function getPermission()
     {
         Session::init();
-        return strcmp(Session::getValue('rol'), 'admin');
+        return strcmp(Session::getValue('rol'), '0');
     }
 
     public function setMensajeError($error){

@@ -27,7 +27,7 @@
             <a href="">Pedidos On-line</a>
     </li>
     <li class="asideItem">
-        {% if rol == "1" %}
+        {% if rol == "0" %}
             <a href="Loader.php?controller=AdminController&method=productosListar&pag=0">Listado de productos</a>
         {%else%}
             <a href="Loader.php?controller=GestorController&method=productosListar&pag=0">Listado de productos</a>
