@@ -15,7 +15,7 @@ class configuracionModel extends Model
 
     public function updateConf($Prod){
         return $this -> query("
-            UPDATE producto
+            UPDATE configuracion
             SET titulo = :titulo,
                 descripcion = :descripcion,
                 mail = :mail,
@@ -24,10 +24,10 @@ class configuracionModel extends Model
                 mensajeHabilitado = :mensajeHabilitado",
             array('titulo' => $Prod["titulo"],
                 'descripcion' => $Prod["descripcion"],
-                'mail' => $Prod["mail"],
-                'cantPagina' => $Prod["cantPagina"],
+                'mail' => $Prod["email"],
+                'cantPagina' => $Prod["lista"],
                 'habilitado' => $Prod["habilitado"],
-                'mensajeHabilitado' => $Prod["mensajeHabilitado"],
+                'mensajeHabilitado' => $Prod["mensaje"],
                 ));
     }
 
