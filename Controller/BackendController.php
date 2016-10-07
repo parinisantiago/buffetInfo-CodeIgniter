@@ -23,9 +23,21 @@ class BackendController extends Controller{
     }
     
     /* ---Compra Venta---*/
-    
-    
-    
+    public function vender(){
+        //$this->paginaCorrecta($this->productoModel->totalProductos());
+        //$this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        //$this->dispatcher->pag = $_GET['pag'];
+        $this->dispatcher->render("Backend/VenderTemplate.twig"); 
+    }
+    public function venta(){
+        /*$this->paginaCorrecta($this->productoModel->totalProductos());
+        $this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        $this->dispatcher->pag = $_GET['pag'];
+        $this->dispatcher->render("Backend/VenderTemplate.twig"); 
+    */}
+
+
+
     /* ---Productos---*/
     
     public function productosListar(){
