@@ -21,7 +21,10 @@
 <body>
 
 <header>
-    {% block header %} <h1 class="headerTitle" id="headerTitle"> Buffet de la Facultad de Informática UNLP</h1> {% endblock %}
+    {% block header %}
+        <h1 class="headerTitle" id="headerTitle"> {{ config.titulo }}</h1>
+        <p style="text-align: center"> {{ config.descripcion }} </p>
+    {% endblock %}
 </header>
 
 <nav>
@@ -49,7 +52,7 @@
 
 </aside>
 
-<footer> {% block footer%} Página desarrollado por el grupo 64 para la cátedra de Proyecto de Software UNLP cursada 2016 {% endblock %}  </footer>
+<footer> {% block footer%} {{ config.mail }} {% endblock %}  </footer>
 
 
 </body>

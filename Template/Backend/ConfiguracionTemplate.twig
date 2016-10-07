@@ -4,23 +4,29 @@
     <form name="formUser" class="formProduc clearfix" action="Loader.php?controller=AdminController&method=changeConf" method="post">
 
         <label for="titulo" class="formProducText">Titulo del sitio:</label>
-        <input  type="text" name="titulo" id="titulo" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="25" pattern="^[a-zA-Z0-9 ]+$" autofocus required >
+        <input value="{{ config.titulo }}" type="text" name="titulo" id="titulo" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="25" pattern="^[a-zA-Z0-9 ]+$" autofocus required >
 
         <label for="descripcion" class="formProducText">Descripcion del sitio:</label>
-        <textarea name="descripcion" id="descripcion" class="formProducinput"  maxlength="400" rows="20" cols="40" autofocus required >
-        </textarea>
+        <textarea name="descripcion" id="descripcion" class="formProducinput"  maxlength="400" rows="20" cols="40" autofocus required >{{ config.descripcion }}</textarea>
 
         <label for="email" class="formProducText">Email:</label>
-        <input  type="email" name="email" id="email" class="formProducinput"  placeholder="ejemplo@email.com" maxlength="25" pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required >
+        <input value="{{ config.mail }}" type="email" name="email" id="email" class="formProducinput"  placeholder="ejemplo@email.com" maxlength="25" pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required >
 
         <label for="lista" class="formProducText">Cantidad de elementos por lista:</label>
-        <input type="number" name="lista" id="lista" class="formProducinput" placeholder="Un número entre 1 y 99" min="5" max="20" maxlength="2" pattern="^[0-9]+$">
+        <input value="{{ config.cantPagina }}" type="number" name="lista" id="lista" class="formProducinput" placeholder="Un número entre 1 y 99" min="5" max="20" maxlength="2" pattern="^[0-9]+$">
 
-        <label for="habilitado" class="formProducText">Habilitado: </label>
-        <input type="checkbox" name="habilitado" id="habilitado" class="formProducinput" value="1">
+        <label for="habilitado" class="formProducText">Frontend: </label>
+        {% if config.habilitado == 'true' %}
+            <input  type="radio" name="habilitado" id="habilitado" value="true"  checked> Habilitado
+            <input  type="radio" name="habilitado" id="habilitado" value="false"  > Deshabilitado
+
+        {% else %}
+            <input  type="radio" name="habilitado" id="habilitado" value="true"  > Habilitado
+            <input  type="radio" name="habilitado" id="habilitado" value="false" checked> Deshabilitado
+        {% endif %}
 
         <label for="mensaje" class="formProducText">Titulo del sitio:</label>
-        <input  type="text" name="mensaje" id="mensaje" class="formProducinput"  placeholder="Solo se admiten letras simples" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" autofocus required >
+        <input value="{{ config.mensajeHabilitado }}" type="text" name="mensaje" id="mensaje" class="formProducinput"  placeholder="Solo se admiten letras simples" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" autofocus required >
 
         <label for="submitButton" hidden>Boton de envio:</label>
         <input type="submit" id="submitButton" name="submitButton">
