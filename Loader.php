@@ -44,8 +44,8 @@ try {
     $controller = new $classController ();
 
     //Se fija si el usuario que inicio sesion tiene permisos para acceder a las funciones del controlador
-  
-    if ( $controller->getPermission ()) {
+
+    if (! $controller->getPermission ()) {
         throw new Exception ( "el usuario no tiene permisos" );
     }
 
