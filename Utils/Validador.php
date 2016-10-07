@@ -1,7 +1,7 @@
 <?php
 class Validador{
     public function validarString( $var ){
-        if (!$this->varSet($var) || !preg_match("/^[a-zA-Z0-9]+$/", $var) )
+        if ($this->varSet($var) || !preg_match("/^[a-zA-Z0-9]+$/", $var) )
             throw new Exception($var.' debe ser letras o numeros');
     }
     
