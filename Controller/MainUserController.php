@@ -26,11 +26,14 @@ class MainUserController extends Controller
     }
 
     public function login(){
+        //si no inicio sesion previamente que se loguee.
+        if (! Session::userLogged()) {
+            $this->validateLogin();
+            //si se logueo de forma correcta setea la sesion del usuario y llama al controllador correspondiente
+            $this->user = $this->model->getUser($this->usernamePOST, $this->passPOST);
+            $this->setSession();
+        }
 
-        $this->validateLogin();
-        //si se logueo de forma correcta setea la sesion del usuario y llama al controllador correspondiente
-        $this -> user = $this -> model -> getUser($this -> usernamePOST, $this -> passPOST);
-        $this -> setSession();
         $this->callUserRolController();
     }
 
