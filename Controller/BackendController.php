@@ -55,15 +55,19 @@ class BackendController extends Controller{
     }
     public function ventaEliminar(){
         /*****************************/
-    
-    /* ---Compra ---*/ }
+    }
+    /* ---Compra ---*/ 
 
     public function compraListar(){
         /*botones de pasar pagina=caca*/
         /******muestra todos los productos comprados***********************/
     }
-    
-    
+     public function compraModificar(){
+        /*****************************/
+    }
+    public function compraEliminar(){
+        /*****************************/
+    }
     /* ---Productos---*/
     
     public function productosListar(){
