@@ -33,24 +33,31 @@
                         <td headers="precioVentaUnitario">{{ prod.proveedor }}</td>
                         <td headers="descripcion">{{ prod.proveedorCuit }}</td>
                         <td headers="fechaAlta">{{ prod.fechaCompra }}</td>
-                        <td headers="editar">
-                            <form method="post" action="Loader.php?controller=AdminController&method=productosAM">
-                                <label for="idProducto" hidden></label>
-                                <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }}>
-                                <button type="submit" id="submitButton" name="submitButton">
-                                    <img class="icono" src="images/editar.png" alt= "editar la informacion" />
-                                </button>
-                            </form>
+                       <td headers="editar">
+                            {% if rol == "0" %}
+                                <form method="post" action="Loader.php?controller=AdminController&method=compraModificar">
+                            {%else%}
+                                <form method="post" action="Loader.php?controller=GestorController&method=compraModificar">
+                            {%endif%}
+                                    <label for="idEgresoDetalle" hidden></label>
+                                    <input id="idEgresoDetalle" name="idEgresoDetalle" type="hidden" value={{ venta.idEgresoDetalle }}>
+                                    <button type="submit" id="submitButton" name="submitButton">
+                                        <img class="icono" src="images/editar.png" alt= "editar la informacion" />
+                                    </button>
+                                </form>
                         </td>
                         <td headers="eliminar">
-                            
-                            <form method="post" action="Loader.php?controller=AdminController&method=productosE">
-                                <label for="idProducto" hidden></label>
-                                <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }} >
-                                <button type="submit" id="submitButton" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" role="button">
-                                    <img class="icono" src="images/eliminar.png" alt= "eliminar" />
-                                </button>
-                            </form>
+                            {% if rol == "0" %}
+                                <form method="post" action="Loader.php?controller=AdminController&method=compraEliminar">
+                            {%else%}
+                                <form method="post" action="Loader.php?controller=GestorController&method=compraEliminar">
+                            {%endif%}
+                                    <label for="idEgresoDetalle" hidden></label>
+                                    <input id="idEgresoDetalle" name="idEgresoDetalle" type="hidden" value={{ venta.idEgresoDetalle }}>
+                                    <button type="submit" id="submitButton" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" role="button">
+                                      <img class="icono" src="images/eliminar.png" alt= "eliminar" />
+                                    </button>
+                                </form>
                         </td>
                     </tr>
                {% endif %}
