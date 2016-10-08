@@ -9,7 +9,7 @@
 
 
         <label for="nombreUsuario" class="formProducText">Nombre de Usuario:</label>
-        <input {% if user.usuario %} value="{{ user.usuario }}" {% endif %} type="text" name="nombreUsuario" id="nombreUsuario" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="25" pattern="^[a-zA-Z0-9]+$" autofocus required >
+        <input {% if user.usuario %} value="{{ user.usuario }}" {% endif %} type="text" name="nombreUsuario" id="nombreUsuario" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="15" pattern="^[a-zA-Z0-9]+$" autofocus required >
 
         <label for="nombre" class="formProducText">Nombre:</label>
         <input {% if user.nombre %} value="{{ user.nombre }}" {% endif %} type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" required >
@@ -24,7 +24,7 @@
         <input {% if user.email %} value="{{ user.email }}" {% endif %} type="email" name="email" id="email" class="formProducinput"  placeholder="ejemplo@email.com" maxlength="25" pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required >
 
         <label for="pass" class="formProducText">Contraseña:</label>
-        <input {% if user.clave %} value="{{ user.clave }}" {% endif %} type="password" name="pass" id="pass" class="formProducinput"  placeholder="Solo se admiten numeros o letras simples" maxlength="25" pattern="^[a-zA-Z0-9]+$" required >
+        <input {% if user.clave %} value="{{ user.clave }}" {% endif %} type="password" name="pass" id="pass" class="formProducinput"  placeholder="Solo se admiten numeros o letras simples" maxlength="15" pattern="^[a-zA-Z0-9]+$" required >
 
         <label for="telefono" class="formProducText">Telefono:</label>
         <input {% if user.telefono %} value="{{ user.telefono }}" {% endif %} type="text" name="telefono" id="telefono" class="formProducinput"  placeholder="Solo se admiten numeros" maxlength="25" pattern="^[0-9]+$" required >
