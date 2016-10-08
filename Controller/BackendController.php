@@ -74,15 +74,10 @@ class BackendController extends Controller{
         $this->paginaCorrecta($this->productoModel->totalProductos());
         $this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
         $this->dispatcher->pag = $_GET['pag'];
+        $this->dispatcher->method = "ProductosListar";
         $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
     }
 
-
-    public function listarFiltrado(){
-        $this->paginaCorrecta($this->productoModel->totalProductos());
-        $this->dispatcher->pag = $_GET['pag'];
-        $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
-    }
 
     public function productosAM(){
         if (isset($_POST["idProducto"])){
@@ -100,11 +95,14 @@ class BackendController extends Controller{
             $this->dispatcher->producto =$this ->productoModel->insertarProducto($_POST);
         }
         $_GET['pag'] = 0;
+        $this->dispatcher->method = "ProductosListar";
         $this->productosListar();
     }
     public function productosE(){
      $this->dispatcher->producto =$this ->productoModel->deleteProducto($_POST["idProducto"]);
-     $this->productosListar();
+        $_GET['pag'] = 0;
+        $this->dispatcher->method = "ProductosListar";
+        $this->productosListar();
     }
 
 
