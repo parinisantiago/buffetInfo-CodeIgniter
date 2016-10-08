@@ -19,7 +19,7 @@ class Validador{
             throw new Exception($error);
     }
     public function validarNumerosPunto($var, $error, $tam){
-        if (!$this->tam($var, $tam) || !$this->varSet($var, $error) || !preg_match("/^[0-9.     ]+$/", $var))
+        if (!$this->tam($var, $tam) || !$this->varSet($var, $error) || !preg_match("/^[0-9. ]+$/", $var))
             throw new Exception($error);
     }
     public function varSet($var, $error){
