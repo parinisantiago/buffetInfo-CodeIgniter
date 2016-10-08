@@ -14,12 +14,23 @@ class GestorController extends BackendController{
     
     /*---listado productos---*/
     
+    
     public function listadoFaltantes(){
         $this->dispatcher->producto = $this->productoModel->listarProductosFaltantes();
-        $this->dispatcher->render("backend/ProductosTemplate.twig");
+        $_GET['pag'] = 0;
+        $_GET['method'] = 'listadoFaltantes';
+        $this->dispatcher->method = $_GET['method'];
+        $this->dispatcher->pag = $_GET['pag'];
+
+        $this->listarFiltrado();
     }
     public function listadoStockMinimo(){
         $this->dispatcher->producto = $this->productoModel->listarProductosStockMinimo();
-        $this->dispatcher->render("backend/ProductosTemplate.twig");
+        $_GET['pag'] = 0;
+        $_GET['method'] = 'listadoStockMinimo';
+        $this->dispatcher->pag = $_GET['pag'];
+
+        $this->dispatcher->method = $_GET['method'];
+        $this->listarFiltrado();
     }
 }
