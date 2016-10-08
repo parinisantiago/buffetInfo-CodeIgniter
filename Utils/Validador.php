@@ -5,21 +5,21 @@ class Validador{
             throw new Exception($error);
     }
 
-    public function validarStringEspeciales($var, $tam, $error){
+    public function validarStringEspeciales($var, $error, $tam){
         if ( !$this->tam($var, $tam) || !$this->varSet($var, $error) || !preg_match("/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$/", $var))
             throw new Exception($error);
     }
-    public function validarNumeros($var, $tam, $error){
+    public function validarNumeros($var, $error, $tam){
         if (!$this->tam($var, $tam) || !$this->varSet($var, $error) || !preg_match("/^[0-9]+$/", $var))
             throw new Exception($error);
     }
 
-    public function validarMail($var, $tam, $error){
+    public function validarMail($var, $error, $tam){
         if (!$this->tam($var, $tam) || !$this->varSet($var, $error) ||  !preg_match("/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/", $var))
             throw new Exception($error);
     }
-    public function validarNumerosPunto($var, $tam, $error){
-        if (!$this->tam($var, $tam) || !$this->varSet($var, $error) || !preg_match("/^[0-9]+$/.", $var))
+    public function validarNumerosPunto($var, $error, $tam){
+        if (!$this->tam($var, $tam) || !$this->varSet($var, $error) || !preg_match("/^[0-9.     ]+$/", $var))
             throw new Exception($error);
     }
     public function varSet($var, $error){
