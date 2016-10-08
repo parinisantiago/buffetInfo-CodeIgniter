@@ -18,7 +18,7 @@ class GestorController extends BackendController{
 
     public function listadoFaltantes(){
 
-        $this->paginaCorrecta($this->productoModel->totalProductos());/* le paso todos los productos, si funciona para todos entonces funciona para un subconjunto */
+        $this->paginaCorrecta($this->productoModel-> totalProductosFaltantes());
         $this->dispatcher->producto = $this->productoModel->listarProductosFaltantes($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->method = "listadoFaltantes";
@@ -26,11 +26,10 @@ class GestorController extends BackendController{
 
     }
     public function listadoStockMinimo(){
-        $this->dispatcher->producto = $this->productoModel->listarProductosStockMinimo();
-        $_GET['pag'] = 0;
-        $_GET['method'] = 'listadoStockMinimo';
+        $this->paginaCorrecta($this->productoModel-> totalProductosStockMinimo());
+        $this->dispatcher->producto = $this->productoModel->listarProductosStockMinimo($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
         $this->dispatcher->pag = $_GET['pag'];
-
-        $this->dispatcher->method = $_GET['method'];
+        $this->dispatcher->method = "listadoStockMinimo";
+        $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
     }
 }
