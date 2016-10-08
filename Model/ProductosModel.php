@@ -100,11 +100,11 @@ class ProductosModel extends Model{
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
                 WHERE p.eliminado = 0 and p.stock <= p.stockMinimo ", array());
     }
-    public function listarProductosFaltantes(){
-        return $this -> queryTodasLasFilas(
+    public function listarProductosFaltantes($limit, $offset){
+        return $this -> queryOFFSET(
                 "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.proveedor, p.precioVentaUnitario, p.descripcion, p.fechaAlta, p.idProducto
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
-                 WHERE p.eliminado = 0 and p.stock = 0 ", array());
+                 WHERE p.eliminado = 0 and p.stock = 0 LIMIT :limit OFFSET :offset ", $limit, $offset);
     }
 
     public function totalProductos(){
