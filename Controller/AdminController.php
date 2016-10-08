@@ -24,14 +24,22 @@ class AdminController extends BackendController{
             $this->dispatcher->render('Backend/abmUsuarios.twig');
     }
 
+    public function insertUsuario(){
+
+        if ($this->model->userExist($_POST['nombreUsuario'])) throw new Exception("El usuario ya existe");
+        $this->model->addUser($_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'], $_POST['telefono'],$_POST['rol']);
+    }
+
+
+
     public function usuarioAM()
     {
 
             $this->validarUsuario(); //realiza validaciones mediante expresiones regulares
-            if (! isset($_POST['idUsuario'])) $this->model->addUser($_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'], $_POST['telefono'],$_POST['rol']);
-
-            else if (Session::getValue('modUserId') == $_POST['idUsuario']) $this->model->modUser($_POST['idUsuario'],$_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'],$_POST['telefono'], $_POST['rol']); //si es el usaurio guardado, lo modifica
+            if (! isset($_POST['idUsuario'])) $this->insertUsuario();
+            else if ((Session::getValue('modUserId') == $_POST['idUsuario']) &&  (  $this->model->userExist($_POST['nombreUsuario']) == $_POST['nombreUsuario'])) $this->model->modUser($_POST['idUsuario'],$_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'],$_POST['telefono'], $_POST['rol']); //si es el usaurio guardado, lo modifica
             else throw new Exception('El id de usuario se vio modificado durante la operacion');
+            $_GET['pag'] = 0;
             $this->abmUsuario();
 
     }
@@ -52,7 +60,7 @@ class AdminController extends BackendController{
     
     public function registroUsuario()
     {
-        $this->dispatcher->rols = $this->rolModel->getAllRols();
+        $this->dispatcher->rols = $this->rolModel->getAllRols(); //para poder crear el listado de roles
         $this->dispatcher->render("Backend/registroUsuariosTemplate.twig");
     }
 
@@ -69,15 +77,16 @@ class AdminController extends BackendController{
     private function validarUsuario()
     {
 
-        $this->validator->varSet($_POST['submitButton']);
+        $this->validator->varSet($_POST['submitButton'], "apreta el boton de sumbit");
         $this->validator->validarString( $_POST['nombreUsuario'], 'Error en nombreUsuarip', 15 );
-        $this->validator->validarStringEspeciales( $_POST['nombre'], 'Error en nombreUsuarip', 25 );
-        $this->validator->validarString( $_POST['pass'], 'Error en nombreUsuarip', 15 );
-        $this->validator->validarStringEspeciales( $_POST['apellido'], 'Error en nombreUsuarip', 25 );
-        $this->validator->validarNumero( $_POST['dni'], 'Error en nombreUsuarip', 8 );
-        $this->validator->validarMail( $_POST['email'], 'Error en nombreUsuarip', 15 );
-        $this->validator->validarNumero( $_POST['telefono'],'Error en nombreUsuarip', 15 );
-        $this->validator->varSet($_POST['rol']);
+        $this->validator->validarStringEspeciales( $_POST['nombre'], 'Error en nombre', 25 );
+        $this->validator->validarString( $_POST['pass'], 'Error en contraseña', 15 );
+        $this->validator->validarStringEspeciales( $_POST['apellido'], 'Error en apellido', 25 );
+        $this->validator->validarNumeros( $_POST['dni'], 'Error en dni', 8 );
+        $this->validator->validarMail( $_POST['email'], 'Error en email', 25 );
+        $this->validator->validarNumeros( $_POST['telefono'],'Error en telefono', 25 );
+        $this->validator->varSet($_POST['rol'], "envia un rol");
+
 
     }
   
