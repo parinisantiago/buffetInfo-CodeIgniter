@@ -72,6 +72,14 @@ class BackendController extends Controller{
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
     }
+
+
+    public function listarFiltrado(){
+        $this->paginaCorrecta($this->productoModel->totalProductos());
+        $this->dispatcher->pag = $_GET['pag'];
+        $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
+    }
+
     public function productosAM(){
         if (isset($_POST["idProducto"])){
             $this->dispatcher->producto =$this ->productoModel->searchIdProducto($_POST["idProducto"]);
@@ -81,12 +89,13 @@ class BackendController extends Controller{
     }
     public function productosAMPost(){
         /*ver botones de venta, solo son del admin*/
-        validarProductos($_POST);
+        $this->validarProductos($_POST);
         if ($_POST["idProducto"] != ""){
            $this->dispatcher->producto =$this ->productoModel->actualizarProducto($_POST); 
         }else{
             $this->dispatcher->producto =$this ->productoModel->insertarProducto($_POST);
         }
+        $_GET['pag'] = 0;
         $this->productosListar();
     }
     public function productosE(){
@@ -96,15 +105,24 @@ class BackendController extends Controller{
 
 
 
-    /*validar productos en el serverrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr
-     * public function validarProductos($var){
-         if (! isset($var['nombre'])) throw new Exception('Falta escribir el telefono');
-        else{
-            validarNumeros($_POST['telefono']);
+    /*validar productos en el serverrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr */
+      public function validarProductos($var){
+
+          $this->validator->varSet($var['submit'],"Apreta el boton de submit");
+          $this->validator->validarStringEspeciales($var['nombre'],"erroe en nombre",25);
+          $this->validator->validarStringEspeciales($var['marca'],"error en marca",25);
+          $this->validator->validarNumeros($var['stock'],"error en stock",3);
+          $this->validator->validarNumeros($var['stockMinimo'],"error en stock minimo",3);
+          $this->validator->validarNumeros($var['categoria'],"error en categoria",3);
+          $this->validator->validarString($var['proveedor'],"error en proveedor",25);
+          $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"error en precio de venta unitario",5);
+          if (! $this->categoriaModel->getCategoriaById($var['categoria'])) throw new Exception("No existe la categoria");
+
         }
-    }*/
+
 
     /*--- paginacion ---*/
+
 
     public function paginaCorrecta($total){
 
