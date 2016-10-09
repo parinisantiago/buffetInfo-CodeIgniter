@@ -143,9 +143,11 @@ clear: both;
 }
 
 /* --- MENSAJE DE ERROR --- */
-.mensajeError{
-    display: block;
-    width: 80%;
-    background-color: yellow;
+#error{
+    border:solid 1px #DEDEDE;
+    background: #ef1014;
+    color:#222222;
+    padding:4px;
+    text-align:center;
 }
 
