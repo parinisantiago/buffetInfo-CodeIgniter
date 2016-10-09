@@ -45,7 +45,7 @@
                         </td>
                         <td headers="eliminar">
                             
-                            <form method="post" action={% if rol == '0' %} Loader.php?controller=AdminController&method=productosE {% else %} Loader.php?controller=GestorController&method=productosE {% endif %}>
+                            <form method="post" action={% if rol == '0' %} Loader.php?controller=AdminController&method=ventasEliminar {% else %} Loader.php?controller=GestorController&method=ventasEliminar {% endif %}>
                                 <label for="idProducto" hidden></label>
                                 <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }} >
                                 <button type="submit" id="submitButton" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" role="button">

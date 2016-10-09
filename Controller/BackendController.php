@@ -9,6 +9,7 @@ class BackendController extends Controller{
     public $rolModel;
     public $productoModel;
     public $categoriaModel;
+    public $ventaModel;
 
     public function __construct(){
             parent::__contruct();
@@ -16,6 +17,7 @@ class BackendController extends Controller{
             $this->rolModel = new RolModel();
             $this->productoModel = new ProductosModel();
             $this->categoriaModel = new CategoriaModel();
+            $this->ventaModel = new VentaModel();
     }
     
     public function index(){
@@ -29,32 +31,41 @@ class BackendController extends Controller{
         $this->paginaCorrecta($this->productoModel->totalProductos());
         $this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
         $this->dispatcher->pag = $_GET['pag'];
-        var_dump($_GET['pag']);
-        $this->dispatcher->render("Backend/VenderTemplate.twig"); 
+        $this->dispatcher->render("Backend/VenderTemplate.twig");
     }
     public function venta(){
         /***** actualizar ganancias***************************/
         var_dump($_POST);
-        die();
         $this->dispatcher->producto =$this ->productoModel->insertarProducto($_POST);
+        
         $this->paginaCorrecta($this->productoModel->totalProductos());
         $this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
         $this->dispatcher->pag = $_GET['pag'];
         
         $this->dispatcher->render("Backend/VenderTemplate.twig"); 
-        var_dump($var);
         die();
     }
 
-    public function ventaListar(){
-        /*botones de pasar pagina=caca*/
-        /******muestra todos los productos vendidos***********************/
+    public function venderListar(){
+        $this->paginaCorrecta($this->ventaModel->totalVenta());
+        $this->dispatcher->ventas = $this->ventaModel->getAllVenta($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        $this->dispatcher->pag = $_GET['pag'];
+        $this->dispatcher->render("Backend/venderListarTemplate.twig");
     }
     public function ventaModificar(){
         /*****************************/
     }
     public function ventaEliminar(){
-        /*****************************/
+        $this->validator->varSet($_POST['submitButton'], "Apreta el botón de eliminar macho");
+        $this->validator->varSet($_POST['idIngresoDetalle'], "Faltan datos para poder eliminar la venta");
+        
+        $this->ventaModel->eliminarVenta($_POST['idIngresoDetalle']);
+        
+        
+        
+        $_GET['pag'] = 0;
+
+        $this->venderListar();
     }
     /* ---Compra ---*/ 
 

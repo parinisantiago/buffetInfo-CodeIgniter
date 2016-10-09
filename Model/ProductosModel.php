@@ -52,6 +52,8 @@ class ProductosModel extends Model{
                     'idProducto' => $Prod["idProducto"]
                 ));
     }
+    
+    
     public function insertarProducto($Prod){
         $today=getDate();
         return $this -> query("

@@ -29,7 +29,7 @@ class MainUserModel extends Model
             SELECT usuario.idUsuario,usuario.usuario, usuario.clave, usuario.nombre, usuario.apellido, usuario.documento, usuario.email, usuario.telefono, rol.nombre AS rol, ubicacion.nombre AS ubicacion  
             FROM usuario 
             INNER JOIN rol ON (usuario.idRol = rol.idRol ) 
-            INNER JOIN ubicacion ON (usuario.idUbicacion = ubicacion.idUbicacion)
+            INNER JOIN ubicacion ON (usuario.idUbicacion = ubicacion.idUbicacion) WHERE eliminado = 0
             LIMIT :limit  
             OFFSET :offset ', $limit, $offset);
     }
@@ -96,7 +96,7 @@ class MainUserModel extends Model
     }
 
     public function totalUsuario(){
-        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM usuario',array());
+        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM usuario WHERE eliminado = 0',array());
     }
 
 }

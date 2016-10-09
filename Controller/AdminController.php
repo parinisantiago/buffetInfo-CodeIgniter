@@ -52,8 +52,9 @@ class AdminController extends BackendController{
             if (!isset($_POST['idUsuario'])) throw new Exception("Faltan datos para poder eliminar el usuario");
             else $idUsuario = $_POST['idUsuario'];
 
-            $this->dispatcher->user = $this->model->deleteUser($idUsuario);
+            $this->model->deleteUser($idUsuario);
 
+            $_GET['pag'] = 0;
             $this->abmUsuario();
 
     }

@@ -6,10 +6,22 @@ class VentaModel extends Model{
         parent::__construct();
     }
     /******OJO YA LISTA LOS NO ELIMINADOS, SACARLO LA PREGUNTA DE TWIG*/
+
+    public function totalVenta(){
+        return $this->queryPreparadaSQL('
+            SELECT COUNT(*) AS total 
+            FROM producto p 
+            INNER JOIN ingresoDetalle i ON (p.idProducto=i.idProducto) 
+            INNER JOIN ingresoTipo it ON (i.idTipoIngreso=it.idIngresoTipo) 
+            WHERE p.eliminado = 0 '
+            ,array());
+    }
+
+
     public function getAllVenta($limit, $offset){
         return $this -> queryOFFSET('
-            SELECT p.nombre, p.marca,i.cantidad, i.precioUnitario,i.descripcion, i.fecha, it.Nombre
-            FROM producto p INNER JOIN ingresoDetalle i ON (p.idProducto=i.idProducto) INNER JOIN ingresoTipo it ON (i.idIngresoTipo=it.idIngresoTipo) 
+            SELECT p.idProducto p.nombre, p.marca,i.cantidad, i.precioUnitario,i.descripcion, i.fecha, it.Nombre
+            FROM producto p INNER JOIN ingresoDetalle i ON (p.idProducto=i.idProducto) INNER JOIN ingresoTipo it ON (i.idTipoIngreso=it.idIngresoTipo) 
             WHERE p.eliminado = 0 
             LIMIT :limit  
             OFFSET :offset', $limit, $offset
@@ -67,7 +79,7 @@ class VentaModel extends Model{
         return $this -> query(
             "UPDATE ingresoDetalle id 
             SET id.eliminado =1 
-            WHERE id.idIngresoDetalle = :idIngresoDetalle" , array('idVent' => $idVent));
+            WHERE id.idIngresoDetalle = :idIngresoDetalle" , array('idIngresoDetalle' => $idVenta));
     }
 }
 ?>
