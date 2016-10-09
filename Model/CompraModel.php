@@ -11,7 +11,14 @@ class CompraModel extends Model{
     }
     public function getAllCompras($limit, $offset){
         return $this -> queryOFFSET('
-            SELECT p.nombre, p.marca, e.cantidad, e.precioUnitario, c.proveedor, c.fecha
+            SELECT
+            c.idCompra,
+            p.nombre, 
+            p.marca, 
+            e.cantidad, 
+            e.precioUnitario, 
+            c.proveedor, 
+            c.fecha
             FROM compra c INNER JOIN egresoDetalle e ON(c.idCompra=e.idCompra)INNER JOIN producto p ON (p.idProducto=e.idProducto) 
             WHERE p.eliminado = 0 and c.eliminado=0 and e.eliminado=0
             ORDER BY c.idCompra

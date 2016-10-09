@@ -11,32 +11,28 @@
         {%endif%}
         <table class="tablaProductos" summary="detallas de cada compra realizada">
             <thead>
-            <tr>
-                <th id="nombre">Nombre</th>
-                <th id="marca">Marca</th>
-                <th id="cantidad">Cantidad</th>
-                <th id="precioUnitario">Precio Unitario</th>
-                <th id="egresoTipo">Tipo de Egreso</th>
-                <th id="proveedor">Proveedor</th>
-                <th id="proveedorCUIT">CUIT Proveedor</th>
-                <th id="fechaCompra">Fecha Compra</th>
-                <th id="editar">Editar</th>
-                <th id="eliminar">Eliminar</th>
-            </tr>
+                <tr>
+                    <th id="idCompra">Numero Ticket</th>
+                    <th id="nombre">Nombre</th>
+                    <th id="marca">Marca</th>
+                    <th id="cantidad">Cantidad</th>
+                    <th id="precioUnitario">Precio Unitario</th>
+                    <th id="proveedor">Proveedor</th>
+                    <th id="fechaCompra">Fecha Compra</th>
+                    <th id="editar">Editar</th>
+                    <th id="eliminar">Eliminar</th>
+                </tr>
             </thead>
             <tbody>
-
             {% for compra in compras %}
                 <tr>
+                    <td headers="idCompra">{{ compra.idCompra }}</td>
                     <td headers="nombre">{{ compra.nombre }}</td>
                     <td headers="marca"> {{ compra.marca }}</td>
-                    <td headers="stock"> {{ compra.stock }}</td>
-                    <td headers="stockMinimo">{{ compra.cantidad }}</td>
+                    <td headers="stock"> {{ compra.cantidad }}</td>
                     <td headers="categoria">{{ compra.precioUnitario }}</td>
-                    <td headers="proveedor">{{ compra.tipoDeEgreso }}</td>
-                    <td headers="precioVentaUnitario">{{ compra.proveedor }}</td>
-                    <td headers="descripcion">{{ compra.proveedorCuit }}</td>
-                    <td headers="fechaAlta">{{ compra.fechaCompra }}</td>
+                    <td headers="proveedor">{{ compra.proveedor }}</td>
+                    <td headers="fecha">{{ compra.fecha }}</td>
                    <td headers="editar">
                         {% if rol == "0" %}
                             <form method="post" action="Loader.php?controller=AdminController&method=compraModificar">
