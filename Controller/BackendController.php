@@ -84,6 +84,9 @@ class BackendController extends Controller{
         $this->dispatcher->method = "compraListar";
         $this->dispatcher->render("Backend/CompraListarTemplate.twig");
     }
+    public function compraAM(){
+        
+    }
      public function compraModificar(){
         /*****************************/
     }

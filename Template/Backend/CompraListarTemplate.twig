@@ -4,6 +4,11 @@
 
     <div>
         <p> Página: {{ pag }} <p>
+        {% if rol == "0" %}
+            <a href="Loader.php?controller=adminController&method=compraAM">Nueva compras</a>
+        {%else%}
+            <a href="Loader.php?controller=GestorController&method=compraAM">Nueva compras</a>
+        {%endif%}
         <table class="tablaProductos" summary="detallas de cada compra realizada">
             <thead>
             <tr>
