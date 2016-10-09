@@ -23,15 +23,15 @@
 
             {% for compra in compras %}
                 <tr>
-                    <td headers="nombre">{{ prod.nombre }}</td>
-                    <td headers="marca"> {{ prod.marca }}</td>
-                    <td headers="stock"> {{ prod.stock }}</td>
-                    <td headers="stockMinimo">{{ prod.cantidad }}</td>
-                    <td headers="categoria">{{ prod.precioUnitario }}</td>
-                    <td headers="proveedor">{{ prod.tipoDeEgreso }}</td>
-                    <td headers="precioVentaUnitario">{{ prod.proveedor }}</td>
-                    <td headers="descripcion">{{ prod.proveedorCuit }}</td>
-                    <td headers="fechaAlta">{{ prod.fechaCompra }}</td>
+                    <td headers="nombre">{{ compra.nombre }}</td>
+                    <td headers="marca"> {{ compra.marca }}</td>
+                    <td headers="stock"> {{ compra.stock }}</td>
+                    <td headers="stockMinimo">{{ compra.cantidad }}</td>
+                    <td headers="categoria">{{ compra.precioUnitario }}</td>
+                    <td headers="proveedor">{{ compra.tipoDeEgreso }}</td>
+                    <td headers="precioVentaUnitario">{{ compra.proveedor }}</td>
+                    <td headers="descripcion">{{ compra.proveedorCuit }}</td>
+                    <td headers="fechaAlta">{{ compra.fechaCompra }}</td>
                    <td headers="editar">
                         {% if rol == "0" %}
                             <form method="post" action="Loader.php?controller=AdminController&method=compraModificar">
@@ -60,10 +60,17 @@
                     </td>
                 </tr>
            {% endfor %}
-            {% if pag != 0 %}
-                <a href="/Loader.php?controller=BackendController&method=productosListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
-            {% endif %}
-            <a href="/Loader.php?controller=BackendController&method=productosListar&pag={{ pag + 1 }}">Página Siguiente --></a>
+            {% if rol == '0' %}
+                {% if pag != 0 %}
+                    <a href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                {% endif %}
+                <a href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente --></a>
+            {% else %}
+                {% if pag != 0 %}
+                    <a href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                {% endif %}
+                <a href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente --></a>
+            {% endif  %}
             </tbody>
         </table>
     </div>
