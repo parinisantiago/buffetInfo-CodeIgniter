@@ -144,8 +144,8 @@ clear: both;
 
 /* --- MENSAJE DE ERROR --- */
 #error{
-    border:solid 1px #DEDEDE;
-    background: #ef1014;
+    border:solid 1px #de0b00;
+    background: #ef7075;
     color:#222222;
     padding:4px;
     text-align:center;
