@@ -19,6 +19,7 @@ class BackendController extends Controller{
             $this->productoModel = new ProductosModel();
             $this->categoriaModel = new CategoriaModel();
             $this->ventaModel = new VentaModel();
+            $this->compraModel= new CompraModel(); 
     }
     
     public function index(){
@@ -71,10 +72,16 @@ class BackendController extends Controller{
     /* ---Compra ---*/ 
 
     public function compraListar(){
+/**************AIIIIIIIIIIIIUUUUUUUUUUUUUDAAAAAAAAAAAAAAAA 
+ * no ecuentro por que no esta listando las compras, parece todo correcto
+ * provee el sql y funca, tengo configurado 5 elemntos por pagina
+ * no se que es  $this->dispatcher->method = "compraListar";
+ * pero lo copie de vos
+ */
         $this->paginaCorrecta($this->compraModel->totalCompras());
-        $this->dispatcher->compra = $this->compraModel->getAllcompras($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        $this->dispatcher->compra = $this->compraModel->getAllCompras($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
         $this->dispatcher->pag = $_GET['pag'];
-        $this->dispatcher->method = "CompraListar";
+        $this->dispatcher->method = "compraListar";
         $this->dispatcher->render("Backend/CompraListarTemplate.twig");
     }
      public function compraModificar(){
@@ -95,8 +102,6 @@ class BackendController extends Controller{
         $this->dispatcher->method = "ProductosListar";
         $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
     }
-
-
     public function productosAM(){
         if (isset($_POST["idProducto"])){
             $this->dispatcher->producto =$this ->productoModel->searchIdProducto($_POST["idProducto"]);

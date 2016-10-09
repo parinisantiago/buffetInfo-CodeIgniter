@@ -6,13 +6,15 @@ class CompraModel extends Model{
     public function __construct(){
         parent::__construct();
     }
-    public function totalCompras(){}/****hacer, es para paginacion
-    /******OJO YA LISTA LOS NO ELIMINADOS, SACARLO LA PREGUNTA DE TWIG*/
+    public function totalCompras(){
+        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM egresoDetalle', array());
+    }
     public function getAllCompras($limit, $offset){
         return $this -> queryOFFSET('
-            SELECT p.nombre, p.marca,e.cantidad, e.precioUnitario, e.fecha, it.Nombre
-            FROM producto p INNER JOIN ingresoDetalle i ON (p.idProducto=i.idProducto) INNER JOIN ingresoTipo it ON (i.idIngresoTipo=it.idIngresoTipo) 
-            WHERE p.eliminado = 0 
+            SELECT p.nombre, p.marca, e.cantidad, e.precioUnitario, c.proveedor, c.fecha
+            FROM compra c INNER JOIN egresoDetalle e ON(c.idCompra=e.idCompra)INNER JOIN producto p ON (p.idProducto=e.idProducto) 
+            WHERE p.eliminado = 0 and c.eliminado=0 and e.eliminado=0
+            ORDER BY c.idCompra
             LIMIT :limit  
             OFFSET :offset', $limit, $offset
         );
