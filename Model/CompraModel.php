@@ -6,6 +6,7 @@ class CompraModel extends Model{
     public function __construct(){
         parent::__construct();
     }
+    public function totalCompras(){}/****hacer, es para paginacion
     /******OJO YA LISTA LOS NO ELIMINADOS, SACARLO LA PREGUNTA DE TWIG*/
     public function getAllCompras($limit, $offset){
         return $this -> queryOFFSET('

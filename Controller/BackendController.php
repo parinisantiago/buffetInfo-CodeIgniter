@@ -10,6 +10,7 @@ class BackendController extends Controller{
     public $productoModel;
     public $categoriaModel;
     public $ventaModel;
+    public $compraModel;
 
     public function __construct(){
             parent::__contruct();
@@ -70,11 +71,17 @@ class BackendController extends Controller{
     /* ---Compra ---*/ 
 
     public function compraListar(){
-        /*botones de pasar pagina=caca*/
-        /******muestra todos los productos comprados***********************/
+        $this->paginaCorrecta($this->compraModel->totalCompras());
+        $this->dispatcher->compra = $this->compraModel->getAllcompras($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        $this->dispatcher->pag = $_GET['pag'];
+        $this->dispatcher->method = "CompraListar";
+        $this->dispatcher->render("Backend/CompraListarTemplate.twig");
     }
      public function compraModificar(){
         /*****************************/
+    }
+    public function compraAMPost(){
+        
     }
     public function compraEliminar(){
         /*****************************/
@@ -109,7 +116,7 @@ class BackendController extends Controller{
         $this->dispatcher->method = "ProductosListar";
         $this->productosListar();
     }
-    public function productosE(){
+    public function productosEliminar(){
      $this->dispatcher->producto =$this ->productoModel->deleteProducto($_POST["idProducto"]);
         $_GET['pag'] = 0;
         $this->dispatcher->method = "ProductosListar";
@@ -127,7 +134,6 @@ class BackendController extends Controller{
           $this->validator->validarNumeros($var['stock'],"error en stock",3);
           $this->validator->validarNumeros($var['stockMinimo'],"error en stock minimo",3);
           $this->validator->validarNumeros($var['categoria'],"error en categoria",3);
-          $this->validator->validarString($var['proveedor'],"error en proveedor",25);
           $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"error en precio de venta unitario",5);
           if (! $this->categoriaModel->getCategoriaById($var['categoria'])) throw new Exception("No existe la categoria");
 

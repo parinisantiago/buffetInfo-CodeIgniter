@@ -1,8 +1,12 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
-	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=AdminController&method=productosAMPost" method="post">
-            <input type='hidden' name='idProducto' id="idProducto" value={{producto.idProducto}}>
+    {% if rol == "0" %}
+	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=AdminController&method=compraAMPost" method="post">
+    {%else%}
+	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=GestorController&method=compraAMPost" method="post">
+    {%endif%}
+        ////    <input type='hidden' name='idProducto' id="idProducto" value={{producto.idProducto}}>
             
             <label for="nombre" class="formProducText">Nombre:</label>
             {% if (producto.nombre is empty)  %}
@@ -43,6 +47,13 @@
                 {% endfor %}
             </select>
            	    
+            <label for="proveedor" class="formProducText">Proveedor:</label>
+            {% if (producto.proveedor is empty)  %}
+                <input type="text" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un proveedor" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required>
+            {% else %}
+                <input type="text" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un proveedor" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required value={{producto.proveedor}}>
+            {% endif %}
+            
 	    <label for="precioVentaUnitario" class="formProducText">Precio Venta Unitario:</label>
 	    {% if (producto.precioVentaUnitario is empty)  %}
                 <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" maxlength="5" required>

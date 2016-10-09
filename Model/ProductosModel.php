@@ -5,16 +5,10 @@ class ProductosModel extends Model{
     public function __construct(){
         parent::__construct();
     }
-    /*************************
-     * campos eliminados MODIFICA A TODAS LAS CONSULTAS :C
-     *
-     * fechaAlta
-     * provedor
-     */
 
     public function getAllProducto($limit, $offset){
         return $this -> queryOFFSET(
-                'SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.proveedor, p.precioVentaUnitario, p.descripcion, p.fechaAlta, p.idProducto
+                'SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.precioVentaUnitario, p.descripcion, p.idProducto
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria) 
                 WHERE p.eliminado = 0 
                 LIMIT :limit  
@@ -22,7 +16,7 @@ class ProductosModel extends Model{
     }
     public function searchIdProducto($idProd){
         return $this ->queryPreparadaSQL(
-                "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, p.proveedor, p.precioVentaUnitario, p.descripcion, p.fechaAlta, p.idProducto,c.nombre as categoria
+                "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, p.precioVentaUnitario, p.descripcion, p.idProducto,c.nombre as categoria
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
                 WHERE p.eliminado = 0 and p.idProducto = :idProd" , array(idProd => $idProd));
     }
@@ -35,20 +29,16 @@ class ProductosModel extends Model{
                     stock = :stock,
                     stockMinimo = :stockMinimo,
                     idCategoria = :categoria,
-                    proveedor = :proveedor,
                     precioVentaUnitario = :precioVentaUnitario,
-                    descripcion = :descripcion, 
-                    fechaAlta = :fechaAlta
+                    descripcion = :descripcion 
                 WHERE idProducto= :idProducto",
                 array('nombre' => $Prod["nombre"],
                     'marca' => $Prod["marca"],
                     'stock' => $Prod["stock"],
                     'stockMinimo' => $Prod["stockMinimo"],
                     'categoria' => $Prod["categoria"],
-                    'proveedor' => $Prod["proveedor"],
                     'precioVentaUnitario' => $Prod["precioVentaUnitario"],
                     'descripcion'=> $Prod["descripcion"], 
-                   'fechaAlta' => $today['year']."-".$today['mon']."-".$today['mday']." ".$today['hours'].":".$today['minutes'].":".$today['seconds'],
                     'idProducto' => $Prod["idProducto"]
                 ));
     }
@@ -63,30 +53,24 @@ class ProductosModel extends Model{
                     stock,
                     stockMinimo,
                     idCategoria,
-                    proveedor,
                     precioVentaUnitario,
                     descripcion, 
-                    fechaAlta,
                     eliminado)
             VALUES (:nombre,
                     :marca,
                     :stock,
                     :stockMinimo,
                     :idCategoria,
-                    :proveedor,
                     :precioVentaUnitario,
                     :descripcion, 
-                    :fechaAlta,
                     0)",
             array('nombre' => $Prod["nombre"],
                     'marca' => $Prod["marca"],
                     'stock' => $Prod["stock"],
                     'stockMinimo' => $Prod["stockMinimo"],
                     'idCategoria' => $Prod["categoria"],
-                    'proveedor' => $Prod["proveedor"],
                     'precioVentaUnitario' => $Prod["precioVentaUnitario"],
-                    'descripcion' => $Prod["descripcion"], 
-                    'fechaAlta' => $today['year']."-".$today['mon']."-".$today['mday']." ".$today['hours'].":".$today['minutes'].":".$today['seconds']
+                    'descripcion' => $Prod["descripcion"]
                 ));    
     }
     public function deleteProducto($idProd){
@@ -98,7 +82,7 @@ class ProductosModel extends Model{
     
     public function listarProductosStockMinimo($limit, $offset){
         return $this -> queryOFFSET(
-                "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.proveedor, p.precioVentaUnitario, p.descripcion, p.fechaAlta, p.idProducto, c.idCategoria
+                "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.precioVentaUnitario, p.descripcion, p.idProducto, c.idCategoria
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
                 WHERE p.eliminado = 0 and p.stock <= p.stockMinimo LIMIT :limit OFFSET :offset", $limit, $offset);
     }
@@ -112,7 +96,7 @@ class ProductosModel extends Model{
 
     public function listarProductosFaltantes($limit, $offset){
         return $this -> queryOFFSET(
-                "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.proveedor, p.precioVentaUnitario, p.descripcion, p.fechaAlta, p.idProducto
+                "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.precioVentaUnitario, p.descripcion, p.idProducto
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
                  WHERE p.eliminado = 0 and p.stock = 0 LIMIT :limit OFFSET :offset ", $limit, $offset);
     }

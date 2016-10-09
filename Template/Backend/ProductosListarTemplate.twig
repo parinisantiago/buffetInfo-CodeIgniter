@@ -12,10 +12,8 @@
                 <th id="stock">Stock</th>
                 <th id="stockMinimo">Stock Minimo</th>
                 <th id="categoria">Categoria</th>
-                <th id="proveedor">Proveedor</th>
                 <th id="precioVentaUnitario">Precio de Venta Unitario</th>
                 <th id="descripcion">Descripcion</th>
-                <th id="fechaAlta">Fecha de Alta</th>
                 <th id="editar">Editar</th>
                 <th id="eliminar">Eliminar</th>
             </tr>
@@ -30,10 +28,8 @@
                         <td headers="stock"> {{ prod.stock }}</td>
                         <td headers="stockMinimo">{{ prod.stockMinimo }}</td>
                         <td headers="categoria">{{ prod.categoria }}</td>
-                        <td headers="proveedor">{{ prod.proveedor }}</td>
                         <td headers="precioVentaUnitario">{{ prod.precioVentaUnitario }}</td>
                         <td headers="descripcion">{{ prod.descripcion }}</td>
-                        <td headers="fechaAlta">{{ prod.fechaAlta }}</td>
                         <td headers="editar">
                             <form method="post" action={% if rol == '0' %} Loader.php?controller=AdminController&method=productosAM {% else %} Loader.php?controller=GestorController&method=productosAM {% endif %}>
                                 <label for="idProducto" hidden></label>
@@ -44,8 +40,11 @@
                             </form>
                         </td>
                         <td headers="eliminar">
-                            
-                            <form method="post" action={% if rol == '0' %} Loader.php?controller=AdminController&method=ventasEliminar {% else %} Loader.php?controller=GestorController&method=ventasEliminar {% endif %}>
+                            {% if rol == "0" %}
+                             <form method="post" action="Loader.php?controller=AdminController&method=productosEliminar">
+                            {%else%}
+                                <form method="post" action="Loader.php?controller=GestorController&method=productosEliminar">
+                            {% endif %}
                                 <label for="idProducto" hidden></label>
                                 <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }} >
                                 <button type="submit" id="submitButton" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" role="button">
