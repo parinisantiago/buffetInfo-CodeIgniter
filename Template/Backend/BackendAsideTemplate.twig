@@ -18,7 +18,11 @@
     </li>
 
     <li class="asideItem">
-        <a href="">Gastos</a>
+        {% if rol == "0" %}
+            <a href="Loader.php?controller=adminController&method=compraListar&pag=0">Compras</a>
+        {%else%}
+            <a href="Loader.php?controller=GestorController&method=compraListar&pag=0">Compras</a>
+        {%endif%}
     </li>
     <li class="asideItem">
         <a href="">Menu</a>
