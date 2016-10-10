@@ -64,22 +64,23 @@ class CompraModel extends Model{
     
      public function insertarCompra($comp){
         $today=getDate();
+ 
         return $this -> query("
             INSERT INTO compra(
                 idProducto,
                 cantidad,
                 precioUnitario,
                 idProveedor,
-                fecha, elimina do)
+                fecha, eliminado)
             VALUES (:idProducto,
                     :cantidad,
                     :precioUnitario,
                     :idProveedor,
                     :fecha, 0)",
-            array('idProducto' => $comp["idProducto"],
+            array('idProducto' => $comp["producto"],
                 'cantidad' => $comp["cantidad"],
                 'precioUnitario' => $comp["precioUnitario"],
-                'idProveedor' => $comp["idProveedor"],
+                'idProveedor' => $comp["proveedor"],
                 'fecha' =>$today['year']."-".$today['mon']."-".$today['mday']." ".$today['hours'].":".$today['minutes'].":".$today['seconds']
                 )
         );

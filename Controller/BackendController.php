@@ -86,7 +86,6 @@ class BackendController extends Controller{
         $valor .= '';
         $this->productoModel->actualizarCantProductos($_POST['idProducto'],$valor);
 
-        var_dump($this->productoModel->searchIdProducto($_POST['idProducto'])->stock)   ;
         $this->ventaModel->eliminarVenta($_POST['idIngresoDetalle']);
   
         $_GET['pag'] = 0;
@@ -113,9 +112,14 @@ class BackendController extends Controller{
     public function compraAMPost(){
         $this->validarCompra($_POST);
         if ($_POST["idCompra"] != ""){
-           $this->dispatcher->compra =$this ->compraModel->actualizarCompra($_POST); 
+           $this->dispatcher->compra =$this->compraModel->actualizarCompra($_POST);
+
         }else{
             $this->dispatcher->compra =$this ->compraModel->insertarCompra($_POST);
+            $producto = $this->productoModel->searchIdProducto($_POST['producto']);
+            $nuevoStock = $producto -> stock + $_POST['cantidad'];
+            $nuevoStock .= "";
+            $this->productoModel->actualizarCantProductos($_POST['producto'], $nuevoStock);
         }
         $_GET['pag'] = 0;
         $this->dispatcher->method = "CompraListar";
@@ -123,7 +127,24 @@ class BackendController extends Controller{
     }
     
     public function compraEliminar(){
-        $this->dispatcher->compra =$this ->compraModel->eliminarCompra($_POST["idCompra"]);
+
+        $this->validator->varSet($_POST['idCompra'], "no hay un id de compra");
+        $this->validator->varSet($_POST['submitButton'], "apreta el boton de submit");
+
+        $compra = $this->compraModel->searchIdCompra($_POST['idCompra']);
+
+        $producto = $this->productoModel->searchIdProducto($compra->idProducto);
+
+        $nuevoStock = $producto -> stock - $compra -> cantidad;
+
+        if ($nuevoStock < 0) throw new Exception("Ya se han vendido productos como para cancelar la compra");
+        $nuevoStock .= "";
+
+        $this->productoModel->actualizarCantProductos($producto->idProducto, $nuevoStock);
+
+        $this->dispatcher->compra =$this ->compraModel->eliminarCompra($compra->idCompra);
+
+
         $_GET['pag'] = 0;
         $this->dispatcher->method = "CompraListar";
         $this->compraListar();
@@ -134,7 +155,7 @@ class BackendController extends Controller{
         if (! $this->productoModel->searchIdProducto($var['producto'])) throw new Exception("No existe el producto");
         $this->validator->validarNumeros($var['cantidad'],"error en cantidad",5);
         $this->validator->validarNumerosPunto($var['precioUnitario'],"error en precio unitario",50);
-        if (! isset($var['fecha'])){
+        if (isset($var['fecha'])){
             $this->validator->validarFecha($var['fecha'],"error en fecha");
         }
     }
@@ -151,7 +172,6 @@ class BackendController extends Controller{
         if (isset($_POST["idProducto"])){
             $this->dispatcher->producto =$this ->productoModel->searchIdProducto($_POST["idProducto"]);
         }
-        var_dump($this->dispatcher->producto);
         $this->dispatcher->categoria =$this ->categoriaModel->getAllCategorias();
         $this->dispatcher->render("Backend/ProductosAMTemplate.twig");
     }
