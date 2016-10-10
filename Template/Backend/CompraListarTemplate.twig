@@ -2,11 +2,13 @@
 
 {% block main %}
     <div>
+        <div class="nuevo">
         {% if rol == "0" %}
-            <a href="Loader.php?controller=adminController&method=compraAM">Nueva compras</a>
+            <a class="boton" href="Loader.php?controller=adminController&method=compraAM">Nueva compras</a>
         {%else%}
-            <a href="Loader.php?controller=GestorController&method=compraAM">Nueva compras</a>
+            <a class="boton" href="Loader.php?controller=GestorController&method=compraAM">Nueva compras</a>
         {%endif%}
+        </div>
         <table class="tablaProductos" summary="detallas de cada compra realizada">
             <thead>
                 <tr>
@@ -62,14 +64,14 @@
             <p> Página: {{ pag }} <p>
             {% if rol == '0' %}
                 {% if pag != 0 %}
-                    <a href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                    <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag - 1 }}"> <-- Página anterior</a>
                 {% endif %}
-                <a href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente --></a>
+                <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente --></a>
             {% else %}
                 {% if pag != 0 %}
-                    <a href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                    <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag - 1 }}"> <-- Página anterior</a>
                 {% endif %}
-                <a href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente --></a>
+                <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente --></a>
             {% endif  %}
             </div>
             </tbody>

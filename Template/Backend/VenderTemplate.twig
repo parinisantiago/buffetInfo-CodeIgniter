@@ -3,7 +3,6 @@
 {% block main %}
 
     <div>
-        <p> Página: {{ pag }} <p>
         <table class="tablaProductos" summary="detallas de cada producto a vender">
             <thead>
                 <tr>
@@ -52,22 +51,27 @@
                         </tr>
                    {% endif %}
                 {% endfor %}
+                <div class="paginas" >
+                <p> Página: {{ pag }} <p>
                 {% if rol == '0' %}
                     {% if pag != 0 %}
-                        <a href="/Loader.php?controller=AdminController&method=vender&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                        <a class="boton" href="/Loader.php?controller=AdminController&method=vender&pag={{ pag - 1 }}"> <-- Página anterior</a>
                     {% endif %}
-                    <a href="/Loader.php?controller=AdminController&method=vender&pag={{ pag + 1 }}">Página Siguiente --></a>
+                    <a class="boton" href="/Loader.php?controller=AdminController&method=vender&pag={{ pag + 1 }}">Página Siguiente --></a>
                 {% else %}
                     {% if pag != 0 %}
-                        <a href="/Loader.php?controller=GestorController&method=vender&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                        <a class="boton" href="/Loader.php?controller=GestorController&method=vender&pag={{ pag - 1 }}"> <-- Página anterior</a>
                     {% endif %}
-                    <a href="/Loader.php?controller=GestorController&method=vender&pag={{ pag + 1 }}">Página Siguiente --></a>
+                    <a class="boton" href="/Loader.php?controller=GestorController&method=vender&pag={{ pag + 1 }}">Página Siguiente --></a>
                 {% endif  %}
+                </div>
+            <div class="nuevo">
                 {% if rol == "0" %}
-                    <a href="/Loader.php?controller=adminController&method=venderListar&pag=0">Productos vendidos</a>
+                    <a class="boton" href="/Loader.php?controller=adminController&method=venderListar&pag=0">Productos vendidos</a>
                 {%else%}
-                    <a href="/Loader.php?controller=GestorController&method=venderListar&pag=0">Productos vendidos</a>
+                    <a class="boton" href="/Loader.php?controller=GestorController&method=venderListar&pag=0">Productos vendidos</a>
                 {%endif%}    
+            </div>
         </tbody>
         </table>
     </div>

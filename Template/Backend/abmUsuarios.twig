@@ -3,8 +3,9 @@
 {% block main %}
 
     <div>
-        <p> Página: {{ pag }} <p>
-        <a href="Loader.php?controller=AdminController&method=registroUsuario"> <button>Registrar Usuario </button></a>
+        <div class="nuevo">
+           <a class="boton" href="Loader.php?controller=AdminController&method=registroUsuario"> Registrar Usuario </a>
+        </div>
         <table class="tablaProductos" summary="detallas de cada producto">
             <thead>
             <tr>
@@ -51,12 +52,16 @@
                     </form>
                 </td>
             </tr>
-           {% endfor %}
+            {% endfor %}
+            <div class="paginas" >
+            <p> Página: {{ pag }} <p>
+           
             {% if pag != 0 %}
             <a href="/Loader.php?controller=AdminController&method=abmUsuario&pag={{ pag - 1 }}"> <-- Página anterior</a>
             {% endif %}
             <a href="/Loader.php?controller=AdminController&method=abmUsuario&pag={{ pag + 1 }}">Página Siguiente --></a>
             </tbody>
+            </div>
         </table>
     </div>
 
