@@ -33,7 +33,6 @@ class MainUserController extends Controller
             $this->user = $this->model->getUser($_POST['username'], $_POST['pass']);
             $this->setSession();
         }
-        var_dump($_SESSION);
         $this->callUserRolController();
     }
 
@@ -57,7 +56,7 @@ class MainUserController extends Controller
         Session::setValue( $this -> user -> usuario, 'username');
         Session::setValue( $this -> user -> idRol, 'rol');
         Session::setValue(true, 'logged');
-        return true;
+
     }
 
     public function initError($error){
