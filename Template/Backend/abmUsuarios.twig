@@ -23,7 +23,6 @@
             <tbody>
 
             {% for user in users %}
-                {% if not user.eliminado == 1 %}
             <tr>
                 <td headers="nombreUsuario">{{ user.usuario }}</td>
                 <td headers="nombre"> {{ user.nombre }}</td>
@@ -52,7 +51,6 @@
                     </form>
                 </td>
             </tr>
-               {% endif %}
            {% endfor %}
             {% if pag != 0 %}
             <a href="/Loader.php?controller=AdminController&method=abmUsuario&pag={{ pag - 1 }}"> <-- Página anterior</a>

@@ -1,0 +1,24 @@
+{% extends 'Template/Backend/IndexTemplate.twig' %}
+
+{% block main %}
+    <form name="formUser" class="formProduc clearfix" action={% if rol == '0' %}"/Loader.php?controller=AdminController&method=modVenta" {% else %} "/Loader.php?controller=GestorController&method=modVenta" {% endif %} method="post">
+
+        <label for="idIngresoDetalle" hidden>Id detalle:</label>
+        <input type='hidden' id='idIngresoDetalle' name='idIngresoDetalle' value={{venta.idIngresoDetalle}}>
+
+        <label for="stockViejo" hidden>stock viejo:</label>
+        <input type='hidden' id='stockViejo' name='stockViejo' value={{venta.cantidad}}>
+
+        <label for="idProducto" hidden>id Producto:</label>
+        <input type='hidden' id='idProducto' name='idProducto' value={{venta.idProducto}}>
+
+        <label for="stock" class="formProducText">Cantidad de productos:</label>
+        <input type="number" name="stock" id="stock" class="formProducinput" value="{{ venta.cantidad }}" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" required>
+
+
+        <label for="submitButton" hidden>Boton de envio:</label>
+        <input type="submit" id="submitButton" name="submitButton">
+
+    </form>
+
+{% endblock %}
