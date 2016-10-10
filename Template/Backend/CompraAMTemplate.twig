@@ -48,7 +48,7 @@
            
             {% if not( compra.idCompra is empty)  %}
                 <label for="fecha" class="formProducText">Fecha:</label>
-                <input type="date" name="fecha" id="fecha" class="formProducinput" placeholder="2016/08/25" maxlength="10" value={{compra.fecha}} >
+                <input type="dateTime" name="fecha" id="fecha" class="formProducinput" placeholder="2016/08/25" maxlength="19" value={{compra.fecha}} >
             {% endif %}
             
 	    <label for="enviar" class="formProducTextHidden" hidden>Botón de envío</label>
