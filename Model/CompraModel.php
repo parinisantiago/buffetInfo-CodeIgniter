@@ -54,10 +54,10 @@ class CompraModel extends Model{
                 fecha = :fecha
             WHERE idCompra = :idCompra ",
             array('idCompra' => $comp["idCompra"],
-                'idProducto' => $comp["idProducto"],
+                'idProducto' => $comp["producto"],
                 'cantidad' => $comp["cantidad"],
                 'precioUnitario' => $comp["precioUnitario"],
-                'idProveedor' => $comp["idProveedor"],
+                'idProveedor' => $comp["proveedor"],
                 'fecha' => $comp["fecha"])
         );
     }
