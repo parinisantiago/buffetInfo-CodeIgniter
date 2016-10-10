@@ -26,9 +26,15 @@ class CompraModel extends Model{
         return $this ->queryPreparadaSQL("
             SELECT c.idCompra,c.idProducto,c.idProveedor, p.nombre, p.marca, c.cantidad, c.precioUnitario, pr.proveedor, c.fecha
             FROM compra c INNER JOIN proveedor pr ON(c.idProveedor=pr.idProveedor)INNER JOIN producto p ON (p.idProducto=c.idProducto) 
-            WHERE c.eliminado = 0 and p.eliminado=0 and c.idCompra = :idComp" , array(idComp => $idComp));
+            WHERE c.eliminado = 0 and p.eliminado=0 and c.idCompra = :idComp" , array('idComp' => $idComp));
     }
     
+    public function searchIdProveedor($idProv){
+        return $this ->queryPreparadaSQL("
+            SELECT pr.idProveedor
+            FROM proveedor pr 
+            WHERE  pr.idProveedor = :idProv" , array(idProv => $idProv));
+    }
     public function getAllProveedor($limit, $offset){
         return $this -> queryOFFSET('
             SELECT pr.idProveedor, pr.proveedor, pr.proveedorCuit
