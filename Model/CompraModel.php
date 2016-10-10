@@ -7,13 +7,13 @@ class CompraModel extends Model{
         parent::__construct();
     }
     public function totalCompras(){
-        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM egresoDetalle', array());
+        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM compra', array());
     }
     public function getAllCompras($limit, $offset){
         return $this -> queryOFFSET('
-            SELECT c.idCompra, p.nombre, p.marca, e.cantidad, e.precioUnitario, c.proveedor, c.fecha
-            FROM compra c INNER JOIN egresoDetalle e ON(c.idCompra=e.idCompra)INNER JOIN producto p ON (p.idProducto=e.idProducto) 
-            WHERE p.eliminado = 0 and c.eliminado=0 and e.eliminado=0
+            SELECT c.idCompra, p.nombre, p.marca, c.cantidad, c.precioUnitario, pr.proveedor, c.fecha
+            FROM compra c INNER JOIN proveedor pr ON(c.idProveedor=pr.idProveedor)INNER JOIN producto p ON (p.idProducto=c.idProducto) 
+            WHERE c.eliminado = 0 and p.eliminado=0
             ORDER BY c.idCompra
             LIMIT :limit  
             OFFSET :offset', $limit, $offset
@@ -24,77 +24,69 @@ class CompraModel extends Model{
     }
      public function searchIdCompra($idComp){
         return $this ->queryPreparadaSQL("
-            SELECT c.idCompra, p.nombre, p.marca, e.cantidad, e.precioUnitario, c.proveedor, c.fecha
-            FROM compra c INNER JOIN egresoDetalle e ON(c.idCompra=e.idCompra)INNER JOIN producto p ON (p.idProducto=e.idProducto) 
-            WHERE p.eliminado = 0 and c.eliminado=0 and e.eliminado=0 and c.idCompra = :idComp" , array(idComp => $idComp));
+            SELECT c.idCompra, p.nombre, p.marca, c.cantidad, c.precioUnitario, pr.proveedor, c.fecha
+            FROM compra c INNER JOIN proveedor pr ON(c.idProveedor=pr.idProveedor)INNER JOIN producto p ON (p.idProducto=c.idProducto) 
+            WHERE c.eliminado = 0 and p.eliminado=0 c.idCompra = :idComp" , array(idComp => $idComp));
     }
     
-    
-    
-    /* sin hacer*/
-    public function insertarCompra($comp){
-/*una compra incluye varios egresos detalle, poner un boton para agregar mas egresos*/
-        $today=getDate();
-        return $this -> query("
-            INSERT INTO egresoDetalle(
-                proveedor,
-                proveedorCuit,
-                fecha)
-            VALUES (:proveedor,
-                    :proveedorCuit,
-                    :fecha)",
-            array('proveedor' => $comp["proveedor"],
-                'proveedorCuit' => $comp["proveedorCuit"],
-                'precioUnitario' => $comp["precioUnitario"],
-                'fecha' =>$today['year']."-".$today['mon']."-".$today['mday']." ".$today['hours'].":".$today['minutes'].":".$today['seconds']
-                )
-        );
-    }
-    public function insertarEgresoDetalle($comp){
-        $today=getDate();
-        return $this -> query("
-            INSERT INTO egresoDetalle(
-                idCompra,
-                idProducto,
-                cantidad,
-                precioUnitario,
-                idTipo)
-            VALUES (:idCompra,
-                    :idProducto,
-                    :cantidad,
-                    :precioUnitario,
-                    :idTipo,
-                    )",
-            array('idCompra' => $comp["idCompra"],
-                'idProducto' => $comp["idProducto"],
-                'cantidad' => $comp["cantidad"],
-                'precioUnitario' => $comp["precioUnitario"],
-                'idTipo' => $comp["idTipo"],)
-        );
+    public function getAllProveedor($limit, $offset){
+        return $this -> queryOFFSET('
+            SELECT pr.idProveedor, pr.proveedor, pr.proveedorCuit
+            FROM proveedor pr
+            LIMIT :limit  
+            OFFSET :offset', $limit, $offset
+            );
     }
     
     public function actualizarCompra($comp){
         return $this -> query("
-            UPDATE egresoDetalle 
-            SET idCompra = :idCompra,
-                idProducto= :idProducto,
+            UPDATE compra 
+            SET idProducto= :idProducto,
                 cantidad= :cantidad,
                 precioUnitario= :precioUnitario,
-                idTipo= idTipo: 
-            WHERE idEgresoDetalle = idEgresoDetalle ",
+                idProveedor= :idProveedor, 
+                fecha = :fecha
+            WHERE idCompra = :idCompra ",
             array('idCompra' => $comp["idCompra"],
                 'idProducto' => $comp["idProducto"],
                 'cantidad' => $comp["cantidad"],
                 'precioUnitario' => $comp["precioUnitario"],
-                'idTipo' => $comp["idTipo"],)
+                'idProveedor' => $comp["idProveedor"],
+                'fecha' => $comp["fecha"])
         );
     }
+    
+     public function insertarCompra($comp){
+        $today=getDate();
+        return $this -> query("
+            INSERT INTO compra(
+                idProducto
+                cantidad,
+                precioUnitario,
+                idProveedor
+                fecha)
+            VALUES (:idProducto,
+                    :cantidad,
+                    :precioUnitario,
+                    :idProveedor,
+                    :fecha)",
+            array('idProducto' => $comp["idProducto"],
+                'cantidad' => $comp["cantidad"],
+                'precioUnitario' => $comp["precioUnitario"],
+                'idProveedor' => $comp["idProveedor"],
+                'fecha' =>$today['year']."-".$today['mon']."-".$today['mday']." ".$today['hours'].":".$today['minutes'].":".$today['seconds']
+                )
+        );
+    }
+    /* sin hacer*/
+   /*
+  
     public function eliminarEgresoDetalle($idEgresoDetalle){
         return $this -> query(
             "UPDATE egresoDetalle ed 
             SET ed.eliminado =1 
             WHERE ed.idEgresoDetalle = :idEgresoDetalle" , array('idEgresoDetalle' => $idEgresoDetalle));
-    }
+    }*/
 }
 ?>
 
