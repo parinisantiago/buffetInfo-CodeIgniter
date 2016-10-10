@@ -16,6 +16,13 @@ class VentaModel extends Model{
             ,array());
     }
 
+    public function getVentaById($id){
+        return $this->queryPreparadaSQL('
+            SELECT * 
+            FROM ingresoDetalle i 
+            WHERE i.idIngresoDetalle = :id',
+            array("id" => $id));
+    }
 
     public function getAllVenta($limit, $offset){
         return $this -> queryOFFSET('
@@ -56,23 +63,15 @@ class VentaModel extends Model{
         );
     }
     
-    public function actualizarVenta($vent){
+    public function actualizarVenta($cantidad, $id){
+
         return $this -> query("
             UPDATE ingresoDetalle 
-            SET idProducto = :idProducto,
-                cantidad = :cantidad,
-                precioUnitario = :precioUnitario,
-                descripcion = :descripcion,
-                fecha = :fecha,
-                idTipo = :idtipo
-            WHERE idIngresoDetalle = idIngresoDetalle ",
-            array('idProducto' => $vent["idProducto"],
-                'cantidad' => $vent["cantidad"],
-                'precioUnitario' => $vent["precioUnitario"],
-                'descripcion' => $vent["descripcion"],
-                'fecha' => $vent["fecha"],
-                'idTipo' => $vent["idTipo"],)
-        );
+            SET cantidad = :cantidad
+            WHERE idIngresoDetalle = :id ",
+            array('cantidad' => $cantidad,
+                'id' => $id)
+                );
     }
     public function eliminarVenta($idVenta){
         return $this -> query(

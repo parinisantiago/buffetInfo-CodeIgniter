@@ -10,7 +10,7 @@ class ProductosModel extends Model{
         return $this -> queryOFFSET(
                 'SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.precioVentaUnitario, p.descripcion, p.idProducto
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria) 
-                WHERE p.eliminado = 0 
+                WHERE p.eliminado = 0 AND p.stock > 0
                 LIMIT :limit  
                 OFFSET :offset', $limit, $offset);
     }
@@ -110,7 +110,7 @@ class ProductosModel extends Model{
     }
 
     public function totalProductos(){
-        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM producto', array());
+        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM producto p WHERE p.eliminado = 0 AND p.stock > 0', array());
     }
     
     public function actualizarCantProductos($id, $cant){

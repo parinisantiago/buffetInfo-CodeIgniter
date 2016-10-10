@@ -56,7 +56,28 @@ class BackendController extends Controller{
     }
     public function ventaModificar(){
         /*****************************/
+        $this->validator->varSet($_POST["submitButton"], "apreta el boton de modificacion");
+        $this->validator->varSet($_POST['idIngresoDetalle'], "no se puede modificar una venta sin id");
+        $this->dispatcher->venta = $this->ventaModel->getVentaById($_POST['idIngresoDetalle']);
+        $this->dispatcher->render("Backend/ModificarVenta.twig");
     }
+
+    public function modVenta(){
+        $this->validator->varSet($_POST["submitButton"], "apreta el boton de modificacion");
+        $this->validator->validarNumeros($_POST['idIngresoDetalle'], "no se puede modificar una venta sin id",3);
+        $this->validator->validarNumeros($_POST["stockViejo"], "No modifiques los inputs gentes malas", 2);
+        $this->validator->validarNumeros($_POST["stock"], "No modifiques los inputs gentes malas", 2);
+        $this->validator->validarNumeros($_POST["idProducto"], "No modifiques los inputs gentes malas", 2);
+        $stock = $this->productoModel->searchIdProducto($_POST["idProducto"])->stock + $_POST["stockViejo"] - $_POST["stock"];
+        if ($stock <= 0) throw new Exception("No podes vender tantos productos");
+        $this->productoModel->actualizarCantProductos($_POST['idProducto'], $stock);
+        $this->ventaModel->actualizarVenta($_POST['stock'], $_POST['idIngresoDetalle']);
+
+        $_GET['pag'] = 0;
+        $this -> venderListar();
+
+    }
+
     public function ventaEliminar(){
         $this->validator->varSet($_POST['submitButton'], "Apreta el botón de eliminar macho");
         $this->validator->varSet($_POST['idIngresoDetalle'], "Faltan datos para poder eliminar la venta");
@@ -159,7 +180,7 @@ class BackendController extends Controller{
 
         if (! isset($_GET['pag'])) throw new Exception('No hay una página que mostrar');
 
-        elseif ($total->total < $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina + $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
+        elseif ($total->total < $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
         else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
         if ($_GET['offset'] < 0) $_GET['offset'] = 0;
         $_GET['offset'] .= "";
