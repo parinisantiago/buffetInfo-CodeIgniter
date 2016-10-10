@@ -17,7 +17,7 @@ class ProductosModel extends Model{
 
     public function searchIdProducto($idProd){
         return $this ->queryPreparadaSQL(
-                "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, p.precioVentaUnitario, p.descripcion, p.idProducto,c.nombre as categoria
+                "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, p.precioVentaUnitario, p.descripcion, p.idProducto,c.nombre as categoria, c.idCategoria
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
                 WHERE p.eliminado = 0 and p.idProducto = :idProd" , array('idProd' => $idProd));
     }

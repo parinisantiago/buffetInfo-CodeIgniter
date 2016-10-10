@@ -1,7 +1,12 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
+    {% if rol == "0" %}
 	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=AdminController&method=productosAMPost" method="post">
+    {%else%}
+	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=GestorController&method=productosAMPost" method="post">
+    {%endif%}
+	
             <input type='hidden' name='idProducto' id="idProducto" value={{producto.idProducto}}>
             
             <label for="nombre" class="formProducText">Nombre:</label>
@@ -34,12 +39,12 @@
 	    
             <label for="categoria" class="formProducText">Categoria:</label>
             <select id="categoria" name="categoria" class="formProducinput" required>
+                <option value="" selected>Seleccione un valor</option>
                 {% for cat in categoria %}
-                    {% if producto.idCategoria == cat.idCategoria %}
-                        <option value="{{ cat.idCategoria }}" selected>{{ cat.nombre }}</option>
-                    {% else %}
-                        <option value="{{ cat.idCategoria }}" >{{ cat.nombre }}</option>
-                    {% endif %}
+                    
+                        <option value="{{ cat.idCategoria }}" {%if producto.idCategoria == cat.idCategoria%} selected{% endif %}>{{ cat.nombre }}</option>
+                 
+                    
                 {% endfor %}
             </select>
            	    
