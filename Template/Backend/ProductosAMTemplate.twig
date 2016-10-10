@@ -10,10 +10,10 @@
             <input type='hidden' name='idProducto' id="idProducto" value={{producto.idProducto}}>
             
             <label for="nombre" class="formProducText">Nombre:</label>
-            {% if (producto.nombre is empty)  %}
+            {% if not (producto.nombre) %}
                 <input type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$"  autofocus required>
             {% else %}
-                <input type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$"  autofocus value={{producto.nombre}} required>
+                <input value="{{producto.nombre}}" type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$"  autofocus  required>
             {% endif %}
             
 	    <label for="marca" class="formProducText">Marca:</label>
