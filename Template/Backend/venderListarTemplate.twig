@@ -58,17 +58,19 @@
                     </tr>
                {% endif %}
             {% endfor %}
+            <div class="boton">
             {% if rol == '0' %}
                 {% if pag != 0 %}
-                    <a href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                    <a class="boton" href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
                 {% endif %}
-                <a href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente --></a>
+                <a class="boton" href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente --></a>
             {% else %}
                 {% if pag != 0 %}
-                    <a href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                    <a class="boton" href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
                 {% endif %}
-                <a href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente --></a>
+                <a class="boton" href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente --></a>
             {% endif  %}
+            </div>
         </tbody>
         </table>
     </div>

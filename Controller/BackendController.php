@@ -128,6 +128,16 @@ class BackendController extends Controller{
         $this->dispatcher->method = "CompraListar";
         $this->compraListar();
     }
+    public function validarCompra($var){
+        $this->validator->varSet($var['submit'],"Apreta el boton de submit");
+        if (! $this->compraModel->searchIdCompra($var['proveedor'])) throw new Exception("No existe el proveedor");
+        if (! $this->productoModel->searchIdProducto($var['producto'])) throw new Exception("No existe el producto");
+        $this->validator->validarNumeros($var['cantidad'],"error en cantidad",5);
+        $this->validator->validarNumerosPunto($var['precioUnitario'],"error en precio unitario",50);
+        if (! isset($var['fecha'])){
+            $this->validator->validarFecha($var['fecha'],"error en fecha");
+        }
+    }
     /* ---Productos---*/
     
     public function productosListar(){
@@ -164,8 +174,6 @@ class BackendController extends Controller{
         $this->productosListar();
     }
 
-
-
     /*validar productos en el serverrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr */
       public function validarProductos($var){
 
@@ -177,21 +185,9 @@ class BackendController extends Controller{
           $this->validator->validarNumeros($var['categoria'],"error en categoria",3);
           $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"error en precio de venta unitario",5);
           if (! $this->categoriaModel->getCategoriaById($var['categoria'])) throw new Exception("No existe la categoria");
-
         }
-    public function validarCompra($var){
-        $this->validator->varSet($var['submit'],"Apreta el boton de submit");
-        if (! $this->compraModel->searchIdCompra($var['proveedor'])) throw new Exception("No existe el proveedor");
-        if (! $this->productoModel->searchIdProducto($var['producto'])) throw new Exception("No existe el producto");
-        $this->validator->validarNumeros($var['cantidad'],"error en cantidad",5);
-        $this->validator->validarNumerosPunto($var['precioUnitario'],"error en precio unitario",50);
-        $this->validator->validarFecha($var['fecha'],"error en fecha");
-
-    }
-
 
     /*--- paginacion ---*/
-
 
     public function paginaCorrecta($total){
 
