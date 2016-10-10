@@ -180,7 +180,6 @@ class BackendController extends Controller{
         }
     public function validarCompra($var){
         $this->validator->varSet($var['submit'],"Apreta el boton de submit");
-        if (! $this->compraModel->searchIdCompra($var['idCompra'])) throw new Exception("No existe la compra");
         if (! $this->compraModel->searchIdCompra($var['idProveedor'])) throw new Exception("No existe el proveedor");
         if (! $this->productoModel->searchIdProducto($var['idProducto'])) throw new Exception("No existe el producto");
         $this->validator->validarNumeros($var['cantidad'],"error en cantidad",3);

@@ -9,14 +9,10 @@
             <input type='hidden' name='idCompra' id="idCompra" value={{compra.idCompra}}>
            
             <label for="producto" class="formProducText">Producto:</label>
-            <select required id='idProducto' class="formProducinput" name='idProducto'>
-                <option value =''>Seleccione un proveedor </option>
+            <select id="idProducto" name="producto" class="formProducinput" required>
+                <option value="" selected>Seleccione un valor</option>
                 {% for producto in productos %}
-                    {% if producto.idProducto == compra.idProducto %}
-                        <option name="idProducto" id="idProducto" value={{ producto.idProducto}}selected> {{ producto.nombre}}  {{producto.marca }} </option>
-                    {% else %}
-                        <option name="idProducto" id="idProducto" value={{ producto.idProducto}}> {{ producto.nombre}}  {{producto.marca }} </option>
-                    {% endif %}
+                    <option value="{{ producto.idProducto }}" {%if producto.idProducto == compra.idProducto%} selected{% endif %}>{{ producto.nombre}}  {{producto.marca }}</option>
                 {% endfor %}
             </select>
          
@@ -29,20 +25,16 @@
 	    
             <label for="precioUnitario" class="formProducText">Precio unitario:</label>
 	    {% if (compra.precioUnitario is empty)  %}
-                <input type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50" min="0" max="999999" maxlength="6" required>
+                <input type="number" name="precioUnitario" id="precioUnitario" pattern="(^\d+(\.|\,)\d{2}$)" class="formProducinput" placeholder="$2.50" min="0" max="999999" maxlength="6" required>
 	    {% else %}
-                <input type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50" min="0" max="999999" maxlength="6" value={{compra.precioUnitario}} required>
+                <input type="number" name="precioUnitario" id="precioUnitario" pattern="(^\d+(\.|\,)\d{2}$)" class="formProducinput" placeholder="$2.50" min="0" max="999999" maxlength="6" value={{compra.precioUnitario}} required>
             {% endif %}
             
             <label for="proveedor" class="formProducText">Proveedor:</label>
-            <select required id='idProveedor' name='idProveedor'>
-                <option value =''>Seleccione un proveedor </option>
+            <select id="idProveedor" name="proveedor" class="formProducinput" required>
+                <option value="" selected>Seleccione un valor</option>
                 {% for prov in proveedor %}
-                    {% if prov.idProveedor == compra.idProveedor %}
-                        <option name="idProveedor" id="idProveedor" value={{ prov.idProveedor}}selected> {{ prov.proveedor}}  {{prov.proveedorCuit }} </option>
-                    {% else %}
-                        <option name="idProveedor" id="idProveedor" value={{ prov.idProveedor}}> {{ prov.proveedor}}  {{prov.proveedorCuit }} </option>
-                    {% endif %}
+                    <option value="{{ prov.idProveedor }}" {%if prov.idProveedor == compra.idProveedor%} selected{% endif %}>{{ prov.proveedor}}  {{prov.proveedorCuit }}</option>
                 {% endfor %}
             </select>
            

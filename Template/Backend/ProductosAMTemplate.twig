@@ -41,10 +41,7 @@
             <select id="categoria" name="categoria" class="formProducinput" required>
                 <option value="" selected>Seleccione un valor</option>
                 {% for cat in categoria %}
-                    
-                        <option value="{{ cat.idCategoria }}" {%if producto.idCategoria == cat.idCategoria%} selected{% endif %}>{{ cat.nombre }}</option>
-                 
-                    
+                    <option value="{{ cat.idCategoria }}" {%if producto.idCategoria == cat.idCategoria%} selected{% endif %}>{{ cat.nombre }}</option>
                 {% endfor %}
             </select>
            	    

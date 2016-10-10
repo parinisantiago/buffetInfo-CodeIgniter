@@ -32,7 +32,7 @@
                         <td headers="descripcion">{{ prod.descripcion }}</td>
                         <td headers="editar">
                             {% if rol == '0' %}
-                                <form method="post" action= Loader.php?controller=AdminController&method=productosAM" >
+                                <form method="post" action= Loader.php?controller=AdminController&method=productosAM >
                             {% else %}
                                 <form method="post" action=  Loader.php?controller=GestorController&method=productosAM >
                             {% endif %}
