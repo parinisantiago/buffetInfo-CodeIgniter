@@ -185,6 +185,8 @@ class BackendController extends Controller{
         if (! $this->productoModel->searchIdProducto($var['idProducto'])) throw new Exception("No existe el producto");
         $this->validator->validarNumeros($var['cantidad'],"error en cantidad",3);
         $this->validator->validarNumerosPunto($var['precioUnitario'],"error en precio unitario",50);
+        $this->validator->validarFecha($var['fecha'],"error en fecha");
+
     }
 
 
