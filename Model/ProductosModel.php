@@ -14,7 +14,7 @@ class ProductosModel extends Model{
                 LIMIT :limit  
                 OFFSET :offset', $limit, $offset);
     }
-    
+
     public function searchIdProducto($idProd){
         return $this ->queryPreparadaSQL(
                 "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, p.precioVentaUnitario, p.descripcion, p.idProducto,c.nombre as categoria
@@ -115,6 +115,7 @@ class ProductosModel extends Model{
     
     public function actualizarCantProductos($id, $cant){
 /*actualiza solo la tabla de productos, tambien hay qye hacer la actualizcion en la tabla de ventas*/
+        var_dump($id); var_dump($cant);
         return $this -> query(
                 "UPDATE producto p 
                 SET p.stock = :cant 

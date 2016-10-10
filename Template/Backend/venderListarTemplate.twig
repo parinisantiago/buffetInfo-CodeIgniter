@@ -24,7 +24,7 @@
                         <td headers="nombre">{{ venta.nombre }}</td>
                         <td headers="marca"> {{ venta.marca }}</td>
                         <td headers="cantidad"> {{ venta.cantidad }}</td>
-                        <td headers="precioVentaUnitario">{{ venta.precioVentaUnitario }}</td>
+                        <td headers="precioVentaUnitario">{{ venta.precioUnitario }}</td>
                         <td headers="fecha">{{ venta.fecha }}</td>
                         <td headers="editar">
                             <form method="post" action={% if rol == "0" %} Loader.php?controller=AdminController&method=ventaModificar {% else %} Loader.php?controller=GestorController&method=ventaModificar {% endif %}>

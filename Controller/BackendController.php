@@ -44,11 +44,8 @@ class BackendController extends Controller{
         if (! $this->productoModel->searchIdProducto($_POST['idProducto'])) throw new Exception("idProducto no valido");
         $this->productoModel->actualizarCantProductos($_POST['idProducto'], $_POST['stock'] - $_POST['cant']);
         $this->ventaModel->insertarVenta($_POST);
-        $this->paginaCorrecta($this->productoModel->totalProductos());
-        $this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
-        $this->dispatcher->pag = 0;
-        $this->dispatcher->render("Backend/VenderTemplate.twig");
 
+        $this->vender();
     } 
 
     public function venderListar(){
@@ -61,14 +58,17 @@ class BackendController extends Controller{
         /*****************************/
     }
     public function ventaEliminar(){
-        var_dump($_POST);
         $this->validator->varSet($_POST['submitButton'], "Apreta el botón de eliminar macho");
         $this->validator->varSet($_POST['idIngresoDetalle'], "Faltan datos para poder eliminar la venta");
-        $this->productoModel->actualizarCantProductos($_POST['IdProducto'],($this->productoModel->searchIdProducto($_POST['idProducto']) + $_POST['cantidad']));
 
+        $valor = $this->productoModel->searchIdProducto($_POST['idProducto'])->stock + $_POST['cantidad'];
+        $valor .= '';
+        $this->productoModel->actualizarCantProductos($_POST['idProducto'],$valor);
+
+        var_dump($this->productoModel->searchIdProducto($_POST['idProducto'])->stock)   ;
         $this->ventaModel->eliminarVenta($_POST['idIngresoDetalle']);
   
-        $_GET['pag'] = 0; //
+        $_GET['pag'] = 0;
 
         $this->venderListar();
     }

@@ -28,7 +28,7 @@
                             <td headers="descripcion">{{ prod.descripcion }}</td>
                             <td headers="Vender">
 
-                            <form method="post" action={% if rol == "0" %} Loader.php?controller=AdminController&method=venta {% else %} Loader.php?controller=GestorController&method=venta {% endif %}>
+                            <form method="post" action={% if rol == "0" %} Loader.php?controller=AdminController&method=venta&pag=0 {% else %} Loader.php?controller=GestorController&method=venta&pag=0 {% endif %}>
                                 <label for="cant" class="formProducTextHidden" hidden>cantidad de venta</label>
 
                                 <select id="cant" name="cant" class="formProducinput" required>
