@@ -11,14 +11,7 @@ class CompraModel extends Model{
     }
     public function getAllCompras($limit, $offset){
         return $this -> queryOFFSET('
-            SELECT
-            c.idCompra,
-            p.nombre, 
-            p.marca, 
-            e.cantidad, 
-            e.precioUnitario, 
-            c.proveedor, 
-            c.fecha
+            SELECT c.idCompra, p.nombre, p.marca, e.cantidad, e.precioUnitario, c.proveedor, c.fecha
             FROM compra c INNER JOIN egresoDetalle e ON(c.idCompra=e.idCompra)INNER JOIN producto p ON (p.idProducto=e.idProducto) 
             WHERE p.eliminado = 0 and c.eliminado=0 and e.eliminado=0
             ORDER BY c.idCompra
@@ -26,7 +19,19 @@ class CompraModel extends Model{
             OFFSET :offset', $limit, $offset
         );
     }
+     public function siguienteId(){
+        return $this -> queryPreparadaSQL('SELECT MAX(idCompra) as idCompra FROM compra',array());
+    }
+     public function searchIdCompra($idComp){
+        return $this ->queryPreparadaSQL("
+            SELECT c.idCompra, p.nombre, p.marca, e.cantidad, e.precioUnitario, c.proveedor, c.fecha
+            FROM compra c INNER JOIN egresoDetalle e ON(c.idCompra=e.idCompra)INNER JOIN producto p ON (p.idProducto=e.idProducto) 
+            WHERE p.eliminado = 0 and c.eliminado=0 and e.eliminado=0 and c.idCompra = :idComp" , array(idComp => $idComp));
+    }
     
+    
+    
+    /* sin hacer*/
     public function insertarCompra($comp){
 /*una compra incluye varios egresos detalle, poner un boton para agregar mas egresos*/
         $today=getDate();
