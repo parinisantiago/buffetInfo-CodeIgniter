@@ -20,21 +20,21 @@
 	    {% if (producto.marca is empty)  %}
                 <input type="text" name="marca" id="marca" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+" required>
             {% else %}
-                <input type="text" name="marca" id="marca" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+" value={{producto.marca}} required>
+                <input value="{{producto.marca}}" type="text" name="marca" id="marca" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+"  required>
             {% endif %}
 	    
             <label for="stock" class="formProducText">Stock:</label>
 	    {% if (producto.stock is empty)  %}
                 <input type="number" name="stock" id="stock" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3">
             {% else %}
-                <input type="number" name="stock" id="stock" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" value={{producto.stock}} >
+                <input value="{{producto.stock}}" type="number" name="stock" id="stock" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3"  >
             {% endif %}
 	    
             <label for="stockMinimo" class="formProducText">Stock Minimo:</label>
 	    {% if (producto.stockMinimo is empty)  %}
                 <input type="number" name="stockMinimo" id="stockMinimo" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" required>
 	    {% else %}
-                <input type="number" name="stockMinimo" id="stockMinimo" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" value={{producto.stockMinimo}} required>
+                <input value="{{producto.stockMinimo}}" type="number" name="stockMinimo" id="stockMinimo" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3"  required>
             {% endif %}
 	    
             <label for="categoria" class="formProducText">Categoria:</label>
@@ -49,14 +49,14 @@
 	    {% if (producto.precioVentaUnitario is empty)  %}
                 <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" maxlength="5" required>
             {% else %}
-                <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" maxlength="5" required value={{producto.precioVentaUnitario}}>
+                <input value="{{producto.precioVentaUnitario}}" type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" maxlength="5" required>
             {% endif %}
             
             <label for="descripcion" class="formProducText">Descripcion:</label>
 	    {% if (producto.descripcion is empty)  %}
                 <input type="text" name="descripcion" id="descripcion" class="formProducinput" placeholder="descripcion del producto?" maxlength="50" required>
             {% else %}
-                <input type="text" name="descripcion" id="descripcion" class="formProducinput" placeholder="descripcion del producto?" maxlength="50" required value={{producto.descripcion}}>
+                <input value="{{producto.descripcion}}" type="text" name="descripcion" id="descripcion" class="formProducinput" placeholder="descripcion del producto?" maxlength="50" required >
             {% endif %}
 
 	    <label for="enviar" class="formProducTextHidden" hidden>Botón de envío</label>
