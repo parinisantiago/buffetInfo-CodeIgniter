@@ -25,9 +25,9 @@
 	    
             <label for="precioUnitario" class="formProducText">Precio unitario:</label>
 	    {% if (compra.precioUnitario is empty)  %}
-                <input type="number" name="precioUnitario" id="precioUnitario" pattern="(^\d+(\.|\,)\d{2}$)" class="formProducinput" placeholder="$2.50" min="0" max="999999" maxlength="6" required>
+                <input type="number" name="precioUnitario" id="precioUnitario" step="any" class="formProducinput" placeholder="$2.50" min="0" max="999999" maxlength="6" required>
 	    {% else %}
-                <input type="number" name="precioUnitario" id="precioUnitario" pattern="(^\d+(\.|\,)\d{2}$)" class="formProducinput" placeholder="$2.50" min="0" max="999999" maxlength="6" value={{compra.precioUnitario}} required>
+                <input value=" {{compra.precioUnitario}} " type="number" name="precioUnitario" id="precioUnitario" step="any"  class="formProducinput" placeholder="$2.50" min="0" max="999999" maxlength="6"  required>
             {% endif %}
             
             <label for="proveedor" class="formProducText">Proveedor:</label>
@@ -40,7 +40,7 @@
            
             {% if not( compra.idCompra is empty)  %}
                 <label for="fecha" class="formProducText">Fecha:</label>
-                <input type="dateTime" name="fecha" id="fecha" class="formProducinput" placeholder="2016/08/25" maxlength="19" value="{{compra.fecha}}" >
+                <input value=" {{ compra.fecha }} " type="dateTime" name="fecha" id="fecha" class="formProducinput" placeholder="2016/08/25" maxlength="19" value="{{compra.fecha}}" >
             {% endif %}
             
 	    <label for="enviar" class="formProducTextHidden" hidden>Botón de envío</label>
