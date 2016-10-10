@@ -64,12 +64,12 @@ class CompraModel extends Model{
                 cantidad,
                 precioUnitario,
                 idProveedor,
-                fecha)
+                fecha, elimina do)
             VALUES (:idProducto,
                     :cantidad,
                     :precioUnitario,
                     :idProveedor,
-                    :fecha)",
+                    :fecha, 0)",
             array('idProducto' => $comp["idProducto"],
                 'cantidad' => $comp["cantidad"],
                 'precioUnitario' => $comp["precioUnitario"],
