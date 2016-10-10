@@ -72,21 +72,21 @@ class BackendController extends Controller{
     /* ---Compra ---*/ 
 
     public function compraListar(){
-/**************AIIIIIIIIIIIIUUUUUUUUUUUUUDAAAAAAAAAAAAAAAA 
- * no ecuentro por que no esta listando las compras, parece todo correcto
- * provee el sql y funca, tengo configurado 5 elemntos por pagina
- * no se que es  $this->dispatcher->method = "compraListar";
- * pero lo copie de vos
- */
         $this->paginaCorrecta($this->compraModel->totalCompras());
         $this->dispatcher->compras = $this->compraModel->getAllCompras($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
-        var_dump($this->compraModel->getAllCompras($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->method = "compraListar";
         $this->dispatcher->render("Backend/CompraListarTemplate.twig");
     }
     public function compraAM(){
-        
+        if (isset($_POST["idCompra"])){
+            $this->dispatcher->compra =$this ->compraModel->searchIdCompra($_POST["idCompra"]);
+        }/*else{
+            no funciona, si ves esto santi y tenes ganas arreglalo 
+            $this->dispatcher->compra =($this ->compraModel->siguienteId());
+        }*/
+        $this->dispatcher->categoria =$this ->categoriaModel->getAllCategorias();
+        $this->dispatcher->render("Backend/CompraAMTemplate.twig");
     }
      public function compraModificar(){
         /*****************************/

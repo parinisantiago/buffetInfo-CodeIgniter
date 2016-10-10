@@ -6,40 +6,66 @@
     {%else%}
 	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=GestorController&method=compraAMPost" method="post">
     {%endif%}
-        ////    <input type='hidden' name='idProducto' id="idProducto" value={{producto.idProducto}}>
+            <input type='hidden' name='idProducto' id="idProducto" value={{compra.idCompra}}>
+            
+            {% if (compra.idCompra is empty)  %}
+            {#   
+          si arreglaste el backend vola el if 
+                <label for="idCompra" class="formProducText">{{compra.idCompra}}</label>
+              #}  
+            {% else %}
+                <label for="idCompra" class="formProducText">Numero Ticket:</label>
+                <label for="idCompra" class="formProducText">{{compra.idCompra}}</label>
+            {% endif %}
             
             <label for="nombre" class="formProducText">Nombre:</label>
-            {% if (producto.nombre is empty)  %}
-                <input type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$"  autofocus required>
+	    {% if (compra.nombre is empty)  %}
+                <input type="text" name="nombre" id="nombre" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+" required>
             {% else %}
-                <input type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$"  autofocus value={{producto.nombre}} required>
+                <input type="text" name="nombre" id="nombre" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+" value={{producto.nombre}} required>
             {% endif %}
             
 	    <label for="marca" class="formProducText">Marca:</label>
-	    {% if (producto.marca is empty)  %}
+	    {% if (compra.marca is empty)  %}
                 <input type="text" name="marca" id="marca" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+" required>
             {% else %}
-                <input type="text" name="marca" id="marca" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+" value={{producto.marca}} required>
+                <input type="text" name="marca" id="marca" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+" value={{compra.marca}} required>
             {% endif %}
-	    
-            <label for="stock" class="formProducText">Stock:</label>
-	    {% if (producto.stock is empty)  %}
-                <input type="number" name="stock" id="stock" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3">
+ 	    
+            <label for="cantidad" class="formProducText">Cantidad:</label>
+	    {% if (compra.cantidad is empty)  %}
+                <input type="number" name="cantidad" id="cantidad" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3">
             {% else %}
-                <input type="number" name="stock" id="stock" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" value={{producto.stock}} >
+                <input type="number" name="cantidad" id="cantidad" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" value={{compra.cantidad}} >
             {% endif %}
 	    
-            <label for="stockMinimo" class="formProducText">Stock Minimo:</label>
-	    {% if (producto.stockMinimo is empty)  %}
-                <input type="number" name="stockMinimo" id="stockMinimo" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" required>
+            <label for="precioUnitario" class="formProducText">Precio unitario:</label>
+	    {% if (compra.precioUnitario is empty)  %}
+                <input type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="Un número entre 1 y 999" min="0" max="999" maxlength="3" required>
 	    {% else %}
-                <input type="number" name="stockMinimo" id="stockMinimo" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" value={{producto.stockMinimo}} required>
+                <input type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="Un número entre 1 y 999" min="0" max="999" maxlength="3" value={{compra.precioUnitario}} required>
             {% endif %}
-	    
+            
+            <label for="proveedor" class="formProducText">Proveedor:</label>
+	    {% if (compra.proveedor is empty)  %}
+                <input type="number" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3">
+            {% else %}
+                <input type="number" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" value={{compra.proveedor}} >
+            {% endif %}
+
+            <label for="fecha" class="formProducText">Fecha:</label>
+	    {% if (compra.fecha is empty)  %}
+                <input type="number" name="fecha" id="fecha" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3">
+            {% else %}
+                <input type="number" name="fecha" id="fecha" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" value={{compra.fecha}} >
+            {% endif %}
+            
+            
+            
             <label for="categoria" class="formProducText">Categoria:</label>
             <select id="categoria" name="categoria" class="formProducinput" required>
                 {% for cat in categoria %}
-                    {% if producto.idCategoria == cat.idCategoria %}
+                    {% if compra.idCategoria == cat.idCategoria %}
                         <option value="{{ cat.idCategoria }}" selected>{{ cat.nombre }}</option>
                     {% else %}
                         <option value="{{ cat.idCategoria }}" >{{ cat.nombre }}</option>
@@ -48,24 +74,24 @@
             </select>
            	    
             <label for="proveedor" class="formProducText">Proveedor:</label>
-            {% if (producto.proveedor is empty)  %}
+            {% if (compra.proveedor is empty)  %}
                 <input type="text" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un proveedor" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required>
             {% else %}
-                <input type="text" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un proveedor" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required value={{producto.proveedor}}>
+                <input type="text" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un proveedor" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required value={{compra.proveedor}}>
             {% endif %}
             
 	    <label for="precioVentaUnitario" class="formProducText">Precio Venta Unitario:</label>
-	    {% if (producto.precioVentaUnitario is empty)  %}
+	    {% if (compra.precioVentaUnitario is empty)  %}
                 <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" maxlength="5" required>
             {% else %}
-                <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" maxlength="5" required value={{producto.precioVentaUnitario}}>
+                <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" maxlength="5" required value={{compra.precioVentaUnitario}}>
             {% endif %}
             
             <label for="descripcion" class="formProducText">Descripcion:</label>
-	    {% if (producto.descripcion is empty)  %}
-                <input type="text" name="descripcion" id="descripcion" class="formProducinput" placeholder="descripcion del producto?" maxlength="50" required>
+	    {% if (compra.descripcion is empty)  %}
+                <input type="text" name="descripcion" id="descripcion" class="formProducinput" placeholder="descripcion del compra?" maxlength="50" required>
             {% else %}
-                <input type="text" name="descripcion" id="descripcion" class="formProducinput" placeholder="descripcion del producto?" maxlength="50" required value={{producto.descripcion}}>
+                <input type="text" name="descripcion" id="descripcion" class="formProducinput" placeholder="descripcion del compra?" maxlength="50" required value={{compra.descripcion}}>
             {% endif %}
 
 	    <label for="enviar" class="formProducTextHidden" hidden>Botón de envío</label>
