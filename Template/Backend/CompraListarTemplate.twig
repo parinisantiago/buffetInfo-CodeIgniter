@@ -12,7 +12,6 @@
         <table class="tablaProductos" summary="detallas de cada compra realizada">
             <thead>
                 <tr>
-                    <th id="idCompra">Numero Ticket</th>
                     <th id="nombre">Nombre</th>
                     <th id="marca">Marca</th>
                     <th id="cantidad">Cantidad</th>
@@ -26,7 +25,6 @@
             <tbody>
             {% for compra in compras %}
                 <tr>
-                    <td headers="idCompra">{{ compra.idCompra }}</td>
                     <td headers="nombre">{{ compra.nombre }}</td>
                     <td headers="marca"> {{ compra.marca }}</td>
                     <td headers="stock"> {{ compra.cantidad }}</td>

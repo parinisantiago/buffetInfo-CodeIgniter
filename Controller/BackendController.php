@@ -105,19 +105,26 @@ class BackendController extends Controller{
     public function compraAM(){
         if (isset($_POST["idCompra"])){
             $this->dispatcher->compra =$this ->compraModel->searchIdCompra($_POST["idCompra"]);
-        }/*else{
-            no funciona, si ves esto santi y tenes ganas arreglalo 
-            $this->dispatcher->compra =($this ->compraModel->siguienteId());
-        }*/
-        $this->dispatcher->categoria =$this ->categoriaModel->getAllCategorias();
+        }
+        $this->dispatcher->proveedor =$this ->compraModel->getAllProveedor(99999,0);
+        $this->dispatcher->productos =$this ->productoModel->getAllProducto(99999,0);
         $this->dispatcher->render("Backend/CompraAMTemplate.twig");
+    }
+    public function compraAMPost(){
+        $this->validarCompra($_POST);
+        if ($_POST["idCompra"] != ""){
+           $this->dispatcher->compra =$this ->compraModel->actualizarCompra($_POST); 
+        }else{
+            $this->dispatcher->compra =$this ->compraModel->insertarCompra($_POST);
+        }
+        $_GET['pag'] = 0;
+        $this->dispatcher->method = "CompraListar";
+        $this->compraListar();
     }
      public function compraModificar(){
         /*****************************/
     }
-    public function compraAMPost(){
-        
-    }
+    
     public function compraEliminar(){
         /*****************************/
     }
@@ -170,6 +177,18 @@ class BackendController extends Controller{
           $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"error en precio de venta unitario",5);
           if (! $this->categoriaModel->getCategoriaById($var['categoria'])) throw new Exception("No existe la categoria");
 
+        }
+    public function validarCompra($var){
+/*
+          $this->validator->varSet($var['submit'],"Apreta el boton de submit");
+          $this->validator->validarStringEspeciales($var['nombre'],"erroe en nombre",25);
+          $this->validator->validarStringEspeciales($var['marca'],"error en marca",25);
+          $this->validator->validarNumeros($var['stock'],"error en stock",3);
+          $this->validator->validarNumeros($var['stockMinimo'],"error en stock minimo",3);
+          $this->validator->validarNumeros($var['categoria'],"error en categoria",3);
+          $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"error en precio de venta unitario",5);
+          if (! $this->categoriaModel->getCategoriaById($var['categoria'])) throw new Exception("No existe la categoria");
+*/
         }
 
 

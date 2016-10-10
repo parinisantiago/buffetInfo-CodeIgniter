@@ -6,37 +6,25 @@
     {%else%}
 	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=GestorController&method=compraAMPost" method="post">
     {%endif%}
-            <input type='hidden' name='idProducto' id="idProducto" value={{compra.idCompra}}>
-            
-            {% if (compra.idCompra is empty)  %}
-            {#   
-          si arreglaste el backend vola el if 
-                <label for="idCompra" class="formProducText">{{compra.idCompra}}</label>
-              #}  
-            {% else %}
-                <label for="idCompra" class="formProducText">Numero Ticket:</label>
-                <label for="idCompra" class="formProducText">{{compra.idCompra}}</label>
-            {% endif %}
-            
-            <label for="nombre" class="formProducText">Nombre:</label>
-	    {% if (compra.nombre is empty)  %}
-                <input type="text" name="nombre" id="nombre" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+" required>
-            {% else %}
-                <input type="text" name="nombre" id="nombre" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+" value={{producto.nombre}} required>
-            {% endif %}
-            
-	    <label for="marca" class="formProducText">Marca:</label>
-	    {% if (compra.marca is empty)  %}
-                <input type="text" name="marca" id="marca" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+" required>
-            {% else %}
-                <input type="text" name="marca" id="marca" class="formProducinput" placeholder="No se admiten números ni caracteres especiales" maxlength="25" pattern="^[A-Za-z ]+" value={{compra.marca}} required>
-            {% endif %}
- 	    
+            <input type='hidden' name='idProducto' id="idCompra" value={{compra.idCompra}}>
+           
+            <label for="producto" class="formProducText">Producto:</label>
+            <select required id='idProducto' name='select'>
+                <option value =''>Seleccione un producto </option>
+                {% for producto in productos %}
+                    {% if producto.idProducto == compra.idProducto %}
+                        <option value={{ producto.idProducto}}selected> {{ producto.nombre}}  {{producto.marca }} </option>
+                    {% else %}
+                        <option value={{ producto.idProducto}}> {{ producto.nombre}}  {{producto.marca }} </option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+         
             <label for="cantidad" class="formProducText">Cantidad:</label>
 	    {% if (compra.cantidad is empty)  %}
-                <input type="number" name="cantidad" id="cantidad" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3">
+                <input type="number" name="cantidad" id="cantidad" class="formProducinput" placeholder="Un número entre 1 y 999" min="1" max="999" maxlength="3">
             {% else %}
-                <input type="number" name="cantidad" id="cantidad" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" value={{compra.cantidad}} >
+                <input type="number" name="cantidad" id="cantidad" class="formProducinput" placeholder="Un número entre 1 y 999" min="1" max="999" maxlength="3" value={{compra.cantidad}} >
             {% endif %}
 	    
             <label for="precioUnitario" class="formProducText">Precio unitario:</label>
@@ -46,54 +34,25 @@
                 <input type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="Un número entre 1 y 999" min="0" max="999" maxlength="3" value={{compra.precioUnitario}} required>
             {% endif %}
             
-            <label for="proveedor" class="formProducText">Proveedor:</label>
-	    {% if (compra.proveedor is empty)  %}
-                <input type="number" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3">
-            {% else %}
-                <input type="number" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" value={{compra.proveedor}} >
-            {% endif %}
-
-            <label for="fecha" class="formProducText">Fecha:</label>
-	    {% if (compra.fecha is empty)  %}
-                <input type="number" name="fecha" id="fecha" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3">
-            {% else %}
-                <input type="number" name="fecha" id="fecha" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" value={{compra.fecha}} >
-            {% endif %}
-            
-            
-            
-            <label for="categoria" class="formProducText">Categoria:</label>
-            <select id="categoria" name="categoria" class="formProducinput" required>
-                {% for cat in categoria %}
-                    {% if compra.idCategoria == cat.idCategoria %}
-                        <option value="{{ cat.idCategoria }}" selected>{{ cat.nombre }}</option>
+            <label for="producto" class="formProducText">Producto:</label>
+            <select required id='idProducto' name='select'>
+                <option value =''>Seleccione un proveedor </option>
+                {% for prov in proveedor %}
+                    {% if prov.idProducto == compra.idProveedor %}
+                        <option value={{ prov.idProveedor}}selected> {{ prov.proveedor}}  {{prov.proveedorCuit }} </option>
                     {% else %}
-                        <option value="{{ cat.idCategoria }}" >{{ cat.nombre }}</option>
+                        <option value={{ prov.idProveedor}}> {{ prov.proveedor}}  {{prov.proveedorCuit }} </option>
                     {% endif %}
                 {% endfor %}
             </select>
-           	    
-            <label for="proveedor" class="formProducText">Proveedor:</label>
-            {% if (compra.proveedor is empty)  %}
-                <input type="text" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un proveedor" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required>
+           
+            <label for="fecha" class="formProducText">Fecha:</label>
+	    {% if (compra.fecha is empty)  %}
+                <input type="date" name="fecha" id="fecha" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3">
             {% else %}
-                <input type="text" name="proveedor" id="proveedor" class="formProducinput" placeholder="Un proveedor" maxlength="25" pattern="^[A-Z|a-z]{1,25}$" required value={{compra.proveedor}}>
+                <input type="date" name="fecha" id="fecha" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" value={{compra.fecha}} >
             {% endif %}
             
-	    <label for="precioVentaUnitario" class="formProducText">Precio Venta Unitario:</label>
-	    {% if (compra.precioVentaUnitario is empty)  %}
-                <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" maxlength="5" required>
-            {% else %}
-                <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" maxlength="5" required value={{compra.precioVentaUnitario}}>
-            {% endif %}
-            
-            <label for="descripcion" class="formProducText">Descripcion:</label>
-	    {% if (compra.descripcion is empty)  %}
-                <input type="text" name="descripcion" id="descripcion" class="formProducinput" placeholder="descripcion del compra?" maxlength="50" required>
-            {% else %}
-                <input type="text" name="descripcion" id="descripcion" class="formProducinput" placeholder="descripcion del compra?" maxlength="50" required value={{compra.descripcion}}>
-            {% endif %}
-
 	    <label for="enviar" class="formProducTextHidden" hidden>Botón de envío</label>
 	    <input type="submit" name="submit"  id="enviar" class="boton" value="Entrar">
 	</form>
