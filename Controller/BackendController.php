@@ -37,16 +37,19 @@ class BackendController extends Controller{
     }
     public function venta(){
         /***** actualizar ganancias***************************/
-        var_dump($_POST);
-        $this->dispatcher->producto =$this ->productoModel->insertarProducto($_POST);
-        
+        $this->validator->varSet($_POST['submitButton'],"apreta el boton de envio");
+        $this->validator->validarNumeros($_POST['idProducto'],"no hay un id valido", 3);
+        $this->validator->validarNumeros($_POST['cant'],"no hay una cantidad valida", 3);
+        if ($_POST['cant'] < 1) throw new Exception("Cantidad inferior a 1");
+        if (! $this->productoModel->searchIdProducto($_POST['idProducto'])) throw new Exception("idProducto no valido");
+        $this->productoModel->actualizarCantProductos($_POST['idProducto'], $_POST['stock'] - $_POST['cant']);
+        $this->ventaModel->insertarVenta($_POST);
         $this->paginaCorrecta($this->productoModel->totalProductos());
         $this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
-        $this->dispatcher->pag = $_GET['pag'];
-        
-        $this->dispatcher->render("Backend/VenderTemplate.twig"); 
-        die();
-    }
+        $this->dispatcher->pag = 0;
+        $this->dispatcher->render("Backend/VenderTemplate.twig");
+
+    } 
 
     public function venderListar(){
         $this->paginaCorrecta($this->ventaModel->totalVenta());

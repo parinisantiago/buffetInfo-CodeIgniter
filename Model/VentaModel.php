@@ -12,7 +12,6 @@ class VentaModel extends Model{
             SELECT COUNT(*) AS total 
             FROM producto p 
             INNER JOIN ingresoDetalle i ON (p.idProducto=i.idProducto) 
-            INNER JOIN ingresoTipo it ON (i.idTipoIngreso=it.idIngresoTipo) 
             WHERE p.eliminado = 0 '
             ,array());
     }
@@ -20,8 +19,9 @@ class VentaModel extends Model{
 
     public function getAllVenta($limit, $offset){
         return $this -> queryOFFSET('
-            SELECT p.idProducto p.nombre, p.marca,i.cantidad, i.precioUnitario,i.descripcion, i.fecha, it.Nombre
-            FROM producto p INNER JOIN ingresoDetalle i ON (p.idProducto=i.idProducto) INNER JOIN ingresoTipo it ON (i.idTipoIngreso=it.idIngresoTipo) 
+            SELECT p.idProducto, p.nombre, p.marca,i.cantidad, i.precioUnitario,i.descripcion, i.fecha
+            FROM producto p
+            INNER JOIN ingresoDetalle i ON (p.idProducto=i.idProducto)
             WHERE p.eliminado = 0 
             LIMIT :limit  
             OFFSET :offset', $limit, $offset
@@ -31,7 +31,7 @@ class VentaModel extends Model{
     public function insertarVenta($vent){
 /*actualiza solo la tabla de vetnas, tambien hay qye hacer la actualizcion en 
  * la tabla de productos*/
-
+        var_dump($vent);
         $today=getDate();
         return $this -> query("
             INSERT INTO ingresoDetalle(
@@ -40,20 +40,19 @@ class VentaModel extends Model{
                 precioUnitario,
                 descripcion,
                 fecha,
-                idTipo)
+                eliminado)
             VALUES (:idProducto,
                     :cantidad,
                     :precioUnitario,
                     :descripcion,
                     :fecha,
-                    :idTipo,
                     0)",
             array('idProducto' => $vent["idProducto"],
-                'cantidad' => $vent["cantidad"],
-                'precioUnitario' => $vent["precioUnitario"],
-                'descripcion' => $vent["descripcion"],
-                'fecha' => $today['year']."-".$today['mon']."-".$today['mday']." ".$today['hours'].":".$today['minutes'].":".$today['seconds'],
-                'idTipo' => $vent["idTipo"],)
+                'cantidad' => $vent["cant"],
+                'precioUnitario' => $vent["precioVentaUnitario"],
+                'descripcion' =>  '',
+                'fecha' => $today['year']."-".$today['mon']."-".$today['mday']." ".$today['hours'].":".$today['minutes'].":".$today['seconds']
+                )
         );
     }
     
