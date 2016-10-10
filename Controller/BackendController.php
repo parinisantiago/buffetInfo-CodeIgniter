@@ -141,6 +141,7 @@ class BackendController extends Controller{
         if (isset($_POST["idProducto"])){
             $this->dispatcher->producto =$this ->productoModel->searchIdProducto($_POST["idProducto"]);
         }
+        var_dump($this->dispatcher->producto);
         $this->dispatcher->categoria =$this ->categoriaModel->getAllCategorias();
         $this->dispatcher->render("Backend/ProductosAMTemplate.twig");
     }
@@ -179,9 +180,10 @@ class BackendController extends Controller{
 
         }
     public function validarCompra($var){
+        var_dump($_POST);
         $this->validator->varSet($var['submit'],"Apreta el boton de submit");
-        if (! $this->compraModel->searchIdCompra($var['idProveedor'])) throw new Exception("No existe el proveedor");
-        if (! $this->productoModel->searchIdProducto($var['idProducto'])) throw new Exception("No existe el producto");
+        if (! $this->compraModel->searchIdCompra($var['proveedor'])) throw new Exception("No existe el proveedor");
+        if (! $this->productoModel->searchIdProducto($var['producto'])) throw new Exception("No existe el producto");
         $this->validator->validarNumeros($var['cantidad'],"error en cantidad",3);
         $this->validator->validarNumerosPunto($var['precioUnitario'],"error en precio unitario",50);
         $this->validator->validarFecha($var['fecha'],"error en fecha");
