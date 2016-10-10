@@ -51,7 +51,7 @@ class MainUserModel extends Model
         return $this -> queryPreparadaSQL('SELECT idRol FROM usuario WHere idUsuario = :idUsuario', array('idUsuario' => $idUsuario));
     }
 
-    public function modUser($id, $nombreUsuario, $nombre, $apellido,$pass, $dni, $email,$telefono,$rol){
+    public function modUser($id, $nombreUsuario, $nombre, $apellido,$pass, $dni, $email,$telefono,$rol, $ub){
         return $this -> query('
               UPDATE usuario 
               SET 
@@ -62,7 +62,8 @@ class MainUserModel extends Model
                  documento= :dni,
                  email= :email,
                  telefono= :telefono,
-                 idRol= :rol
+                 idRol= :rol,
+                 idUbicacion = :ub
               WHERE 
                  idUsuario= :id',
             array(
@@ -74,14 +75,15 @@ class MainUserModel extends Model
                 'email' => $email,
                 'telefono' => $telefono,
                 'rol' => $rol,
-                'id' => $id
+                'id' => $id,
+                'ub' => $ub
             )
             );
     }
 
-    public function addUser($nombreUsuario, $nombre, $apellido,$pass, $dni, $email,$telefono,$rol){
+    public function addUser($nombreUsuario, $nombre, $apellido,$pass, $dni, $email,$telefono,$rol, $ub){
         return $this -> query(
-            'INSERT INTO usuario (usuario, clave, nombre, apellido, documento, email, telefono, idRol, idUbicacion, eliminado) VALUES (:nombreUsuario, :pass, :nombre, :apellido, :dni, :email, :telefono, :rol, 1, 0)',
+            'INSERT INTO usuario (usuario, clave, nombre, apellido, documento, email, telefono, idRol, idUbicacion, eliminado) VALUES (:nombreUsuario, :pass, :nombre, :apellido, :dni, :email, :telefono, :rol, :ub, 0)',
             array(
                 'nombreUsuario' => $nombreUsuario,
                 'pass' => $pass,
@@ -90,7 +92,8 @@ class MainUserModel extends Model
                 'dni' => $dni,
                 'email' => $email,
                 'telefono' => $telefono,
-                'rol' => $rol
+                'rol' => $rol,
+                'ub' => $ub
             )
         );
     }

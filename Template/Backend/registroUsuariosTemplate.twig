@@ -39,6 +39,16 @@
             {% endif %}
             {% endfor %}
         </select>
+        <label for="ubicacion" class="formProducText">Ubicacion: </label>
+        <select id="ubicacion" name="ubicacion" class="formProducinput">
+            {% for ubi in ubicacion %}
+                {% if user.idUbicacion == ubi.idUbicacion %}
+                    <option value="{{ ubi.idUbicacion }}" selected>{{ ubi.nombre }}</option>
+                {% else %}
+                    <option value="{{ ubi.idUbicacion }}" >{{ ubi.nombre }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
 
 
         <label for="submitButton" hidden>Boton de envio:</label>

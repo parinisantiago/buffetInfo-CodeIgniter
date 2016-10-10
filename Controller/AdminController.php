@@ -28,7 +28,7 @@ class AdminController extends BackendController{
     public function insertUsuario(){
 
         if ($this->model->userExist($_POST['nombreUsuario'])) throw new Exception("El usuario ya existe");
-        $this->model->addUser($_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'], $_POST['telefono'],$_POST['rol']);
+        $this->model->addUser($_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'], $_POST['telefono'],$_POST['rol'], $_POST['ubicacion']);
     }
 
 
@@ -37,8 +37,9 @@ class AdminController extends BackendController{
     {
 
             $this->validarUsuario(); //realiza validaciones mediante expresiones regulares
+
             if (! isset($_POST['idUsuario'])) $this->insertUsuario();
-            else if ((Session::getValue('modUserId') == $_POST['idUsuario']) &&  (  $this->model->userExist($_POST['nombreUsuario']) == $_POST['nombreUsuario'])) $this->model->modUser($_POST['idUsuario'],$_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'],$_POST['telefono'], $_POST['rol']); //si es el usaurio guardado, lo modifica
+            else if ((Session::getValue('modUserId') == $_POST['idUsuario']) &&  (  $this->model->userExist($_POST['nombreUsuario'])->usuario == $_POST['nombreUsuario'])) $this->model->modUser($_POST['idUsuario'],$_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'],$_POST['telefono'], $_POST['rol'], $_POST['ubicacion']); //si es el usaurio guardado, lo modifica
             else throw new Exception('El id de usuario se vio modificado durante la operacion');
             $_GET['pag'] = 0;
             $this->abmUsuario();
@@ -62,6 +63,7 @@ class AdminController extends BackendController{
     
     public function registroUsuario()
     {
+        $this->dispatcher->ubicacion = $this->rolModel->getAllUbicacion();
         $this->dispatcher->rols = $this->rolModel->getAllRols(); //para poder crear el listado de roles
         $this->dispatcher->render("Backend/registroUsuariosTemplate.twig");
     }
@@ -88,6 +90,7 @@ class AdminController extends BackendController{
         $this->validator->validarMail( $_POST['email'], 'Error en email', 25 );
         $this->validator->validarNumeros( $_POST['telefono'],'Error en telefono', 25 );
         $this->validator->varSet($_POST['rol'], "envia un rol");
+        if ( $_POST['rol'] != '2' ) $_POST['ubicacion'] = '0';
 
 
     }

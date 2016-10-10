@@ -17,4 +17,9 @@ class RolModel extends Model
     {
         return $this ->queryPreparadaSQL("SELECT * FROM rol WHERE idRol = :id", array('id' => $id));
     }
+
+    public function getAllUbicacion()
+    {
+        return $this -> queryTodasLasFilas("SELECT * FROM ubicacion", array());
+    }
 }
