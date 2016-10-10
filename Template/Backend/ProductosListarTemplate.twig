@@ -31,7 +31,11 @@
                         <td headers="precioVentaUnitario">{{ prod.precioVentaUnitario }}</td>
                         <td headers="descripcion">{{ prod.descripcion }}</td>
                         <td headers="editar">
-                            <form method="post" action={% if rol == '0' %} Loader.php?controller=AdminController&method=productosAM {% else %} Loader.php?controller=GestorController&method=productosAM {% endif %}>
+                            {% if rol == '0' %}
+                                <form method="post" action= Loader.php?controller=AdminController&method=productosAM" >
+                            {% else %}
+                                <form method="post" action=  Loader.php?controller=GestorController&method=productosAM >
+                            {% endif %}
                                 <label for="idProducto" hidden></label>
                                 <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }}>
                                 <button type="submit" id="submitButton" name="submitButton">

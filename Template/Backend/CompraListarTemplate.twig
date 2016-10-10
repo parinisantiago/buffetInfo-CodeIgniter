@@ -33,12 +33,12 @@
                     <td headers="fecha">{{ compra.fecha }}</td>
                    <td headers="editar">
                         {% if rol == "0" %}
-                            <form method="post" action="Loader.php?controller=AdminController&method=compraModificar">
+                            <form method="post" action="Loader.php?controller=AdminController&method=compraAM">
                         {%else%}
-                            <form method="post" action="Loader.php?controller=GestorController&method=compraModificar">
+                            <form method="post" action="Loader.php?controller=GestorController&method=compraAM">
                         {%endif%}
-                                <label for="idEgresoDetalle" hidden></label>
-                                <input id="idEgresoDetalle" name="idEgresoDetalle" type="hidden" value={{ venta.idEgresoDetalle }}>
+                                <label for="idCompra" hidden></label>
+                                <input id="idCompra" name="idCompra" type="hidden" value={{ compra.idCompra }}>
                                 <button type="submit" id="submitButton" name="submitButton">
                                     <img class="icono" src="images/editar.png" alt= "editar la informacion" />
                                 </button>
@@ -50,8 +50,8 @@
                         {%else%}
                             <form method="post" action="Loader.php?controller=GestorController&method=compraEliminar">
                         {%endif%}
-                                <label for="idEgresoDetalle" hidden></label>
-                                <input id="idEgresoDetalle" name="idEgresoDetalle" type="hidden" value={{ venta.idEgresoDetalle }}>
+                                <label for="idCompra" hidden></label>
+                                <input id="idCompra" name="idCompra" type="hidden" value={{ compra.idCompra }}>
                                 <button type="submit" id="submitButton" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" role="button">
                                   <img class="icono" src="images/eliminar.png" alt= "eliminar" />
                                 </button>

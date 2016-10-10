@@ -4,9 +4,16 @@
     </li>
     <li class="asideItem">
         {% if rol == "0" %}
-            <a href="Loader.php?controller=adminController&method=productosAM">Productos</a>
+            <a href="Loader.php?controller=adminController&method=productosAM">Alta de productos</a>
         {%else%}
-            <a href="Loader.php?controller=GestorController&method=productosAM">Productos</a>
+            <a href="Loader.php?controller=GestorController&method=productosAM">Alta de productos</a>
+        {%endif%}
+    </li>
+    <li class="asideItem">
+        {% if rol == "0" %}
+            <a href="Loader.php?controller=AdminController&method=productosListar&pag=0">Listado de productos</a>
+        {%else%}
+            <a href="Loader.php?controller=GestorController&method=productosListar&pag=0">Listado de productos</a>
         {%endif%}
     </li>
     <li class="asideItem">
@@ -19,32 +26,18 @@
 
     <li class="asideItem">
         {% if rol == "0" %}
-            <a href="Loader.php?controller=adminController&method=compraListar&pag=0">Compras</a>
+            <a href="Loader.php?controller=adminController&method=compraListar&pag=0">Compras de productos</a>
         {%else%}
-            <a href="Loader.php?controller=GestorController&method=compraListar&pag=0">Compras</a>
+            <a href="Loader.php?controller=GestorController&method=compraListar&pag=0">Compras de productos</a>
         {%endif%}
     </li>
-    <li class="asideItem">
-        <a href="">Menu</a>
-    </li>
+    
     {% if rol == "0" %}
         <li class="asideItem">
             <a href="Loader.php?controller=adminController&method=abmUsuario&pag=0">Usuarios</a>
         </li>
     {%endif%}
-    <li class="asideItem">
-            <a href="">Pedidos On-line</a>
-    </li>
-    <li class="asideItem">
-        {% if rol == "0" %}
-            <a href="Loader.php?controller=AdminController&method=productosListar&pag=0">Listado de productos</a>
-        {%else%}
-            <a href="Loader.php?controller=GestorController&method=productosListar&pag=0">Listado de productos</a>
-        {%endif%}
-    </li>
-    <li class="asideTitleItem">
-            <p>Balance</p>
-    </li>
+    
     {% if rol == "1" %}
         <li class="asideItem">
             <a href="Loader.php?controller=GestorController&method=listadoFaltantes&pag=0">Productos faltantes</a>
@@ -53,15 +46,31 @@
             <a href="Loader.php?controller=GestorController&method=listadoStockMinimo&pag=0">Productos con stock minimo</a>
         </li>
     {%endif%}
-    <li class="asideItem">
-        <a href="">Ingresos entre fechas</a>
-    </li>
-    <li class="asideItem">
-        <a href="">Gastos entre fechas</a>
-    </li>
+    
     {% if rol == "0" %}
         <li class="asideItem">
             <a href="Loader.php?controller=adminController&method=configuracionSitio">Configuracion del sitio</a>
         </li>
     {%endif%}
+    {% if rol == "100" %}
+    <li class="asideItem">
+        <a href="">Menu</a>
+    </li>
+    
+    <li class="asideItem">
+        <a href="">Ingresos entre fechas</a>
+    </li>
+    
+    <li class="asideItem">
+        <a href="">Gastos entre fechas</a>
+    </li>
+
+    <li class="asideTitleItem">
+        <p>Balance</p>
+    </li>
+    
+    <li class="asideItem">
+            <a href="">Pedidos On-line</a>
+    </li>
+     {%endif%}
 </ul>

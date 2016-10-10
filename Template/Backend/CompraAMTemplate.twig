@@ -6,16 +6,16 @@
     {%else%}
 	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=GestorController&method=compraAMPost" method="post">
     {%endif%}
-            <input type='hidden' name='idProducto' id="idCompra" value={{compra.idCompra}}>
+            <input type='hidden' name='idCompra' id="idCompra" value={{compra.idCompra}}>
            
             <label for="producto" class="formProducText">Producto:</label>
-            <select required id='idProducto' name='select'>
-                <option value =''>Seleccione un producto </option>
+            <select required id='idProducto' class="formProducinput" name='idProducto'>
+                <option value =''>Seleccione un proveedor </option>
                 {% for producto in productos %}
                     {% if producto.idProducto == compra.idProducto %}
-                        <option value={{ producto.idProducto}}selected> {{ producto.nombre}}  {{producto.marca }} </option>
+                        <option name="idProducto" id="idProducto" value={{ producto.idProducto}}selected> {{ producto.nombre}}  {{producto.marca }} </option>
                     {% else %}
-                        <option value={{ producto.idProducto}}> {{ producto.nombre}}  {{producto.marca }} </option>
+                        <option name="idProducto" id="idProducto" value={{ producto.idProducto}}> {{ producto.nombre}}  {{producto.marca }} </option>
                     {% endif %}
                 {% endfor %}
             </select>
@@ -34,22 +34,20 @@
                 <input type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="Un número entre 1 y 999" min="0" max="999" maxlength="3" value={{compra.precioUnitario}} required>
             {% endif %}
             
-            <label for="producto" class="formProducText">Producto:</label>
-            <select required id='idProducto' name='select'>
+            <label for="proveedor" class="formProducText">Proveedor:</label>
+            <select required id='idProveedor' name='idProveedor'>
                 <option value =''>Seleccione un proveedor </option>
                 {% for prov in proveedor %}
-                    {% if prov.idProducto == compra.idProveedor %}
-                        <option value={{ prov.idProveedor}}selected> {{ prov.proveedor}}  {{prov.proveedorCuit }} </option>
+                    {% if prov.idProveedor == compra.idProveedor %}
+                        <option name="idProveedor" id="idProveedor" value={{ prov.idProveedor}}selected> {{ prov.proveedor}}  {{prov.proveedorCuit }} </option>
                     {% else %}
-                        <option value={{ prov.idProveedor}}> {{ prov.proveedor}}  {{prov.proveedorCuit }} </option>
+                        <option name="idProveedor" id="idProveedor" value={{ prov.idProveedor}}> {{ prov.proveedor}}  {{prov.proveedorCuit }} </option>
                     {% endif %}
                 {% endfor %}
             </select>
            
-            <label for="fecha" class="formProducText">Fecha:</label>
-	    {% if (compra.fecha is empty)  %}
-                <input type="date" name="fecha" id="fecha" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3">
-            {% else %}
+            {% if not( compra.idCompra is empty)  %}
+                <label for="fecha" class="formProducText">Fecha:</label>
                 <input type="date" name="fecha" id="fecha" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" value={{compra.fecha}} >
             {% endif %}
             

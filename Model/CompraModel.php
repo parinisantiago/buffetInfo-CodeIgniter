@@ -24,9 +24,9 @@ class CompraModel extends Model{
     }
      public function searchIdCompra($idComp){
         return $this ->queryPreparadaSQL("
-            SELECT c.idCompra, p.nombre, p.marca, c.cantidad, c.precioUnitario, pr.proveedor, c.fecha
+            SELECT c.idCompra,c.idProducto,c.idProveedor, p.nombre, p.marca, c.cantidad, c.precioUnitario, pr.proveedor, c.fecha
             FROM compra c INNER JOIN proveedor pr ON(c.idProveedor=pr.idProveedor)INNER JOIN producto p ON (p.idProducto=c.idProducto) 
-            WHERE c.eliminado = 0 and p.eliminado=0 c.idCompra = :idComp" , array(idComp => $idComp));
+            WHERE c.eliminado = 0 and p.eliminado=0 and c.idCompra = :idComp" , array(idComp => $idComp));
     }
     
     public function getAllProveedor($limit, $offset){
@@ -60,10 +60,10 @@ class CompraModel extends Model{
         $today=getDate();
         return $this -> query("
             INSERT INTO compra(
-                idProducto
+                idProducto,
                 cantidad,
                 precioUnitario,
-                idProveedor
+                idProveedor,
                 fecha)
             VALUES (:idProducto,
                     :cantidad,
@@ -78,15 +78,13 @@ class CompraModel extends Model{
                 )
         );
     }
-    /* sin hacer*/
-   /*
-  
-    public function eliminarEgresoDetalle($idEgresoDetalle){
+     
+    public function eliminarCompra($idCompra){
         return $this -> query(
-            "UPDATE egresoDetalle ed 
-            SET ed.eliminado =1 
-            WHERE ed.idEgresoDetalle = :idEgresoDetalle" , array('idEgresoDetalle' => $idEgresoDetalle));
-    }*/
+            "UPDATE compra c 
+            SET c.eliminado =1 
+            WHERE c.idCompra = :idCompra" , array('idCompra' => $idCompra));
+    }
 }
 ?>
 

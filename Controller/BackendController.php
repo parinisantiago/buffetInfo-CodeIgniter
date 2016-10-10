@@ -121,12 +121,12 @@ class BackendController extends Controller{
         $this->dispatcher->method = "CompraListar";
         $this->compraListar();
     }
-     public function compraModificar(){
-        /*****************************/
-    }
     
     public function compraEliminar(){
-        /*****************************/
+        $this->dispatcher->compra =$this ->compraModel->eliminarCompra($_POST["idCompra"]);
+        $_GET['pag'] = 0;
+        $this->dispatcher->method = "CompraListar";
+        $this->compraListar();
     }
     /* ---Productos---*/
     
