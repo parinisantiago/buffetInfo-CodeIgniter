@@ -179,17 +179,13 @@ class BackendController extends Controller{
 
         }
     public function validarCompra($var){
-/*
-          $this->validator->varSet($var['submit'],"Apreta el boton de submit");
-          $this->validator->validarStringEspeciales($var['nombre'],"erroe en nombre",25);
-          $this->validator->validarStringEspeciales($var['marca'],"error en marca",25);
-          $this->validator->validarNumeros($var['stock'],"error en stock",3);
-          $this->validator->validarNumeros($var['stockMinimo'],"error en stock minimo",3);
-          $this->validator->validarNumeros($var['categoria'],"error en categoria",3);
-          $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"error en precio de venta unitario",5);
-          if (! $this->categoriaModel->getCategoriaById($var['categoria'])) throw new Exception("No existe la categoria");
-*/
-        }
+        $this->validator->varSet($var['submit'],"Apreta el boton de submit");
+        if (! $this->compraModel->searchIdCompra($var['idCompra'])) throw new Exception("No existe la compra");
+        if (! $this->compraModel->searchIdCompra($var['idProveedor'])) throw new Exception("No existe el proveedor");
+        if (! $this->productoModel->searchIdProducto($var['idProducto'])) throw new Exception("No existe el producto");
+        $this->validator->validarNumeros($var['cantidad'],"error en cantidad",3);
+        $this->validator->validarNumerosPunto($var['precioUnitario'],"error en precio unitario",50);
+    }
 
 
     /*--- paginacion ---*/
