@@ -14,6 +14,11 @@ class Validador{
             throw new Exception($error);
     }
 
+    public function validarFecha($var, $error){
+        if (!$this->tam($var, 25) || !$this->varSet($var, $error) ||  !preg_match("/^\\d{4}\\/\\d{1,2}\\/\\d{1,2}$/", $var))
+            throw new Exception($error);
+    }
+
     public function validarMail($var, $error, $tam){
         if (!$this->tam($var, $tam) || !$this->varSet($var, $error) ||  !preg_match("/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/", $var))
             throw new Exception($error);
