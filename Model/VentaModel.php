@@ -12,17 +12,17 @@ class VentaModel extends Model{
             SELECT COUNT(*) AS total 
             FROM producto p 
             INNER JOIN ingresoDetalle i ON (p.idProducto=i.idProducto) 
-            WHERE p.eliminado = 0 '
+            WHERE i.eliminado = 0 '
             ,array());
     }
 
 
     public function getAllVenta($limit, $offset){
         return $this -> queryOFFSET('
-            SELECT p.idProducto, p.nombre, p.marca,i.cantidad, i.precioUnitario,i.descripcion, i.fecha
+            SELECT i.idIngresoDetalle ,p.idProducto, p.nombre, p.marca,i.cantidad, i.precioUnitario,i.descripcion, i.fecha
             FROM producto p
             INNER JOIN ingresoDetalle i ON (p.idProducto=i.idProducto)
-            WHERE p.eliminado = 0 
+            WHERE i.eliminado = 0 
             LIMIT :limit  
             OFFSET :offset', $limit, $offset
         );
@@ -76,7 +76,7 @@ class VentaModel extends Model{
     }
     public function eliminarVenta($idVenta){
         return $this -> query(
-            "UPDATE ingresoDetalle id 
+            "UPDATE ingresoDetalle id
             SET id.eliminado =1 
             WHERE id.idIngresoDetalle = :idIngresoDetalle" , array('idIngresoDetalle' => $idVenta));
     }

@@ -14,12 +14,14 @@ class ProductosModel extends Model{
                 LIMIT :limit  
                 OFFSET :offset', $limit, $offset);
     }
+    
     public function searchIdProducto($idProd){
         return $this ->queryPreparadaSQL(
                 "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, p.precioVentaUnitario, p.descripcion, p.idProducto,c.nombre as categoria
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
                 WHERE p.eliminado = 0 and p.idProducto = :idProd" , array('idProd' => $idProd));
     }
+
     public function actualizarProducto($Prod){
         $today=getDate();
         return $this -> query("
@@ -42,8 +44,7 @@ class ProductosModel extends Model{
                     'idProducto' => $Prod["idProducto"]
                 ));
     }
-    
-    
+
     public function insertarProducto($Prod){
         $today=getDate();
         return $this -> query("

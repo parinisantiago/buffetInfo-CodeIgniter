@@ -61,14 +61,14 @@ class BackendController extends Controller{
         /*****************************/
     }
     public function ventaEliminar(){
+        var_dump($_POST);
         $this->validator->varSet($_POST['submitButton'], "Apreta el botón de eliminar macho");
         $this->validator->varSet($_POST['idIngresoDetalle'], "Faltan datos para poder eliminar la venta");
-        
+        $this->productoModel->actualizarCantProductos($_POST['IdProducto'],($this->productoModel->searchIdProducto($_POST['idProducto']) + $_POST['cantidad']));
+
         $this->ventaModel->eliminarVenta($_POST['idIngresoDetalle']);
-        
-        
-        
-        $_GET['pag'] = 0;
+  
+        $_GET['pag'] = 0; //
 
         $this->venderListar();
     }
