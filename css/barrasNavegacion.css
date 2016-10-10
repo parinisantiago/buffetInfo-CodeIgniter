@@ -71,23 +71,30 @@ nav{
 }
 /* --- LOGOUT --- */
 #logout{
+    margin-top: 2%;
     float: left;
-    margin-left: 33%;
-    margin-top: 1%;
+    margin-left: 1%;
+    height: 2em;
+    width: 55%;
+   
 }
 #textoBienvida{
+    margin-top: -2%;
     float: none;
     margin-left: 0%;
     color: white;
-    width: auto;
     display: block;
     clear: right;
 }
 
 #logoutBoton{
+    margin-top: 25%;
     float: none;
-    margin-top: -11.7%;
-    margin-left: 68%;
+    width: 32%;
+    display: block;
+    margin-top: -18%;
+    margin-left: 50%;
+  
 }
 @media screen and (max-width: 851px) {
     #logoutBoton{
