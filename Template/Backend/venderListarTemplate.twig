@@ -3,7 +3,6 @@
 {% block main %}
 
     <div>
-        <p> Página: {{ pag }} <p>
         <table class="tablaProductos" summary="detallas de cada venta realizada">
             <thead>
             <tr> {#ver tabla de la bd#}
@@ -58,7 +57,8 @@
                     </tr>
                {% endif %}
             {% endfor %}
-            <div class="boton">
+            <div class="paginas" >
+            <p> Página: {{ pag }} <p>
             {% if rol == '0' %}
                 {% if pag != 0 %}
                     <a class="boton" href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
