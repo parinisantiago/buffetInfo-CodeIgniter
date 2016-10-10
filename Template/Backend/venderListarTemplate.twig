@@ -56,16 +56,17 @@
                     </tr>
                {% endif %}
             {% endfor %}
-            {% if pag != 0 %}
-                <a href="/Loader.php?controller=BackendController&method=productosListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
-            {% endif %}
-            <a href="/Loader.php?controller=BackendController&method=productosListar&pag={{ pag + 1 }}">Página Siguiente --></a>
-            
-            {% if rol == "0" %}
-                <a href="Loader.php?controller=adminController&method=ventaListar&pag=0">Ventas de productos</a>
-            {%else%}
-                <a href="Loader.php?controller=GestorController&method=ventaListar&pag=0">Ventas de productos</a>
-            {%endif%}    
+            {% if rol == '0' %}
+                {% if pag != 0 %}
+                    <a href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                {% endif %}
+                <a href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente --></a>
+            {% else %}
+                {% if pag != 0 %}
+                    <a href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                {% endif %}
+                <a href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente --></a>
+            {% endif  %}
         </tbody>
         </table>
     </div>

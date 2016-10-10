@@ -36,6 +36,12 @@
                                     <option value="{{i}}" >{{ i }}</option>
                                 {% endfor %}
                             </select>
+                                <label for="stock" hidden></label>
+                                <input id="stock" name="stock" type="hidden" value={{ prod.stock }} >
+                                <label for="precioVentaUnitario" hidden></label>
+                                <input id="precioVentaUnitario" name="precioVentaUnitario" type="hidden" value={{ prod.precioVentaUnitario }} >
+                                <label for="stockMinimo" hidden></label>
+                                <input id="stockMinimo" name="stockMinimo" type="hidden" value={{ prod.stockMinimo }} >
                             <label for="idProducto" hidden></label>
                             <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }} >
                             <button type="submit" id="submitButton" name="submitButton">

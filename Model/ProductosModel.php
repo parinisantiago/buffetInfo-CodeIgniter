@@ -18,7 +18,7 @@ class ProductosModel extends Model{
         return $this ->queryPreparadaSQL(
                 "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, p.precioVentaUnitario, p.descripcion, p.idProducto,c.nombre as categoria
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
-                WHERE p.eliminado = 0 and p.idProducto = :idProd" , array(idProd => $idProd));
+                WHERE p.eliminado = 0 and p.idProducto = :idProd" , array('idProd' => $idProd));
     }
     public function actualizarProducto($Prod){
         $today=getDate();
@@ -112,14 +112,14 @@ class ProductosModel extends Model{
         return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM producto', array());
     }
     
-    public function actualizarCantProductos($var){
+    public function actualizarCantProductos($id, $cant){
 /*actualiza solo la tabla de productos, tambien hay qye hacer la actualizcion en la tabla de ventas*/
         return $this -> query(
                 "UPDATE producto p 
                 SET p.stock = :cant 
                 WHERE p.idProducto = :idProd",
-        array('cant' => $var["idProducto"],
-              'idProd' =>["cant"]));
+        array('cant' => $cant,
+              'idProd' =>$id));
     }
 
 }
