@@ -1,9 +1,7 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
-
     <div>
-        <p> Página: {{ pag }} <p>
         {% if rol == "0" %}
             <a href="Loader.php?controller=adminController&method=compraAM">Nueva compras</a>
         {%else%}
@@ -58,7 +56,10 @@
                             </form>
                     </td>
                 </tr>
+            
            {% endfor %}
+           <div class="paginas" >
+            <p> Página: {{ pag }} <p>
             {% if rol == '0' %}
                 {% if pag != 0 %}
                     <a href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag - 1 }}"> <-- Página anterior</a>
@@ -70,6 +71,7 @@
                 {% endif %}
                 <a href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente --></a>
             {% endif  %}
+            </div>
             </tbody>
         </table>
     </div>

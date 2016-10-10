@@ -58,7 +58,8 @@
                     </tr>
                {% endif %}
             {% endfor %}
-            <div class="boton">
+            <div class="paginas" >
+            <p> Página: {{ pag }} <p>
             {% if rol == '0' %}
                 {% if pag != 0 %}
                     <a class="boton" href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag - 1 }}"> <-- Página anterior</a>

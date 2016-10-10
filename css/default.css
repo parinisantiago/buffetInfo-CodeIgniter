@@ -121,6 +121,7 @@ clear: both;
     color: #fff;
     background-color: #333;
     padding: 5%;
+    padding: 10%;
     margin-left: 10%;
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
@@ -150,4 +151,20 @@ clear: both;
     padding:4px;
     text-align:center;
 }
+
+/* -------numero pagina ---- */
+.paginas{
+    text-align: center;
+    float: right;
+    color: white;
+    position: relative;
+    margin-right: 45%;
+    padding: 2%;
+    margin-bottom: 5%;
+    background-color: #333;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
 
