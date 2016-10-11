@@ -70,36 +70,25 @@ nav{
     color: white; 
 }
 /* --- LOGOUT --- */
-#logout{
-    margin-top: 2%;
-    float: left;
-    margin-left: 1%;
-    height: 2em;
-    width: 55%;
-   
-}
+
 #textoBienvida{
-    margin-top: -2%;
-    float: none;
-    margin-left: 0%;
     color: white;
-    display: block;
-    clear: right;
+    display: inline-block;
+    width: 50%;  
+    margin-top: 1%;
+    margin-left: 10%;
 }
 
 #logoutBoton{
-    margin-top: 25%;
-    float: none;
-    width: 32%;
-    display: block;
-    margin-top: -18%;
-    margin-left: 50%;
-  
+    float:right;
+    margin-right: 10%;
+    margin-top: -2.7%;
 }
 @media screen and (max-width: 851px) {
     #logoutBoton{
-        margin-left: 70%;
-        margin-top: -11.7%;
+         margin-top: -4%}
+    #textoBienvida{
+        margin-top: 2%;
     }
 } 
 

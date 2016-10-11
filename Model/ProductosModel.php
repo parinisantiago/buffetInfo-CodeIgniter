@@ -116,8 +116,7 @@ class ProductosModel extends Model{
     
     public function actualizarCantProductos($id, $cant){
 /*actualiza solo la tabla de productos, tambien hay qye hacer la actualizcion en la tabla de ventas*/
-        var_dump($id); var_dump($cant);
-        return $this -> query(
+       return $this -> query(
                 "UPDATE producto p 
                 SET p.stock = :cant 
                 WHERE p.idProducto = :idProd",

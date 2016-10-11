@@ -38,8 +38,8 @@
                             <form method="post" action="Loader.php?controller=GestorController&method=compraAM">
                         {%endif%}
                                 <label for="idCompra" hidden></label>
-                                <input id="idCompra" name="idCompra" type="hidden" value={{ compra.idCompra }}>
-                                <button type="submit" id="submitButton" name="submitButton">
+                                <input name="idCompra" type="hidden" value={{ compra.idCompra }}>
+                                <button type="submit" name="submitButton">
                                     <img class="icono" src="images/editar.png" alt= "editar la informacion" />
                                 </button>
                             </form>
@@ -51,15 +51,18 @@
                             <form method="post" action="Loader.php?controller=GestorController&method=compraEliminar">
                         {%endif%}
                                 <label for="idCompra" hidden></label>
-                                <input id="idCompra" name="idCompra" type="hidden" value={{ compra.idCompra }}>
-                                <button type="submit" id="submitButton" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" role="button">
+                                <input name="idCompra" type="hidden" value={{ compra.idCompra }}>
+                                <button type="submit" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')>
                                   <img class="icono" src="images/eliminar.png" alt= "eliminar" />
                                 </button>
                             </form>
                     </td>
                 </tr>
+                {% endfor %}
+                   </tbody>
+        </table>
             
-           {% endfor %}
+           
            <div class="paginas" >
             <p> Página: {{ pag }} <p>
             {% if rol == '0' %}
@@ -74,8 +77,7 @@
                 <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente --></a>
             {% endif  %}
             </div>
-            </tbody>
-        </table>
+         
     </div>
 
 {% endblock %}

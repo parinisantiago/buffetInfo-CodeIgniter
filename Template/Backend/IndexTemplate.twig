@@ -2,14 +2,16 @@
 
 {% block nav %}
     <ul class="navbar" id="navbar">
-        <li id="logout">
-            <p class="loginNavbar" id="textoBienvida">Bienvenido
+        <li>
+            <p id="textoBienvida">Bienvenido
             {% if rol == "0" %}
                 Administrador
             {%else%}
                 Gestion
             {%endif%}
             </p>
+        </li>
+        <li>
             <p class="boton" id="logoutBoton"><a class="botonLink" href="Loader.php?controller=MainUserController&method=cerrarSesion">Cerrar Sesion</a></p>
         </li>
     </ul>

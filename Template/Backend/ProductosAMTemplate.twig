@@ -6,9 +6,9 @@
     {%else%}
 	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=GestorController&method=productosAMPost" method="post">
     {%endif%}
-	
+            {% if (producto.idProducto) %}
             <input type='hidden' name='idProducto' id="idProducto" value={{producto.idProducto}}>
-            
+            {% endif %}
             <label for="nombre" class="formProducText">Nombre:</label>
             {% if not (producto.nombre) %}
                 <input type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$"  autofocus required>
@@ -25,16 +25,16 @@
 	    
             <label for="stock" class="formProducText">Stock:</label>
 	    {% if (producto.stock is empty)  %}
-                <input type="number" name="stock" id="stock" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3">
+                <input type="number" name="stock" id="stock" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999">
             {% else %}
-                <input value="{{producto.stock}}" type="number" name="stock" id="stock" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3"  >
+                <input value="{{producto.stock}}" type="number" name="stock" id="stock" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999">
             {% endif %}
 	    
             <label for="stockMinimo" class="formProducText">Stock Minimo:</label>
 	    {% if (producto.stockMinimo is empty)  %}
-                <input type="number" name="stockMinimo" id="stockMinimo" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3" required>
+                <input type="number" name="stockMinimo" id="stockMinimo" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" required>
 	    {% else %}
-                <input value="{{producto.stockMinimo}}" type="number" name="stockMinimo" id="stockMinimo" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" maxlength="3"  required>
+                <input value="{{producto.stockMinimo}}" type="number" name="stockMinimo" id="stockMinimo" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" required>
             {% endif %}
 	    
             <label for="categoria" class="formProducText">Categoria:</label>
@@ -47,9 +47,9 @@
            	    
 	    <label for="precioVentaUnitario" class="formProducText">Precio Venta Unitario:</label>
 	    {% if (producto.precioVentaUnitario is empty)  %}
-                <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" maxlength="5" required>
+                <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" required>
             {% else %}
-                <input value="{{producto.precioVentaUnitario}}" type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" maxlength="5" required>
+                <input value="{{producto.precioVentaUnitario}}" type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" required>
             {% endif %}
             
             <label for="descripcion" class="formProducText">Descripcion:</label>

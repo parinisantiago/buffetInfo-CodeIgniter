@@ -3,9 +3,9 @@
 {% block main %}
 
     <div>
-        <table class="tablaProductos" summary="detallas de cada venta realizada">
+        <table class="tablaProductos" >
             <thead>
-            <tr> {#ver tabla de la bd#}
+            <tr> 
                 <th id="nombre">Nombre</th>
                 <th id="marca">Marca</th>
                 <th id="stock">cantidad</th>
@@ -42,14 +42,14 @@
                                 <form method="post" action="Loader.php?controller=GestorController&method=ventaEliminar">
                             {%endif%}
                                     <label for="idIngresoDetalle" hidden></label>
-                                    <input id="idIngresoDetalle" name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
+                                    <input  name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
                                     <label for="cantidad" hidden></label>
-                                    <input id="cantidad" name="cantidad" type="hidden" value={{ venta.cantidad }}>
+                                    <input  name="cantidad" type="hidden" value={{ venta.cantidad }}>
                                     <label for="idProducto" hidden></label>
-                                    <input id="idProducto" name="idProducto" type="hidden" value={{ venta.idProducto }}>
+                                    <input  name="idProducto" type="hidden" value={{ venta.idProducto }}>
                                     <label for="cant" hidden></label>
-                                    <input id="cant" name="cant" type="hidden" value={{ venta.cantidad }}>
-                                    <button type="submit" id="submitButton" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" role="button">
+                                    <input  name="cant" type="hidden" value={{ venta.cantidad }}>
+                                    <button type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" >
                                       <img class="icono" src="images/eliminar.png" alt= "eliminar" />
                                     </button>
                                 </form>
@@ -57,6 +57,8 @@
                     </tr>
                {% endif %}
             {% endfor %}
+            </tbody>
+        </table>
             <div class="paginas" >
             <p> Página: {{ pag }} <p>
             {% if rol == '0' %}
@@ -71,8 +73,7 @@
                 <a class="boton" href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente --></a>
             {% endif  %}
             </div>
-        </tbody>
-        </table>
+        
     </div>
 
 {% endblock %}

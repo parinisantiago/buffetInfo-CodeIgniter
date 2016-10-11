@@ -30,20 +30,20 @@
                             <form method="post" action={% if rol == "0" %} Loader.php?controller=AdminController&method=venta&pag=0 {% else %} Loader.php?controller=GestorController&method=venta&pag=0 {% endif %}>
                                 <label for="cant" class="formProducTextHidden" hidden>cantidad de venta</label>
 
-                                <select id="cant" name="cant" class="formProducinput" required>
+                                <select name="cant" class="formProducinput" required>
                                 {% for i in  1 .. prod.stock %}
                                     <option value="{{i}}" >{{ i }}</option>
                                 {% endfor %}
                             </select>
                                 <label for="stock" hidden></label>
-                                <input id="stock" name="stock" type="hidden" value={{ prod.stock }} >
+                                <input name="stock" type="hidden" value={{ prod.stock }} >
                                 <label for="precioVentaUnitario" hidden></label>
-                                <input id="precioVentaUnitario" name="precioVentaUnitario" type="hidden" value={{ prod.precioVentaUnitario }} >
+                                <input i name="precioVentaUnitario" type="hidden" value={{ prod.precioVentaUnitario }} >
                                 <label for="stockMinimo" hidden></label>
-                                <input id="stockMinimo" name="stockMinimo" type="hidden" value={{ prod.stockMinimo }} >
+                                <input  name="stockMinimo" type="hidden" value={{ prod.stockMinimo }} >
                             <label for="idProducto" hidden></label>
-                            <input id="idProducto" name="idProducto" type="hidden" value={{ prod.idProducto }} >
-                            <button type="submit" id="submitButton" name="submitButton">
+                            <input  name="idProducto" type="hidden" value={{ prod.idProducto }} >
+                            <button type="submit"  name="submitButton">
                                 <img class="icono" src="images/vender.png" alt= "vender" />
                             </button>
                                 </form>
@@ -51,6 +51,8 @@
                         </tr>
                    {% endif %}
                 {% endfor %}
+                </tbody>
+        </table>
                 <div class="paginas" >
                 <p> Página: {{ pag }} <p>
                 {% if rol == '0' %}
@@ -72,8 +74,7 @@
                     <a class="boton" href="/Loader.php?controller=GestorController&method=venderListar&pag=0">Productos vendidos</a>
                 {%endif%}    
             </div>
-        </tbody>
-        </table>
+        
     </div>
 
 {% endblock %}

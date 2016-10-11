@@ -38,7 +38,6 @@ class VentaModel extends Model{
     public function insertarVenta($vent){
 /*actualiza solo la tabla de vetnas, tambien hay qye hacer la actualizcion en 
  * la tabla de productos*/
-        var_dump($vent);
         $today=getDate();
         return $this -> query("
             INSERT INTO ingresoDetalle(
