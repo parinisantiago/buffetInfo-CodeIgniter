@@ -7,15 +7,15 @@
          <p> Página: {{ pag }} <p>
            
             {% if pag != 0 %}
-            <a href="/Loader.php?controller=AdminController&method=abmUsuario&pag={{ pag - 1 }}"> <-- Página anterior</a>
+            <a href="/Loader.php?controller=AdminController&method=abmUsuario&pag={{ pag - 1 }}">Página anterior</a>
             {% endif %}
-            <a href="/Loader.php?controller=AdminController&method=abmUsuario&pag={{ pag + 1 }}">Página Siguiente --></a>
+            <a href="/Loader.php?controller=AdminController&method=abmUsuario&pag={{ pag + 1 }}">Página Siguiente</a>
             
             </div>
         <div class="nuevo">
            <a class="boton" href="Loader.php?controller=AdminController&method=registroUsuario"> Registrar Usuario </a>
         </div>
-        <table class="tablaProductos" summary="detallas de cada producto">
+        <table class="tablaProductos">
             <thead>
             <tr>
                 <th id="nombreUsuario">Nombre Usuario</th>
