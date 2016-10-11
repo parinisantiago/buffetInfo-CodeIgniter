@@ -111,15 +111,29 @@ class BackendController extends Controller{
     }
     public function compraAMPost(){
         $this->validarCompra($_POST);
-        if ($_POST["idCompra"] != ""){
-           $this->dispatcher->compra =$this->compraModel->actualizarCompra($_POST);
+        $producto = $this->productoModel->searchIdProducto($_POST['producto']);
 
+        var_dump($_POST);
+
+
+        if ($_POST["idCompra"] != ""){
+
+           $compra =  $this->compraModel->searchIdCompra($_POST['idCompra']);
+           $nuevoStock = $producto->stock - $compra->cantidad + $_POST['cantidad'];
+
+            if ($nuevoStock < 0) throw new Exception("No se puede modificar la compra porque quedaria sin stock el producto");
+
+            $this->productoModel->actualizarCantProductos($producto->idProducto, $nuevoStock);
+            $this->dispatcher->compra =$this->compraModel->actualizarCompra($_POST);
+    
         }else{
+
             $this->dispatcher->compra =$this ->compraModel->insertarCompra($_POST);
-            $producto = $this->productoModel->searchIdProducto($_POST['producto']);
+
             $nuevoStock = $producto -> stock + $_POST['cantidad'];
             $nuevoStock .= "";
             $this->productoModel->actualizarCantProductos($_POST['producto'], $nuevoStock);
+
         }
         $_GET['pag'] = 0;
         $this->dispatcher->method = "CompraListar";
@@ -151,13 +165,11 @@ class BackendController extends Controller{
     }
     public function validarCompra($var){
         $this->validator->varSet($var['submit'],"Apreta el boton de submit");
-        if (! $this->compraModel->searchIdCompra($var['proveedor'])) throw new Exception("No existe el proveedor");
+        if (! $this->compraModel->searchIdProveedor($var['proveedor'])) throw new Exception("No existe el proveedor");
         if (! $this->productoModel->searchIdProducto($var['producto'])) throw new Exception("No existe el producto");
         $this->validator->validarNumeros($var['cantidad'],"error en cantidad",5);
         $this->validator->validarNumerosPunto($var['precioUnitario'],"error en precio unitario",50);
-        if (isset($var['fecha'])){
-            $this->validator->validarFecha($var['fecha'],"error en fecha");
-        }
+
     }
     /* ---Productos---*/
     

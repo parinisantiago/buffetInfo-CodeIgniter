@@ -7,7 +7,9 @@ class CompraModel extends Model{
         parent::__construct();
     }
     public function totalCompras(){
-        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM compra', array());
+        return $this->queryPreparadaSQL('SELECT COUNT(*) AS total  FROM compra c INNER JOIN proveedor pr ON(c.idProveedor=pr.idProveedor)INNER JOIN producto p ON (p.idProducto=c.idProducto) 
+            WHERE c.eliminado = 0 and p.eliminado=0
+            ORDER BY c.idCompra', array());
     }
     public function getAllCompras($limit, $offset){
         return $this -> queryOFFSET('
