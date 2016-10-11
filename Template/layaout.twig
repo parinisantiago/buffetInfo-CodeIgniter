@@ -34,7 +34,7 @@
     {% endblock %}
 </nav>
 {% if mensajeError %}
-<div id="error">
+<div class="error">
     <p>
 
             {{ mensajeError }}
@@ -43,7 +43,7 @@
 </div>
 {% endif %}
 {% if (config.habilitado == 'false') and (not (rol == '0'))%}
-    <main><p> {{ config.mensajeHabilitado }}</p></main>
+    <main><div class="error"><p> {{ config.mensajeHabilitado }}</p></div></main>
 {% else %}
 
     <main>

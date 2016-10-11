@@ -147,7 +147,7 @@ clear: both;
 }
 
 /* --- MENSAJE DE ERROR --- */
-#error{
+.error{
     border:solid 1px #de0b00;
     background: #ef7075;
     color:#222222;
