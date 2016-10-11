@@ -40,11 +40,11 @@
                         <td headers="precioVentaUnitario">{{ venta.precioUnitario }}</td>
                         <td headers="fecha">{{ venta.fecha }}</td>
                         <td headers="editar">
-                            <form method="post" action={% if rol == "0" %} Loader.php?controller=AdminController&method=ventaModificar {% else %} Loader.php?controller=GestorController&method=ventaModificar {% endif %}>
+                            <form method="post" action="{% if rol == "0" %}Loader.php?controller=AdminController&method=ventaModificar{% else %}Loader.php?controller=GestorController&method=ventaModificar{% endif %}">
 
                             <label for="idProducto" hidden></label>
-                                    <input id="idIngresoDetalle" name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
-                                    <button type="submit" id="submitButton" name="submitButton">
+                                    <input name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
+                                    <button type="submit" name="submitButton">
                                         <img class="icono" src="images/editar.png" alt= "editar la informacion" />
                                     </button>
                                 </form>
