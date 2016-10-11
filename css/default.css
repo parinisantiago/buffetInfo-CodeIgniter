@@ -123,9 +123,12 @@ clear: both;
     padding: 5%;
     padding: 10%;
     margin-left: 10%;
+    width: 90%;
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    z-index: -2;
+    margin-bottom: 10%;
 }
 
 .icono {
@@ -155,29 +158,32 @@ clear: both;
 /* -------numero pagina ---- */
 .paginas{
     text-align: center;
-    float: right;
-    color: white;
-    position: relative;
-    margin-right: 45%;
-    padding: 2%;
-    margin-bottom: 5%;
-    background-color: #333;
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    z-index: -10;
-}
-.nuevo{
     float: left;
     color: white;
     position: relative;
-    margin-left: 20%;
+    padding: 1%;
+    margin-left: 10%;;
+    background-color: #333;
+    margin-bottom: 1%; 
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    z-index: -1;
+}
+.paginas > p{
+    margin-top: 0;
+}
+.nuevo{
+    float: right;
+    color: white;
+    position: relative;
     padding: 2%;
-    margin-top: 2%;
+    margin-right: 1%;
+    margin-bottom: 1%; 
     background-color: #333;
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-   z-index: -10;
+   z-index: -1;
 }
 

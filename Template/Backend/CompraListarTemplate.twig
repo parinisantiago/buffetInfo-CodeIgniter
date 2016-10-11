@@ -9,6 +9,20 @@
             <a class="boton" href="Loader.php?controller=GestorController&method=compraAM">Nueva compras</a>
         {%endif%}
         </div>
+        <div class="paginas" >
+            <p> Página: {{ pag }} <p>
+            {% if rol == '0' %}
+                {% if pag != 0 %}
+                    <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                {% endif %}
+                <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente --></a>
+            {% else %}
+                {% if pag != 0 %}
+                    <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                {% endif %}
+                <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente --></a>
+            {% endif  %}
+            </div>
         <table class="tablaProductos" summary="detallas de cada compra realizada">
             <thead>
                 <tr>
@@ -63,20 +77,7 @@
         </table>
             
            
-           <div class="paginas" >
-            <p> Página: {{ pag }} <p>
-            {% if rol == '0' %}
-                {% if pag != 0 %}
-                    <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag - 1 }}"> <-- Página anterior</a>
-                {% endif %}
-                <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente --></a>
-            {% else %}
-                {% if pag != 0 %}
-                    <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag - 1 }}"> <-- Página anterior</a>
-                {% endif %}
-                <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente --></a>
-            {% endif  %}
-            </div>
+           
          
     </div>
 

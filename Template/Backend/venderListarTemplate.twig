@@ -3,6 +3,20 @@
 {% block main %}
 
     <div>
+        <div class="paginas" >
+            <p> Página: {{ pag }} <p>
+            {% if rol == '0' %}
+                {% if pag != 0 %}
+                    <a class="boton" href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                {% endif %}
+                <a class="boton" href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente --></a>
+            {% else %}
+                {% if pag != 0 %}
+                    <a class="boton" href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
+                {% endif %}
+                <a class="boton" href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente --></a>
+            {% endif  %}
+            </div>
         <table class="tablaProductos" >
             <thead>
             <tr> 
@@ -59,20 +73,7 @@
             {% endfor %}
             </tbody>
         </table>
-            <div class="paginas" >
-            <p> Página: {{ pag }} <p>
-            {% if rol == '0' %}
-                {% if pag != 0 %}
-                    <a class="boton" href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
-                {% endif %}
-                <a class="boton" href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente --></a>
-            {% else %}
-                {% if pag != 0 %}
-                    <a class="boton" href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag - 1 }}"> <-- Página anterior</a>
-                {% endif %}
-                <a class="boton" href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente --></a>
-            {% endif  %}
-            </div>
+            
         
     </div>
 
