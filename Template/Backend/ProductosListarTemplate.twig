@@ -4,7 +4,7 @@
 
     <div >
         <div class="paginas" >
-                  <p class="numeroPagina"> Página: {{ pag }} <p>
+                  <p class="numeroPagina"> Página: {{ pag }} </p>
             {% if rol == '0' %}
             {% if pag != 0 %}
                 <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag - 1 }}"> <-- Página anterior</a>

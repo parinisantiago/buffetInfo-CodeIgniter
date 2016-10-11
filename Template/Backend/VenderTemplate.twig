@@ -25,7 +25,7 @@
                 {% endif  %}
                 </div>
             
-        <table class="tablaProductos" summary="detallas de cada producto a vender">
+        <table class="tablaProductos">
             <thead>
                 <tr>
                     <th id="nombre">Nombre</th>
@@ -47,23 +47,24 @@
                             <td headers="stockMinimo">{{ prod.stockMinimo }}</td>
                             <td headers="precioVentaUnitario">{{ prod.precioVentaUnitario }}</td>
                             <td headers="descripcion">{{ prod.descripcion }}</td>
-                            <td headers="Vender">
+                            <td headers="vender">
 
-                            <form method="post" action={% if rol == "0" %} Loader.php?controller=AdminController&method=venta&pag=0 {% else %} Loader.php?controller=GestorController&method=venta&pag=0 {% endif %}>
-                                <label for="cant" class="formProducTextHidden" hidden>cantidad de venta</label>
+                            <form method="post" action="{% if rol == "0" %} Loader.php?controller=AdminController&method=venta&pag=0" {% else %} Loader.php?controller=GestorController&method=venta&pag=0" {% endif %}>
+                                <label class="formProducTextHidden" hidden>cantidad de venta</label>
 
                                 <select name="cant" class="formProducinput" required>
+                                    <option value="" >-</option>
                                 {% for i in  1 .. prod.stock %}
                                     <option value="{{i}}" >{{ i }}</option>
                                 {% endfor %}
                             </select>
-                                <label for="stock" hidden></label>
+                                <label hidden></label>
                                 <input name="stock" type="hidden" value={{ prod.stock }} >
-                                <label for="precioVentaUnitario" hidden></label>
-                                <input i name="precioVentaUnitario" type="hidden" value={{ prod.precioVentaUnitario }} >
-                                <label for="stockMinimo" hidden></label>
+                                <label hidden></label>
+                                <input name="precioVentaUnitario" type="hidden" value={{ prod.precioVentaUnitario }} >
+                                <label hidden></label>
                                 <input  name="stockMinimo" type="hidden" value={{ prod.stockMinimo }} >
-                            <label for="idProducto" hidden></label>
+                            <label hidden></label>
                             <input  name="idProducto" type="hidden" value={{ prod.idProducto }} >
                             <button type="submit"  name="submitButton">
                                 <img class="icono" src="images/vender.png" alt= "vender" />
