@@ -85,14 +85,14 @@ class ProductosModel extends Model{
         return $this -> queryOFFSET(
                 "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.precioVentaUnitario, p.descripcion, p.idProducto, c.idCategoria
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
-                WHERE p.eliminado = 0 and p.stock <= p.stockMinimo LIMIT :limit OFFSET :offset", $limit, $offset);
+                WHERE p.eliminado = 0 and p.stock <= p.stockMinimo and not p.stock = 0 LIMIT :limit OFFSET :offset", $limit, $offset);
     }
 
     public function totalProductosStockMinimo(){
         return $this -> queryPreparadaSQL(
             "SELECT COUNT(*) AS total
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
-                WHERE NOT p.eliminado = 0 and p.stock <= p.stockMinimo",array());
+                WHERE NOT p.eliminado = 0 and p.stock <= p.stockMinimo and not p.stock = 0",array());
     }
 
     public function listarProductosFaltantes($limit, $offset){
