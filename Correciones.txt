@@ -1,0 +1,9 @@
+Mostrar el formulario en caso de error e indicar en que campo se produce el error, mantener los datos cargados
+validar la ubicacion de los usuarios on line en edicion
+botones de pag siuien en usuarios sin css
+habilitar / deshabilitar usuarios online -> no permitir entrar
+punto para los digitos de los numeros SIEMPRE
+venta de multiples cosas -> añadir transacciones???? ver
+total de productos vendidos, es decir sumar el total de cada producto vendido....deesde cuando y hasta cuando...desde la creacion del prog a la actualidad????
+factura scaneada
+sacar cuando el stock es 0 del listado de stock minimo

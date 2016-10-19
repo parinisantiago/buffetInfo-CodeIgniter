@@ -1,8 +1,8 @@
 <?php
 
 define("host", "localhost");
-define("user", "grupo64");
-define("pass", "leeGhish8e");
+define("user", "root");
+define("pass", "1234");
 define("db", "grupo64");
 
 ?>
