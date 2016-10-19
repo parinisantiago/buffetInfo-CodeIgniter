@@ -1,0 +1,81 @@
+{% extends 'Template/Backend/MenuTemplate.twig' %}
+
+{% block calendario %}
+<script>"ponerFechaActual()"</script>
+
+<div style="width: 57mm" >
+<!-- Nombre del mes actual ---------------------------------------------->
+<table  width="100%" onload="ponerFechaActual()">
+  <tr>
+    <th align="left">
+      <h2><span id="NombreMes"></span></th>
+    <th align="right" colspan="2">
+      <a onclick="annoAtras()">&lt;&lt;</a>
+      &nbsp;<span id="AnnoActual"></span>&nbsp;
+      <a onclick="annoAdelante()">&gt;&gt;</a></th>
+  </tr>
+</table>
+
+<!-- Menus de los meses ------------------------------------------------->
+
+<TABLE id="mnuPOPMeses" class="menu" width="100%">
+	
+	<!-- Enero ------------------------------------------------------------>
+	<TR>
+		<TD id="mnuEne" onmouseover=subrayar("mnuEne")
+			onmouseout=nosubrayar("mnuEne")
+			onclick=generarMes(0)>Enero</TD>
+	<!-- Febrero ------------------------------------------------------------>
+		<TD id="mnuFeb" onmouseover=subrayar("mnuFeb")
+			onmouseout=nosubrayar("mnuFeb")
+			onclick=generarMes(1)>Febrero</TD>
+	<!-- Marzo ------------------------------------------------------------>
+		<TD id="mnuMar" onmouseover=subrayar("mnuMar")
+			onmouseout=nosubrayar("mnuMar")
+			onclick=generarMes(2)>Marzo</TD>
+  <!-- Abril ------------------------------------------------------------>
+			<TD id="mnuAbr" onmouseover=subrayar("mnuAbr")
+			onmouseout=nosubrayar("mnuAbr")
+			onclick=generarMes(3)>Abril</TD></TR>
+	<!-- Mayo ------------------------------------------------------------->
+	<TR>
+			<TD id="mnuMay" onmouseover=subrayar("mnuMay")
+			onmouseout=nosubrayar("mnuMay")
+			onclick=generarMes(4)>Mayo</TD>
+	<!-- Junio ------------------------------------------------------------>
+		<TD id="mnuJun" onmouseover=subrayar("mnuJun")
+			onmouseout=nosubrayar("mnuJun")
+			onclick=generarMes(5)>Junio</TD>	
+	<!-- Julio ------------------------------------------------------------>
+		<TD id="mnuJul" onmouseover=subrayar("mnuJul")
+			onmouseout=nosubrayar("mnuJul")
+			onclick=generarMes(6)>Julio</TD>
+	<!-- Agosto ----------------------------------------------------------->
+		<TD id="mnuAgo" onmouseover=subrayar("mnuAgo")
+			onmouseout=nosubrayar("mnuAgo")
+			onclick=generarMes(7)>Agosto</TD>	</TR>
+	<!-- Setiembre -------------------------------------------------------->
+	<TR>
+		<TD id="mnuSet" onmouseover=subrayar("mnuSet")
+			onmouseout=nosubrayar("mnuSet")
+			onclick=generarMes(8)>Setiembre</TD>
+	<!-- Octubre------------------------------------------------------------>
+		<TD id="mnuOct" onmouseover=subrayar("mnuOct")
+			onmouseout=nosubrayar("mnuOct")
+			onclick=generarMes(9)>Octubre</TD>
+	<!-- Noviembre --------------------------------------------------------->
+	  <TD id="mnuNov" onmouseover=subrayar("mnuNov")
+			onmouseout=nosubrayar("mnuNov")
+			onclick=generarMes(10)>Noviembre</TD>
+	<!-- Diciembre --------------------------------------------------------->
+		<TD id="mnuDic" onmouseover=subrayar("mnuDic")
+			onmouseout=nosubrayar("mnuDic")
+			onclick=generarMes(11)>Diciembre</TD>
+	</TR>
+	</div>
+</TABLE>
+
+<!-- Hoja del almanaque ------------------------------------------------->
+
+<div id=HojaMes></div>
+{% endblock %}
