@@ -113,8 +113,6 @@ class BackendController extends Controller{
         $this->validarCompra($_POST);
         $producto = $this->productoModel->searchIdProducto($_POST['producto']);
 
-        var_dump($_POST);
-
 
         if ($_POST["idCompra"] != ""){
 
@@ -189,6 +187,7 @@ class BackendController extends Controller{
     }
     public function productosAMPost(){
         /*ver botones de venta, solo son del admin*/
+        try{
         $this->validarProductos($_POST);
         if ($_POST["idProducto"] != ""){
            $this->dispatcher->producto =$this ->productoModel->actualizarProducto($_POST); 
@@ -198,7 +197,12 @@ class BackendController extends Controller{
         $_GET['pag'] = 0;
         $this->dispatcher->method = "ProductosListar";
         $this->productosListar();
+        } catch (valException $e){
+            $this->dispatcher->mensajeError = $e->getMessage();
+            $this->productosAM();
+        }
     }
+
     public function productosEliminar(){
      $this->dispatcher->producto =$this ->productoModel->deleteProducto($_POST["idProducto"]);
         $_GET['pag'] = 0;

@@ -54,9 +54,17 @@ try {
    
 
 } catch ( Exception $e ) {  //si exise algún error redirecciona al index.
-   $mainController = new MainUserController ();
-   $mainController->initError($e->getMessage());
 
+        echo "entre";
+        var_dump($e);
+    die;
+
+        if( $e instanceof valException){
+            throw $e;
+        }
+
+        $mainController = new MainUserController ();
+        $mainController->initError($e->getMessage());
 }
 
 

@@ -35,15 +35,18 @@ class AdminController extends BackendController{
 
     public function usuarioAM()
     {
+            try{
+                $this->validarUsuario(); //realiza validaciones mediante expresiones regulares
 
-            $this->validarUsuario(); //realiza validaciones mediante expresiones regulares
-
-            if (! isset($_POST['idUsuario'])) $this->insertUsuario();
-            else if ((Session::getValue('modUserId') == $_POST['idUsuario']) &&  (  $this->model->userExist($_POST['nombreUsuario'])->usuario == $_POST['nombreUsuario'])) $this->model->modUser($_POST['idUsuario'],$_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'],$_POST['telefono'], $_POST['rol'], $_POST['ubicacion']); //si es el usaurio guardado, lo modifica
-            else throw new Exception('El id de usuario se vio modificado durante la operacion');
-            $_GET['pag'] = 0;
-            $this->abmUsuario();
-
+                if (!isset($_POST['idUsuario'])) $this->insertUsuario();
+                else if ((Session::getValue('modUserId') == $_POST['idUsuario']) && ($this->model->userExist($_POST['nombreUsuario'])->usuario == $_POST['nombreUsuario'])) $this->model->modUser($_POST['idUsuario'], $_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'], $_POST['pass'], $_POST['dni'], $_POST['email'], $_POST['telefono'], $_POST['rol'], $_POST['ubicacion']); //si es el usaurio guardado, lo modifica
+                else throw new Exception('El id de usuario se vio modificado durante la operacion');
+                $_GET['pag'] = 0;
+                $this->abmUsuario();
+            }  catch (valException $e){
+                $this->dispatcher->mensajeError = $e->getMessage();
+                $this->registroUsuario();
+            }
     }
     
     public function eliminarUsuario()
@@ -70,12 +73,18 @@ class AdminController extends BackendController{
 
     public function modificarUsuario()
     {
+
+        try{
         if (! isset($_POST['submitButton'])) throw new Exception('Apreta el boton de modificar macho');
         if (! isset($_POST['idUsuario'])) throw new Exception('Como vas a modificar un usuario sin ID?');
         if (! $this->model->getUserById($_POST['idUsuario'])) throw new Exception('Id invalido');
         Session::setValue($this->model->getUserById($_POST['idUsuario'])->idUsuario, 'modUserId'); //se guarda el usuario a modificar, para validar que no se cambie el valor del input del id.
         $this->dispatcher->user = $this->model->getUserById($_POST['idUsuario']);
         $this->registroUsuario();
+        } catch (valException $e){
+            $this->dispatcher->mensajeError = $e->getMessage();
+            $this->registroUsuario();
+        }
     }
     
     private function validarUsuario()
