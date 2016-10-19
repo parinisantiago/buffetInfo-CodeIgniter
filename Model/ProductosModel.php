@@ -92,7 +92,7 @@ class ProductosModel extends Model{
         return $this -> queryPreparadaSQL(
             "SELECT COUNT(*) AS total
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
-                WHERE p.eliminado = 0 and p.stock <= p.stockMinimo",array());
+                WHERE NOT p.eliminado = 0 and p.stock <= p.stockMinimo",array());
     }
 
     public function listarProductosFaltantes($limit, $offset){
