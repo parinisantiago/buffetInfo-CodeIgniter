@@ -39,7 +39,7 @@
                 <td headers="email">{{ user.email }}</td>
                 <td headers="telefono">{{ user.telefono }}</td>
                 <td headers="rol">{{ user.rol }}</td>
-                <td headers="ubicacion">{% if user.rol == "Cliente OnLine" %}{{ user.ubicacion }} {% else %} ------ {% endif %}</td>
+                <td headers="ubicacion">{% if user.rol == "Cliente Online" %}{{ user.ubicacion }} {% else %} ------ {% endif %}</td>
                 <td headers="editar">
                     <form method="post" action="Loader.php?controller=AdminController&method=modificarUsuario">
                         <label for="idUsuario" hidden></label>
