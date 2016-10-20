@@ -2,9 +2,9 @@
 
 {% block main %}
     {% if rol == "0" %}
-	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=AdminController&method=compraAMPost" method="post">
+	<form name="formProduc" class="formProduc clearfix sombreado" action="Loader.php?controller=AdminController&method=compraAMPost" method="post">
     {%else%}
-	<form name="formProduc" class="formProduc clearfix" action="Loader.php?controller=GestorController&method=compraAMPost" method="post">
+	<form name="formProduc" class="formProduc clearfix sombreado" action="Loader.php?controller=GestorController&method=compraAMPost" method="post">
     {%endif%}
             <input type='hidden' name='idCompra' id="idCompra" value={{compra.idCompra}}>
            

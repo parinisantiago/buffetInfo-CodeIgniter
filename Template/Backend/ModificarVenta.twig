@@ -1,7 +1,7 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
-    <form name="formUser" class="formProduc clearfix" action={% if rol == '0' %}"/Loader.php?controller=AdminController&method=modVenta" {% else %} "/Loader.php?controller=GestorController&method=modVenta" {% endif %} method="post">
+    <form name="formUser" class="formProduc clearfix sombreado" action={% if rol == '0' %}"/Loader.php?controller=AdminController&method=modVenta" {% else %} "/Loader.php?controller=GestorController&method=modVenta" {% endif %} method="post">
 
         <label for="idIngresoDetalle" hidden>Id detalle:</label>
         <input type='hidden' id='idIngresoDetalle' name='idIngresoDetalle' value={{venta.idIngresoDetalle}}>

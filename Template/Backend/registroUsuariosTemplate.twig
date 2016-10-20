@@ -1,7 +1,7 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
-    <form name="formUser" class="formProduc clearfix" action="Loader.php?controller=AdminController&method=usuarioAM" method="post">
+    <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=AdminController&method=usuarioAM" method="post">
 
         {% if user.idUsuario %}
             <input type='hidden' name='idUsuario' value={{user.idUsuario}}>

@@ -1,3 +1,8 @@
+.sombreado{
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
 /* --- CABEZARA --- */
 
 
@@ -39,9 +44,6 @@ body{
     clear: right;
     margin-right: 2%;
     margin-bottom: 2%;
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }
 .textoComida{
     font-size: 1.1em;
@@ -75,9 +77,6 @@ body{
     margin-bottom: 10%;
     display: block;
     clear: both;
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
 }
 @media screen and (max-width: 851px) {
    .formProduc{
@@ -124,9 +123,6 @@ clear: both;
     padding: 10%;
     margin-left: 10%;
     width: 90%;
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     z-index: 0;
     margin-bottom: 10%;
 }
@@ -165,9 +161,6 @@ clear: both;
     margin-left: 10%;;
     background-color: #333;
     margin-bottom: 1%; 
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     z-index: 8;
 }
 .paginas > p{
@@ -184,61 +177,82 @@ div > p > a{
     margin-right: 1%;
     margin-bottom: 1%; 
     background-color: #333;
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
-    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
    z-index: 8;
 }
 /* -------calendario ---- */
-body {
-     	background-color: #E6E1AA;
-     	color: #2b0e12;
-     }
-     table.hoja, th.hoja, td.hoy, td.domingo, td.dia {
-     	border: 1px solid #2b0e12;
-     }
-     th.hoja {
-     	font-family: sans-serif;
-     	font-size: 8pt;
-     	background-color: #a1c980;
-     	font-style: normal;
-     	font-weight: normal;
-     }
-     td.hoy, td.domingo, td.sem, td.dia {
-     	text-align:center;
-     	font-family: sans-serif;
-     	font-size: 9.0pt;
-     }
-     td.hoy {
-     	color:#a1c980;
-     }
-     td.hoy {
-     	background-color: #7d9b19;
-     }
-     td.domingo {
-     	color: red;
-     }
-     a#imgAtras, a#imgAdelante {
-     	font-size: 12.0pt;
-     	font-weight: bold;
-     }
-     TABLE.menu
-     {
-     	COLOR: #7d9b19;
-     	FONT-FAMILY: sans-serif;
-     	FONT-SIZE: 8pt;
-     	margin: 0px;
-     	padding: 0px;
-     	border: 1px solid #7d9b19;
-     	text-align: center;
-     	background-color: #f4f6cf;
-     }
-     #NombreMes, #AnnoActual, td.sem {
-     	color: #7d9b19;
-     }
-     #NombreMes, #AnnoActual {
-     	font-size: 10pt;
-     	font-family: sans-serif;
-     }
+#calendario{
+    margin-top: -8%;
+    margin-bottom: 5%;
+    margin-left: 2%;
+    width: 21%; /*tamaño minimo*/
+    padding: 1%;
+    background-color: #333;
+    color: white;
+}
+#cabezeraCalendario{
+    width: 100%;
+}
+#nombreMesDiv{
+    float: left;
+    width: 50%;
+     color:#A8A7A7;
+}
+#sigAnoDiv{
+    float: right;
+}
+.sigAno{
+    cursor:pointer;
+}
+#AnnoActual{
+    color:#A8A7A7;
+}
+.mes:hover{
+    cursor:pointer;
+    text-decoration: underline;
+}
+
+table.hoja, th.hoja, td.hoy, td.domingo, td.dia {
+    border: 1px solid #2b0e12;
+}
+th.hoja {
+    font-family: sans-serif;
+    font-size: 8pt;
+    background-color: #a1c980;
+    font-style: normal;
+    font-weight: normal;
+}
+td.hoy, td.domingo, td.sem, td.dia {
+   text-align:center;
+   font-family: sans-serif;
+   font-size: 9.0pt;
+}
+td.hoy {
+   color:#a1c980;
+}
+td.hoy {
+   background-color: #7d9b19;
+}
+td.domingo {
+   color: red;
+}
+a#imgAtras, a#imgAdelante {
+   font-size: 12.0pt;
+   font-weight: bold;
+}
+TABLE.menu
+{
+   COLOR: #7d9b19;
+   FONT-FAMILY: sans-serif;
+   FONT-SIZE: 8pt;
+   margin: 0px;
+   padding: 0px;
+   border: 1px solid #7d9b19;
+   text-align: center;
+   background-color: #f4f6cf;
+}
+td.sem {
+  color:#A8A7A7;
+}
+
 
 

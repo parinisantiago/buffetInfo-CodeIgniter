@@ -2,14 +2,14 @@
 
 {% block main %}
     <div>
-        <div class="nuevo">
+        <div class="nuevo sombreado">
         {% if rol == "0" %}
             <a class="boton" href="Loader.php?controller=adminController&method=compraAM">Nueva compras</a>
         {%else%}
             <a class="boton" href="Loader.php?controller=GestorController&method=compraAM">Nueva compras</a>
         {%endif%}
         </div>
-        <div class="paginas" >
+        <div class="paginas sombreado" >
             <p> Página: {{ pag }} <p>
             {% if rol == '0' %}
                 {% if pag != 0 %}
@@ -23,7 +23,7 @@
                 <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente</a>
             {% endif  %}
             </div>
-        <table class="tablaProductos">
+        <table class="tablaProductos sombreado">
             <thead>
                 <tr>
                     <th id="nombre">Nombre</th>
