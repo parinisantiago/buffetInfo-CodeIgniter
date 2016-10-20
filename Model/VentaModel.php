@@ -34,6 +34,15 @@ class VentaModel extends Model{
             OFFSET :offset', $limit, $offset
         );
     }
+
+    public function getAlltotales(){
+        return $this -> queryTodasLasFilas('
+            SELECT COUNT(i.idProducto) AS total,SUM(i.precioUnitario * i.cantidad) AS cant,SUM(i.cantidad) AS vent, i.idProducto, p.nombre 
+            FROM ingresoDetalle i 
+            INNER JOIN producto p 
+            ON (i.idProducto = p.idProducto) 
+            GROUP BY p.idProducto');
+    }
     
     public function insertarVenta($vent){
 /*actualiza solo la tabla de vetnas, tambien hay qye hacer la actualizcion en 
