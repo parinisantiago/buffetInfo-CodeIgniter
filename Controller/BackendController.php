@@ -51,9 +51,12 @@ class BackendController extends Controller{
     public function venderListar(){
         $this->paginaCorrecta($this->ventaModel->totalVenta());
         $this->dispatcher->ventas = $this->ventaModel->getAllVenta($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        $this->dispatcher->totales = $this->ventaModel->getAlltotales();
+        var_dump($this->dispatcher->totales);
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->render("Backend/venderListarTemplate.twig");
     }
+    
     public function ventaModificar(){
         /*****************************/
         $this->validator->varSet($_POST["submitButton"], "apreta el boton de modificacion");
