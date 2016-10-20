@@ -73,8 +73,23 @@
             {% endfor %}
             </tbody>
         </table>
-            
-        
+
+        <table class="tablaProductos sombreado">
+            <tr>
+                <td id="nombre">nombre</td>
+                <td id="cantidad">cantidad</td>
+                <td id="ventas">Total ventas</td>
+                <td id="cant">cantidad productos</td>
+            </tr>
+            {% for total in totales %}
+                <tr>
+                    <td headers="nombre">{{ total.nombre }}</td>
+                    <td headers="cantidad">{{ total.total }}</td>
+                    <td headers="ventas">{{ total.cant }}</td>
+                    <td headers="cant">{{ total.vent }}</td>
+                </tr>
+            {% endfor %}
+        </table>
     </div>
 
 {% endblock %}
