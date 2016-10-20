@@ -99,7 +99,6 @@ class AdminController extends BackendController{
         $this->validator->validarMail( $_POST['email'], 'Error en email', 25 );
         $this->validator->validarNumeros( $_POST['telefono'],'Error en telefono', 25 );
         $this->validator->varSet($_POST['rol'], "envia un rol");
-        var_dump($_POST);
         if ( $_POST['rol'] != '2' ) $_POST['ubicacion'] = '0';
         if ($_POST['rol'] == 2 and $_POST['ubicacion']=='0') throw  new valException("Los usuarios web deben poseer una ubicación");
 
