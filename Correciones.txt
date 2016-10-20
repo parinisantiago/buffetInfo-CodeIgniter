@@ -1,4 +1,3 @@
-validar la ubicacion de los usuarios on line en edicion
 botones de pag siuien en usuarios sin css
 punto para los digitos de los numeros SIEMPRE
 venta de multiples cosas -> a�adir transacciones???? ver
