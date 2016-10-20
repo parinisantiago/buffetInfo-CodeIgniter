@@ -39,7 +39,7 @@ class AdminController extends BackendController{
                 $this->validarUsuario(); //realiza validaciones mediante expresiones regulares
 
                 if (!isset($_POST['idUsuario'])) $this->insertUsuario();
-                else if ((Session::getValue('modUserId') == $_POST['idUsuario']) && ($this->model->userExist($_POST['nombreUsuario'])->usuario == $_POST['nombreUsuario'])) $this->model->modUser($_POST['idUsuario'], $_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'], $_POST['pass'], $_POST['dni'], $_POST['email'], $_POST['telefono'], $_POST['rol'], $_POST['ubicacion']); //si es el usaurio guardado, lo modifica
+                else if ((Session::getValue('modUserId') == $_POST['idUsuario']) && ($this->model->userExistInDB($_POST['nombreUsuario'])->usuario == $_POST['nombreUsuario'])) $this->model->modUser($_POST['idUsuario'], $_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'], $_POST['pass'], $_POST['dni'], $_POST['email'], $_POST['telefono'], $_POST['rol'], $_POST['ubicacion'], $_POST['habilitado']); //si es el usaurio guardado, lo modifica
                 else throw new Exception('El id de usuario se vio modificado durante la operacion');
                 $_GET['pag'] = 0;
                 $this->abmUsuario();

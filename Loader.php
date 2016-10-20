@@ -54,10 +54,7 @@ try {
    
 
 } catch ( Exception $e ) {  //si exise algún error redirecciona al index.
-
-        echo "entre";
-        var_dump($e);
-    die;
+    
 
         if( $e instanceof valException){
             throw $e;

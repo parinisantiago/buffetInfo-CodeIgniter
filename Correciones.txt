@@ -1,6 +1,5 @@
 validar la ubicacion de los usuarios on line en edicion
 botones de pag siuien en usuarios sin css
-habilitar / deshabilitar usuarios online -> no permitir entrar
 punto para los digitos de los numeros SIEMPRE
 venta de multiples cosas -> a�adir transacciones???? ver
 total de productos vendidos, es decir sumar el total de cada producto vendido....deesde cuando y hasta cuando...desde la creacion del prog a la actualidad????

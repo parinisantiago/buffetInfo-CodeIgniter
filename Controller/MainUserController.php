@@ -46,7 +46,8 @@ class MainUserController extends Controller
         $this->validator->validarString($_POST['pass'], "escribi una contraseña", 15);
 
         if (!$this->model->userExist($_POST['username'])) throw new Exception("El usuario no existe");
-
+         
+            
         elseif (!$this->model->passDontMissmatch($_POST['pass'])) throw new Exception("Contraseña incorrecta");
         return true;
     }

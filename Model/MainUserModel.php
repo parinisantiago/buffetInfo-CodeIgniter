@@ -10,6 +10,11 @@ class MainUserModel extends Model
 
     public function userExist($username)
     {
+        return $this->queryPreparadaSQL('SELECT usuario FROM usuario WHERE usuario = :username AND eliminado = 0 AND habilitado = 0', array('username'=> $username));
+    }
+
+    public function userExistInDB($username)
+    {
         return $this->queryPreparadaSQL('SELECT usuario FROM usuario WHERE usuario = :username', array('username'=> $username));
     }
 
@@ -51,7 +56,7 @@ class MainUserModel extends Model
         return $this -> queryPreparadaSQL('SELECT idRol FROM usuario WHere idUsuario = :idUsuario', array('idUsuario' => $idUsuario));
     }
 
-    public function modUser($id, $nombreUsuario, $nombre, $apellido,$pass, $dni, $email,$telefono,$rol, $ub){
+    public function modUser($id, $nombreUsuario, $nombre, $apellido,$pass, $dni, $email,$telefono,$rol, $ub, $hab){
         return $this -> query('
               UPDATE usuario 
               SET 
@@ -63,7 +68,8 @@ class MainUserModel extends Model
                  email= :email,
                  telefono= :telefono,
                  idRol= :rol,
-                 idUbicacion = :ub
+                 idUbicacion = :ub,
+                 habilitado = :hab
               WHERE 
                  idUsuario= :id',
             array(
@@ -76,14 +82,16 @@ class MainUserModel extends Model
                 'telefono' => $telefono,
                 'rol' => $rol,
                 'id' => $id,
-                'ub' => $ub
+                'ub' => $ub,
+                'hab' => $hab
             )
             );
     }
 
     public function addUser($nombreUsuario, $nombre, $apellido,$pass, $dni, $email,$telefono,$rol, $ub){
         return $this -> query(
-            'INSERT INTO usuario (usuario, clave, nombre, apellido, documento, email, telefono, idRol, idUbicacion, eliminado) VALUES (:nombreUsuario, :pass, :nombre, :apellido, :dni, :email, :telefono, :rol, :ub, 0)',
+            'INSERT INTO usuario (usuario, clave, nombre, apellido, documento, email, telefono, idRol, idUbicacion, eliminado)
+             VALUES (:nombreUsuario, :pass, :nombre, :apellido, :dni, :email, :telefono, :rol, :ub, 0)',
             array(
                 'nombreUsuario' => $nombreUsuario,
                 'pass' => $pass,

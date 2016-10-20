@@ -50,6 +50,17 @@
             {% endfor %}
         </select>
 
+        {% if user.idUsuario %}
+            <label for="habilitado" class="formProducText">Frontend: </label>
+            {% if user.habilitado == '0' %}
+                <input  type="radio" name="habilitado" id="habilitado" value="0"  checked> Habilitado
+                <input  type="radio" name="habilitado" id="habilitado" value="1"  > Deshabilitado
+
+            {% else %}
+                <input  type="radio" name="habilitado" id="habilitado" value="0"  > Habilitado
+                <input  type="radio" name="habilitado" id="habilitado" value="1" checked> Deshabilitado
+            {% endif %}
+        {% endif %}
 
         <label for="submitButton" hidden>Boton de envio:</label>
         <input type="submit" id="submitButton" name="submitButton">
