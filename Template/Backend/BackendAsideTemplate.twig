@@ -34,15 +34,7 @@
             <a href="Loader.php?controller=GestorController&method=compraListar&pag=0">Compras de productos</a>
         {%endif%}
     </li>
-    
-    <li class="asideItem">
-        {% if rol == "0" %}
-            <a href="Loader.php?controller=adminController&method=menu">Administracion del Menu</a>
-        {%else%}
-            <a href="Loader.php?controller=GestorController&method=menu">Administracion del Menu</a>
-        {%endif%}
-    </li>
-    
+ 
     {% if rol == "1" %}
         <li class="asideItem">
             <a href="Loader.php?controller=GestorController&method=listadoFaltantes&pag=0">Productos faltantes</a>
@@ -80,5 +72,13 @@
     <li class="asideItem">
             <a href="">Pedidos On-line</a>
     </li>
+    <li class="asideItem">
+        {% if rol == "0" %}
+            <a href="Loader.php?controller=adminController&method=menu">Administracion del Menu</a>
+        {%else%}
+            <a href="Loader.php?controller=GestorController&method=menu">Administracion del Menu</a>
+        {%endif%}
+    </li>
+   
      {%endif%}
 </ul>

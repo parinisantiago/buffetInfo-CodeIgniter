@@ -238,9 +238,5 @@ class BackendController extends Controller{
         $_GET['offset'] .= "";
 
     }
-    /*--- Menu ---*/
-
-    public function menu(){
-        $this->dispatcher->render("Backend/CalendarioTemplate.twig");
-    }
+    
 }
