@@ -52,7 +52,6 @@ class BackendController extends Controller{
         $this->paginaCorrecta($this->ventaModel->totalVenta());
         $this->dispatcher->ventas = $this->ventaModel->getAllVenta($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
         $this->dispatcher->totales = $this->ventaModel->getAlltotales();
-        var_dump($this->dispatcher->totales);
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->render("Backend/venderListarTemplate.twig");
     }
@@ -201,6 +200,7 @@ class BackendController extends Controller{
         $this->dispatcher->method = "ProductosListar";
         $this->productosListar();
         } catch (valException $e){
+            $this->dispatcher->producto = $_POST;
             $this->dispatcher->mensajeError = $e->getMessage();
             $this->productosAM();
         }
@@ -221,9 +221,9 @@ class BackendController extends Controller{
           $this->validator->validarStringEspeciales($var['marca'],"error en marca",25);
           $this->validator->validarNumeros($var['stock'],"error en stock",3);
           $this->validator->validarNumeros($var['stockMinimo'],"error en stock minimo",3);
-          $this->validator->validarNumeros($var['categoria'],"error en categoria",3);
+          $this->validator->validarNumeros($var['idCategoria'],"error en categoria",3);
           $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"error en precio de venta unitario",5);
-          if (! $this->categoriaModel->getCategoriaById($var['categoria'])) throw new Exception("No existe la categoria");
+          if (! $this->categoriaModel->getCategoriaById($var['idCategoria'])) throw new Exception("No existe la categoria");
         }
 
     /*--- paginacion ---*/
