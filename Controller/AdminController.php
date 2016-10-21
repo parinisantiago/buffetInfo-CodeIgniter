@@ -44,6 +44,7 @@ class AdminController extends BackendController{
                 $_GET['pag'] = 0;
                 $this->abmUsuario();
             }  catch (valException $e){
+                $this->dispatcher->user = $_POST;
                 $this->dispatcher->mensajeError = $e->getMessage();
                 $this->registroUsuario();
             }
