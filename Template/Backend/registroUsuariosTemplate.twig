@@ -8,8 +8,8 @@
         {% endif %}
 
 
-        <label for="nombreUsuario" class="formProducText">Nombre de Usuario:</label>
-        <input {% if user.usuario %} value="{{ user.usuario }}" {% endif %} type="text" name="nombreUsuario" id="nombreUsuario" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="15" pattern="^[a-zA-Z0-9]+$" autofocus required >
+        <label for="usuario" class="formProducText">Nombre de Usuario:</label>
+        <input {% if user.usuario %} value="{{ user.usuario }}" {% endif %} type="text" name="usuario" id="usuario" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="15" pattern="^[a-zA-Z0-9]+$" autofocus required >
 
         <label for="nombre" class="formProducText">Nombre:</label>
         <input {% if user.nombre %} value="{{ user.nombre }}" {% endif %} type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" required >
@@ -17,20 +17,20 @@
         <label for="apellido" class="formProducText">Apellido:</label>
         <input {% if user.apellido %} value="{{ user.apellido }}" {% endif %} type="text" name="apellido" id="apellido" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" required >
 
-        <label for="dni" class="formProducText">Dni:</label>
-        <input {% if user.documento %} value="{{ user.documento }}" {% endif %} type="text" name="dni" id="dni" class="formProducinput"  placeholder="Solo se admiten numeros" maxlength="8" pattern="^[0-9]+$" required >
+        <label for="documento" class="formProducText">Dni:</label>
+        <input {% if user.documento %} value="{{ user.documento }}" {% endif %} type="text" name="documento" id="documento" class="formProducinput"  placeholder="Solo se admiten numeros" maxlength="8" pattern="^[0-9]+$" required >
 
         <label for="email" class="formProducText">Email:</label>
         <input {% if user.email %} value="{{ user.email }}" {% endif %} type="email" name="email" id="email" class="formProducinput"  placeholder="ejemplo@email.com" maxlength="25" pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required >
 
-        <label for="pass" class="formProducText">Contraseña:</label>
-        <input {% if user.clave %} value="{{ user.clave }}" {% endif %} type="password" name="pass" id="pass" class="formProducinput"  placeholder="Solo se admiten numeros o letras simples" maxlength="15" pattern="^[a-zA-Z0-9]+$" required >
+        <label for="clave" class="formProducText">Contraseña:</label>
+        <input {% if user.clave %} value="{{ user.clave }}" {% endif %} type="password" name="clave" id="clave" class="formProducinput"  placeholder="Solo se admiten numeros o letras simples" maxlength="15" pattern="^[a-zA-Z0-9]+$" required >
 
         <label for="telefono" class="formProducText">Telefono:</label>
         <input {% if user.telefono %} value="{{ user.telefono }}" {% endif %} type="text" name="telefono" id="telefono" class="formProducinput"  placeholder="Solo se admiten numeros" maxlength="25" pattern="^[0-9]+$" required >
 
-        <label for="rol" class="formProducText">Rol: </label>
-        <select id="rol" name="rol" class="formProducinput" required>
+        <label for="idRol" class="formProducText">Rol: </label>
+        <select id="idRol" name="idRol" class="formProducinput" required>
         {% for rol in rols %}
             {% if user.idRol == rol.idRol %}
             <option value="{{ rol.idRol }}" selected>{{ rol.nombre }}</option>
@@ -39,8 +39,8 @@
             {% endif %}
             {% endfor %}
         </select>
-        <label for="ubicacion" class="formProducText">Ubicacion: </label>
-        <select id="ubicacion" name="ubicacion" class="formProducinput">
+        <label for="idUbicacion" class="formProducText">Ubicacion: </label>
+        <select id="idUbicacion" name="idUbicacion" class="formProducinput">
             {% for ubi in ubicacion %}
                 {% if user.idUbicacion == ubi.idUbicacion %}
                     <option value="{{ ubi.idUbicacion }}" selected>{{ ubi.nombre }}</option>
