@@ -38,7 +38,7 @@ class ProductosModel extends Model{
                     'marca' => $Prod["marca"],
                     'stock' => $Prod["stock"],
                     'stockMinimo' => $Prod["stockMinimo"],
-                    'categoria' => $Prod["categoria"],
+                    'categoria' => $Prod["idCategoria"],
                     'precioVentaUnitario' => $Prod["precioVentaUnitario"],
                     'descripcion'=> $Prod["descripcion"], 
                     'idProducto' => $Prod["idProducto"]
@@ -69,7 +69,7 @@ class ProductosModel extends Model{
                     'marca' => $Prod["marca"],
                     'stock' => $Prod["stock"],
                     'stockMinimo' => $Prod["stockMinimo"],
-                    'idCategoria' => $Prod["categoria"],
+                    'idCategoria' => $Prod["idCategoria"],
                     'precioVentaUnitario' => $Prod["precioVentaUnitario"],
                     'descripcion' => $Prod["descripcion"]
                 ));    
