@@ -8,14 +8,13 @@
             <a id="NombreMes"></a>
         </div>
         <div id="sigAnoDiv">
-            <a class="sigAno" onclick="annoAtras()"> << </a>
+            <a class="sigAno" onclick="annoAtras()"> &lt </a>
             <span id="AnnoActual"></span>
-            <a class="sigAno" onclick="annoAdelante()"> >> </a>
+            <a class="sigAno" onclick="annoAdelante()"> > </a>
         </div>
     </div>
-
-    <!-- Menus de los meses ------------------------------------------------->
-    <TABLE id="mnuPOPMeses" class="menu" width="100%">
+    <!-- Menus de los meses -->
+    <TABLE id="mnuPOPMeses" class="menu">
         <TR>
             <TD id="mnuEne" class="mes" onclick=generarMes(0)>Enero</TD>
             <TD id="mnuFeb" class="mes" onclick=generarMes(1)>Febrero</TD>
@@ -35,9 +34,7 @@
             <TD id="mnuDic" class="mes" onclick=generarMes(11)>Diciembre</TD>
         </TR>
     </TABLE>
-
-     <!-- Hoja del almanaque ------------------------------------------------->
-
+     <!-- Hoja del almanaque -->
     <div id=HojaMes></div>
 </div>
 {% endblock %}

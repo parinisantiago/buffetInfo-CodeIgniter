@@ -181,6 +181,7 @@ div > p > a{
 }
 /* -------calendario ---- */
 #calendario{
+    text-align:center;
     margin-top: -8%;
     margin-bottom: 5%;
     margin-left: 2%;
@@ -195,7 +196,7 @@ div > p > a{
 #nombreMesDiv{
     float: left;
     width: 50%;
-     color:#A8A7A7;
+    color:#A8A7A7;
 }
 #sigAnoDiv{
     float: right;
@@ -210,47 +211,40 @@ div > p > a{
     cursor:pointer;
     text-decoration: underline;
 }
-
-table.hoja, th.hoja, td.hoy, td.domingo, td.dia {
-    border: 1px solid #2b0e12;
-}
-th.hoja {
-    font-family: sans-serif;
+.hoja {
     font-size: 8pt;
-    background-color: #a1c980;
+    background-color: #A8A7A7;
     font-style: normal;
     font-weight: normal;
+    border: 1px solid #A8A7A7;
 }
-td.hoy, td.domingo, td.sem, td.dia {
-   text-align:center;
-   font-family: sans-serif;
-   font-size: 9.0pt;
+.diaMenu{
+    font-size: 9.0pt;
+    border: 1px solid #A8A7A7;
 }
-td.hoy {
-   color:#a1c980;
+.diaMenu:hover{
+    text-decoration: underline;
+    cursor:pointer;
+    background-color: #A8A7A7;
+    color:#ffffff;
 }
-td.hoy {
-   background-color: #7d9b19;
+.hoy {
+   background-color: #A8A7A7;
+   color:#ffffff;
 }
-td.domingo {
-   color: red;
+.domingo {
+   color: #A8A7A7;
 }
-a#imgAtras, a#imgAdelante {
-   font-size: 12.0pt;
-   font-weight: bold;
-}
-TABLE.menu
-{
-   COLOR: #7d9b19;
-   FONT-FAMILY: sans-serif;
-   FONT-SIZE: 8pt;
+.menu{
+    width: 100%;
+   color: #ffffff;
+   font-size: 8pt;
    margin: 0px;
    padding: 0px;
-   border: 1px solid #7d9b19;
-   text-align: center;
-   background-color: #f4f6cf;
+   border: 1px solid #ffffff;
+   background-color: #A8A7A7;
 }
-td.sem {
+sem {
   color:#A8A7A7;
 }
 
