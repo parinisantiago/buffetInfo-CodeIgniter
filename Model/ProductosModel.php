@@ -30,7 +30,7 @@ class ProductosModel extends Model{
                     marca = :marca,
                     stock = :stock,
                     stockMinimo = :stockMinimo,
-                    idCategoria = :categoria,
+                    idCategoria = :idCategoria,
                     precioVentaUnitario = :precioVentaUnitario,
                     descripcion = :descripcion 
                 WHERE idProducto= :idProducto",
@@ -38,7 +38,7 @@ class ProductosModel extends Model{
                     'marca' => $Prod["marca"],
                     'stock' => $Prod["stock"],
                     'stockMinimo' => $Prod["stockMinimo"],
-                    'categoria' => $Prod["idCategoria"],
+                    'idCategoria' => $Prod["idCategoria"],
                     'precioVentaUnitario' => $Prod["precioVentaUnitario"],
                     'descripcion'=> $Prod["descripcion"], 
                     'idProducto' => $Prod["idProducto"]

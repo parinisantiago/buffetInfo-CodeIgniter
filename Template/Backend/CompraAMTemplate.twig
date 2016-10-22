@@ -25,9 +25,9 @@
 	    
             <label for="precioUnitario" class="formProducText">Precio unitario:</label>
 	    {% if (compra.precioUnitario is empty)  %}
-                <input type="number" name="precioUnitario" id="precioUnitario" step="any" class="formProducinput" placeholder="$2.50" min="0" max="999999" maxlength="6" required>
+                <input type="text" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50" pattern="^[0-9\.0-9]+" maxlength="6" required>
 	    {% else %}
-                <input value=" {{compra.precioUnitario}} " type="number" name="precioUnitario" id="precioUnitario" step="any"  class="formProducinput" placeholder="$2.50" min="0" max="999999" maxlength="6"  required>
+                <input value=" {{compra.precioUnitario}} " type="text" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50" pattern="^[0-9\.0-9]+" maxlength="6"  required>
             {% endif %}
             
             <label for="proveedor" class="formProducText">Proveedor:</label>

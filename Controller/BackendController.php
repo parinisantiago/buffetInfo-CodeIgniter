@@ -164,11 +164,11 @@ class BackendController extends Controller{
         $this->compraListar();
     }
     public function validarCompra($var){
-        $this->validator->varSet($var['submit'],"Apreta el boton de submit");
-        if (! $this->compraModel->searchIdProveedor($var['proveedor'])) throw new Exception("No existe el proveedor");
-        if (! $this->productoModel->searchIdProducto($var['producto'])) throw new Exception("No existe el producto");
-        $this->validator->validarNumeros($var['cantidad'],"error en cantidad",5);
-        $this->validator->validarNumerosPunto($var['precioUnitario'],"error en precio unitario",50);
+        $this->validator->varSet($var['submit'],"Presione el boton de submit");
+        if (! $this->compraModel->searchIdProveedor($var['proveedor'])) throw new Exception("Error: No existe el proveedor");
+        if (! $this->productoModel->searchIdProducto($var['producto'])) throw new Exception("Error: No existe el producto");
+        $this->validator->validarNumeros($var['cantidad'],"Error: error en cantidad",5);
+        $this->validator->validarNumerosPunto($var['precioUnitario'],"Error: error en precio unitario",50);
 
     }
     /* ---Productos---*/
@@ -213,12 +213,14 @@ class BackendController extends Controller{
         $this->productosListar();
     }
       public function validarProductos($var){
-            $this->validator->varSet($var['submit'],"Apreta el boton de submit");
+         var_dump($var);
+          $this->validator->varSet($var['submit'],"Presione el boton de submit");
           $this->validator->validarStringEspeciales($var['nombre'],"Error: el campo 'Nombre' solo admite letras.",25);
           $this->validator->validarStringEspeciales($var['marca'],"Error: el campo 'Marca' solo admite letras.",25);
           $this->validator->validarNumeros($var['stock'],"Error: el campo 'Stock' solo admite numeros.",3);
           $this->validator->validarNumeros($var['stockMinimo'],"Error: el 'Stock Minimo' nombre solo admite letras.",3);
-          $this->validator->validarNumeros($var['categoria'],"No existe la categoria.",3);
+          $this->validator->validarNumeros($var['idCategoria'],"No existe la categoria.",3);
+           
           $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"Error: solo se admite el formato xxx.xx",5);
           if (! $this->categoriaModel->getCategoriaById($var['categoria'])) throw new Exception("Error:No existe la categoria");
 }
