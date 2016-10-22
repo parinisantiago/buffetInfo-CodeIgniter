@@ -37,8 +37,8 @@
                 <input value="{{producto.stockMinimo}}" type="number" name="stockMinimo" id="stockMinimo" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" required>
             {% endif %}
 	    
-            <label for="categoria" class="formProducText">Categoria:</label>
-            <select id="categoria" name="categoria" class="formProducinput" required>
+            <label for="idCategoria" class="formProducText">Categoria:</label>
+            <select id="idCategoria" name="idCategoria" class="formProducinput" required>
                 <option value="" selected>Seleccione un valor</option>
                 {% for cat in categoria %}
                     <option value="{{ cat.idCategoria }}" {%if producto.idCategoria == cat.idCategoria%} selected{% endif %}>{{ cat.nombre }}</option>

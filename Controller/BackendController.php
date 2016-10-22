@@ -52,7 +52,6 @@ class BackendController extends Controller{
         $this->paginaCorrecta($this->ventaModel->totalVenta());
         $this->dispatcher->ventas = $this->ventaModel->getAllVenta($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
         $this->dispatcher->totales = $this->ventaModel->getAlltotales();
-        var_dump($this->dispatcher->totales);
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->render("Backend/venderListarTemplate.twig");
     }
@@ -201,6 +200,7 @@ class BackendController extends Controller{
         $this->dispatcher->method = "ProductosListar";
         $this->productosListar();
         } catch (valException $e){
+            $this->dispatcher->producto = $_POST;
             $this->dispatcher->mensajeError = $e->getMessage();
             $this->productosAM();
         }
@@ -212,11 +212,8 @@ class BackendController extends Controller{
         $this->dispatcher->method = "ProductosListar";
         $this->productosListar();
     }
-
-    /*validar productos en el serverrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr */
       public function validarProductos($var){
-
-          $this->validator->varSet($var['submit'],"Apreta el boton de submit");
+            $this->validator->varSet($var['submit'],"Apreta el boton de submit");
           $this->validator->validarStringEspeciales($var['nombre'],"Error: el campo 'Nombre' solo admite letras.",25);
           $this->validator->validarStringEspeciales($var['marca'],"Error: el campo 'Marca' solo admite letras.",25);
           $this->validator->validarNumeros($var['stock'],"Error: el campo 'Stock' solo admite numeros.",3);
@@ -224,7 +221,7 @@ class BackendController extends Controller{
           $this->validator->validarNumeros($var['categoria'],"No existe la categoria.",3);
           $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"Error: solo se admite el formato xxx.xx",5);
           if (! $this->categoriaModel->getCategoriaById($var['categoria'])) throw new Exception("Error:No existe la categoria");
-        }
+}
 
     /*--- paginacion ---*/
 
