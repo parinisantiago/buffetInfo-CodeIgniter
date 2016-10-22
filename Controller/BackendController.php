@@ -37,11 +37,11 @@ class BackendController extends Controller{
     }
     public function venta(){
         /***** actualizar ganancias***************************/
-        $this->validator->varSet($_POST['submitButton'],"apreta el boton de envio");
-        $this->validator->validarNumeros($_POST['idProducto'],"no hay un id valido", 3);
-        $this->validator->validarNumeros($_POST['cant'],"no hay una cantidad valida", 3);
-        if ($_POST['cant'] < 1) throw new Exception("Cantidad inferior a 1");
-        if (! $this->productoModel->searchIdProducto($_POST['idProducto'])) throw new Exception("idProducto no valido");
+        $this->validator->varSet($_POST['submitButton'],"Presione el boton de envio");
+        $this->validator->validarNumeros($_POST['idProducto'],"Error: no se ah encontrado la venta deseada", 3);
+        $this->validator->validarNumeros($_POST['cant'],"Error: este campo solo acepta numeros", 3);
+        if ($_POST['cant'] < 1) throw new Exception("Error:Cantidad inferior a 1");
+        if (! $this->productoModel->searchIdProducto($_POST['idProducto'])) throw new Exception("Error:no se ah encontrado el producto deseado");
         $this->productoModel->actualizarCantProductos($_POST['idProducto'], $_POST['stock'] - $_POST['cant']);
         $this->ventaModel->insertarVenta($_POST);
 
@@ -58,20 +58,20 @@ class BackendController extends Controller{
     
     public function ventaModificar(){
         /*****************************/
-        $this->validator->varSet($_POST["submitButton"], "apreta el boton de modificacion");
-        $this->validator->varSet($_POST['idIngresoDetalle'], "no se puede modificar una venta sin id");
+        $this->validator->varSet($_POST["submitButton"], "Presione el boton de modificacion");
+        $this->validator->varSet($_POST['idIngresoDetalle'], "Error: la venta deseada no ah sido encontrada");
         $this->dispatcher->venta = $this->ventaModel->getVentaById($_POST['idIngresoDetalle']);
         $this->dispatcher->render("Backend/ModificarVenta.twig");
     }
 
     public function modVenta(){
-        $this->validator->varSet($_POST["submitButton"], "apreta el boton de modificacion");
-        $this->validator->validarNumeros($_POST['idIngresoDetalle'], "no se puede modificar una venta sin id",3);
-        $this->validator->validarNumeros($_POST["stockViejo"], "No modifiques los inputs gentes malas", 2);
-        $this->validator->validarNumeros($_POST["stock"], "No modifiques los inputs gentes malas", 2);
-        $this->validator->validarNumeros($_POST["idProducto"], "No modifiques los inputs gentes malas", 2);
+        $this->validator->varSet($_POST["submitButton"], "Presione el boton de modificar");
+        $this->validator->validarNumeros($_POST['idIngresoDetalle'], "Error: no se a encotrado la venta deseada",3);
+        $this->validator->validarNumeros($_POST["stockViejo"], "Error: este campo solo acepta numeros", 2);
+        $this->validator->validarNumeros($_POST["stock"], "Error: este campo solo acepta numeros", 2);
+        $this->validator->validarNumeros($_POST["idProducto"], "Error: no se a encontrado el producto deseado", 2);
         $stock = $this->productoModel->searchIdProducto($_POST["idProducto"])->stock + $_POST["stockViejo"] - $_POST["stock"];
-        if ($stock <= 0) throw new Exception("No podes vender tantos productos");
+        if ($stock <= 0) throw new Exception("Error: la cantidad vendida supera el stock actual de productos");
         $this->productoModel->actualizarCantProductos($_POST['idProducto'], $stock);
         $this->ventaModel->actualizarVenta($_POST['stock'], $_POST['idIngresoDetalle']);
 
@@ -81,8 +81,8 @@ class BackendController extends Controller{
     }
 
     public function ventaEliminar(){
-        $this->validator->varSet($_POST['submitButton'], "Apreta el botón de eliminar macho");
-        $this->validator->varSet($_POST['idIngresoDetalle'], "Faltan datos para poder eliminar la venta");
+        $this->validator->varSet($_POST['submitButton'], "Presione el botón de eliminar");
+        $this->validator->varSet($_POST['idIngresoDetalle'], "Error: la venta deseada no existe.");
 
         $valor = $this->productoModel->searchIdProducto($_POST['idProducto'])->stock + $_POST['cantidad'];
         $valor .= '';
@@ -142,8 +142,8 @@ class BackendController extends Controller{
     
     public function compraEliminar(){
 
-        $this->validator->varSet($_POST['idCompra'], "no hay un id de compra");
-        $this->validator->varSet($_POST['submitButton'], "apreta el boton de submit");
+        $this->validator->varSet($_POST['idCompra'], "Error: no existe la compra");
+        $this->validator->varSet($_POST['submitButton'], "Presione el boton de submit");
 
         $compra = $this->compraModel->searchIdCompra($_POST['idCompra']);
 
@@ -151,7 +151,7 @@ class BackendController extends Controller{
 
         $nuevoStock = $producto -> stock - $compra -> cantidad;
 
-        if ($nuevoStock < 0) throw new Exception("Ya se han vendido productos como para cancelar la compra");
+        if ($nuevoStock < 0) throw new Exception("Error: no se puede eliminar la compra, ya que se han vendido productos");
         $nuevoStock .= "";
 
         $this->productoModel->actualizarCantProductos($producto->idProducto, $nuevoStock);
@@ -229,7 +229,7 @@ class BackendController extends Controller{
 
     public function paginaCorrecta($total){
 
-        if (! isset($_GET['pag'])) throw new Exception('No hay una página que mostrar');
+        if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
 
         elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
         else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
