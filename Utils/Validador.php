@@ -36,7 +36,7 @@ class Validador{
     }
 
     public function tam($var, $tam){
-        if (0 >= strlen($var)) throw new valException("todos los campos son obligatorios");
+        if (0 >= strlen($var)) throw new valException("Deben completarse todos los campos.");
         if (  strlen($var) > $tam ) throw new valException($var." no es de un tamaño permitido");
         return true;
     }

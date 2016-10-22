@@ -217,13 +217,13 @@ class BackendController extends Controller{
       public function validarProductos($var){
 
           $this->validator->varSet($var['submit'],"Apreta el boton de submit");
-          $this->validator->validarStringEspeciales($var['nombre'],"erroe en nombre",25);
-          $this->validator->validarStringEspeciales($var['marca'],"error en marca",25);
-          $this->validator->validarNumeros($var['stock'],"error en stock",3);
-          $this->validator->validarNumeros($var['stockMinimo'],"error en stock minimo",3);
-          $this->validator->validarNumeros($var['categoria'],"error en categoria",3);
-          $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"error en precio de venta unitario",5);
-          if (! $this->categoriaModel->getCategoriaById($var['categoria'])) throw new Exception("No existe la categoria");
+          $this->validator->validarStringEspeciales($var['nombre'],"Error: el campo 'Nombre' solo admite letras.",25);
+          $this->validator->validarStringEspeciales($var['marca'],"Error: el campo 'Marca' solo admite letras.",25);
+          $this->validator->validarNumeros($var['stock'],"Error: el campo 'Stock' solo admite numeros.",3);
+          $this->validator->validarNumeros($var['stockMinimo'],"Error: el 'Stock Minimo' nombre solo admite letras.",3);
+          $this->validator->validarNumeros($var['categoria'],"No existe la categoria.",3);
+          $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"Error: solo se admite el formato xxx.xx",5);
+          if (! $this->categoriaModel->getCategoriaById($var['categoria'])) throw new Exception("Error:No existe la categoria");
         }
 
     /*--- paginacion ---*/
