@@ -2,6 +2,18 @@
 
 {% block main %}
     {% if rol == "0" %}
+        <form name="formFact" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=AdminController&method=subirFoto" method="post">
+    {%else%}
+        <form name="formFact" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=GestorController&method=subirFoto" method="post">
+    {%endif%}
+        <input name="uploadedfile" type="file" />
+        <input type="submit" value="Subir archivo" />
+    </form> 
+        
+        
+        
+        
+    {% if rol == "0" %}
 	<form name="formProduc" class="formProduc clearfix sombreado" action="Loader.php?controller=AdminController&method=compraAMPost" method="post">
     {%else%}
 	<form name="formProduc" class="formProduc clearfix sombreado" action="Loader.php?controller=GestorController&method=compraAMPost" method="post">
@@ -46,6 +58,7 @@
 	    <label for="enviar" class="formProducTextHidden" hidden>Botón de envío</label>
 	    <input type="submit" name="submit"  id="enviar" class="boton" value="Entrar">
 	</form>
+        
            
         
 {% endblock %}
