@@ -32,8 +32,10 @@
                     <th id="precioUnitario">Precio Unitario</th>
                     <th id="proveedor">Proveedor</th>
                     <th id="fecha">Fecha Compra</th>
+                    <th id="foto">Foto Factura</th>
                     <th id="editar">Editar</th>
                     <th id="eliminar">Eliminar</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -45,9 +47,11 @@
                     <td headers="precioUnitario">{{ compra.precioUnitario }}</td>
                     <td headers="proveedor">{{ compra.proveedor }}</td>
                     <td headers="fecha">{{ compra.fecha }}</td>
+                    <td headers="foto">
                      {% if compra.fotoFactura != "" %}
                     <a  href="uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini"src="uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a>
                      {%endif%}
+                    </td>
                    <td headers="editar">
                         {% if rol == "0" %}
                             <form method="post" action="Loader.php?controller=AdminController&method=compraAM">

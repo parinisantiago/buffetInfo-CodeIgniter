@@ -10,8 +10,9 @@
             
             <label for="fotoFactura" class="formProducText">FotoFactura:</label>
             <input type="file" name="uploadedfile" id="facturaFoto" class="formProducinput">
-            {% if not(compra.facturaFoto is empty)  %}
-                <img src="uploads/{{compra.facturaFoto}}" alt="foto de la factura de la compra"/> 
+            {% if (compra.fotoFactura != "")  %}
+                <input type='hidden' name='fotoFactura' id="fotoFactura" value={{ compra.fotoFactura }}>
+                <a  href="uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini"src="uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a> 
             {% endif %}
            
             
@@ -34,7 +35,7 @@
 	    {% if (compra.precioUnitario is empty)  %}
                 <input type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50"  step="0.01" min=0 required>
 	    {% else %}
-                <input value=" {{compra.precioUnitario}} " type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50" step="0.01" min=0 required>
+                <input value="{{compra.precioUnitario}}" type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50" step="0.01" min=0 required>
             {% endif %}
             
             <label for="proveedor" class="formProducText">Proveedor:</label>

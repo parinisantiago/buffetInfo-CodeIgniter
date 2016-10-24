@@ -110,12 +110,14 @@ class BackendController extends Controller{
     public function compraAMPost(){
         $this->validarCompra($_POST);
         $producto = $this->productoModel->searchIdProducto($_POST['producto']);
-        if (isset($_POST['uploadedfile'])){//si hay foto de la factura
+        if ($_FILES['uploadedfile']['size'] >1){//si hay foto de la factura  !isset($_POST['fotoFactura']
             $this->subirFoto();
-            $_POST["fotoFactura"]=basename( $_FILES['uploadedfile']['name']);
-        }else{
-            $_POST["fotoFactura"]="";
+        }else{//pregunto si ya hay una foto
+            if (!isset($_POST['fotoFactura'])){
+                $_POST["fotoFactura"]=basename( $_FILES['uploadedfile']['name']);
+            }
         }
+        
         if ($_POST["idCompra"] != ""){
            $compra =  $this->compraModel->searchIdCompra($_POST['idCompra']);
            $nuevoStock = $producto->stock - $compra->cantidad + $_POST['cantidad'];
@@ -151,6 +153,7 @@ class BackendController extends Controller{
         $target_path = "uploads/";
         $target_path = $target_path . basename( $_FILES['uploadedfile']['name']);
         $aux = move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path); 
+        $_POST["fotoFactura"]=basename( $_FILES['uploadedfile']['name']);
         if (! $aux) {
             throw new Exception('Error: no se pude subir el archivo.');
         }
