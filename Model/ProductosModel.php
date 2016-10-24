@@ -15,6 +15,11 @@ class ProductosModel extends Model{
                 OFFSET :offset', $limit, $offset);
     }
 
+    public function getProductos(){
+        return $this->queryTodasLasFilas('SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.precioVentaUnitario, p.descripcion, p.idProducto
+                FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria)', array());
+    }
+
     public function searchIdProducto($idProd){
         return $this ->queryPreparadaSQL(
                 "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, p.precioVentaUnitario, p.descripcion, p.idProducto,c.nombre as categoria, c.idCategoria

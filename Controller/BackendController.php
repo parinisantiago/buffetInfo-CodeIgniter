@@ -104,7 +104,7 @@ class BackendController extends Controller{
             $this->dispatcher->compra =$this ->compraModel->searchIdCompra($_POST["idCompra"]);
         }//crear una compra nueva
         $this->dispatcher->proveedor =$this ->compraModel->getAllProveedor(99999,0);
-        $this->dispatcher->productos =$this ->productoModel->getAllProducto(99999,0);
+        $this->dispatcher->productos =$this ->productoModel->getProductos();
         $this->dispatcher->render("Backend/CompraAMTemplate.twig");
     }
     public function compraAMPost(){
