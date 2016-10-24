@@ -2,24 +2,19 @@
 
 {% block main %}
     {% if rol == "0" %}
-        <form name="formFact" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=AdminController&method=subirFoto" method="post">
+	<form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=AdminController&method=compraAMPost" method="post">
     {%else%}
-        <form name="formFact" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=GestorController&method=subirFoto" method="post">
-    {%endif%}
-        <input name="uploadedfile" type="file" />
-        <input type="submit" value="Subir archivo" />
-    </form> 
-        
-        
-        
-        
-    {% if rol == "0" %}
-	<form name="formProduc" class="formProduc clearfix sombreado" action="Loader.php?controller=AdminController&method=compraAMPost" method="post">
-    {%else%}
-	<form name="formProduc" class="formProduc clearfix sombreado" action="Loader.php?controller=GestorController&method=compraAMPost" method="post">
+	<form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=GestorController&method=compraAMPost" method="post">
     {%endif%}
             <input type='hidden' name='idCompra' id="idCompra" value={{compra.idCompra}}>
+            
+            <label for="fotoFactura" class="formProducText">FotoFactura:</label>
+            <input type="file" name="uploadedfile" id="facturaFoto" class="formProducinput">
+            {% if not(compra.facturaFoto is empty)  %}
+                <img src="uploads/{{compra.facturaFoto}}" alt="foto de la factura de la compra"/> 
+            {% endif %}
            
+            
             <label for="producto" class="formProducText">Producto:</label>
             <select id="idProducto" name="producto" class="formProducinput" required>
                 <option value="" selected>Seleccione un valor</option>
@@ -37,9 +32,9 @@
 	    
             <label for="precioUnitario" class="formProducText">Precio unitario:</label>
 	    {% if (compra.precioUnitario is empty)  %}
-                <input type="text" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50" pattern="^[0-9\.0-9]+" maxlength="6" required>
+                <input type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50"  step="0.01" min=0 required>
 	    {% else %}
-                <input value=" {{compra.precioUnitario}} " type="text" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50" pattern="^[0-9\.0-9]+" maxlength="6"  required>
+                <input value=" {{compra.precioUnitario}} " type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50" step="0.01" min=0 required>
             {% endif %}
             
             <label for="proveedor" class="formProducText">Proveedor:</label>

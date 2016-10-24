@@ -100,9 +100,9 @@ class BackendController extends Controller{
         $this->dispatcher->render("Backend/CompraListarTemplate.twig");
     }
     public function compraAM(){
-        if (isset($_POST["idCompra"])){
+        if (isset($_POST["idCompra"])){ //modificar una compra
             $this->dispatcher->compra =$this ->compraModel->searchIdCompra($_POST["idCompra"]);
-        }
+        }//crear una compra nueva
         $this->dispatcher->proveedor =$this ->compraModel->getAllProveedor(99999,0);
         $this->dispatcher->productos =$this ->productoModel->getAllProducto(99999,0);
         $this->dispatcher->render("Backend/CompraAMTemplate.twig");
@@ -110,6 +110,10 @@ class BackendController extends Controller{
     public function compraAMPost(){
         $this->validarCompra($_POST);
         $producto = $this->productoModel->searchIdProducto($_POST['producto']);
+        if (! isset($_POST['uploadedfile'])){//si hay foto de la factura
+            $this->subirFoto();
+            $_POST["fotoFactura"]=basename( $_FILES['uploadedfile']['name']);
+        }
         if ($_POST["idCompra"] != ""){
            $compra =  $this->compraModel->searchIdCompra($_POST['idCompra']);
            $nuevoStock = $producto->stock - $compra->cantidad + $_POST['cantidad'];
@@ -144,35 +148,11 @@ class BackendController extends Controller{
     public function subirFoto(){
         $target_path = "uploads/";
         $target_path = $target_path . basename( $_FILES['uploadedfile']['name']);
-        if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
-            echo "El archivo ". basename( $_FILES['uploadedfile']['name']). " ha sido subido";
-        }else{
-            echo "Ha ocurrido un error, trate de nuevo!";
+        $aux = move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path); 
+        if (! $aux) {
+            throw new Exception('Error: no se pude subir el archivo.');
         }
     } 
-    public function uploader(){
-        $uploadedfileload="true";
-        $uploadedfile_size=$_FILES['uploadedfile'][size];
-        echo $_FILES[uploadedfile][name];
-        if ($_FILES[uploadedfile][size]>200000)
-           {$msg=$msg."El archivo es mayor que 200KB, debes reduzcirlo antes de subirlo<BR>";
-        $uploadedfileload="false";}
-
-        if (!($_FILES[uploadedfile][type] =="image/pjpeg" OR $_FILES[uploadedfile][type] =="image/gif"))
-        {$msg=$msg." Tu archivo tiene que ser JPG o GIF. Otros archivos no son permitidos<BR>";
-        $uploadedfileload="false";}
-
-        $file_name=$_FILES[uploadedfile][name];
-        $add="uploads/$file_name";
-        if($uploadedfileload=="true"){
-
-        if(move_uploaded_file ($_FILES[uploadedfile][tmp_name], $add)){
-        echo " Ha sido subido satisfactoriamente";
-        }else{echo "Error al subir el archivo";}
-
-        }else{echo $msg;}
-    }
-    
     public function validarCompra($var){
         $this->validator->varSet($var['submit'],"Presione el boton de submit");
         if (! $this->compraModel->searchIdProveedor($var['proveedor'])) throw new Exception("Error: No existe el proveedor");
