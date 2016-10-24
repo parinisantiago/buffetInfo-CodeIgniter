@@ -45,6 +45,9 @@
                     <td headers="precioUnitario">{{ compra.precioUnitario }}</td>
                     <td headers="proveedor">{{ compra.proveedor }}</td>
                     <td headers="fecha">{{ compra.fecha }}</td>
+                     {% if compra.fotoFactura != "" %}
+                    <a  href="uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini"src="uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a>
+                     {%endif%}
                    <td headers="editar">
                         {% if rol == "0" %}
                             <form method="post" action="Loader.php?controller=AdminController&method=compraAM">
