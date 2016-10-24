@@ -110,9 +110,11 @@ class BackendController extends Controller{
     public function compraAMPost(){
         $this->validarCompra($_POST);
         $producto = $this->productoModel->searchIdProducto($_POST['producto']);
-        if (! isset($_POST['uploadedfile'])){//si hay foto de la factura
+        if (isset($_POST['uploadedfile'])){//si hay foto de la factura
             $this->subirFoto();
             $_POST["fotoFactura"]=basename( $_FILES['uploadedfile']['name']);
+        }else{
+            $_POST["fotoFactura"]="";
         }
         if ($_POST["idCompra"] != ""){
            $compra =  $this->compraModel->searchIdCompra($_POST['idCompra']);
