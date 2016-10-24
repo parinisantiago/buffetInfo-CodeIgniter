@@ -17,7 +17,7 @@ class ProductosModel extends Model{
 
     public function getProductos(){
         return $this->queryTodasLasFilas('SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.precioVentaUnitario, p.descripcion, p.idProducto
-                FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria)', array());
+                FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria) WHERE p.eliminado = 0', array());
     }
 
     public function searchIdProducto($idProd){
