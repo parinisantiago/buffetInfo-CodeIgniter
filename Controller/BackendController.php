@@ -108,6 +108,7 @@ class BackendController extends Controller{
         $this->dispatcher->render("Backend/CompraAMTemplate.twig");
     }
     public function compraAMPost(){
+        try{
         $this->validarCompra($_POST);
         $producto = $this->productoModel->searchIdProducto($_POST['producto']);
         if ($_FILES['uploadedfile']['size'] >1){//si hay foto de la factura  !isset($_POST['fotoFactura']
@@ -133,6 +134,11 @@ class BackendController extends Controller{
         $_GET['pag'] = 0;
         $this->dispatcher->method = "CompraListar";
         $this->compraListar();
+    } catch (valException $e){
+        $this->dispatcher->ventas = $_POST;
+        $this->dispatcher->mensajeError = $e->getMessage();
+        $this->compraAM();
+}
     }
     
     public function compraEliminar(){
