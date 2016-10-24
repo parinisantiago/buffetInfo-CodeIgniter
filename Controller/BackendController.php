@@ -220,7 +220,7 @@ class BackendController extends Controller{
           $this->validator->validarNumeros($var['stockMinimo'],"Error: el 'Stock Minimo' nombre solo admite letras.",3);
           $this->validator->validarNumeros($var['idCategoria'],"No existe la categoria.",3);
           $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"Error: solo se admite el formato xxx.xx",5);
-          if (! $this->categoriaModel->getCategoriaById($var['categoria'])) throw new Exception("Error:No existe la categoria");
+          if (! $this->categoriaModel->getCategoriaById($var['idCategoria'])) throw new valException("Error:No existe la categoria");
     }
     
     /*--- paginacion ---*/
