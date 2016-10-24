@@ -35,7 +35,7 @@ class CompraModel extends Model{
         return $this ->queryPreparadaSQL("
             SELECT pr.idProveedor
             FROM proveedor pr 
-            WHERE  pr.idProveedor = :idProv" , array(idProv => $idProv));
+            WHERE  pr.idProveedor = :idProv" , array('idProv' => $idProv));
     }
     public function getAllProveedor($limit, $offset){
         return $this -> queryOFFSET('
