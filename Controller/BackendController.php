@@ -212,7 +212,6 @@ class BackendController extends Controller{
         $this->productosListar();
     }
       public function validarProductos($var){
-         var_dump($var);
           $this->validator->varSet($var['submit'],"Presione el boton de submit");
           $this->validator->validarStringEspeciales($var['nombre'],"Error: el campo 'Nombre' solo admite letras.",25);
           $this->validator->validarStringEspeciales($var['marca'],"Error: el campo 'Marca' solo admite letras.",25);
