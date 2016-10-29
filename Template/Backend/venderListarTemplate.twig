@@ -20,56 +20,51 @@
         <table class="tablaProductos sombreado" >
             <thead>
             <tr> 
-                <th id="nombre">Nombre</th>
-                <th id="marca">Marca</th>
+                <th class="columnaAncha" id="nombre">Nombre</th>
+                <th class="columnaAncha" id="marca">Marca</th>
                 <th id="stock">cantidad</th>
-                <th id="precioVentaUnitario">Precio de Venta Unitario</th>
+                <th class="columnaAncha" id="precioVentaUnitario">Precio de Venta Unitario</th>
                 <th id="fecha">fecha</th>
-                <th id="modificar">Modificar</th>
-                <th id="eliminar">Eliminar</th>
+                <th id="acciones">Acciones</th>
             </tr>
             </thead>
             <tbody>
 
             {% for venta in ventas %}
-                {% if venta.eliminado == 0 %}
-                    <tr>
-                        <td headers="nombre">{{ venta.nombre }}</td>
-                        <td headers="marca"> {{ venta.marca }}</td>
-                        <td headers="cantidad"> {{ venta.cantidad }}</td>
-                        <td headers="precioVentaUnitario">{{ venta.precioUnitario }}</td>
-                        <td headers="fecha">{{ venta.fecha }}</td>
-                        <td headers="editar">
-                            <form method="post" action="{% if rol == "0" %}Loader.php?controller=AdminController&method=ventaModificar{% else %}Loader.php?controller=GestorController&method=ventaModificar{% endif %}">
+                <tr class="fila">
+                    <td headers="nombre">{{ venta.nombre }}</td>
+                    <td headers="marca"> {{ venta.marca }}</td>
+                    <td headers="cantidad"> {{ venta.cantidad }}</td>
+                    <td headers="precioVentaUnitario">{{ venta.precioUnitario }}</td>
+                    <td headers="fecha">{{ venta.fecha }}</td>
+                    <td headers="acciones">
+                        <form method="post" action="{% if rol == "0" %}Loader.php?controller=AdminController&method=ventaModificar{% else %}Loader.php?controller=GestorController&method=ventaModificar{% endif %}">
 
-                            <label for="idProducto" hidden></label>
-                                    <input name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
-                                    <button type="submit" name="submitButton">
-                                        <img class="icono" src="images/editar.png" alt= "editar la informacion" />
-                                    </button>
-                                </form>
-                        </td>
-                        <td headers="eliminar">
-                            {% if rol == "0" %}
-                                <form method="post" action="Loader.php?controller=AdminController&method=ventaEliminar">
-                            {%else%}
-                                <form method="post" action="Loader.php?controller=GestorController&method=ventaEliminar">
-                            {%endif%}
-                                    <label for="idIngresoDetalle" hidden></label>
-                                    <input  name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
-                                    <label for="cantidad" hidden></label>
-                                    <input  name="cantidad" type="hidden" value={{ venta.cantidad }}>
-                                    <label for="idProducto" hidden></label>
-                                    <input  name="idProducto" type="hidden" value={{ venta.idProducto }}>
-                                    <label for="cant" hidden></label>
-                                    <input  name="cant" type="hidden" value={{ venta.cantidad }}>
-                                    <button type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" >
-                                      <img class="icono" src="images/eliminar.png" alt= "eliminar" />
-                                    </button>
-                                </form>
-                        </td>
-                    </tr>
-               {% endif %}
+                        <label for="idProducto" hidden></label>
+                                <input name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
+                                <button class="botonTabla" type="submit" name="submitButton">
+                                    <img class="icono" src="images/editar.png" alt= "editar la informacion" />
+                                </button>
+                            </form>
+                        {% if rol == "0" %}
+                            <form method="post" action="Loader.php?controller=AdminController&method=ventaEliminar">
+                        {%else%}
+                            <form method="post" action="Loader.php?controller=GestorController&method=ventaEliminar">
+                        {%endif%}
+                                <label for="idIngresoDetalle" hidden></label>
+                                <input  name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
+                                <label for="cantidad" hidden></label>
+                                <input  name="cantidad" type="hidden" value={{ venta.cantidad }}>
+                                <label for="idProducto" hidden></label>
+                                <input  name="idProducto" type="hidden" value={{ venta.idProducto }}>
+                                <label for="cant" hidden></label>
+                                <input  name="cant" type="hidden" value={{ venta.cantidad }}>
+                                <button class="botonTabla"  type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" >
+                                  <img class="icono" src="images/eliminar.png" alt= "eliminar" />
+                                </button>
+                            </form>
+                    </td>
+                </tr>
             {% endfor %}
             </tbody>
         </table>
