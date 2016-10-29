@@ -1,0 +1,96 @@
+{% extends 'Template/Backend/IndexTemplate.twig' %}
+
+{% block main %}
+   
+    <script type="text/javascript" src="Javascript/calendario.js"></script>
+    {% block calendario %}{% endblock %}
+    
+    {% if rol == "0" %}
+	<form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=AdminController&method=menu" method="post">
+    {%else%}
+	<form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=GestorController&method=menu" method="post">
+    {%endif%}
+    </div>
+        <div class="paginas sombreado" >
+            <p> Página: {{ pag }} <p>
+            {% if rol == '0' %}
+                {% if pag != 0 %}
+                    <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag - 1 }}">Página anterior</a>
+                {% endif %}
+                <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente </a>
+            {% else %}
+                {% if pag != 0 %}
+                    <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag - 1 }}">Página anterior</a>
+                {% endif %}
+                <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente</a>
+            {% endif  %}
+            </div>
+        <table class="tablaProductos sombreado">
+            <thead>
+                <tr>
+                    <th id="nombre">Nombre</th>
+                    <th id="stock">Stock</th>
+                    <th id="stockMinimo">Stock Minimo</th>
+                    <th id="precioUnitario">Precio Unitario</th>
+                    <th id="descripcion">Descripcion</th>
+                    <th id="foto">Foto</th>
+                    <th id="editar">Editar</th>
+                    <th id="eliminar">Eliminar</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+            {% for m in menu %}
+                <tr>
+                    <td headers="nombre">{{ m.nombre }}</td>
+                    <td headers="Stock"> {{ m.stock }}</td>
+                    <td headers="stockMinimo"> {{ m.stockMinimo }}</td>
+                    <td headers="precioUnitario">{{ m.precioUnitario }}</td>
+                    <td headers="descripcion">{{ m.descripcion }}</td>
+                    <td headers="foto">
+                     {% if compra.fotoFactura != "" %}
+                    <a  href="uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini" src="uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a>
+                     {%endif%}
+                    </td>
+                   <td headers="editar">
+                        {% if rol == "0" %}
+                            <form method="post" action="Loader.php?controller=AdminController&method=menuAM">
+                        {%else%}
+                            <form method="post" action="Loader.php?controller=GestorController&method=menuAM">
+                        {%endif%}
+                                <label hidden></label>
+                                <input name="idCompra" type="hidden" value={{ M.idMenu }}>
+                                <button type="submit" name="submitButton">
+                                    <img class= "icono" src="images/editar.png" alt= "editar la informacion" />
+                                </button>
+                            </form>
+                    </td>
+                    <td headers="eliminar">
+                        {% if rol == "0" %}
+                            <form method="post" action="Loader.php?controller=AdminController&method=menuEliminar">
+                        {%else%}
+                            <form method="post" action="Loader.php?controller=GestorController&method=menuEliminar">
+                        {%endif%}
+                                <label hidden></label>
+                                <input name="idCompra" type="hidden" value={{ m.idMenu }}>
+                                
+                                <button type="submit" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
+                                  <img class="icono" src="images/eliminar.png" alt= "eliminar" />
+                                </button>
+                            </form>
+                    </td>
+                </tr>
+                {% endfor %}
+                   </tbody>
+        </table>
+            
+    
+    
+    
+    
+    
+    
+    
+    
+    </form>
+{% endblock %}

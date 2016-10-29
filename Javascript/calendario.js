@@ -27,31 +27,26 @@ function generarHoja(Mes, Anno) {
         var CadSemana = "<tr>";
         for (var i=0; i<7; i++) {
             if (Fecha.getMonth()!= Mes) {
-                CadSemana=CadSemana + "<td>&nbsp;</td>";
+                CadSemana += "<td>&nbsp;</td>";
             } else {
-		if (i == 0) {
-                    if (Fecha.getTime() == Hoy.getTime()) {
-                        CadSemana = CadSemana + "<td class='hoy diaMenu'><b>" + Fecha.getDate() + "</b></td>\n";
+                if (Fecha.getTime() == Hoy.getTime()) {
+                        CadSemana +="<td class='hoy diaMenu'><b>" + Fecha.getDate() + "</b></td>";
+                }else{
+                    if (i == 0 ) {
+                        CadSemana +="<td class='domingo diaMenu'><b>" + Fecha.getDate() + "</b></td>";
                     } else {
-			CadSemana = CadSemana + "<td class='domingo diaMenu'><b>" + Fecha.getDate() + "</b></td>";
-                    }
-                } else {
-                    if (Fecha.getTime() == Hoy.getTime()) {
-                        CadSemana = CadSemana + "<td class='hoy diaMenu'><b>" + Fecha.getDate() + "</b></td>";
-                    } else {
-			CadSemana = CadSemana + "<td class='dia diaMenu'><b>" + Fecha.getDate() + "</b></td>";
+                        CadSemana +="<td class='dia diaMenu'><b>" + Fecha.getDate() + "</b></td>";
                     }
                 }
             }	
             Fecha.setTime(Fecha.getTime() + timeDia);
         }
         CadSemana = CadSemana + "</tr>\n";
-	
-        Cadena = Cadena + CadSemana;
+	Cadena = Cadena + CadSemana;
         var miMes = Fecha.getMonth();
     } while (miMes == Mes);
     Cadena = Cadena + "</table>";
-    //Poner el a�o
+    //Poner el año
     var objeto = elemento("AnnoActual");
     objeto.innerHTML = Anno
     //Escribir la hoja del almanaque

@@ -44,6 +44,14 @@
         </li>
     {%endif%}
     
+    <li class="asideItem">
+        {% if rol == "0" %}
+            <a href="Loader.php?controller=adminController&method=menu">Administracion del Menu</a>
+        {%else%}
+            <a href="Loader.php?controller=GestorController&method=menu">Administracion del Menu</a>
+        {%endif%}
+    </li>
+    
     {% if rol == "0" %}
         <li class="asideItem">
             <a href="Loader.php?controller=adminController&method=abmUsuario&pag=0">Usuarios</a>
@@ -57,28 +65,20 @@
     {%endif%}
     
     {% if rol == "100" %}
-    <li class="asideItem">
-        <a href="">Ingresos entre fechas</a>
-    </li>
-    
-    <li class="asideItem">
-        <a href="">Gastos entre fechas</a>
-    </li>
+        <li class="asideItem">
+            <a href="">Ingresos entre fechas</a>
+        </li>
 
-    <li class="asideTitleItem">
-        <p>Balance</p>
-    </li>
-    
-    <li class="asideItem">
-            <a href="">Pedidos On-line</a>
-    </li>
-    <li class="asideItem">
-        {% if rol == "0" %}
-            <a href="Loader.php?controller=adminController&method=menu">Administracion del Menu</a>
-        {%else%}
-            <a href="Loader.php?controller=GestorController&method=menu">Administracion del Menu</a>
-        {%endif%}
-    </li>
-   
-     {%endif%}
+        <li class="asideItem">
+            <a href="">Gastos entre fechas</a>
+        </li>
+
+        <li class="asideTitleItem">
+            <p>Balance</p>
+        </li>
+
+        <li class="asideItem">
+                <a href="">Pedidos On-line</a>
+        </li>
+   {%endif%}
 </ul>
