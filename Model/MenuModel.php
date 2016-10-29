@@ -78,7 +78,6 @@ class MenuModel extends Model{
             SET m.eliminado =1 
             WHERE m.idMenu = :idMenu" , array('idMenu' => $idMenu));
     }
-    }
 }
 ?>
 
