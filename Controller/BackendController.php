@@ -221,6 +221,21 @@ class BackendController extends Controller{
           $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"Error: solo se admite el formato xxx.xx",5);
           if (! $this->categoriaModel->getCategoriaById($var['idCategoria'])) throw new valException("Error:No existe la categoria");
     }
+    /*--- menu ---*/
+    public function menu(){
+        /*deberia mostrar los menu para el dia que llegue como parametro
+         * si no hay parametros muestra el de hoy
+         * tambien numeros de paginas
+         * agregar un marco de color sobre la fecha seleccionada en el calendario
+         */
+         $this->dispatcher->render("Backend/calendarioTemplate.twig");
+    }
+    public function menuAM(){
+        echo"POLIMORFISAR FUNESTO";
+    }
+    public function menuEliminar(){
+        echo"DESINTEGRAR";
+    }
     
     /*--- paginacion ---*/
     public function paginaCorrecta($total){
