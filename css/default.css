@@ -109,30 +109,47 @@ clear: both;
 
 
 /* --- TABLA PRODUCTOS --- */
-.tablaProductos tbody tr td{
-    margin-top: 1%;
-    font-size: 1.1em;
-    text-align: center;
-    width: 2%;
+th{
+    width: 7%;
+}
+.columnaAncha{
+    width: 13%;
+}
+th{
+    font-size-adjust: 0.41;
 }
 
+.fila:hover{
+    background-color: #A8A7A7;
+        
+}
+th, td {
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    border-left: none;
+    border-right: none;
+    
+}
 .tablaProductos{
     color: #fff;
     background-color: #333;
     padding: 5%;
-    padding: 10%;
-    margin-left: 10%;
-    width: 90%;
+    margin-left: 5%;
+    width: 108%;
     z-index: 0;
     margin-bottom: 10%;
+   border-spacing: 0px 0px;
 }
 
 .icono {
-    width: 2em;
+    width: 1.5em;
     margin: 1%;
     position: relative;
 }
-
+.botonTabla{
+    clear:right;
+    float:left;
+}
 @media screen and (max-width: 851px) {
    .icono {
     width: 1.5em;
