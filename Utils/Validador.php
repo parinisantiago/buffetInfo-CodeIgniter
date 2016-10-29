@@ -27,7 +27,7 @@ class Validador{
             throw new valException($error);
     }
     public function validarNumerosPunto($var, $error, $tam){
-        if (!$this->tam($var, $tam) || !$this->varSet($var, $error) || !preg_match("/^[0-9. ]+$/", $var))
+        if (!$this->tam($var, $tam) || !$this->varSet($var, $error) || !preg_match("/^[0-9\.0-9]+$/", $var))
             throw new valException($error);
     }
     public function varSet($var, $error){
@@ -36,7 +36,7 @@ class Validador{
     }
 
     public function tam($var, $tam){
-        if (0 >= strlen($var)) throw new valException("todos los campos son obligatorios");
+        if (0 >= strlen($var)) throw new valException("Deben completarse todos los campos.");
         if (  strlen($var) > $tam ) throw new valException($var." no es de un tamaño permitido");
         return true;
     }

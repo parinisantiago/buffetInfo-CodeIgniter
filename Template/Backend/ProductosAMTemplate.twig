@@ -37,9 +37,9 @@
                 <input value="{{producto.stockMinimo}}" type="number" name="stockMinimo" id="stockMinimo" class="formProducinput" placeholder="Un número entre 1 y 99" min="0" max="999" required>
             {% endif %}
 	    
-            <label for="categoria" class="formProducText">Categoria:</label>
-            <select id="categoria" name="categoria" class="formProducinput" required>
-                <option value="" selected>Seleccione un valor</option>
+            <label for="idCategoria" class="formProducText">Categoria:</label>
+            <select id="idCategoria" name="idCategoria" class="formProducinput" required>
+                <option value="">Seleccione un valor</option>
                 {% for cat in categoria %}
                     <option value="{{ cat.idCategoria }}" {%if producto.idCategoria == cat.idCategoria%} selected{% endif %}>{{ cat.nombre }}</option>
                 {% endfor %}
@@ -47,9 +47,9 @@
            	    
 	    <label for="precioVentaUnitario" class="formProducText">Precio Venta Unitario:</label>
 	    {% if (producto.precioVentaUnitario is empty)  %}
-                <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" required>
+                <input type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput"  placeholder="$2.50" step="0.01" min=0 required>
             {% else %}
-                <input value="{{producto.precioVentaUnitario}}" type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" step="0.01" placeholder="2,50" required>
+                <input value="{{producto.precioVentaUnitario}}" type="number" name="precioVentaUnitario" id="precioVentaUnitario" class="formProducinput" placeholder="$2.50" step="0.01" min=0 required>
             {% endif %}
             
             <label for="descripcion" class="formProducText">Descripcion:</label>

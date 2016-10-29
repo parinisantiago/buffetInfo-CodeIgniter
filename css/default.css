@@ -244,9 +244,14 @@ div > p > a{
    border: 1px solid #ffffff;
    background-color: #A8A7A7;
 }
-sem {
+.mini{
+    width: 25px;
+    height: 25px;
+}
+.sem {
   color:#A8A7A7;
 }
+
 
 
 

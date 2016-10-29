@@ -20,9 +20,7 @@ class Dispatcher
     public function loadByTwig($view) {
         $dir = __DIR__;
         $loader = new Twig_Loader_Filesystem ( "$dir" );
-        $twig = new Twig_Environment ( $loader, array ()
-
-        );
+        $twig = new Twig_Environment ( $loader, array ());
         $template = $twig->loadTemplate ( $view );
 
         $params = array ();

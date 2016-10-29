@@ -28,7 +28,7 @@ class AdminController extends BackendController{
     public function insertUsuario(){
 
         if ($this->model->userExist($_POST['nombreUsuario'])) throw new Exception("El usuario ya existe");
-        $this->model->addUser($_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'],$_POST['pass'], $_POST['dni'], $_POST['email'], $_POST['telefono'],$_POST['rol'], $_POST['ubicacion']);
+        $this->model->addUser($_POST['usuario'], $_POST['nombre'], $_POST['apellido'],$_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'],$_POST['idRol'], $_POST['idUbicacion']);
     }
 
 
@@ -39,11 +39,12 @@ class AdminController extends BackendController{
                 $this->validarUsuario(); //realiza validaciones mediante expresiones regulares
 
                 if (!isset($_POST['idUsuario'])) $this->insertUsuario();
-                else if ((Session::getValue('modUserId') == $_POST['idUsuario']) && ($this->model->userExistInDB($_POST['nombreUsuario'])->usuario == $_POST['nombreUsuario'])) $this->model->modUser($_POST['idUsuario'], $_POST['nombreUsuario'], $_POST['nombre'], $_POST['apellido'], $_POST['pass'], $_POST['dni'], $_POST['email'], $_POST['telefono'], $_POST['rol'], $_POST['ubicacion'], $_POST['habilitado']); //si es el usaurio guardado, lo modifica
-                else throw new Exception('El id de usuario se vio modificado durante la operacion');
+                else if ((Session::getValue('modUserId') == $_POST['idUsuario']) && ($this->model->userExistInDB($_POST['usuario'])->usuario == $_POST['usuario'])) $this->model->modUser($_POST['idUsuario'], $_POST['usuario'], $_POST['nombre'], $_POST['apellido'], $_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'], $_POST['idRol'], $_POST['idUbicacion'], $_POST['habilitado']); //si es el usaurio guardado, lo modifica
+                else throw new Exception('Error: El id de usuario se vio modificado durante la operacion');
                 $_GET['pag'] = 0;
                 $this->abmUsuario();
             }  catch (valException $e){
+                $this->dispatcher->user = $_POST;
                 $this->dispatcher->mensajeError = $e->getMessage();
                 $this->registroUsuario();
             }
@@ -91,16 +92,16 @@ class AdminController extends BackendController{
     {
 
         $this->validator->varSet($_POST['submitButton'], "apreta el boton de sumbit");
-        $this->validator->validarString( $_POST['nombreUsuario'], 'Error en nombreUsuarip', 15 );
+        $this->validator->validarString( $_POST['usuario'], 'Error en nombreUsuarip', 15 );
         $this->validator->validarStringEspeciales( $_POST['nombre'], 'Error en nombre', 25 );
-        $this->validator->validarString( $_POST['pass'], 'Error en contraseña', 15 );
+        $this->validator->validarString( $_POST['clave'], 'Error en contraseña', 15 );
         $this->validator->validarStringEspeciales( $_POST['apellido'], 'Error en apellido', 25 );
-        $this->validator->validarNumeros( $_POST['dni'], 'Error en dni', 8 );
+        $this->validator->validarNumeros( $_POST['documento'], 'Error en dni', 8 );
         $this->validator->validarMail( $_POST['email'], 'Error en email', 25 );
         $this->validator->validarNumeros( $_POST['telefono'],'Error en telefono', 25 );
-        $this->validator->varSet($_POST['rol'], "envia un rol");
-        if ( $_POST['rol'] != '2' ) $_POST['ubicacion'] = '0';
-        if ($_POST['rol'] == 2 and $_POST['ubicacion']=='0') throw  new valException("Los usuarios web deben poseer una ubicación");
+        $this->validator->varSet($_POST['idRol'], "envia un rol");
+        if ( $_POST['idRol'] != '2' ) $_POST['idUbicacion'] = '0';
+        if ($_POST['idRol'] == 2 and $_POST['idUbicacion']=='0') throw  new valException("Los usuarios web deben poseer una ubicación");
 
     }
   

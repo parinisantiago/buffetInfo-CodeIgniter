@@ -15,6 +15,11 @@ class ProductosModel extends Model{
                 OFFSET :offset', $limit, $offset);
     }
 
+    public function getProductos(){
+        return $this->queryTodasLasFilas('SELECT p.nombre, p.marca, p.stock, p.stockMinimo, c.nombre as categoria, p.precioVentaUnitario, p.descripcion, p.idProducto
+                FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria) WHERE p.eliminado = 0', array());
+    }
+
     public function searchIdProducto($idProd){
         return $this ->queryPreparadaSQL(
                 "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, p.precioVentaUnitario, p.descripcion, p.idProducto,c.nombre as categoria, c.idCategoria
@@ -30,7 +35,7 @@ class ProductosModel extends Model{
                     marca = :marca,
                     stock = :stock,
                     stockMinimo = :stockMinimo,
-                    idCategoria = :categoria,
+                    idCategoria = :idCategoria,
                     precioVentaUnitario = :precioVentaUnitario,
                     descripcion = :descripcion 
                 WHERE idProducto= :idProducto",
@@ -38,7 +43,7 @@ class ProductosModel extends Model{
                     'marca' => $Prod["marca"],
                     'stock' => $Prod["stock"],
                     'stockMinimo' => $Prod["stockMinimo"],
-                    'categoria' => $Prod["categoria"],
+                    'idCategoria' => $Prod["idCategoria"],
                     'precioVentaUnitario' => $Prod["precioVentaUnitario"],
                     'descripcion'=> $Prod["descripcion"], 
                     'idProducto' => $Prod["idProducto"]
@@ -69,7 +74,7 @@ class ProductosModel extends Model{
                     'marca' => $Prod["marca"],
                     'stock' => $Prod["stock"],
                     'stockMinimo' => $Prod["stockMinimo"],
-                    'idCategoria' => $Prod["categoria"],
+                    'idCategoria' => $Prod["idCategoria"],
                     'precioVentaUnitario' => $Prod["precioVentaUnitario"],
                     'descripcion' => $Prod["descripcion"]
                 ));    
