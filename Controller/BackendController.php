@@ -11,6 +11,7 @@ class BackendController extends Controller{
     public $categoriaModel;
     public $ventaModel;
     public $compraModel;
+    public $menuModel;
 
     public function __construct(){
             parent::__contruct();
@@ -20,6 +21,7 @@ class BackendController extends Controller{
             $this->categoriaModel = new CategoriaModel();
             $this->ventaModel = new VentaModel();
             $this->compraModel= new CompraModel(); 
+            $this->menuModel= new MenuModel();
     }
     
     public function index(){
@@ -228,7 +230,11 @@ class BackendController extends Controller{
          * tambien numeros de paginas
          * agregar un marco de color sobre la fecha seleccionada en el calendario
          */
-         $this->dispatcher->render("Backend/calendarioTemplate.twig");
+        $this->paginaCorrecta($this->menuModel->totalCompras());
+        $this->dispatcher->menu = $this->menuModel->getAllCompras($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        $this->dispatcher->pag = $_GET['pag'];
+        $this->dispatcher->method = "menu";
+        $this->dispatcher->render("Backend/calendarioTemplate.twig");
     }
     public function menuAM(){
         echo"POLIMORFISAR FUNESTO";
