@@ -1,6 +1,9 @@
-//Nombres de meses
-var MonthName = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'];
+window.onload = function() { 
+    ponerFechaActual();
+};
 
+var MonthName = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'];
+var ultimoSeleccionado = new Date().getDay();
 function elemento(id){
     var elem;
     if (document.all) {
@@ -30,19 +33,19 @@ function generarHoja(Mes, Anno) {
                 CadSemana += "<td>&nbsp;</td>";
             } else {
                 if (Fecha.getTime() == Hoy.getTime()) {
-                        CadSemana +="<td class='hoy diaMenu'><b>" + Fecha.getDate() + "</b></td>";
+                        CadSemana +="<td class='hoy diaMenu' onclick='seleccionado(this)'><b>" + Fecha.getDate() + "</b></td>";
                 }else{
                     if (i == 0 ) {
-                        CadSemana +="<td class='domingo diaMenu'><b>" + Fecha.getDate() + "</b></td>";
+                        CadSemana +="<td class='domingo diaMenu' onclick='seleccionado(this)'><b>" + Fecha.getDate() + "</b></td>";
                     } else {
-                        CadSemana +="<td class='dia diaMenu'><b>" + Fecha.getDate() + "</b></td>";
+                        CadSemana +="<td class='dia diaMenu' onclick='seleccionado(this)'><b>" + Fecha.getDate() + "</b></td>";
                     }
                 }
             }	
             Fecha.setTime(Fecha.getTime() + timeDia);
         }
         CadSemana = CadSemana + "</tr>\n";
-	Cadena = Cadena + CadSemana;
+        Cadena = Cadena + CadSemana;
         var miMes = Fecha.getMonth();
     } while (miMes == Mes);
     Cadena = Cadena + "</table>";
@@ -88,4 +91,12 @@ function annoAtras() {
 function annoAdelante() {
     Anno++;
     generarHoja(MesActual, Anno);		
+}
+
+/* -----*/
+function seleccionado(elem){
+    $(ultimoSeleccionado).attr("id" , "");
+    ultimoSeleccionado = $(elem).children();
+    $(ultimoSeleccionado).attr("id" , "seleccionado");
+    alert($(elem).children().text());
 }

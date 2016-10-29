@@ -14,3 +14,6 @@ que muestre  al menos 2 o 3 páginas anteriores y posteriores.
 
 ¿¿¿FINALIZADO???
  Hay que mejorar el aspecto visual del proyecto en especial tablas.
+
+NOTA MENTAL:
+el listar de menu deberia tomar el dia de la fecha/seleecionado y en base a eso listar
