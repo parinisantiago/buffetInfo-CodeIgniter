@@ -150,6 +150,11 @@ th, td {
     clear:right;
     float:left;
 }
+#cantVender{
+    float:left;
+    width: 30%;
+    clear: right;
+}
 @media screen and (max-width: 851px) {
    .icono {
     width: 1.5em;

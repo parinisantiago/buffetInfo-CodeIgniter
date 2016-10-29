@@ -1,5 +1,14 @@
-botones de pag siuien en usuarios sin css
-punto para los digitos de los numeros SIEMPRE
-venta de multiples cosas -> a�adir transacciones???? ver
-total de productos vendidos, es decir sumar el total de cada producto vendido....deesde cuando y hasta cuando...desde la creacion del prog a la actualidad????
-factura scaneada
+ERRORES!
+vender listar muestra algo
+
+CORRECCIONES SEGUNDA ENTREGA
+    ABM de usuarios: pedí que cada campo tenga un mensaje de error correspondiente,
+ y muestra un mensaje global “Debe completar todos los campos”. Quiero ver en el 
+campo que me equivoqué en qué meequivoqué.
+Corregido, muestra el precio
+    ABM de ventas de productos: total pero el cálculo está mal. Vendí 2 items de
+ un producto de 2.4 de precio unitario y el total es 4.800000190734863. Además
+ falta paginar los listados de venta y compra de productos.
+    En proceso-->Hay que mejorar el aspecto visual del proyecto en especial tablas.
+ El orden de las mismas es aleatorio. Además habría que mejorar la paginación, 
+que muestre  al menos 2 o 3 páginas anteriores y posteriores. 

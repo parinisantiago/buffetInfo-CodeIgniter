@@ -40,19 +40,19 @@
             <tbody>
                 {% for prod in producto %}
                     {% if producto.eliminado == 0 %}
-                        <tr>
-                            <td headers="nombre">{{ prod.nombre }}</td>
-                            <td headers="marca"> {{ prod.marca }}</td>
+                        <tr class="fila">
+                            <td class="columnaAncha" headers="nombre">{{ prod.nombre }}</td>
+                            <td class="columnaAncha" headers="marca"> {{ prod.marca }}</td>
                             <td headers="stock"> {{ prod.stock }}</td>
                             <td headers="stockMinimo">{{ prod.stockMinimo }}</td>
-                            <td headers="precioVentaUnitario">{{ prod.precioVentaUnitario }}</td>
+                            <td class="columnaAncha" headers="precioVentaUnitario">{{ prod.precioVentaUnitario }}</td>
                             <td headers="descripcion">{{ prod.descripcion }}</td>
-                            <td headers="vender">
+                            <td class="columnaAncha" headers="vender">
 
                             <form method="post" action="{% if rol == "0" %} Loader.php?controller=AdminController&method=venta&pag=0" {% else %} Loader.php?controller=GestorController&method=venta&pag=0" {% endif %}>
                                 <label class="formProducTextHidden" hidden>cantidad de venta</label>
 
-                                <select name="cant" class="formProducinput" required>
+                                <select id="cantVender" name="cant" class="formProducinput" required>
                                     <option value="" >-</option>
                                 {% for i in  1 .. prod.stock %}
                                     <option value="{{i}}" >{{ i }}</option>
@@ -66,7 +66,7 @@
                                 <input  name="stockMinimo" type="hidden" value={{ prod.stockMinimo }} >
                             <label hidden></label>
                             <input  name="idProducto" type="hidden" value={{ prod.idProducto }} >
-                            <button type="submit"  name="submitButton">
+                            <button class="botonTabla"  type="submit"  name="submitButton">
                                 <img class="icono" src="images/vender.png" alt= "vender" />
                             </button>
                                 </form>
