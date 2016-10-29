@@ -1,7 +1,7 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 {% block main %}
 
-    <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=AdminController&method=changeConf" method="post">
+    <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=ConfigController&method=changeConf" method="post">
 
         <label for="titulo" class="formProducText">Titulo del sitio:</label>
         <input value="{{ config.titulo }}" type="text" name="titulo" id="titulo" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="25" pattern="^[a-zA-Z0-9 ]+$" autofocus required >
