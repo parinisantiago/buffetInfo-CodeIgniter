@@ -109,28 +109,21 @@ clear: both;
 
 
 /* --- TABLA PRODUCTOS --- */
-th{
+.tablaProductos th{
     width: 7%;
+    font-size-adjust: 0.41;
 }
 .columnaAncha{
     width: 13%;
 }
-th{
-    font-size-adjust: 0.41;
-}
-
 .fila:hover{
     background-color: #A8A7A7;
-        
 }
-th, td {
-    text-align: left;
+.tablaProductos th, .tablaProductos td {
     border-bottom: 1px solid #ddd;
-    border-left: none;
-    border-right: none;
-    
 }
 .tablaProductos{
+    text-align: center;
     color: #fff;
     background-color: #333;
     padding: 5%;
@@ -138,9 +131,8 @@ th, td {
     width: 108%;
     z-index: 0;
     margin-bottom: 10%;
-   border-spacing: 0px 0px;
+    border-spacing: 0px 0px;
 }
-
 .icono {
     width: 1.5em;
     margin: 1%;
@@ -150,14 +142,23 @@ th, td {
     clear:right;
     float:left;
 }
-#cantVender{
+.cantVender{
+    margin-left: 10%;
+    margin-right: 10%;
     float:left;
-    width: 30%;
+    width: 40%;
     clear: right;
 }
+
 @media screen and (max-width: 851px) {
    .icono {
-    width: 1.5em;
+    width: 0.9em;
+    }
+    .botonTabla{
+        width: 50%;
+    }
+    .botonVender{
+        width: 40%;
     }
     .tablaProductos tbody tr td{
     font-size: 0.9em;
@@ -201,16 +202,25 @@ div > p > a{
     background-color: #333;
    z-index: 8;
 }
-/* -------calendario ---- */
+/* --- tabla de menu ---*/
+.tablaMenu{
+    float: right;
+    margin-top: -20%;
+    margin-right: -11%;
+    width: 75%;
+}
+/* -------calendario del manu ---- */
 #calendario{
     text-align:center;
-    margin-top: -8%;
+    margin-top: -2%;
     margin-bottom: 5%;
     margin-left: 2%;
-    width: 21%; /*tamaño minimo*/
+    width:190px; /*tamaño minimo*/
     padding: 1%;
     background-color: #333;
     color: white;
+    clear: right;
+    float: left;
 }
 #cabezeraCalendario{
     width: 100%;

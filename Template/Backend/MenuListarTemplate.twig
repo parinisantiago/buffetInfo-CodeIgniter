@@ -6,9 +6,9 @@
     {% block calendario %}{% endblock %}
     
     {% if rol == "0" %}
-	<form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=AdminController&method=menu" method="post">
+	<form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado tablaMenu" action="Loader.php?controller=AdminController&method=menu" method="post">
     {%else%}
-	<form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=GestorController&method=menu" method="post">
+	<form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado tablaMenu" action="Loader.php?controller=GestorController&method=menu" method="post">
     {%endif%}
     </div>
         <div class="paginas sombreado" >

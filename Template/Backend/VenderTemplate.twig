@@ -52,7 +52,7 @@
                             <form method="post" action="{% if rol == "0" %} Loader.php?controller=AdminController&method=venta&pag=0" {% else %} Loader.php?controller=GestorController&method=venta&pag=0" {% endif %}>
                                 <label class="formProducTextHidden" hidden>cantidad de venta</label>
 
-                                <select id="cantVender" name="cant" class="formProducinput" required>
+                                <select name="cant" class="formProducinput cantVender" required>
                                     <option value="" >-</option>
                                 {% for i in  1 .. prod.stock %}
                                     <option value="{{i}}" >{{ i }}</option>
@@ -66,7 +66,7 @@
                                 <input  name="stockMinimo" type="hidden" value={{ prod.stockMinimo }} >
                             <label hidden></label>
                             <input  name="idProducto" type="hidden" value={{ prod.idProducto }} >
-                            <button class="botonTabla"  type="submit"  name="submitButton">
+                            <button class="botonTabla botonVender"  type="submit"  name="submitButton">
                                 <img class="icono" src="images/vender.png" alt= "vender" />
                             </button>
                                 </form>
