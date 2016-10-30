@@ -1,62 +1,50 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
-    {% if rol == "0" %}
-	<form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=AdminController&method=compraAMPost" method="post">
-    {%else%}
-	<form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=GestorController&method=compraAMPost" method="post">
-    {%endif%}
-            <input type='hidden' name='idCompra' id="idCompra" value={{compra.idCompra}}>
-            
-            <label for="facturaFoto" class="formProducText">FotoFactura:</label>
-            <input type="file" name="uploadedfile" id="facturaFoto" class="formProducinput">
-            {% if (compra.fotoFactura != "")  %}
-                <input type='hidden' name='fotoFactura' id="fotoFactura" value={{ compra.fotoFactura }}>
-                <a  href="uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini" src="uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a> 
-            {% endif %}
-           
-            
-            <label for="idProducto" class="formProducText">Producto:</label>
-            <select id="idProducto" name="producto" class="formProducinput" required>
-                <option value="">Seleccione un valor</option>
-                {% for producto in productos %}
-                    <option value="{{ producto.idProducto }}" {%if producto.idProducto == compra.idProducto%} selected{% endif %}>{{ producto.nombre}}  {{producto.marca }}</option>
-                {% endfor %}
-            </select>
-         
-            <label for="cantidad" class="formProducText">Cantidad:</label>
-	    {% if (compra.cantidad is empty)  %}
-                <input type="number" name="cantidad" id="cantidad" class="formProducinput" placeholder="Un número entre 1 y 999" min="1" max="999" >
-            {% else %}
-                <input type="number" name="cantidad" id="cantidad" class="formProducinput" placeholder="Un número entre 1 y 999" min="1" max="999"  value={{compra.cantidad}} >
-            {% endif %}
-	    
-            <label for="precioUnitario" class="formProducText">Precio unitario:</label>
-	    {% if (compra.precioUnitario is empty)  %}
-                <input type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50"  step="0.01" min=0 required>
-	    {% else %}
-                <input value="{{compra.precioUnitario}}" type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50" step="0.01" min=0 required>
-            {% endif %}
-            
-            <label for="idProveedor" class="formProducText">Proveedor:</label>
-            <select id="idProveedor" name="proveedor" class="formProducinput" required>
-                <option value="">Seleccione un valor</option>
-                {% for prov in proveedor %}
-                    <option value="{{ prov.idProveedor }}" {%if prov.idProveedor == compra.idProveedor%} selected{% endif %}>{{ prov.proveedor}}  {{prov.proveedorCuit }}</option>
-                {% endfor %}
-            </select>
-           
-            {% if not( compra.idCompra is empty)  %}
-                <label for="fecha" class="formProducText">Fecha:</label>
-                <input value=" {{ compra.fecha }} " type="dateTime" name="fecha" id="fecha" class="formProducinput" >
-            {% endif %}
-            
-	    <label for="enviar" class="formProducTextHidden" hidden>Botón de envío</label>
-	    <input type="submit" name="submit"  id="enviar" class="boton" value="Entrar">
-	</form>
-        
-           
-        
+    <form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=CompraController&method=compraAMPost" method="post">
+        <input type='hidden' name='idCompra' id="idCompra" value={{compra.idCompra}}>
+        <label for="facturaFoto" class="formProducText">FotoFactura:</label>
+        <input type="file" name="uploadedfile" id="facturaFoto" class="formProducinput">
+        {% if (compra.fotoFactura != "")  %}
+            <input type='hidden' name='fotoFactura' id="fotoFactura" value={{ compra.fotoFactura }}>
+            <a  href="uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini" src="uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a> 
+        {% endif %}
+        <label for="idProducto" class="formProducText">Producto:</label>
+        <select id="idProducto" name="producto" class="formProducinput" required>
+            <option value="">Seleccione un valor</option>
+            {% for producto in productos %}
+                <option value="{{ producto.idProducto }}" {%if producto.idProducto == compra.idProducto%} selected{% endif %}>{{ producto.nombre}}  {{producto.marca }}</option>
+            {% endfor %}
+        </select>
+        <label for="cantidad" class="formProducText">Cantidad:</label>
+        {% if (compra.cantidad is empty)  %}
+            <input type="number" name="cantidad" id="cantidad" class="formProducinput" placeholder="Un número entre 1 y 999" min="1" max="999" >
+        {% else %}
+            <input type="number" name="cantidad" id="cantidad" class="formProducinput" placeholder="Un número entre 1 y 999" min="1" max="999"  value={{compra.cantidad}} >
+        {% endif %}
+        <label for="precioUnitario" class="formProducText">Precio unitario:</label>
+        {% if (compra.precioUnitario is empty)  %}
+            <input type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50"  step="0.01" min=0 required>
+        {% else %}
+            <input value="{{compra.precioUnitario}}" type="number" name="precioUnitario" id="precioUnitario" class="formProducinput" placeholder="$2.50" step="0.01" min=0 required>
+        {% endif %}
+
+        <label for="idProveedor" class="formProducText">Proveedor:</label>
+        <select id="idProveedor" name="proveedor" class="formProducinput" required>
+            <option value="">Seleccione un valor</option>
+            {% for prov in proveedor %}
+                <option value="{{ prov.idProveedor }}" {%if prov.idProveedor == compra.idProveedor%} selected{% endif %}>{{ prov.proveedor}}  {{prov.proveedorCuit }}</option>
+            {% endfor %}
+        </select>
+
+        {% if not( compra.idCompra is empty)  %}
+            <label for="fecha" class="formProducText">Fecha:</label>
+            <input value=" {{ compra.fecha }} " type="dateTime" name="fecha" id="fecha" class="formProducinput" >
+        {% endif %}
+
+        <label for="enviar" class="formProducTextHidden" hidden>Botón de envío</label>
+        <input type="submit" name="submit"  id="enviar" class="boton" value="Entrar">
+    </form>
 {% endblock %}
 
 

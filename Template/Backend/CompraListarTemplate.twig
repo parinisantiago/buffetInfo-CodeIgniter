@@ -3,26 +3,15 @@
 {% block main %}
     <div>
         <div class="nuevo sombreado">
-        {% if rol == "0" %}
-            <a class="boton" href="Loader.php?controller=adminController&method=compraAM">Nueva compras</a>
-        {%else%}
-            <a class="boton" href="Loader.php?controller=GestorController&method=compraAM">Nueva compras</a>
-        {%endif%}
+            <a class="boton" href="Loader.php?controller=ComprarController&method=compraAM">Nueva compras</a>
         </div>
         <div class="paginas sombreado" >
             <p> Página: {{ pag }} <p>
-            {% if rol == '0' %}
-                {% if pag != 0 %}
-                    <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag - 1 }}">Página anterior</a>
-                {% endif %}
-                <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente </a>
-            {% else %}
-                {% if pag != 0 %}
-                    <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag - 1 }}">Página anterior</a>
-                {% endif %}
-                <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente</a>
-            {% endif  %}
-            </div>
+            {% if pag != 0 %}
+                <a class="boton" href="/Loader.php?controller=CompraController&method={{ method }}&pag={{ pag - 1 }}">Página anterior</a>
+            {% endif %}
+            <a class="boton" href="/Loader.php?controller=CompraController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente </a>
+        </div>
         <table class="tablaProductos sombreado">
             <thead>
                 <tr>
@@ -37,52 +26,37 @@
                 </tr>
             </thead>
             <tbody>
-            {% for compra in compras %}
-                <tr class="fila">
-                    <td headers="nombre">{{ compra.nombre }}</td>
-                    <td headers="marca"> {{ compra.marca }}</td>
-                    <td headers="cantidad"> {{ compra.cantidad }}</td>
-                    <td headers="precioUnitario">{{ compra.precioUnitario }}</td>
-                    <td headers="proveedor">{{ compra.proveedor }}</td>
-                    <td headers="fecha">{{ compra.fecha }}</td>
-                    <td headers="foto">
-                     {% if compra.fotoFactura != "" %}
-                    <a  href="uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini" src="uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a>
-                     {%endif%}
-                    </td>
-                   <td headers="acciones">
-                        {% if rol == "0" %}
-                            <form method="post" action="Loader.php?controller=AdminController&method=compraAM">
-                        {%else%}
-                            <form method="post" action="Loader.php?controller=GestorController&method=compraAM">
-                        {%endif%}
+                {% for compra in compras %}
+                    <tr class="fila">
+                        <td headers="nombre">{{ compra.nombre }}</td>
+                        <td headers="marca"> {{ compra.marca }}</td>
+                        <td headers="cantidad"> {{ compra.cantidad }}</td>
+                        <td headers="precioUnitario">{{ compra.precioUnitario }}</td>
+                        <td headers="proveedor">{{ compra.proveedor }}</td>
+                        <td headers="fecha">{{ compra.fecha }}</td>
+                        <td headers="foto">
+                         {% if compra.fotoFactura != "" %}
+                        <a  href="uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini" src="uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a>
+                         {%endif%}
+                        </td>
+                        <td headers="acciones">
+                            <form method="post" action="Loader.php?controller=CompraController&method=compraAM">
                                 <label hidden></label>
                                 <input name="idCompra" type="hidden" value={{ compra.idCompra }}>
                                 <button class="botonTabla" type="submit" name="submitButton">
                                     <img class= "icono" src="images/editar.png" alt= "editar la informacion" />
                                 </button>
                             </form>
-                        {% if rol == "0" %}
-                            <form method="post" action="Loader.php?controller=AdminController&method=compraEliminar">
-                        {%else%}
-                            <form method="post" action="Loader.php?controller=GestorController&method=compraEliminar">
-                        {%endif%}
-                                <label hidden></label>
+                            <form method="post" action="Loader.php?controller=CompraController&method=compraEliminar">
                                 <input name="idCompra" type="hidden" value={{ compra.idCompra }}>
-                                
                                 <button class="botonTabla" type="submit" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
-                                  <img class="icono" src="images/eliminar.png" alt= "eliminar" />
+                                    <img class="icono" src="images/eliminar.png" alt= "eliminar" />
                                 </button>
                             </form>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 {% endfor %}
-                   </tbody>
+            </tbody>
         </table>
-            
-           
-           
-         
     </div>
-
 {% endblock %}
