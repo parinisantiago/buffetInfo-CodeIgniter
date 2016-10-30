@@ -8,25 +8,14 @@
         
         <div class="paginas sombreado" >
             <p class="numeroPagina"> Página: {{ pag }} </p>
-            {% if rol == '0' %}
-                {% if pag != 0 %}
-                    <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag - 1 }}">Página anterior</a>
-                {% endif %}
-                <a class="boton" href="/Loader.php?controller=AdminController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente</a>
-            {% else %}
-                {% if pag != 0 %}
-                    <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag - 1 }}">Página anterior</a>
-                {% endif %}
-                <a class="boton" href="/Loader.php?controller=GestorController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente</a>
-            {% endif  %}
+            {% if pag != 0 %}
+                <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag - 1 }}">Página anterior</a>
+            {% endif %}
+                <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente</a>
         </div>
         
         <div class="nuevo sombreado">
-            {% if rol == "0" %}
-                <a class="boton" href="Loader.php?controller=adminController&method=menuAM">Nuevo Menu</a>
-            {%else%}
-                <a class="boton" href="Loader.php?controller=GestorController&method=menuAM">Nueva Menu</a>
-            {%endif%}
+            <a class="boton" href="Loader.php?controller=MenuController&method=menuAM">Nuevo Menu</a>
         </div>
 
         <table class="tablaProductos sombreado">
@@ -55,21 +44,13 @@
                             {%endif%}
                         </td>
                         <td headers="acciones">
-                            {% if rol == '0' %}
-                                <form method="post" action= "Loader.php?controller=AdminController&method=menuAM" >
-                            {% else %}
-                                <form method="post" action= "Loader.php?controller=GestorController&method=menuAM" >
-                            {% endif %}
+                            <form method="post" action= "Loader.php?controller=MenuController&method=menuAM" >
                                 <input  name="idProducto" type="hidden" value={{ m.idMenu }}>
                                 <button class="botonTabla" type="submit"  name="submitButton">
                                     <img class="icono" src="images/editar.png" alt= "editar la informacion" />
                                 </button>
                             </form>
-                            {% if rol == "0" %}
-                                <form method="post" action="Loader.php?controller=AdminController&method=menuEliminar">
-                            {%else%}
-                                <form method="post" action="Loader.php?controller=GestorController&method=menuEliminar">
-                            {% endif %}
+                            <form method="post" action="Loader.php?controller=MenuController&method=menuEliminar">
                                 <input  name="idProducto" type="hidden" value={{ m.idMenu }} >
                                 <button class="botonTabla" type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
                                     <img class="icono" src="images/eliminar.png" alt= "eliminar" />
