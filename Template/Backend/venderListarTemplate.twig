@@ -5,18 +5,11 @@
     <div>
         <div class="paginas sombreado" >
             <p> Página: {{ pag }} <p>
-            {% if rol == '0' %}
-                {% if pag != 0 %}
-                    <a class="boton" href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag - 1 }}">Página anterior</a>
-                {% endif %}
-                <a class="boton" href="/Loader.php?controller=AdminController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente</a>
-            {% else %}
-                {% if pag != 0 %}
-                    <a class="boton" href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag - 1 }}">Página anterior</a>
-                {% endif %}
-                <a class="boton" href="/Loader.php?controller=GestorController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente</a>
-            {% endif  %}
-            </div>
+            {% if pag != 0 %}
+                <a class="boton" href="/Loader.php?controller=VenderController&method=venderListar&pag={{ pag - 1 }}">Página anterior</a>
+            {% endif %}
+            <a class="boton" href="/Loader.php?controller=VenderController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente</a>
+        </div>
         <table class="tablaProductos sombreado" >
             <thead>
             <tr> 
@@ -38,31 +31,26 @@
                     <td headers="precioVentaUnitario">{{ venta.precioUnitario }}</td>
                     <td headers="fecha">{{ venta.fecha }}</td>
                     <td headers="acciones">
-                        <form method="post" action="{% if rol == "0" %}Loader.php?controller=AdminController&method=ventaModificar{% else %}Loader.php?controller=GestorController&method=ventaModificar{% endif %}">
-
-                        <label for="idProducto" hidden></label>
-                                <input name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
-                                <button class="botonTabla" type="submit" name="submitButton">
-                                    <img class="icono" src="images/editar.png" alt= "editar la informacion" />
-                                </button>
-                            </form>
-                        {% if rol == "0" %}
-                            <form method="post" action="Loader.php?controller=AdminController&method=ventaEliminar">
-                        {%else%}
-                            <form method="post" action="Loader.php?controller=GestorController&method=ventaEliminar">
-                        {%endif%}
-                                <label for="idIngresoDetalle" hidden></label>
-                                <input  name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
-                                <label for="cantidad" hidden></label>
-                                <input  name="cantidad" type="hidden" value={{ venta.cantidad }}>
-                                <label for="idProducto" hidden></label>
-                                <input  name="idProducto" type="hidden" value={{ venta.idProducto }}>
-                                <label for="cant" hidden></label>
-                                <input  name="cant" type="hidden" value={{ venta.cantidad }}>
-                                <button class="botonTabla"  type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" >
-                                  <img class="icono" src="images/eliminar.png" alt= "eliminar" />
-                                </button>
-                            </form>
+                        <form method="post" action="Loader.php?controller=VenderController&method=VentaAMTemplate">
+                            <label for="idProducto" hidden></label>
+                            <input name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
+                            <button class="botonTabla" type="submit" name="submitButton">
+                                <img class="icono" src="images/editar.png" alt= "editar la informacion" />
+                            </button>
+                        </form>
+                        <form method="post" action="Loader.php?controller=VenderController&method=ventaEliminar">
+                            <label for="idIngresoDetalle" hidden></label>
+                            <input  name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
+                            <label for="cantidad" hidden></label>
+                            <input  name="cantidad" type="hidden" value={{ venta.cantidad }}>
+                            <label for="idProducto" hidden></label>
+                            <input  name="idProducto" type="hidden" value={{ venta.idProducto }}>
+                            <label for="cant" hidden></label>
+                            <input  name="cant" type="hidden" value={{ venta.cantidad }}>
+                            <button class="botonTabla"  type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" >
+                              <img class="icono" src="images/eliminar.png" alt= "eliminar" />
+                            </button>
+                        </form>
                     </td>
                 </tr>
             {% endfor %}
