@@ -4,27 +4,15 @@
 
     <div>
         <div class="nuevo sombreado">
-                {% if rol == "0" %}
-                    <a class="boton" href="/Loader.php?controller=adminController&method=venderListar&pag=0">Productos vendidos</a>
-                {%else%}
-                    <a class="boton" href="/Loader.php?controller=GestorController&method=venderListar&pag=0">Productos vendidos</a>
-                {%endif%}    
-            </div>
+            <a class="boton" href="/Loader.php?controller=VenderController&method=venderListar&pag=0">Productos vendidos</a>
+        </div>
         <div class="paginas sombreado" >
-                <p> Página: {{ pag }} <p>
-                {% if rol == '0' %}
-                    {% if pag != 0 %}
-                        <a class="boton" href="/Loader.php?controller=AdminController&method=vender&pag={{ pag - 1 }}">Página anterior</a>
-                    {% endif %}
-                    <a class="boton" href="/Loader.php?controller=AdminController&method=vender&pag={{ pag + 1 }}">Página Siguiente</a>
-                {% else %}
-                    {% if pag != 0 %}
-                        <a class="boton" href="/Loader.php?controller=GestorController&method=vender&pag={{ pag - 1 }}">Página anterior</a>
-                    {% endif %}
-                    <a class="boton" href="/Loader.php?controller=GestorController&method=vender&pag={{ pag + 1 }}">Página Siguiente</a>
-                {% endif  %}
-                </div>
-            
+            <p> Página: {{ pag }} <p>
+            {% if pag != 0 %}
+                <a class="boton" href="/Loader.php?controller=VenderController&method=vender&pag={{ pag - 1 }}">Página anterior</a>
+            {% endif %}
+            <a class="boton" href="/Loader.php?controller=VenderController&method=vender&pag={{ pag + 1 }}">Página Siguiente</a>
+        </div>
         <table class="tablaProductos sombreado">
             <thead>
                 <tr>
@@ -49,9 +37,8 @@
                             <td headers="descripcion">{{ prod.descripcion }}</td>
                             <td class="columnaAncha" headers="vender">
 
-                            <form method="post" action="{% if rol == "0" %} Loader.php?controller=AdminController&method=venta&pag=0" {% else %} Loader.php?controller=GestorController&method=venta&pag=0" {% endif %}>
+                            <form method="post" action="Loader.php?controller=VenderController&method=venta&pag=0">
                                 <label class="formProducTextHidden" hidden>cantidad de venta</label>
-
                                 <select name="cant" class="formProducinput cantVender" required>
                                     <option value="" >-</option>
                                 {% for i in  1 .. prod.stock %}
