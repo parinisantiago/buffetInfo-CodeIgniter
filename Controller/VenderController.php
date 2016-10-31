@@ -9,6 +9,13 @@ class VenderController extends Controller{
         $this->productoModel = new ProductosModel();
     }
 
+    public function getPermission()
+    {
+        Session::init();
+        $rol = Session::getValue('rol');
+        return (($rol == '0') || ($rol == '1'));
+    }
+
     public function vender(){
         $this->paginaCorrecta($this->productoModel->totalProductos());
         $this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
