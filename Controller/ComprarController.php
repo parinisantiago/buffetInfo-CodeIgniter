@@ -89,4 +89,12 @@ class ComprarController extends Controller{
         $this->validator->validarNumeros($var['cantidad'],"Error: error en cantidad",5);
         $this->validator->validarNumerosPunto($var['precioUnitario'],"Error: error en precio unitario",50);
     }
+
+    public function paginaCorrecta($total){
+        if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
+        elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
+        else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
+        if ($_GET['offset'] < 0) $_GET['offset'] = 0;
+        $_GET['offset'] .= "";
+    }
 }
