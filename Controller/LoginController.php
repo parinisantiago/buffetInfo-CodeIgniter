@@ -64,10 +64,10 @@ class LoginController extends Controller
         switch (Session::getValue('rol')) {
             //dependiendo del idRol del usuario, instanciamos el rol correspondiente y llamamos a su index();
             case '0':
-                $this->controller = new AdminController();
+                $this->controller = new BackendController();
                 break;
             case '1':
-                $this->controller = new GestorController();
+                $this->controller = new BackendController();
                 break;
             default:
                 throw new Exception("usuario no valido");
