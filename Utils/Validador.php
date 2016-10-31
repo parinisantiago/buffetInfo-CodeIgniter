@@ -18,7 +18,7 @@ class Validador{
     }
 
     public function validarFecha($var, $error){
-        if (!$this->tam($var, 25) || !$this->varSet($var, $error) ||  !preg_match("/^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})+$/", $var))
+        if (!$this->tam($var, 25) || !$this->varSet($var, $error) ||  preg_match("/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$/", $var))
             throw new valException($error);
     }
 
