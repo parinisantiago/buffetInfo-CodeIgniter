@@ -21,7 +21,12 @@ class BackendController extends Controller{
     public function index(){
         $this->dispatcher->render("Backend/IndexTemplate.twig");
     }
-    
+
+    public function setMensajeError($error){
+        $this->dispatcher->mensajeError = $error;
+        $this->index();
+    }
+
 
     public function subirFoto(){
         $target_path = "uploads/";
