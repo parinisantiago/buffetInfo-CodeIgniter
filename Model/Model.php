@@ -25,6 +25,14 @@ class Model{
         $this->stmnt->execute();
         return $this->stmnt ->fetchAll();
     }
+    protected function queryOFFSETDIA($sql, $limit, $offset, $fecha){
+        $this->stmnt = $this->db->prepare($sql);
+        $this->stmnt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+        $this->stmnt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+        $this->stmnt->bindValue(':fecha', $fecha);
+        $this->stmnt->execute();
+        return $this->stmnt ->fetchAll();
+    }
     protected function queryTodasLasFilas($sql, $parametros){
         $this->stmnt = $this->db->prepare($sql);
         $this->stmnt->execute($parametros);
