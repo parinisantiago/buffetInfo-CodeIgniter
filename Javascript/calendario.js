@@ -33,15 +33,15 @@ function generarHoja(Mes, Anno) {
                 CadSemana += "<td>&nbsp;</td>";
             } else {
                 if (Fecha.getTime() == Hoy.getTime()) {
-                        CadSemana +="<td class='hoy diaMenu' onclick='seleccionado(this)'><b>" + Fecha.getDate() + "</b></td>";
+                        CadSemana +="<td class='hoy diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+Fecha.getMonth()+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></b></td>";
                 }else{
                     if (i == 0 ) {
-                        CadSemana +="<td class='domingo diaMenu' onclick='seleccionado(this)'><b>" + Fecha.getDate() + "</b></td>";
+                        CadSemana +="<td class='domingo diaMenu' onclick='seleccionado(this)'><b><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha="  + Fecha.getFullYear()+"-"+Fecha.getMonth()+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></b></td>";
                     } else {
-                        CadSemana +="<td class='dia diaMenu' onclick='seleccionado(this)'><b>" + Fecha.getDate() + "</b></td>";
+                        CadSemana +="<td class='dia diaMenu' onclick='seleccionado(this)'><b><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+Fecha.getMonth()+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></b></td>";
                     }
                 }
-            }	
+            }
             Fecha.setTime(Fecha.getTime() + timeDia);
         }
         CadSemana = CadSemana + "</tr>\n";
@@ -64,18 +64,18 @@ function ponerFechaActual() {
 }
 function escribirMes(id, mes) {
     var objeto = elemento(id);
-    objeto.innerHTML = MonthName[mes];   
+    objeto.innerHTML = MonthName[mes];
 }
 function escribirTitulosColumnas() {
     var cadena;
     cadena = "<table width='100%'>";
     cadena = cadena + "<tr>"
-    + "<th class='hoja'>Dom</th>" 
-    + "<th class='hoja'>Lun</th>" 
-    + "<th class='hoja'>Mar</th>" 
-    + "<th class='hoja'>Mie</th>" 
-    + "<th class='hoja'>Jue</th>" 
-    + "<th class='hoja'>Vie</th>" 
+    + "<th class='hoja'>Dom</th>"
+    + "<th class='hoja'>Lun</th>"
+    + "<th class='hoja'>Mar</th>"
+    + "<th class='hoja'>Mie</th>"
+    + "<th class='hoja'>Jue</th>"
+    + "<th class='hoja'>Vie</th>"
     + "<th class='hoja'>Sab</th>" +
     "</tr>";
     return cadena;
