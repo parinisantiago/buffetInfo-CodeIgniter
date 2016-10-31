@@ -29,6 +29,17 @@ class MenuModel extends Model{
             OFFSET :offset', $limit, $offset
             );
     }
+
+    public function getAllMenuDia($limit, $offset, $fecha){
+        return $this -> queryOFFSETDIA('
+            SELECT m.idMenu,m.idProducto,m.fecha,m.foto, m.eliminado,p.nombre,p.stock,p.stockMinimo,p.precioVentaUnitario,p.descripcion,p.eliminado
+            FROM menu m INNER JOIN producto p ON(m.idProducto=p.idProducto) 
+            WHERE m.eliminado = 0 and p.eliminado=0 and m.fecha = :fecha
+            ORDER BY p.nombre
+            LIMIT :limit  
+            OFFSET :offset', $limit, $offset, $fecha
+        );
+    }
     
     public function actualizarMenu($menu){
         return $this -> query("
