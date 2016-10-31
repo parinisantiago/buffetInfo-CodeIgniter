@@ -51,7 +51,7 @@ function generarHoja(Mes, Anno) {
     Cadena = Cadena + "</table>";
     //Poner el año
     var objeto = elemento("AnnoActual");
-    objeto.innerHTML = Anno
+    objeto.innerHTML = Anno;
     //Escribir la hoja del almanaque
     objeto = elemento("HojaMes");
     objeto.innerHTML = Cadena;
