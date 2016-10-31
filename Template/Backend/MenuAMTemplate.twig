@@ -2,10 +2,11 @@
 
 {% block main %}
 
-    <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=UserController&method=usuarioAM" method="post">
+    <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=MenuController&method=menuAMPOST" method="post">
+
         <p  class="formProducText"> Productos del menu: </p>
         {% for prod in producto %}
-            <input id="{{ prod.idProducto }}" type="checkbox" class="prods" value="{{ prod.idProducto }}">
+            <input name="productos[]" id="{{ prod.idProducto }}" type="checkbox" class="prods" value="{{ prod.idProducto }}">
             <label for="{{ prod.idProducto }}"  class="formProducText">{{ prod.nombre }}</label>
             <br>
         {% endfor %}
@@ -15,9 +16,9 @@
 
         <label for="foto" class="formProducText">Foto:</label>
         <input type="file" name="foto" id="foto" class="formProducinput">
-        {% if (prod.fotoFactura != "")  %}
+        {% if (menu.foto != "")  %}
             <input type='hidden' name='fotoFactura' id="fotoFactura" value={{ compra.fotoFactura }}>
-            <a  href="uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini" src="uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a>
+            <a  href="uploads/{{ menu.foto }}" target="_blank"><img class="mini" src="uploads/{{ menu.foto }}" alt="foto del menu"></a>
         {% endif %}
 
         <label for="submitButton" hidden>Boton de envio:</label>
