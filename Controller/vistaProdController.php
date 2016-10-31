@@ -1,6 +1,6 @@
 <?php
 require_once 'Controller/BackendController.php';
-class GestorController extends BackendController{
+class vistaProdController extends BackendController{
     
     public function getPermission(){
         Session::init();  
