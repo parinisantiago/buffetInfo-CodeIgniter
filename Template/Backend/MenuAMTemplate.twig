@@ -1,1 +1,28 @@
-{# empty Twig template #}
+{% extends 'Template/Backend/IndexTemplate.twig' %}
+
+{% block main %}
+
+    <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=UserController&method=usuarioAM" method="post">
+        <p  class="formProducText"> Productos del menu: </p>
+        {% for prod in producto %}
+            <input id="{{ prod.idProducto }}" type="checkbox" class="prods" value="{{ prod.idProducto }}">
+            <label for="{{ prod.idProducto }}"  class="formProducText">{{ prod.nombre }}</label>
+            <br>
+        {% endfor %}
+
+        <label for="fecha"  class="formProducText">Fecha: </label>
+        <input type="date" name="fecha" id="fecha" class="fecha">
+
+        <label for="foto" class="formProducText">Foto:</label>
+        <input type="file" name="foto" id="foto" class="formProducinput">
+        {% if (prod.fotoFactura != "")  %}
+            <input type='hidden' name='fotoFactura' id="fotoFactura" value={{ compra.fotoFactura }}>
+            <a  href="uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini" src="uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a>
+        {% endif %}
+
+        <label for="submitButton" hidden>Boton de envio:</label>
+        <input type="submit" id="submitButton" name="submitButton">
+
+    </form>
+
+{% endblock %}
