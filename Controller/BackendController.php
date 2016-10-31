@@ -17,7 +17,14 @@ class BackendController extends Controller{
             $this->productoModel = new ProductosModel();
             $this->categoriaModel = new CategoriaModel();
     }
-    
+
+    public function getPermission()
+    {
+        Session::init();
+        $rol = Session::getValue('rol');
+        return (($rol == '0') || ($rol == '1'));
+    }
+
     public function index(){
         $this->dispatcher->render("Backend/IndexTemplate.twig");
     }
