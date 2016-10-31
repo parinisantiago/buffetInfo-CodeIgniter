@@ -3,11 +3,14 @@ require_once 'Controller/Controller.php';
 
 class MenuController extends Controller{
     public $menuModel;
+    public $productosModel;
 
     public function __construct(){
         parent::__contruct();
         $this->menuModel= new MenuModel();
+        $this->productosModel = new ProductosModel();
     }
+
     public function getPermission()
     {
         Session::init();
@@ -47,7 +50,9 @@ class MenuController extends Controller{
     }
 
     public function menuAM(){
-        echo"POLIMORFISAR FUNESTO";
+        $this->dispatcher->producto = $this->productosModel->getAllProducto(99,0);
+        var_dump($this->dispatcher);
+        $this->dispatcher->render("Backend/MenuAMTemplate.twig");
     }
     public function menuEliminar(){
         echo"DESINTEGRAR";
