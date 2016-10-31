@@ -1,11 +1,7 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
-    {% if rol == "0" %}
-	<form name="formProduc" class="formProduc clearfix sombreado" action="Loader.php?controller=AdminController&method=productosAMPost" method="post">
-    {%else%}
-	<form name="formProduc" class="formProduc clearfix sombreado" action="Loader.php?controller=GestorController&method=productosAMPost" method="post">
-    {%endif%}
+	<form name="formProduc" class="formProduc clearfix sombreado" action="Loader.php?controller=ProductoController&method=productosAMPost" method="post">
             {% if (producto.idProducto) %}
             <input type='hidden' name='idProducto' id="idProducto" value={{producto.idProducto}}>
             {% endif %}
