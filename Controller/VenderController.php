@@ -2,10 +2,11 @@
 class VenderController extends Controller{
     public $productoModel;
     public $ventaModel;
-    
+
     public function __construct(){
         parent::__contruct();
         $this->ventaModel = new VentaModel();
+        $this->productoModel = new ProductosModel();
     }
 
     public function vender(){
@@ -65,5 +66,13 @@ class VenderController extends Controller{
         $this->ventaModel->eliminarVenta($_POST['idIngresoDetalle']);
         $_GET['pag'] = 0;
         $this->venderListar();
+    }
+
+    public function paginaCorrecta($total){
+        if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
+        elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
+        else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
+        if ($_GET['offset'] < 0) $_GET['offset'] = 0;
+        $_GET['offset'] .= "";
     }
 }
