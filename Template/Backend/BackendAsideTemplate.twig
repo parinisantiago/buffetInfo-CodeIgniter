@@ -20,19 +20,11 @@
     </li>
     
     <li class="asideItem">
-	{% if rol == "0" %}
-            <a href="Loader.php?controller=adminController&method=vender&pag=0">Ventas de productos</a>
-        {%else%}
-            <a href="Loader.php?controller=GestorController&method=vender&pag=0">Ventas de productos</a>
-        {%endif%}
+            <a href="Loader.php?controller=VenderController&method=vender&pag=0">Ventas de productos</a>
     </li>
 
     <li class="asideItem">
-        {% if rol == "0" %}
-            <a href="Loader.php?controller=adminController&method=compraListar&pag=0">Compras de productos</a>
-        {%else%}
-            <a href="Loader.php?controller=GestorController&method=compraListar&pag=0">Compras de productos</a>
-        {%endif%}
+            <a href="Loader.php?controller=ComprarController&method=compraListar&pag=0">Compras de productos</a>
     </li>
  
     {% if rol == "1" %}
