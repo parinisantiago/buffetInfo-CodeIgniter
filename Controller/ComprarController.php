@@ -12,6 +12,13 @@ class ComprarController extends Controller{
             $this->compraModel= new CompraModel(); 
     }
 
+    public function getPermission()
+    {
+        Session::init();
+        $rol = Session::getValue('rol');
+        return (($rol == '0') || ($rol == '1'));
+    }
+
     public function compraListar(){
         $this->paginaCorrecta($this->compraModel->totalCompras());
         $this->dispatcher->compras = $this->compraModel->getAllCompras($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
