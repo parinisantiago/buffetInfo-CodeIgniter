@@ -14,8 +14,15 @@
                 <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente</a>
         </div>
         
-        <div class="nuevo sombreado">
-            <a class="boton" href="Loader.php?controller=MenuController&method=menuAM">Nuevo Menu</a>
+        <div id="nuevoMenu" class="nuevo sombreado">
+            <form id="formNuevoMenu" method="post" action="Loader.php?controller=MenuController&method=menuAM">
+
+                <input type="hidden" id="nuevoMenuValue" value="">
+
+                <label for="submitButton" hidden>Boton de envio:</label>
+                <input type="submit" class="boton" id="submitButton" name="submitButton">
+
+            </form>
         </div>
 
         <table class="tablaProductos sombreado">
