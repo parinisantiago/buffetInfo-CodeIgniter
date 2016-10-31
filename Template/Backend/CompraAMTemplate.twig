@@ -1,7 +1,7 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
-    <form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=CompraController&method=compraAMPost" method="post">
+    <form name="formProduc" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=ComprarController&method=compraAMPost" method="post">
         <input type='hidden' name='idCompra' id="idCompra" value={{compra.idCompra}}>
         <label for="facturaFoto" class="formProducText">FotoFactura:</label>
         <input type="file" name="uploadedfile" id="facturaFoto" class="formProducinput">
