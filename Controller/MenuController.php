@@ -25,12 +25,14 @@ class MenuController extends Controller{
          * agregar un marco de color sobre la fecha seleccionada en el calendario
          */
         $date= date('Y-m-d');
-            $this->paginaCorrecta($this->menuModel->totalMenu());
+        $this->paginaCorrecta($this->menuModel->totalMenu());
+      
         $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$date);
-        $this->dispatcher->datos = $this->dispatcher->menu[1];
+        $this->dispatcher->datos = $this->dispatcher->menu;
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->method = "menu";
         $this->dispatcher->render("Backend/calendarioTemplate.twig");
+         
     }
 
     public function menuDia(){
@@ -103,7 +105,7 @@ class MenuController extends Controller{
     }
 
     public function menuEliminar(){
-       $this->dispatcher->menuModel =$this ->menuModel->deleteMenu($_POST["idMenu"]);
+       $this->dispatcher->menuModel =$this ->menuModel->eliminarMenu($_POST["idMenu"]);
         $_GET['pag'] = 0;
         $this->dispatcher->method = "menu";
         $this->menu();

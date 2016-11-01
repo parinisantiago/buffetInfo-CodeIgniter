@@ -1,8 +1,7 @@
 window.onload = function() { 
     ponerFechaActual();
 };
-
-var MonthName = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'];
+var MonthName = ['enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'];
 var ultimoSeleccionado = new Date().getDay();
 function elemento(id){
     var elem;
@@ -18,6 +17,7 @@ function generarMes(MesNuevo) {
     generarHoja(MesActual, obtenerAnno());	
 }
 function generarHoja(Mes, Anno) {
+    Mes=Mes-1;
     escribirMes("NombreMes", Mes);
     var Cadena = escribirTitulosColumnas();
     var Fecha = new Date(Anno, Mes, 1);
@@ -60,7 +60,7 @@ function ponerFechaActual() {
     Hoy = new Date();
     MesActual = Hoy.getMonth();
     Anno = Hoy.getFullYear();
-    generarHoja(MesActual, Anno);
+    generarHoja(MesActual+1, Anno);
 }
 function escribirMes(id, mes) {
     var objeto = elemento(id);
