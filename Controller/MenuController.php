@@ -48,7 +48,6 @@ class MenuController extends Controller{
             $this->menu();
         }
     }
-
     public function menuAM(){
         $this->dispatcher->producto = $this->productosModel->getAllProducto(99,0);
         var_dump($this->dispatcher);

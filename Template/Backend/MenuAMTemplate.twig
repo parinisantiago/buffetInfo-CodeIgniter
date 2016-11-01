@@ -1,16 +1,18 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
-
+ <script src="script/multiSelect.js" type="text/javascript"></script>
     <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=MenuController&method=menuAMPOST" method="post">
 
         <p  class="formProducText"> Productos del menu: </p>
-        {% for prod in producto %}
-            <input name="productos[]" id="{{ prod.idProducto }}" type="checkbox" class="prods" value="{{ prod.idProducto }}">
-            <label for="{{ prod.idProducto }}"  class="formProducText">{{ prod.nombre }}</label>
-            <br>
-        {% endfor %}
-
+        
+        <select multiple="multiple" id="selectProdMult" name="selectProdMult[]">
+            {% for prod in producto %}
+            <option value='{{ prod.idProducto }}'>{{ prod.nombre }}</option>
+            {% endfor %}
+        </select>
+        <script type="text/javascript"> $('#selectProdMult').multiSelect();</script>
+       
         <label for="fecha"  class="formProducText">Fecha: </label>
         <input type="date" name="fecha" id="fecha" class="fecha">
 
