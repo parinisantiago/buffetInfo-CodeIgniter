@@ -40,6 +40,7 @@ class MenuController extends Controller{
             $this->validator->validarFecha($_GET['fecha'], "Fecha no valida");
             $this->paginaCorrecta($this->menuModel->totalMenu());
             $this->dispatcher->menu = $this->menuModel->getAllMenuDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_GET['fecha']);
+            //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
             $this->dispatcher->fecha=$_GET['fecha'];
             $this->dispatcher->pag = $_GET['pag'];
             $this->dispatcher->method = "menuDia";
@@ -105,7 +106,7 @@ class MenuController extends Controller{
 
     public function validateMenu($menu){
         if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
-        
+
         $this->validator->validarFecha($menu['fecha'], "Fecha no valida");
         $this->validator->varSet($menu['selectProdMult']);
 
