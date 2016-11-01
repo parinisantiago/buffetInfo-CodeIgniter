@@ -61,7 +61,6 @@ class MenuController extends Controller{
     {
         /*valida que los parametros sean correctos y despues se fija si ya existe el menu*/
 
-        var_dump($_POST);
         try{
         $this->validateMenu($_POST);
         }catch (valException $e){
@@ -70,23 +69,26 @@ class MenuController extends Controller{
             $_GET['pag'] = 0;
             $this->menu();
         }
-
-        if (isset($_POST['idMenu'])) $this->agregarMenu($_POST);
+        if (!isset($_POST['idMenu'])) $this->agregarMenu($_POST);
         else $this->modificarMenu($_POST);
-        die;
-
+        $_GET['pag'] = 0;
         $this->menu();
     }
 
     public function agregarMenu($menu)
     {
-        
-        
-        if(! move_uploaded_file($_FILES['tmp_name'], files.basename($_FILES['name']))) throw new valException("no se pudo guardar la imagen del menu");
-
+        $image= basename($_FILES['foto']['name']);
         $fecha= $_POST['fecha'];
-        
 
+        if(! move_uploaded_file($_FILES['foto']['tmp_name'], files.$image)) throw new valException("no se pudo guardar la imagen del menu");
+
+        $idMenu = $this->menuModel->insertarMenu($fecha, $image);
+
+        foreach ($menu['selectProdMult'] as $prod) {
+
+            $this->menuModel->insertarProd($idMenu,$prod);
+
+        }
 
     }
 
@@ -102,13 +104,11 @@ class MenuController extends Controller{
     }
 
     public function validateMenu($menu){
-
-        if(! ($_FILES['type'] == 'image/png' ||  $_FILES['type'] == 'image/jpg' || $_FILES['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
-
-
+        if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
+        
         $this->validator->validarFecha($menu['fecha'], "Fecha no valida");
         $this->validator->varSet($menu['selectProdMult']);
-        /* se fija que todos los productos existan */
+
         foreach ($menu['selectProdMult'] as $prod){
             if (! $this->productosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
         }
