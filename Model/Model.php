@@ -16,7 +16,7 @@ class Model{
 
     protected function queryPreparadaSQL($sql, $parametros){
         $this->query($sql, $parametros);
-	return $this -> stmnt -> fetch(); //retorna el valor de la consulta como un objeto
+	    return $this -> stmnt -> fetch(); //retorna el valor de la consulta como un objeto
     }
     protected function queryOFFSET($sql, $limit, $offset){
         $this->stmnt = $this->db->prepare($sql);
@@ -40,8 +40,13 @@ class Model{
     }
     protected function query($sql, $parametros){
         $this->stmnt = $this->db->prepare($sql);
-	$this->stmnt->execute($parametros);
-	return true;
+	    $this->stmnt->execute($parametros);
+	    return true;
+    }
+
+    protected function lastId($sql, $parametros){
+        $this->query($sql, $parametros);
+        return $this->db->lastInsertId();
     }
 }
 
