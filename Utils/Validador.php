@@ -18,7 +18,7 @@ class Validador{
     }
 
     public function validarFecha($var, $error){
-        if (!$this->tam($var, 25) || !$this->varSet($var, $error) ||  preg_match("/^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$/", $var))
+        if (!$this->tam($var, 25) || !$this->varSet($var, $error) ||  preg_match("/^[0-9]+$/", $var))
             throw new valException($error);
     }
 
@@ -36,7 +36,7 @@ class Validador{
     }
 
     public function tam($var, $tam){
-        if (0 >= strlen($var)) throw new valException("Deben completarse todos los campos.");
+        if (0 >= strlen($var)) throw new valException("Deben completarse todos los campos");
         if (  strlen($var) > $tam ) throw new valException($var." no es de un tamaño permitido");
         return true;
     }
