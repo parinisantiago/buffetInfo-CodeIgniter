@@ -17,6 +17,7 @@ function generarMes(MesNuevo) {
     generarHoja(MesActual, obtenerAnno());	
 }
 function generarHoja(Mes, Anno) {
+    Mes=Mes-1;
     escribirMes("NombreMes", Mes);
     var Cadena = escribirTitulosColumnas();
     var Fecha = new Date(Anno, Mes, 1);
