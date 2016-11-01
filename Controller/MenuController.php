@@ -24,9 +24,10 @@ class MenuController extends Controller{
          * tambien numeros de paginas
          * agregar un marco de color sobre la fecha seleccionada en el calendario
          */
+        $date= date('Y-m-d');
 
         $this->paginaCorrecta($this->menuModel->totalMenu());
-        $this->dispatcher->menu = $this->menuModel->getAllMenu($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$date);
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->method = "menu";
         $this->dispatcher->render("Backend/calendarioTemplate.twig");
@@ -39,7 +40,7 @@ class MenuController extends Controller{
         try{
             $this->validator->validarFecha($_GET['fecha'], "Fecha no valida");
             $this->paginaCorrecta($this->menuModel->totalMenu());
-            $this->dispatcher->menu = $this->menuModel->getAllMenuDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_GET['fecha']);
+            $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_GET['fecha']);
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
             $this->dispatcher->fecha=$_GET['fecha'];
             $this->dispatcher->pag = $_GET['pag'];
@@ -53,7 +54,7 @@ class MenuController extends Controller{
         }
     }
     public function menuAM(){
-        /*falta agregar que pregunte si le envian un menu por parametro y que lo setee */
+        /*falta agregar que pregunte si le envian un m por parametro y que lo setee */
         $this->dispatcher->producto = $this->productosModel->getAllProducto(99,0);
         $this->dispatcher->render("Backend/MenuAMTemplate.twig");
     }
