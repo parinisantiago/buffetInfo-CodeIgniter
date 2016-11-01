@@ -25,8 +25,7 @@ class MenuController extends Controller{
          * agregar un marco de color sobre la fecha seleccionada en el calendario
          */
         $date= date('Y-m-d');
-
-        $this->paginaCorrecta($this->menuModel->totalMenu());
+            $this->paginaCorrecta($this->menuModel->totalMenu());
         $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$date);
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->method = "menu";
