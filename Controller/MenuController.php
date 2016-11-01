@@ -28,7 +28,7 @@ class MenuController extends Controller{
         $this->paginaCorrecta($this->menuModel->totalMenu());
       
         $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$date);
-        $this->dispatcher->datos = $this->dispatcher->menu;
+        $this->dispatcher->datos = $this->dispatcher->menu[1];
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->method = "menu";
         $this->dispatcher->render("Backend/calendarioTemplate.twig");
@@ -95,6 +95,28 @@ class MenuController extends Controller{
 
         }
 
+    }
+
+    public function menuAMMod(){
+        var_dump($_GET);
+
+        try{
+
+            $this->validator->varSet($_GET['fecha']);
+            $fecha= $_GET['fecha'];
+
+            if (! $this->menuModel->getMenuDia($fecha)) throw new valException("No existe el menu para modificar");
+            $this->dispatcher->menu = $this->menuModel->getMenuByDia(99,0,$fecha);
+            $this->dispatcher->productos= $this->menuModel->getProdNotInMenu($this->dispatcher->menu['1']->idMenu);
+            $this->dispatcher->datos = $this->dispatcher->menu[1];
+
+            $this->dispatcher->render("Backend/MenuAMTemplate.twig");
+
+        } catch (valException $e){
+            $this->dispatcher->mensajeError = "error";
+            echo "upa, algo raro paso";
+        }
+        die;
     }
 
     public function modificarMenu($menu)
