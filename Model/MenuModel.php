@@ -54,23 +54,40 @@ class MenuModel extends Model{
                 'idMenu' => $menu["idMenu"])
         );
     }
-    
-     public function insertarMenu($menu){
-        return $this -> query("
+
+    public function insertarProd($idMenu, $idProd){
+
+        return $this->query(
+            "INSERT INTO menuProducto(
+                idMenu,
+                idProducto)
+            VALUES (
+                :idMenu,
+                :idProd)",
+            array(
+                "idMenu" => $idMenu,
+                "idProd" => $idProd
+            )
+        );
+
+    }
+
+     public function insertarMenu($fecha, $foto){
+         
+        return $this -> lastId("
             INSERT INTO menu(
-                idProducto,
                 fecha,
                 foto,
                 eliminado,
                 habilitado)
-            VALUES (:idProducto,
+            VALUES (
                     :fecha,
                     :foto,
                     0,
                     0)",
-            array('idProducto' => $menu["producto"],
-                'fecha' =>$menu["fecha"],
-                'foto' =>$menu["foto"]
+            array(
+                'fecha' =>$fecha,
+                'foto' => $foto
                 )
         );
     }
