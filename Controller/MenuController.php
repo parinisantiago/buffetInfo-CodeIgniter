@@ -33,6 +33,9 @@ class MenuController extends Controller{
     }
 
     public function menuDia(){
+
+        /* muestra el menu para un dia en particular, le mande un try catch por las dudas de que pasen cualquier cosa por get */
+
         try{
             $this->validator->validarFecha($_GET['fecha'], "Fecha no valida");
             $this->paginaCorrecta($this->menuModel->totalMenu());
@@ -49,14 +52,68 @@ class MenuController extends Controller{
         }
     }
     public function menuAM(){
+        /*falta agregar que pregunte si le envian un menu por parametro y que lo setee */
         $this->dispatcher->producto = $this->productosModel->getAllProducto(99,0);
-        var_dump($this->dispatcher);
         $this->dispatcher->render("Backend/MenuAMTemplate.twig");
     }
+
+    public function menuAMPOST()
+    {
+        /*valida que los parametros sean correctos y despues se fija si ya existe el menu*/
+
+        var_dump($_POST);
+        try{
+        $this->validateMenu($_POST);
+        }catch (valException $e){
+            /* falta que setee post */
+            $this->dispatcher->mensajeError = $e->getMessage();
+            $_GET['pag'] = 0;
+            $this->menu();
+        }
+
+        if (isset($_POST['idMenu'])) $this->agregarMenu($_POST);
+        else $this->modificarMenu($_POST);
+        die;
+
+        $this->menu();
+    }
+
+    public function agregarMenu($menu)
+    {
+        
+        
+        if(! move_uploaded_file($_FILES['tmp_name'], files.basename($_FILES['name']))) throw new valException("no se pudo guardar la imagen del menu");
+
+        $fecha= $_POST['fecha'];
+        
+
+
+    }
+
+    public function modificarMenu($menu)
+    {
+
+
+
+    }
+
     public function menuEliminar(){
         echo"DESINTEGRAR";
     }
 
+    public function validateMenu($menu){
+
+        if(! ($_FILES['type'] == 'image/png' ||  $_FILES['type'] == 'image/jpg' || $_FILES['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
+
+
+        $this->validator->validarFecha($menu['fecha'], "Fecha no valida");
+        $this->validator->varSet($menu['selectProdMult']);
+        /* se fija que todos los productos existan */
+        foreach ($menu['selectProdMult'] as $prod){
+            if (! $this->productosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
+        }
+
+    }
 
     public function paginaCorrecta($total){
         if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
