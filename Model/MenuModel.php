@@ -19,6 +19,26 @@ class MenuModel extends Model{
         ', $limit, $offset, $fecha);
     }
 
+    public function getProdNotInMenu($idMenu)
+    {
+        return $this -> queryTodasLasFilas('
+        SELECT * 
+        FROM producto 
+        WHERE eliminado = 0
+        AND stock > 0
+        AND idProducto NOT IN (SELECT idProducto FROM menuProducto WHERE idMenu = :idMenu )',
+        array('idMenu'=> $idMenu));
+    }
+
+    public function getMenuDia($fecha)
+    {
+        return $this->queryPreparadaSQL('
+            SELECT *
+            FROM menu
+            WHERE fecha = :fecha',
+            array("fecha" => $fecha));
+    }
+
     public function totalMenu(){
         return $this->queryPreparadaSQL('
             SELECT COUNT(*) AS total  
