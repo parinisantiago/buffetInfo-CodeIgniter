@@ -25,27 +25,26 @@
             </form>
         </div>
 
-
-        <table class="tablaProductos sombreado">
-            <thead>
-            <tr>
-                <th id="FechaD">Fecha</th>
-                <th id="imagenD">Imagen</th>
-                <th id="hablitiadoD">Habilitado</th>
-
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="fila">
-                <td headers="FechaD">{{ datos.fecha }}</td>
-                <td headers="imagenD">                                 <a  href="uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="uploads/{{ datos.foto }}" alt="foto del menu"></a>
-                </td>
-                <td headers="hablitiadoD"> {{ datos.habilitado }}</td>
-
-            </tr>
-            </tbody>
-        </table>
-
+        {% if datos.foto != "" %}
+            <table class="tablaProductos sombreado">
+                <thead>
+                <tr>
+                    <th id="FechaD">Fecha</th>
+                    <th id="imagenD">Imagen</th>
+                    <th id="hablitiadoD">Habilitado</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr class="fila">
+                        <td headers="FechaD">{{ datos.fecha }}</td>
+                        <td headers="imagenD">
+                            <a  href="uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="uploads/{{ datos.foto }}" alt="foto del menu"></a>
+                        </td>
+                        <td headers="hablitiadoD"> {{ datos.habilitado }}</td>
+                    </tr>
+                </tbody>
+            </table>
+         
         <table class="tablaProductos sombreado">
             <thead>
                 <tr>
@@ -89,5 +88,10 @@
                 {% endfor %}
             </tbody>
         </table>
+        {% else %}
+            <div class="error">
+                <p>No hay un menu para este dia</p>
+            </div>
+        {% endif%}      
     </div>
 {% endblock %}
