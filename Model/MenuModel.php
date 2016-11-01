@@ -6,6 +6,19 @@ class MenuModel extends Model{
     public function __construct(){
         parent::__construct();
     }
+
+    public function getMenuByDia($limit, $offset, $fecha){
+        return $this->queryOFFSETDIA('
+            SELECT *  
+            FROM menu m
+            INNER JOIN menuProducto mp ON (mp.idMenu = m.idMenu)
+            INNER JOIN producto p ON (mp.idProducto = p.idProducto)
+            WHERE m.fecha = :fecha
+            LIMIT :limit
+            OFFSET :offset
+        ', $limit, $offset, $fecha);
+    }
+
     public function totalMenu(){
         return $this->queryPreparadaSQL('
             SELECT COUNT(*) AS total  
@@ -73,14 +86,13 @@ class MenuModel extends Model{
     }
 
 
-    public function getProductos($limit, $offset, $idMenu){
-
-
-
+    public function getMenu($limit, $offset, $idMenu){
         $this->stmnt = $this->db->prepare("
-            SELECT *
-            FROM menuProducto
-            WHERE idMenu = :idMenu
+            SELECT m.idMenu,mp.idProducto,m.fecha,m.foto, m.eliminado,p.nombre,p.stock,p.stockMinimo,p.precioVentaUnitario,p.descripcion,p.eliminado
+            FROM menuProducto mp
+            INNER JOIN menu m ON (mp.idMenu = m.idMenu)
+            INNER JOIN producto p ON (mp.idProducto = p.idProducto)
+            WHERE mp.idMenu = :idMenu
             LIMIT :limit
             OFFSET :offset
             ");
