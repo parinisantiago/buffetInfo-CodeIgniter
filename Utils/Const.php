@@ -3,6 +3,6 @@
 define("host", "localhost");
 define("user", "grupo64");
 define("pass", "leeGhish8e");
-define("db", "proyecto");
+define("db", "grupo64");
 define("files", "uploads/");
 ?>
