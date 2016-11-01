@@ -1,8 +1,8 @@
 <?php
 
 class Model{
-    private $db;
-    private $stmnt;
+    protected $db;
+    protected $stmnt;
     
     public function __construct(){
         try {
