@@ -5,27 +5,24 @@
     <script type="text/javascript" src="script/calendario.js"></script>
     {% block calendario %}{% endblock %}
     <div >
-        
-        <div class="paginas sombreado" >
-            <p class="numeroPagina"> Página: {{ pag }} </p>
-            {% if pag != 0 %}
-                <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag - 1 }}&fecha={{ fecha }}">Página anterior</a>
-            {% endif %}
-                <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag + 1 }}&fecha={{ fecha }}">Página Siguiente</a>
-        </div>
-        
         <div id="nuevoMenu" class="nuevo sombreado">
-            <form id="formNuevoMenu" method="post" action="Loader.php?controller=MenuController&method=menuAM">
-
-                <input type="hidden" id="nuevoMenuValue" value="">
-
-                <label for="submitButton" hidden>Boton de envio:</label>
-                <input type="submit" class="boton" id="submitButton" name="submitButton">
-
-            </form>
-        </div>
-
+                <form id="formNuevoMenu" method="post" action="Loader.php?controller=MenuController&method=menuAM">
+                    <input type="hidden" id="nuevoMenuValue" value="">
+                    <input type="submit" class="boton" id="submitButton" value="Crear Menu" name="submitButton">
+                </form>
+            </div>
         {% if datos.foto != "" %}
+            <div class="paginas sombreado" >
+                <p class="numeroPagina"> Página: {{ pag }} </p>
+                {% if pag != 0 %}
+                    <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag - 1 }}&fecha={{ fecha }}">Página anterior</a>
+                {% endif %}
+                    <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag + 1 }}&fecha={{ fecha }}">Página Siguiente</a>
+            </div>
+
+            
+
+     
             <table class="tablaProductos sombreado">
                 <thead>
                 <tr>
