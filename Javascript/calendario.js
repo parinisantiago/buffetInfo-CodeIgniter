@@ -33,12 +33,12 @@ function generarHoja(Mes, Anno) {
                 CadSemana += "<td>&nbsp;</td>";
             } else {
                 if (Fecha.getTime() == Hoy.getTime()) {
-                        CadSemana +="<td class='hoy diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+Fecha.getMonth()+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></b></td>";
+                        CadSemana +="<td class='hoy diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+Fecha.getMonth()+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
                 }else{
                     if (i == 0 ) {
-                        CadSemana +="<td class='domingo diaMenu' onclick='seleccionado(this)'><b><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha="  + Fecha.getFullYear()+"-"+Fecha.getMonth()+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></b></td>";
+                        CadSemana +="<td class='domingo diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha="  + Fecha.getFullYear()+"-"+Fecha.getMonth()+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
                     } else {
-                        CadSemana +="<td class='dia diaMenu' onclick='seleccionado(this)'><b><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+Fecha.getMonth()+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></b></td>";
+                        CadSemana +="<td class='dia diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+Fecha.getMonth()+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
                     }
                 }
             }

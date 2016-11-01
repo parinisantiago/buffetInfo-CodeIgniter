@@ -286,6 +286,14 @@ div > p > a{
 #seleccionado{
     color:red;
 }
+td a:link{
+     text-decoration:none; 
+     color:#ffffff;
+}
+td a:visited{
+    text-decoration:none; 
+     color:#ffffff;
+}
 
 
 
