@@ -103,7 +103,10 @@ class MenuController extends Controller{
     }
 
     public function menuEliminar(){
-        echo"DESINTEGRAR";
+       $this->dispatcher->menuModel =$this ->menuModel->deleteMenu($_POST["idMenu"]);
+        $_GET['pag'] = 0;
+        $this->dispatcher->method = "menu";
+        $this->menu();
     }
 
     public function validateMenu($menu){
