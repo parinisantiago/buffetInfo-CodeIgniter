@@ -72,8 +72,28 @@ class MenuModel extends Model{
 
     }
 
+
+    public function getProductos($limit, $offset, $idMenu){
+
+
+
+        $this->stmnt = $this->db->prepare("
+            SELECT *
+            FROM menuProducto
+            WHERE idMenu = :idMenu
+            LIMIT :limit
+            OFFSET :offset
+            ");
+        $this->stmnt->bindValue(':limit', (int) $limit, PDO::PARAM_INT);
+        $this->stmnt->bindValue(':offset', (int) $offset, PDO::PARAM_INT);
+        $this->stmnt->bindValue(':idMenu', $idMenu);
+        $this->stmnt->execute();
+        return $this->stmnt ->fetchAll();
+    }
+
+
      public function insertarMenu($fecha, $foto){
-         
+
         return $this -> lastId("
             INSERT INTO menu(
                 fecha,
