@@ -2,7 +2,6 @@
 
 {% block main %}
 
-    {{ menu }}
  <script src="script/multiSelect.js" type="text/javascript"></script>
     <form name="formMenu" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=MenuController&method=menuAMPOST" method="post">
 
@@ -38,7 +37,7 @@
         <label for="foto" class="formProducText">Foto:</label>
         <input type="file" name="foto" id="foto" class="formProducinput">
         {% if (datos.foto != "")  %}
-            <input type='hidden' name='foto' id="foto" value={{ compra.fotoFactura }}>
+            <input type='hidden' name='foto2' id="foto2" value="{{ datos.foto }}">
             <a  href="uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="uploads/{{ datos.foto }}" alt="foto del menu"></a>
         {% endif %}
 
