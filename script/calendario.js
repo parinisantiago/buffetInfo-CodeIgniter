@@ -1,4 +1,5 @@
-window.onload = function() { 
+
+window.onload = function() {
     ponerFechaActual();
 };
 var MonthName = ['enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'];
@@ -33,12 +34,12 @@ function generarHoja(Mes, Anno) {
                 CadSemana += "<td>&nbsp;</td>";
             } else {
                 if (Fecha.getTime() == Hoy.getTime()) {
-                        CadSemana +="<td class='hoy diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+Fecha.getMonth()+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
+                        CadSemana +="<td class='hoy diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+(Fecha.getMonth()+1 )+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
                 }else{
                     if (i == 0 ) {
-                        CadSemana +="<td class='domingo diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha="  + Fecha.getFullYear()+"-"+Fecha.getMonth()+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
+                        CadSemana +="<td class='domingo diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha="  + Fecha.getFullYear()+"-"+(Fecha.getMonth()+1 )+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
                     } else {
-                        CadSemana +="<td class='dia diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+Fecha.getMonth()+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
+                        CadSemana +="<td class='dia diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+(Fecha.getMonth()+1 )+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
                     }
                 }
             }
