@@ -1,6 +1,8 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
+
+    {{ menu }}
  <script src="script/multiSelect.js" type="text/javascript"></script>
     <form name="formMenu" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=MenuController&method=menuAMPOST" method="post">
 
@@ -10,17 +12,20 @@
             {% for prod in producto %}
             <option value='{{ prod.idProducto }}'>{{ prod.nombre }}</option>
             {% endfor %}
+            {% for m in menu %}
+                <option value='{{ m.idProducto }}' selected>{{ m.nombre }}</option>
+            {% endfor %}
         </select>
         <script type="text/javascript"> $('#selectProdMult').multiSelect();</script>
        
         <label for="fecha"  class="formProducText">Fecha: </label>
-        <input type="date" name="fecha" id="fecha" class="fecha">
+        <input type="date" name="fecha" id="fecha" class="fecha" value="{{ datos.fecha }}">
 
         <label for="foto" class="formProducText">Foto:</label>
         <input type="file" name="foto" id="foto" class="formProducinput">
-        {% if (menu.foto != "")  %}
-            <input type='hidden' name='fotoFactura' id="fotoFactura" value={{ compra.fotoFactura }}>
-            <a  href="uploads/{{ menu.foto }}" target="_blank"><img class="mini" src="uploads/{{ menu.foto }}" alt="foto del menu"></a>
+        {% if (datos.foto != "")  %}
+            <input type='hidden' name='fotoFactura' id="fotoFactu" value={{ compra.fotoFactura }}>
+            <a  href="uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="uploads/{{ datos.foto }}" alt="foto del menu"></a>
         {% endif %}
 
         <label for="submitButton" hidden>Boton de envio:</label>

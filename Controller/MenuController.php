@@ -107,7 +107,7 @@ class MenuController extends Controller{
 
             if (! $this->menuModel->getMenuDia($fecha)) throw new valException("No existe el menu para modificar");
             $this->dispatcher->menu = $this->menuModel->getMenuByDia(99,0,$fecha);
-            $this->dispatcher->productos= $this->menuModel->getProdNotInMenu($this->dispatcher->menu['1']->idMenu);
+            $this->dispatcher->producto= $this->menuModel->getProdNotInMenu($this->dispatcher->menu['1']->idMenu);
             $this->dispatcher->datos = $this->dispatcher->menu[1];
 
             $this->dispatcher->render("Backend/MenuAMTemplate.twig");
