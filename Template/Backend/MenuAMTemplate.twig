@@ -7,7 +7,21 @@
     <form name="formMenu" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=MenuController&method=menuAMPOST" method="post">
 
         <p  class="formProducText"> Productos del menu: </p>
-        
+
+        {% if datos %}
+            <label for="idMenu" hidden>idMenu</label>
+            <input type="hidden" id="idMenu" class="idMenu" name="idMenu" value="{{ datos.idMenu }}">
+            <label for="habilitado"  class="formProducText">habilitado:</label>
+            {% if datos.habilitado == '0' %}
+                <input  type="radio" name="habilitado" id="habilitado"  class="formProducText" value="true"  checked> <p class="formProducText">Habilitado</p>
+                <input  type="radio" name="habilitado" id="habilitado"   class="formProducText" value="false"  > <p class="formProducText">Deshabilitado</p>
+
+            {% else %}
+                <input  type="radio" name="habilitado" id="habilitado"  class="formProducText" value="true"  > <p class="formProducText">Habilitado</p>
+                <input  type="radio" name="habilitado" id="habilitado"  class="formProducText" value="false" checked><p class="formProducText">Deshabilitado</p>
+            {% endif %}
+        {% endif %}
+        <label for="selectProdMult" class="formProducText">Productos deshabilitado/ Prouctos habilitados</label>
         <select multiple="multiple" id="selectProdMult" name="selectProdMult[]">
             {% for prod in producto %}
             <option value='{{ prod.idProducto }}'>{{ prod.nombre }}</option>
@@ -24,7 +38,7 @@
         <label for="foto" class="formProducText">Foto:</label>
         <input type="file" name="foto" id="foto" class="formProducinput">
         {% if (datos.foto != "")  %}
-            <input type='hidden' name='fotoFactura' id="fotoFactu" value={{ compra.fotoFactura }}>
+            <input type='hidden' name='foto' id="foto" value={{ compra.fotoFactura }}>
             <a  href="uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="uploads/{{ datos.foto }}" alt="foto del menu"></a>
         {% endif %}
 
