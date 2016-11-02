@@ -102,7 +102,7 @@ class MenuController extends Controller{
 
         try{
 
-            $this->validator->varSet($_GET['fecha']);
+            $this->validator->varSet($_GET['fecha'], "estas zarpado en soga y en ratón");
             $fecha= $_GET['fecha'];
 
             if (! $this->menuModel->getMenuDia($fecha)) throw new valException("No existe el menu para modificar");
@@ -122,18 +122,17 @@ class MenuController extends Controller{
     public function modificarMenu($menu)
     {
         var_dump($menu);
-
+        var_dump($_FILES);
 
         $fecha = $_POST['fecha'];
         $idMenu = $_POST['idMenu'];
         $menu= $this->menuModel->getMenuDia($fecha);
 
-
         //validaciones
         try{
             if( (!$menu) && ($menu->idMenu != $idMenu)) throw new valException("La fecha elegida ya pertenece a otro menu");
 
-            if( ! isset($_FILES['foto'])) $foto= $_POST['foto2'];
+            if( ($_FILES['foto']['size'] == 0 )) $foto= $_POST['foto2'];
             else{
                 if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
                 else{
@@ -150,10 +149,24 @@ class MenuController extends Controller{
             echo $e->getMessage();
         }
 
-        
+        $this->menuModel->eliminarMenu($idMenu);
 
-        echo "pase";
-        die;
+        $idMenu2 = $this->menuModel->insertarMenu($fecha, $foto);
+
+        foreach ($_POST['selectProdMult'] as $prod) {
+            var_dump($prod);
+            $this->menuModel->insertarProd($idMenu2,$prod);
+
+        }
+        $_GET['pag'] = 0;
+        $_GET['fecha'] = $fecha;
+        $this->paginaCorrecta($this->menuModel->totalMenu());
+        $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_GET['fecha']);
+        //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
+        $this->dispatcher->datos = $this->dispatcher->menu[1];
+        $this->dispatcher->fecha=$_GET['fecha'];
+        $this->dispatcher->pag = $_GET['pag'];
+        $this->dispatcher->method = "menuDia";
 
     }
 
