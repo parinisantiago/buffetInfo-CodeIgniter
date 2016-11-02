@@ -14,6 +14,7 @@ class MenuModel extends Model{
             INNER JOIN menuProducto mp ON (mp.idMenu = m.idMenu)
             INNER JOIN producto p ON (mp.idProducto = p.idProducto)
             WHERE m.fecha = :fecha
+            AND m.eliminado = 0
             LIMIT :limit
             OFFSET :offset
         ', $limit, $offset, $fecha);
@@ -35,7 +36,8 @@ class MenuModel extends Model{
         return $this->queryPreparadaSQL('
             SELECT *
             FROM menu
-            WHERE fecha = :fecha',
+            WHERE fecha = :fecha
+            AND eliminado = 0',
             array("fecha" => $fecha));
     }
 
