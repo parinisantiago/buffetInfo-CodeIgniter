@@ -170,7 +170,8 @@ class MenuController extends Controller{
 
     }
 
-    public function menuEliminar(){
+    public function menuEliminar()
+    {
        $this->dispatcher->menuModel =$this ->menuModel->eliminarMenu($_POST["idMenu"]);
         $_GET['pag'] = 0;
         $this->dispatcher->method = "menu";
