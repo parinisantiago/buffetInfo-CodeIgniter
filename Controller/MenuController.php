@@ -121,8 +121,39 @@ class MenuController extends Controller{
 
     public function modificarMenu($menu)
     {
+        var_dump($menu);
 
 
+        $fecha = $_POST['fecha'];
+        $idMenu = $_POST['idMenu'];
+        $menu= $this->menuModel->getMenuDia($fecha);
+
+
+        //validaciones
+        try{
+            if( (!$menu) && ($menu->idMenu != $idMenu)) throw new valException("La fecha elegida ya pertenece a otro menu");
+
+            if( ! isset($_FILES['foto'])) $foto= $_POST['foto2'];
+            else{
+                if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
+                else{
+                    $foto= basename($_FILES['foto']['name']);
+                    if(! move_uploaded_file($_FILES['foto']['tmp_name'], files.$foto)) throw new valException("no se pudo guardar la imagen del menu");
+                }
+            }
+
+            foreach ($_POST['selectProdMult'] as $prod){
+                if (! $this->productosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
+            }
+
+        } catch (valException $e){
+            echo $e->getMessage();
+        }
+
+        
+
+        echo "pase";
+        die;
 
     }
 
