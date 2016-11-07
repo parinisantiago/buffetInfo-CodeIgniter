@@ -19,7 +19,16 @@ class MenuModel extends Model{
             OFFSET :offset
         ', $limit, $offset, $fecha);
     }
-
+    public function getMenuToday(){
+        $today=getDate();
+        return $this->queryPreparadaSQL('
+            SELECT *
+            FROM menu
+            WHERE fecha = :fecha
+            AND eliminado = 0',
+            array('fecha' => $today['year']."-".$today['mon']."-".$today['mday']));
+    }
+    
     public function getProdNotInMenu($idMenu)
     {
         return $this -> queryTodasLasFilas('

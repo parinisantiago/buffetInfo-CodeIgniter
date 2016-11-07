@@ -7,11 +7,13 @@ class MainUserController extends Controller
     private $usernamePOST;
     private $passPOST;
     private $controller;
+    private $menuModel;
 
     public function __construct(){
 
         parent::__contruct();
         $this->model = new MainUserModel();
+        $this->menuModel = new MenuModel();
 
     }
 
@@ -22,6 +24,7 @@ class MainUserController extends Controller
     }
 
     public function index(){
+        $this->dispatcher->menu = $this->menuModel->getMenuToday();
         $this->dispatcher->render("Main/MainTemplate.twig");
     }
 
