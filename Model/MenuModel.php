@@ -22,10 +22,11 @@ class MenuModel extends Model{
     public function getMenuToday(){
         $today=getDate();
         return $this->queryPreparadaSQL('
-            SELECT *
-            FROM menu
-            WHERE fecha = :fecha
-            AND eliminado = 0',
+            FROM menu m
+            INNER JOIN menuProducto mp ON (mp.idMenu = m.idMenu)
+            INNER JOIN producto p ON (mp.idProducto = p.idProducto)
+            WHERE m.fecha = :fecha
+            AND m.eliminado = 0',
             array('fecha' => $today['year']."-".$today['mon']."-".$today['mday']));
     }
     
