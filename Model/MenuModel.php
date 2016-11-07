@@ -22,6 +22,7 @@ class MenuModel extends Model{
     public function getMenuToday(){
         $today=getDate();
         return $this->queryPreparadaSQL('
+            SELECT *
             FROM menu m
             INNER JOIN menuProducto mp ON (mp.idMenu = m.idMenu)
             INNER JOIN producto p ON (mp.idProducto = p.idProducto)
