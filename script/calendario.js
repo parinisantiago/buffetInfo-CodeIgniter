@@ -3,7 +3,9 @@ window.onload = function() {
     ponerFechaActual();
 };
 var MonthName = ['enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Setiembre','Octubre','Noviembre','Diciembre'];
-var ultimoSeleccionado = new Date().getDay();
+var diaSeleccionado = new Date().getDay();
+var mesSeleccionado = new Date().getMonth();
+var anioSeleccionado = new Date().getFullYear();
 function elemento(id){
     var elem;
     if (document.all) {
@@ -15,6 +17,7 @@ function elemento(id){
 }
 function generarMes(MesNuevo) {
     MesActual = MesNuevo;
+    //$mesSeleccionado=MesNuevo;
     generarHoja(MesActual, obtenerAnno());	
 }
 function generarHoja(Mes, Anno) {
@@ -34,12 +37,13 @@ function generarHoja(Mes, Anno) {
                 CadSemana += "<td>&nbsp;</td>";
             } else {
                 if (Fecha.getTime() == Hoy.getTime()) {
-                        CadSemana +="<td class='hoy diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+(Fecha.getMonth()+1 )+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
+                        //onclick='seleccionado(this)'
+                        CadSemana +="<td class='hoy diaMenu' ><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+(Fecha.getMonth()+1 )+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
                 }else{
                     if (i == 0 ) {
-                        CadSemana +="<td class='domingo diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha="  + Fecha.getFullYear()+"-"+(Fecha.getMonth()+1 )+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
+                        CadSemana +="<td class='domingo diaMenu' ><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha="  + Fecha.getFullYear()+"-"+(Fecha.getMonth()+1 )+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
                     } else {
-                        CadSemana +="<td class='dia diaMenu' onclick='seleccionado(this)'><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+(Fecha.getMonth()+1 )+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
+                        CadSemana +="<td class='dia diaMenu' ><a href='/Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=" + Fecha.getFullYear()+"-"+(Fecha.getMonth()+1 )+"-"+Fecha.getDate() + "'>" + Fecha.getDate() + "</a></td>";
                     }
                 }
             }
@@ -95,9 +99,9 @@ function annoAdelante() {
 }
 
 /* -----*/
-function seleccionado(elem){
-    $(ultimoSeleccionado).attr("id" , "");
-    ultimoSeleccionado = $(elem).children();
-    $(ultimoSeleccionado).attr("id" , "seleccionado");
-    alert($(elem).children().text());
+/*function seleccionado(elem){
+    $diaSeleccionado=$(elem).children().text();
+    $mesSeleccionado=
+    alert($mesSeleccionado);
 }
+ */
