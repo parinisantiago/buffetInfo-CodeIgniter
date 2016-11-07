@@ -9,15 +9,19 @@
 {% block main %}
 
 <div class="textoIndex">
-    <p class="titleComida">Menu del día:</p>
-    <img class="imageComida sombreado" src="uploads/{{ menu.foto }}" alt="foto del menu">
-    {% set numMenu = 1 %}
-    {% for m in menu %}
-        <p class="textoComida"> Menu Nº{{ numMenu }}:</p></br>
-        <p class="textoComida">{{ m.nombre }} por {{ m.precioVentaUnitario }}</br>
-        <p class="textoComida">{{ m.descripcion }}</p></br>
-        {% set numMenu = numMenu + 1 %}
-    {% endfor %}
+    {% if menu is empty %}
+        <p class="titleComida">No hay ningun menu para el día de hoy.</p>
+    {% else %}
+        <p class="titleComida">Menu del día:</p>
+        <img class="imageComida sombreado" src="uploads/{{ menu.foto }}" alt="foto del menu">
+        {% set numMenu = 1 %}
+        {% for m in menu %}
+            <p class="textoComida"> Menu Nº{{ numMenu }}:</p></br>
+            <p class="textoComida">{{ m.nombre }} por {{ m.precioVentaUnitario }}</br>
+            <p class="textoComida">{{ m.descripcion }}</p></br>
+            {% set numMenu = numMenu + 1 %}
+        {% endfor %}
+    {% endif %}
 </div>
 
 
