@@ -1,6 +1,8 @@
 <?php
 
 require_once (__DIR__.'/../libchart/libchart/classes/libchart.php');
+require_once (__DIR__.'/../fpdf_demo/fpdf.php');
+
 
 class BalanceController extends Controller
 {
@@ -81,4 +83,180 @@ class BalanceController extends Controller
         $image = imagecreatefrompng('uploads/demo2.png');
     }
 
+    function balanceRango()
+    {
+
+        try
+        {
+            $this->validator->validarFecha($_POST['fechaInicio'], "La fecha ingresada no es válida");
+            $this->validator->validarFecha($_POST['fechaFin'], "La fecha ingresada no es válida");
+            $fechaInicio=$_POST['fechaInicio'];
+            $fechaFin=$_POST['fechaFin'];
+            if ($fechaFin < $fechaInicio) throw new valException("La fecha de fin no puede ser inferior a la fecha de inicio");
+        }
+        catch (valException $e){
+            echo "apa la bocha";
+        }
+
+        //aca va a empezar la negrada de las fechas, agarranse de donde puedan porque son las 3 AM y ya no me da el bocho.
+
+        //Puede que no existan egresos para una fecha pero si ingresos y viceversa. Hay que validar eso en ambos arreglos.
+        //Traer todo de la base no es una opcion por los valores nulos y la consulta anidada enquilombada.
+        //Tambien hay que validar que una vez que controlo un arreglo, cuando empiezo a controlar el otro el valor que estoy controlando no haya sido ya controlado.
+        //no se si se entende pero tengo una mezcla de ansiedad, cansancio, mate y depresion y en mi cabeza las cosas funcionan de la siguiente forma:
+
+
+        //me traigo los valores
+        $ingresos = $this->balance->ingresoRango($fechaInicio, $fechaFin);
+        $egresos = $this->balance->egresoRango($fechaInicio, $fechaFin);
+        $total= array();
+        $balances = array();
+        //creo un arreglo simple porque de la base lo traigo en objetos. Esto me sirve para despues mergear los arreglos
+        foreach ($ingresos as $ingreso)
+        {
+            $balances['ingreso'][''.$ingreso->fecha] = $ingreso->total;
+        }
+
+        //idem anterior
+        foreach ($egresos as $egreso)
+        {
+            $balances['egreso'][''.$egreso->fecha] = $egreso->total;
+        }
+
+        //hago la cuentita de ingreso - egreso, si no hay egreso le mando solo el ingreso
+        foreach ($balances['ingreso'] as $key => $value){
+            if (isset($balances['egreso'][$key])) $total[$key] = ($balances['ingreso'][$key] - $balances['egreso'][$key]).'';
+            else $total[$key] = $balances['ingreso'][$key];
+        }
+
+        //hago la validacion de nuevo por si existen egresos pero no ingresos.
+        foreach ($balances['egreso'] as $key => $value){
+            if (!isset($balances['ingreso'][$key])) $total[$key] = (0 - $balances['egreso'][$key]).'';
+        }
+
+
+        //y ahora creo el gráifco de barras (falta el de tortas todavia pero ese es mas facil)
+        $chart = new VerticalBarChart(500, 250);
+        $dataSet = new XYDataSet();
+        foreach ($total as $key => $value) {
+            $dataSet->addPoint(new Point($key, $value));
+        }
+
+        $chart->setTitle('Cantidad de productos vendidos para el dia ' . $fechaInicio . 'Hasta el dia' . $fechaFin);
+        $chart->setDataSet($dataSet);
+        $chart->render('uploads/demo2.png');
+        $image = imagecreatefrompng('uploads/demo2.png');
+
+
+        //ahora vamos con los productos, a esto le hace falta alto refactoring pero estoy re podrido.
+        $productos = $this->balance->productosEgresoRango($fechaInicio, $fechaFin);
+        $chart = new PieChart(500, 250);
+        $dataSet = new XYDataSet();
+
+
+        foreach ($productos as $producto) {
+            $dataSet->addPoint(new Point($producto->nombre, $producto->cant));
+        }
+
+        $chart->setTitle('Cantidad de productos vendidos para el dia ' . $fechaInicio .'hasta el dia' . $fechaFin);
+        $chart->setDataSet($dataSet);
+        $chart->render('uploads/demo.png');
+        $image = imagecreatefrompng('uploads/demo.png');
+
+        $this->dispatcher->fechaInicio = $fechaInicio;
+        $this->dispatcher->fechaFin = $fechaFin;
+        $this->dispatcher->render('Backend/balanceTemplate.twig');
+    }
+
+    public function exportarPDF()
+    {
+        try
+        {
+            $this->validator->validarFecha($_POST['fechaInicio'], "La fecha ingresada no es válida");
+            $this->validator->validarFecha($_POST['fechaFin'], "La fecha ingresada no es válida");
+            $fechaInicio=$_POST['fechaInicio'];
+            $fechaFin=$_POST['fechaFin'];
+            if ($fechaFin < $fechaInicio) throw new valException("La fecha de fin no puede ser inferior a la fecha de inicio");
+        }
+        catch (valException $e){
+            echo "apa la bocha";
+        }
+
+        $ingresos = $this->balance->ingresoRango($fechaInicio, $fechaFin);
+        $egresos = $this->balance->egresoRango($fechaInicio, $fechaFin);
+        $total= array();
+        $balances = array();
+
+        foreach ($ingresos as $ingreso)
+        {
+            $balances['ingreso'][''.$ingreso->fecha] = $ingreso->total;
+        }
+
+        foreach ($egresos as $egreso)
+        {
+            $balances['egreso'][''.$egreso->fecha] = $egreso->total;
+        }
+
+        foreach ($balances['ingreso'] as $key => $value){
+            if (isset($balances['egreso'][$key])) $total[$key] = ($balances['ingreso'][$key] - $balances['egreso'][$key]).'';
+            else $total[$key] = $balances['ingreso'][$key];
+        }
+
+        foreach ($balances['egreso'] as $key => $value){
+            if (!isset($balances['ingreso'][$key])) $total[$key] = (0 - $balances['egreso'][$key]).'';
+        }
+
+
+        $image = imagecreatefrompng('uploads/demo.png');
+        $image2 = imagecreatefrompng('uploads/demo2.png');
+        imagejpeg($image, 'uploads/demo3.jpg', 100);
+        imagejpeg($image2, 'uploads/demo4.jpg', 100);
+
+        ob_start();
+        $pdf = new FPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',14);
+        $pdf->Cell(30,10,'Listado');
+        $pdf->Ln();
+        $pdf->Cell(30,10,'Fecha');
+        $pdf->Cell(30,10,'Balance');
+        $pdf->Ln();
+        $pdf->SetFont('Arial','B',10);
+        while ( list ( $key, $va ) = each ( $total ) ) {
+            $pdf->Cell(30,10,$key);
+            $pdf->Cell(30,10,$va);
+            $pdf->Ln();
+        }
+        $pdf->SetFont('Arial','B',14);
+        $pdf->Cell(30,10,'Grafico Barra');
+        $pdf->Ln();
+        $pdf->Image('uploads/demo4.jpg');
+
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',14);
+        $pdf->Cell(30,10,'Listado');
+        $pdf->Ln();
+        $pdf->Cell(30,10,'Producto');
+        $pdf->Cell(30,10,'Total vendido');
+        $pdf->Ln();
+        $pdf->SetFont('Arial','B',10);
+
+        $productos = $this->balance->productosEgresoRango($fechaInicio, $fechaFin);
+
+        foreach ($productos as $producto) {
+            $pdf->Cell(50,10,$producto->nombre);
+            $pdf->Cell(50,10,$producto->cant);
+            $pdf->Ln();
+        }
+
+        $pdf->SetFont('Arial','B',14);
+        $pdf->Cell(30,10,'Grafico Torta');
+        $pdf->Ln();
+        $pdf->Image('uploads/demo3.jpg');
+
+
+        $pdf->Output();
+        ob_end_flush();
+
+    }
 }
