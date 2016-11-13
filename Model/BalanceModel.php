@@ -12,7 +12,7 @@ class BalanceModel extends Model
     function ingresoDia($fecha)
     {
         return $this->queryPreparadaSQL("
-            SELECT SUM(precioUnitario * cantidad) AS total
+            SELECT ROUND(SUM(precioUnitario * cantidad), 2) AS total
             FROM ingresoDetalle
             WHERE fecha=:fecha AND eliminado = 0",
             array("fecha" => $fecha)
@@ -22,7 +22,7 @@ class BalanceModel extends Model
     function egresoDia($fecha)
     {
         return $this->queryPreparadaSQL("
-            SELECT SUM(precioUnitario * cantidad) AS total
+            SELECT ROUND(SUM(precioUnitario * cantidad), 2) AS total
             FROM compra
             WHERE fecha=:fecha AND eliminado = 0",
             array("fecha" => $fecha)
@@ -32,7 +32,7 @@ class BalanceModel extends Model
     function productosEgresoDia($fecha)
     {
         return $this->queryTodasLasFilas("
-            SELECT SUM(cantidad) AS cant, p.nombre
+            SELECT ROUND(SUM(cantidad),2) AS cant, p.nombre
             FROM ingresoDetalle i
             INNER JOIN producto p 
             ON (p.idProducto = i.idProducto)
