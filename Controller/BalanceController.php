@@ -55,7 +55,7 @@ class BalanceController extends Controller
         $chart->render('libchart/demo/generated/demo.png');
         $image = imagecreatefrompng('libchart/demo/generated/demo.png');
 
-        die;
+        $this->dispatcher->render('Backend/balanceTemplate.twig');
 
     }
 
