@@ -21,11 +21,36 @@ class BalanceModel extends Model
 
     function egresoDia($fecha)
     {
-        return $this->queryPreparadaSQL("
+        return $this->queryTodasLasFilas("
             SELECT ROUND(SUM(precioUnitario * cantidad), 2) AS total
             FROM compra
             WHERE fecha=:fecha AND eliminado = 0",
             array("fecha" => $fecha)
+        );
+    }
+
+
+    function ingresoRango($fechaInicio, $fechaFin)
+    {
+        return $this->queryTodasLasFilas("
+            SELECT ROUND(SUM(precioUnitario * cantidad), 2) AS total, fecha
+            FROM ingresoDetalle
+            WHERE eliminado = 0
+            AND fecha BETWEEN :fechaInicio AND :fechaFin
+            GROUP BY fecha",
+            array("fechaInicio" => $fechaInicio, "fechaFin" => $fechaFin)
+        );
+    }
+
+    function egresoRango($fechaInicio, $fechaFin)
+    {
+        return $this->queryTodasLasFilas("
+            SELECT ROUND(SUM(precioUnitario * cantidad), 2) AS total, fecha
+            FROM compra
+            WHERE eliminado = 0
+            AND fecha BETWEEN :fechaInicio AND :fechaFin
+            GROUP BY fecha",
+            array("fechaInicio" => $fechaInicio, "fechaFin" => $fechaFin)
         );
     }
 
@@ -39,5 +64,18 @@ class BalanceModel extends Model
             WHERE i.fecha =:fecha AND i.eliminado = 0
             GROUP BY i.idProducto",
             array("fecha" => $fecha));
+    }
+
+    function productosEgresoRango($fechaInicio, $fechaFin)
+    {
+        return $this->queryTodasLasFilas("
+            SELECT ROUND(SUM(cantidad),2) AS cant, p.nombre
+            FROM ingresoDetalle i
+            INNER JOIN producto p 
+            ON (p.idProducto = i.idProducto)
+            WHERE i.fecha BETWEEN :fechaInicio AND :fechaFin
+            AND i.eliminado = 0
+            GROUP BY i.idProducto",
+            array("fechaInicio" => $fechaInicio, "fechaFin" => $fechaFin));
     }
 }
