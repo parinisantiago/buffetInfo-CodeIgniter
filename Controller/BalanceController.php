@@ -40,6 +40,7 @@ class BalanceController extends Controller
         (empty($egreso->total))? $egreso = "0" : $egreso = $egreso->total;
 
         $totalProductos = $this->balance->productosEgresoDia($_POST['fecha']);
+        
 
         $chart = new PieChart(500,250);
         $dataSet = new XYDataSet();
@@ -53,6 +54,7 @@ class BalanceController extends Controller
         $chart->setTitle('Cantidad de productos vendidos para el dia '.$_POST['fecha']);
         $chart->setDataSet($dataSet);
         $chart->render('libchart/demo/generated/demo.png');
+        chmod('libchart/demo/generated/demo.png', 0777);
         $image = imagecreatefrompng('libchart/demo/generated/demo.png');
 
         $this->dispatcher->render('Backend/balanceTemplate.twig');
