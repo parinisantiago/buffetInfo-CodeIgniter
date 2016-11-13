@@ -2,8 +2,16 @@
 
 {% block main %}
     <div>
-        <img src="uploads/demo.png" alt="grafico kilos entregados">
-        <img src="uploads/demo2.png" alt="grafico kilos entregados">
-        <a href="Loader.php?class=BalanceController&mehotd=exportarPDF"> <button>Exportar a PDF</button></a>
+        <img src="uploads/demo.png" alt="grafico ganancias">
+        <img src="uploads/demo2.png" alt="grafico productos">
+        <form method="post" action="Loader.php?controller=BalanceController&method=exportarPDF" target="_blank">
+            <label for="fechaInicio" hidden></label>
+            <input  name="fechaInicio" type="hidden" value={{ fechaInicio }}>
+            <label for="fechaFin" hidden></label>
+            <input  name="fechaFin" type="hidden" value={{ fechaFin }}>
+            <button class="botonTabla" type="submit"  name="submitButton"  onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" >
+                Exportar a PDF
+            </button>
+        </form>
     </div>
 {% endblock %}
