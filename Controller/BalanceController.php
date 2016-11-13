@@ -53,8 +53,8 @@ class BalanceController extends Controller
 
         $chart->setTitle('Cantidad de productos vendidos para el dia ' . $fecha);
         $chart->setDataSet($dataSet);
-        $chart->render('libchart/demo/generated/demo.png');
-        $image = imagecreatefrompng('libchart/demo/generated/demo.png');
+        $chart->render('uploads/demo.png');
+        $image = imagecreatefrompng('uploads/demo.png');
     }
 
     protected function graficoBarraDia($fecha)
@@ -77,8 +77,8 @@ class BalanceController extends Controller
         $chart->setTitle('Balance para el dia ' . $fecha);
         $chart->setTitle('Balance para el dia ' . $fecha);
         $chart->setDataSet($dataSet);
-        $chart->render('libchart/demo/generated/demo2.png');
-        $image = imagecreatefrompng('libchart/demo/generated/demo2.png');
+        $chart->render('uploads/demo2.png');
+        $image = imagecreatefrompng('uploads/demo2.png');
     }
 
 }
