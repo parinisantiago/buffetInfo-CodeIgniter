@@ -1,8 +1,7 @@
 <?php
-
 define("host", "localhost");
-define("user", "root");
-define("pass", "1234");
+define("user", "grupo64");
+define("pass", "leeGhish8e");
 define("db", "grupo64");
 define("files", "uploads/");
 ?>
