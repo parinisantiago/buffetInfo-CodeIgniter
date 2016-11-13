@@ -43,12 +43,9 @@ class BalanceController extends Controller
 
         $chart = new PieChart(500,250);
         $dataSet = new XYDataSet();
-        $testGD = get_extension_funcs("gd"); // Grab function list
-        if (!$testGD){ echo "GD not even installed."; exit; }
-        echo"<pre>".print_r($testGD,true)."</pre>";
-        echo phpinfo();
 
-     /*   foreach ($totalProductos as $producto)
+
+        foreach ($totalProductos as $producto)
         {
             $dataSet->addPoint(new Point($producto->nombre,$producto->cant));
         }
@@ -57,7 +54,7 @@ class BalanceController extends Controller
         $chart->setDataSet($dataSet);
         $chart->render('libchart/demo/generated/demo.png');
         $image = imagecreatefrompng('libchart/demo/generated/demo.png');
-*/
+
         die;
 
     }
