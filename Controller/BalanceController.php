@@ -36,6 +36,7 @@ class BalanceController extends Controller
         $this->graficoBarraDia($fecha);
         $this->graficoTortaDia($fecha);
 
+        $this->dispatcher->fecha = $fecha;
         $this->dispatcher->render('Backend/balanceTemplate.twig');
 
     }
@@ -134,14 +135,18 @@ class BalanceController extends Controller
             if (!isset($balances['ingreso'][$key])) $total[$key] = (0 - $balances['egreso'][$key]).'';
         }
 
+        $colores = array();
 
         //y ahora creo el gráifco de barras (falta el de tortas todavia pero ese es mas facil)
-        $chart = new VerticalBarChart(500, 250);
+        $chart = new HorizontalBarChart(500, 250);
         $dataSet = new XYDataSet();
         foreach ($total as $key => $value) {
+
+            (strcmp($value, '0') > 0)? array_push($colores, new Color(0, 0, 255)) : array_push($colores, new Color(255, 0, 0));
             $dataSet->addPoint(new Point($key, $value));
         }
 
+        $chart->getPlot()->getPalette()->barColorSet = new ColorSet($colores, 0.7);
         $chart->setTitle('Cantidad de productos vendidos para el dia ' . $fechaInicio . 'Hasta el dia' . $fechaFin);
         $chart->setDataSet($dataSet);
         $chart->render('uploads/demo2.png');
@@ -157,7 +162,6 @@ class BalanceController extends Controller
         foreach ($productos as $producto) {
             $dataSet->addPoint(new Point($producto->nombre, $producto->cant));
         }
-
         $chart->setTitle('Cantidad de productos vendidos para el dia ' . $fechaInicio .'hasta el dia' . $fechaFin);
         $chart->setDataSet($dataSet);
         $chart->render('uploads/demo.png');
@@ -168,7 +172,83 @@ class BalanceController extends Controller
         $this->dispatcher->render('Backend/balanceTemplate.twig');
     }
 
-    public function exportarPDF()
+    function exportarPDFdia()
+    {
+
+        try
+        {
+            $this->validator->validarFecha($_POST['fecha'], "La fecha ingresada no es válida");
+            $fecha=$_POST['fecha'];
+        }
+        catch (valException $e){
+            echo "apa la bocha";
+        }
+
+        $productos = $this->balance->productosEgresoDia($fecha);
+        $ingreso = $this->balance->ingresoDia($fecha);
+
+        (empty($ingreso->total)) ? $ingreso = "0" : $ingreso = $ingreso->total;
+
+
+        $egreso = $this->balance->egresoDia($fecha);
+
+        (empty($egreso->total)) ? $egreso = "0" : $egreso = $egreso->total;
+
+        $balance = $ingreso - $egreso;
+        $image = imagecreatefrompng('uploads/demo.png');
+        $image2 = imagecreatefrompng('uploads/demo2.png');
+        imagejpeg($image, 'uploads/demo3.jpg', 100);
+        imagejpeg($image2, 'uploads/demo4.jpg', 100);
+
+
+        ob_start();
+        $pdf = new FPDF();
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',14);
+        $pdf->Cell(30,10,'Balance del dia');
+        $pdf->Ln();
+        $pdf->Cell(30,10,'Fecha');
+        $pdf->Cell(30,10,'Balance');
+        $pdf->Ln();
+        $pdf->SetFont('Arial','B',10);
+        $pdf->Cell(30,10,$fecha);
+        $pdf->Cell(30,10,$balance);
+        $pdf->Ln();
+
+        $pdf->SetFont('Arial','B',14);
+        $pdf->Cell(30,10,'Grafico Barra');
+        $pdf->Ln();
+        $pdf->Image('uploads/demo4.jpg');
+
+        $pdf->AddPage();
+        $pdf->SetFont('Arial','B',14);
+        $pdf->Cell(30,10,'Productos vendidos');
+        $pdf->Ln();
+        $pdf->Cell(30,10,'Producto');
+        $pdf->Cell(30,10,'Total vendido');
+        $pdf->Ln();
+        $pdf->SetFont('Arial','B',10);
+
+
+        foreach ($productos as $producto) {
+
+
+            $pdf->Cell(50,10,$producto->nombre);
+            $pdf->Cell(50,10,$producto->cant);
+            $pdf->Ln();
+        }
+
+        $pdf->SetFont('Arial','B',14);
+        $pdf->Cell(30,10,'Grafico Torta');
+        $pdf->Ln();
+        $pdf->Image('uploads/demo3.jpg');
+
+
+        $pdf->Output();
+        ob_end_flush();
+
+    }
+    function exportarPDF()
     {
         try
         {
@@ -206,7 +286,6 @@ class BalanceController extends Controller
             if (!isset($balances['ingreso'][$key])) $total[$key] = (0 - $balances['egreso'][$key]).'';
         }
 
-
         $image = imagecreatefrompng('uploads/demo.png');
         $image2 = imagecreatefrompng('uploads/demo2.png');
         imagejpeg($image, 'uploads/demo3.jpg', 100);
@@ -216,7 +295,7 @@ class BalanceController extends Controller
         $pdf = new FPDF();
         $pdf->AddPage();
         $pdf->SetFont('Arial','B',14);
-        $pdf->Cell(30,10,'Listado');
+        $pdf->Cell(30,10,'Listado de balances para cada dia');
         $pdf->Ln();
         $pdf->Cell(30,10,'Fecha');
         $pdf->Cell(30,10,'Balance');
@@ -234,7 +313,7 @@ class BalanceController extends Controller
 
         $pdf->AddPage();
         $pdf->SetFont('Arial','B',14);
-        $pdf->Cell(30,10,'Listado');
+        $pdf->Cell(30,10,'Listado de productos vendidos');
         $pdf->Ln();
         $pdf->Cell(30,10,'Producto');
         $pdf->Cell(30,10,'Total vendido');
@@ -244,6 +323,8 @@ class BalanceController extends Controller
         $productos = $this->balance->productosEgresoRango($fechaInicio, $fechaFin);
 
         foreach ($productos as $producto) {
+
+
             $pdf->Cell(50,10,$producto->nombre);
             $pdf->Cell(50,10,$producto->cant);
             $pdf->Ln();
