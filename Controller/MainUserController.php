@@ -62,6 +62,9 @@ class MainUserController extends Controller
             case '1':
                 $this->controller = new BackendController();
                 break;
+            case '2':
+                $this->controller = new BackendController();
+                break;
             default:
                 throw new Exception("usuario no valido");
 
