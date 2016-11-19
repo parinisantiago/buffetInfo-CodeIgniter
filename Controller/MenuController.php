@@ -98,7 +98,6 @@ class MenuController extends Controller{
     }
 
     public function menuAMMod(){
-        var_dump($_GET);
 
         try{
 
@@ -121,8 +120,6 @@ class MenuController extends Controller{
 
     public function modificarMenu($menu)
     {
-        var_dump($menu);
-        var_dump($_FILES);
 
         $fecha = $_POST['fecha'];
         $idMenu = $_POST['idMenu'];
