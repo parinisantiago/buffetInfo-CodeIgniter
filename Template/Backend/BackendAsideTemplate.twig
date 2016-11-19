@@ -2,7 +2,8 @@
     <li class="asideTitleItem">
         <p> General </p>
     </li>
-    
+
+    {% if rol == "1" or  rol == "0" %}
     <li class="asideItem">
         <a href="Loader.php?controller=ProductoController&method=productosAM">Alta de productos</a>
     </li>
@@ -18,7 +19,17 @@
     <li class="asideItem">
             <a href="Loader.php?controller=ComprarController&method=compraListar&pag=0">Compras de productos</a>
     </li>
- 
+
+        <li class="asideItem">
+            <a href="Loader.php?controller=MenuController&method=menuDia&pag=0&fecha={{"now"|date("Y-m-d") }}">Administracion del Menu</a>
+        </li>
+
+        <li class="asideItem">
+            <a href="Loader.php?controller=BalanceController&method=index">Balance</a>
+        </li>
+
+    {% endif %}
+
     {% if rol == "1" %}
         <li class="asideItem">
             <a href="Loader.php?controller=vistaProdController&method=listadoFaltantes&pag=0">Productos faltantes</a>
@@ -28,42 +39,24 @@
         </li>
     {%endif%}
     
-    <li class="asideItem">
-            <a href="Loader.php?controller=MenuController&method=menuDia&pag=0&fecha={{"now"|date("Y-m-d") }}">Administracion del Menu</a>
-    </li>
-    
+
     {% if rol == "0" %}
         <li class="asideItem">
             <a href="Loader.php?controller=UserController&method=abmUsuario&pag=0">Usuarios</a>
         </li>
-    {%endif%}
-    
-    {% if rol == "0" %}
+
         <li class="asideItem">
             <a href="Loader.php?controller=ConfigController&method=configuracionSitio">Configuracion del sitio</a>
         </li>
     {%endif%}
-
-    <li class="asideItem">
-        <a href="Loader.php?controller=BalanceController&method=index">Balance</a>
-    </li>
-
     
-    {% if rol == "100" %}
+    {% if rol == "2" %}
         <li class="asideItem">
-            <a href="">Ingresos entre fechas</a>
+            <a href="Loader.php?controller=PedidosController&method=hacerPedido">Hacer pedido Online</a>
         </li>
-
         <li class="asideItem">
-            <a href="">Gastos entre fechas</a>
+            <a href="Loader.php?controller=PedidosController&method=verPedido">Ver mis pedidos</a>
         </li>
+    {%endif%}
 
-        <li class="asideTitleItem">
-            <p>Balance</p>
-        </li>
-
-        <li class="asideItem">
-                <a href="">Pedidos On-line</a>
-        </li>
-   {%endif%}
 </ul>
