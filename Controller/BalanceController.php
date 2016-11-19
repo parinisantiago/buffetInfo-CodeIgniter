@@ -9,6 +9,11 @@ class BalanceController extends Controller
 
     private $balance;
 
+    public function getPermission(){
+        Session::init();
+        return ((Session::getValue('rol') == '0' )or(Session::getValue('rol') == '1' ) );
+    }
+
     function __construct()
     {
         parent::__contruct();
