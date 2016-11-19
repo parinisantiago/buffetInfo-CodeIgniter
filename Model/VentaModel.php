@@ -70,7 +70,32 @@ class VentaModel extends Model{
                 )
         );
     }
-    
+
+    public function insertarVentaId($vent)
+    {
+        $today=getDate();
+        return $this -> lastId("
+            INSERT INTO ingresoDetalle(
+                idProducto,
+                cantidad,
+                precioUnitario,
+                descripcion,
+                fecha,
+                eliminado)
+            VALUES (:idProducto,
+                    :cantidad,
+                    :precioUnitario,
+                    :descripcion,
+                    :fecha,
+                    0)",
+            array('idProducto' => $vent["idProducto"],
+                'cantidad' => $vent["cant"],
+                'precioUnitario' => $vent["precioVentaUnitario"],
+                'descripcion' =>  '',
+                'fecha' => $today['year']."-".$today['mon']."-".$today['mday']." ".$today['hours'].":".$today['minutes'].":".$today['seconds']
+            )
+        );
+    }
     public function actualizarVenta($cantidad, $id){
 
         return $this -> query("
@@ -87,5 +112,8 @@ class VentaModel extends Model{
             SET id.eliminado =1 
             WHERE id.idIngresoDetalle = :idIngresoDetalle" , array('idIngresoDetalle' => $idVenta));
     }
+
+
+
 }
 ?>
