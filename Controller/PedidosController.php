@@ -80,7 +80,7 @@ class PedidosController extends Controller
         //despues de agregar un producto, hay que agregar un pedido detalle.
 
 
-        CAL_DOW_DAYNOC = array();
+        $venta = array();
         foreach ($menuHoy as $producto)
         {
 
