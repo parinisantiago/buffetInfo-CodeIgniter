@@ -1,16 +1,16 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
-      <script type="text/javascript" src="script/script.js"></script>
+    <script type="text/javascript" src="script/script.js"></script>
     <script>
         $( function() { $( "#datepicker" ).datepicker(); } );
     </script>
     <div id="datepicker"></div>
         <form method="post" action="Loader.php?controller=MenuController&method=menuDia&pag=0">
-            <input type="hidden" name="fechaPicker" id="fechaPicker" value="">
+            <input type="hidden" name="fecha" id="fecha" value="">
             <input type="submit" value="Enviar" onclick="ponerFecha()" >
         </form>
-    <div >
+    <div>
         <div id="nuevoMenu" class="nuevo sombreado">
                 <form id="formNuevoMenu" method="post" action="Loader.php?controller=MenuController&method=menuAM">
                     <input type="hidden" id="nuevoMenuValue" value="">

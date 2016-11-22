@@ -3,6 +3,7 @@
 {% block main %}
 
  <script src="script/multiSelect.js" type="text/javascript"></script>
+  <script type="text/javascript" src="script/script.js"></script>
     <form name="formMenu" enctype="multipart/form-data" class="formProduc clearfix sombreado" action="Loader.php?controller=MenuController&method=menuAMPOST" method="post">
 
         <p  class="formProducText"> Productos del menu: </p>
@@ -32,7 +33,10 @@
         <script type="text/javascript"> $('#selectProdMult').multiSelect();</script>
        
         <label for="fecha"  class="formProducText">Fecha: </label>
-        <input type="date" name="fecha" id="fecha" class="fecha" value="{{ datos.fecha }}">
+        <input type="date" name="fecha" id="datepicker" class="fecha" value="{{ datos.fecha }}"  > 
+        <script>$( function() {$( "#datepicker" ).datepicker();} );</script>
+
+        
 
         <label for="foto" class="formProducText">Foto:</label>
         <input type="file" name="foto" id="foto" class="formProducinput">
@@ -42,7 +46,7 @@
         {% endif %}
 
         <label for="submitButton" hidden>Boton de envio:</label>
-        <input type="submit" id="submitButton" name="submitButton">
+        <input type="submit" id="submitButton" name="submitButton" onclick="ponerFechaAM()">
 
     </form>
 
