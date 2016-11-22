@@ -37,15 +37,17 @@ class MenuController extends Controller{
 
     public function menuDia(){
         /* muestra el menu para un dia en particular, le mande un try catch por las dudas de que pasen cualquier cosa por get */
-        var_dump($_POST['fechaPicker']);
-        var_dump($_GET['fechaPicker']);
-        try{
-            $this->validator->validarFecha($_GET['fechaPicker'], "Fecha no valida");
+       try{
+           if (!isset($_POST['fechaPicker'])){
+               $_POST['fechaPicker']=date("Y-m-d");
+           }
+           var_dump($_POST['fechaPicker']);
+            $this->validator->validarFecha($_POST['fechaPicker'], "Fecha no valida");
             $this->paginaCorrecta($this->menuModel->totalMenu());
-            $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_GET['fechaPicker']);
+            $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_POST['fechaPicker']);
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
             $this->dispatcher->datos = $this->dispatcher->menu[1];
-            $this->dispatcher->fecha=$_GET['fechaPicker'];
+            $this->dispatcher->fecha=$_POST['fechaPicker'];
             $this->dispatcher->pag = $_GET['pag'];
             $this->dispatcher->method = "menuDia";
             $this->dispatcher->render("Backend/MenuListarTemplate.twig");

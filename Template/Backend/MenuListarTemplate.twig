@@ -5,11 +5,9 @@
     <script>
         $( function() { $( "#datepicker" ).datepicker(); } );
     </script>
-        <div id="datepicker"></div>
-        <script>
-             </script>
+    <div id="datepicker"></div>
         <form method="post" action="Loader.php?controller=MenuController&method=menuDia&pag=0">
-            <input type="hidden" id="fechaPicker" value="">
+            <input type="hidden" name="fechaPicker" id="fechaPicker" value="">
             <input type="submit" value="Enviar" onclick="ponerFecha()" >
         </form>
     <div >
