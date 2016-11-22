@@ -36,9 +36,9 @@ class MenuController extends Controller{
     }
 
     public function menuDia(){
-
         /* muestra el menu para un dia en particular, le mande un try catch por las dudas de que pasen cualquier cosa por get */
-
+        var_dump($_POST['fechaPicker']);
+        var_dump($_GET['fechaPicker']);
         try{
             $this->validator->validarFecha($_GET['fechaPicker'], "Fecha no valida");
             $this->paginaCorrecta($this->menuModel->totalMenu());

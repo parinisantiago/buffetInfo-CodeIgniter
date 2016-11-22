@@ -8,9 +8,10 @@
         <div id="datepicker"></div>
         <script>
              </script>
-         <form method="post" action="Loader.php?controller=MenuController&method=menuDia&pag=0&fecha=">
-               <input type="submit" id="fechaPicker" value="" onclick="ponerFecha()">
-         </form>
+        <form method="post" id="fechaPickerForm" action="Loader.php?controller=MenuController&method=menuDia&pag=0">
+            <input type="hidden" id="fechaPicker" value="">
+            <input type="button" value="Enviar" onclick="ponerFecha()">
+        </form>
     <div >
         <div id="nuevoMenu" class="nuevo sombreado">
                 <form id="formNuevoMenu" method="post" action="Loader.php?controller=MenuController&method=menuAM">
