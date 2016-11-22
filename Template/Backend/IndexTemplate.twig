@@ -6,8 +6,10 @@
             <p id="textoBienvida">Bienvenido
             {% if rol == "0" %}
                 Administrador
-            {%else%}
+            {% elseif rol == "1"%}
                 Gestion
+             {% else %}
+                Usuario On-line
             {%endif%}
             </p>
         </li>
