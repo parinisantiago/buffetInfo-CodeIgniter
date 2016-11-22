@@ -7,6 +7,7 @@ class PedidosController extends Controller
     private $pedidos;
     private $menu;
     private $venta;
+    private $producto;
 
     public function getPermission(){
         Session::init();
@@ -19,6 +20,7 @@ class PedidosController extends Controller
         $this->pedidos = new PedidosModel();
         $this->menu = new MenuModel();
         $this->venta = new VentaModel();
+        $this->producto = new ProductosModel();
     }
 
     //le pasa el menu del dia a la vista, si no hay lo avisa.
@@ -64,6 +66,7 @@ class PedidosController extends Controller
 
             $cantidad = $_POST['numPedidos'];
 
+
             foreach ($menuHoy as $producto)
             {
                 if ($producto->stock <  $cantidad) throw new valException("No hay suficiente cantidad de $producto->nombre para completar $cantidad pedidos");
@@ -76,24 +79,58 @@ class PedidosController extends Controller
         }
 
         //Primero hay que agregar el pedido y recuperar su id.
-        //despues hay que agregar cada producto y recuperar su id.
-        //despues de agregar un producto, hay que agregar un pedido detalle.
+        //hay que agregar un pedido detalle.
 
+        $pedidoId = $this->pedidos->insertarPedido($_SESSION['idUsuario']);
 
-        $venta = array();
+        //tengo que agregar los productos al detalle y despues descontar la cantidad en productos
+        //para que despues en el cancelar solo modificar los productos
+        //en el aceptar se hace lo que esta comentado en el foreach
+
         foreach ($menuHoy as $producto)
         {
+            $this->pedidos->insertPedidoDetalle($pedidoId, $producto->idProducto, $cantidad);
+            //actualizo el producto
+            $this->producto->actualizarCantProductos($producto->idProducto, $producto->stock - $cantidad);
 
+        /*
             $venta['idProducto'] = $producto->idProducto;
             $venta['precioVentaUnitario'] = $producto->precioVentaUnitario;
             $venta['cant'] = $cantidad;
 
 
             echo ($this->venta->insertarVentaId($venta));
-
+    */
         }
 
+        $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, "0");
 
+        $this->dispatcher->pag = 0;
+
+        $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
+
+    }
+
+    public function verPedidos()
+    {
+        $this->paginaCorrecta($this->pedidos->totalPedidos($_SESSION['idUsuario']));
+        $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset']);
+        $this->dispatcher->pag = $_GET['pag'];
+        $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
+    }    
+
+    public function paginaCorrecta($total){
+        if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
+        elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
+        else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
+        if ($_GET['offset'] < 0) $_GET['offset'] = 0;
+        $_GET['offset'] .= "";
+    }
+
+    public function cancelarPedido()
+    {
+        echo "cancelar pedido";
+        die;
     }
 
 }
