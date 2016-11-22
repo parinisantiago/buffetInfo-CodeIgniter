@@ -121,6 +121,7 @@ class ProductosModel extends Model{
     
     public function actualizarCantProductos($id, $cant){
 /*actualiza solo la tabla de productos, tambien hay qye hacer la actualizcion en la tabla de ventas*/
+
        return $this -> query(
                 "UPDATE producto p 
                 SET p.stock = :cant 
@@ -128,6 +129,7 @@ class ProductosModel extends Model{
         array('cant' => $cant,
               'idProd' =>$id));
     }
+
 
 }
 
