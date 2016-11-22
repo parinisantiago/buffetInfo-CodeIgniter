@@ -1,0 +1,52 @@
+{% extends 'Template/Backend/IndexTemplate.twig' %}
+
+{% block main %}
+
+    <div>
+    <div class="paginas sombreado">
+        <p> Página: {{ pag }}
+        <p>
+            {% if pag != 0 %}
+                <a class="boton" href="Loader.php?controller=PedidosController&method=verPedidos&pag={{ pag - 1 }}">Página
+                    anterior</a>
+            {% endif %}
+            <a class="boton" href="Loader.php?controller=PedidosController&method=verPedidos&pag={{ pag + 1 }}">Página
+                Siguiente</a>
+    </div>
+    <table class="tablaProductos sombreado">
+        <thead>
+        <tr>
+            <th class="columnaAncha" id="estado">Estado</th>
+            <th class="columnaAncha" id="observaciones">Observacioness</th>
+            <th class="columnaAncha" id="fechaAlta">fecha de alta</th>
+            <th class="columnaAncha" id="total">total</th>
+            <th id="acciones">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for pedido in pedidos %}
+            <tr class="fila">
+                <td headers="estado">{{ pedido.idEstado }}</td>
+                <td headers="observaciones"> {{ pedido.observaciones }}</td>
+                <td headers="fechaAlta"> {{ pedido.fechaAlta }}</td>
+                <td headers="total">{{ pedido.total }}</td>
+                <td headers="fecha">{{ venta.fecha }}</td>
+                <td headers="acciones">
+                    {% if pedido.idEstado == "pendiente" %}
+                        <form method="post" action="Loader.php?controller=PedidosController&method=cancelarPedido">
+                            <input name="idProducto" type="hidden" value={{ prod.idProducto }}>
+                            <button class="botonTabla" type="submit" name="submitButton"
+                                    onClick="return confirm('¿Está seguro?')"
+                                    onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
+                                <img class="icono" src="images/eliminar.png" alt="eliminar"/>
+                            </button>
+                        </form>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
