@@ -1,14 +1,13 @@
 <?php
+include_once 'Model/MenuModel.php';
 
 $returnArray = true;
 $rawData = file_get_contents('php://input');
 $response = json_decode($rawData, $returnArray);
 $id_del_chat = $response['message']['chat']['id'];
 
-
 // Obtener comando (y sus posibles parametros)
 $regExp = '#^(\/[a-zA-Z0-9\/]+?)(\ .*?)$#i';
-
 
 $tmp = preg_match($regExp, $response['message']['text'], $aResults);
 
@@ -21,6 +20,7 @@ if (isset($aResults[1])) {
 }
 
 //armado respuesta
+$menuModel= new MenuModel();
 $msg = array();
 $msg['chat_id'] = $response['message']['chat']['id'];
 $msg['text'] = null;
@@ -41,8 +41,15 @@ switch ($cmd) {
         $msg['text'] .= '/help Muestra esta ayuda';
         $msg['reply_to_message_id'] = null;
         break;
-    case '/menú':
-        $msg['text']  = 'El menú del día es ensalada tropical';
+    case '/hoy':
+        $menu= $menuModel -> getMenuToday();
+        $msg['text']  = 'El menú del día es: '.$menu["nombre"].' '.$menu["descripcion"];
+        break;
+    case '/mañana':
+        $today=getDate();
+        $fecha= $today['year']."-".$today['mon']."-".($today['mday']+1);
+        $menu= $menuModel ->getMenuByDia($fecha);
+        $msg['text']  = 'El menú de mañana es: '.$menu["nombre"].' '.$menu["descripcion"];
         break;
     default:
         $msg['text']  = 'Lo siento, no es un comando válido.' . PHP_EOL;
