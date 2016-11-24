@@ -45,7 +45,7 @@ switch ($cmd) {
         $menu= $menuModel -> getMenuToday();
         $msg['text']  = 'El menú del día es: '.$menu["nombre"].' '.$menu["descripcion"];
         break;
-    case '/mañana':
+    case '/maniana':
         $today=getDate();
         $fecha= $today['year']."-".$today['mon']."-".($today['mday']+1);
         $menu= $menuModel ->getMenuByDia($fecha);
