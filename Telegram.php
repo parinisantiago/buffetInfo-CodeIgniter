@@ -1,5 +1,7 @@
 <?php
 include_once 'Model/MenuModel.php';
+require_once 'Utils/Const.php';
+
         $returnArray = true;
         $rawData = file_get_contents('php://input');
         $response = json_decode($rawData, $returnArray);
