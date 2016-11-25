@@ -55,7 +55,7 @@ include_once 'Model/MenuModel.php';
                 $msg['text'] = 'Hola ';
                 $today = getDate();
                 $fecha = $today['year'] . "-" . $today['mon'] . "-" . ($today['mday'] + 1);
-                $menu = $menuModel->getMenuByDia($fecha);
+                $menu = $menuModel->getMenuByDia($fecha,1,0);
                 if ($menu) {
                     $msg['text'] = 'El menú de mañana es: ' . $menu["nombre"] . ' ' . $menu["descripcion"];
                 } else {
