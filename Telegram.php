@@ -48,7 +48,6 @@ require_once 'Utils/Const.php';
                 $menu = $menuModel->getMenuToday();
                 if ($menu) {
                     foreach ($menu as $clave=>$valor){
-                        $msg['text'] =$clave;
                         $msg['text'] =$valor;
                     }
                 } else {
@@ -62,7 +61,10 @@ require_once 'Utils/Const.php';
                 $fecha = $today['year'] . "-" . $today['mon'] . "-" . ($today['mday'] + 1);
                 $menu = $menuModel->getMenuByDia($fecha,1,0);
                 if ($menu) {
-                    $msg['text'] = 'El menú de mañana es: '. $menu['nombre'] . ' ' . $menu["descripcion"];; 
+                    $msg['text'] = 'El menú de mañana es: ';
+                    $msg['text'] =$menu['nombre'];
+                    $msg['text'] = ' ';
+                    $msg['text'] =$menu["descripcion"]; 
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para mañana :(';
                 }
