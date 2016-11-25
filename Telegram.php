@@ -48,7 +48,8 @@ require_once 'Utils/Const.php';
                 $menu = $menuModel->getMenuToday();
                 if ($menu) {
                     foreach ($menu as $clave=>$valor){
-                        $msg['text'] .=$valor;
+                        $msg['text'] .=$menu[$clave];
+                         $msg['text'] .=$menu[$valor];
                     }
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para hoy';
