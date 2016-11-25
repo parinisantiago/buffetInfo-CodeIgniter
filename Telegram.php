@@ -64,16 +64,19 @@ require_once 'Utils/Const.php';
                 }
                 break;
             case '/hoy2':
+                $msg['text'] = 'Hola ';
                 $menu = $menuModel->getMenuToday();
                 foreach ($menu as $clave=>$valor){
                          $msg['text'] .= $valor;
                 }
             break;
             case '/hoy3':
+                $msg['text'] = 'Hola ';
                 $menu = $menuModel->getMenuToday();
                  $msg['text'] .= $menu['nombre'];
                 break;
             case '/hoy4':
+                $msg['text'] = 'Hola ';
                 
                 $menu = $menuModel->getMenuToday();
                 $msg['text'] .= $menu;
