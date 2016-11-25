@@ -60,8 +60,8 @@ require_once 'Utils/Const.php';
                 $menu = $menuModel->getMenuByDia($fecha,1,0);
                 if ($menu) {
                     $msg['text'] = 'El menú de mañana es: '; 
-                    foreach ($menu as $aux){
-                        $msg['text'] =    $aux;
+                    foreach ($menu as $clave => $valor){
+                        $msg['text'] =$valor;
                 
                     }
                 } else {
