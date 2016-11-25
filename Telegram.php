@@ -59,7 +59,11 @@ require_once 'Utils/Const.php';
                 $fecha = $today['year'] . "-" . $today['mon'] . "-" . ($today['mday'] + 1);
                 $menu = $menuModel->getMenuByDia($fecha,1,0);
                 if ($menu) {
-                    $msg['text'] = 'El menú de mañana es: ' . $menu . ' ' . $menu["descripcion"];
+                    $msg['text'] = 'El menú de mañana es: '; 
+                    foreach ($menu as $aux){
+                        $msg['text'] =    $aux;
+                
+                    }
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para mañana :(';
                 }
