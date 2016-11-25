@@ -21,6 +21,15 @@ class PedidosModel extends Model
         );
     }
 
+    public function getPedido($id)
+    {
+        return $this->queryPreparadaSQL(
+            "SELECT *
+            FROM pedido
+            WHERE idPedido = :id",
+            array("id" => $id));
+    }
+
     public function insertPedidoDetalle($idPedido, $idProducto, $cantidad)
     {
         return $this->lastId("
@@ -29,10 +38,23 @@ class PedidosModel extends Model
           array("idPedido" => $idPedido, "idProducto" => $idProducto, "cantidad"=>$cantidad));
     }
 
+    public function getDetalle($id)
+    {
+        return $this->queryTodasLasFilas(
+          " SELECT * 
+            FROM pedido pe
+            INNER JOIN pedidoDetalle d
+            ON (pe.idPedido = d.idPedido)
+            INNER JOIN producto p
+            ON (d.idProducto = p.idProducto)
+            WHERE pe.idPedido = :id",
+            array("id" => $id)
+        );
+    }
 
     public function pedidosUsuarios($idUsuario, $limit, $offset)
     {
-        $this->stmnt = $this->db->prepare(     "SELECT pe.idPedido, pe.idEstado, pe.observaciones, pe.fechaAlta,
+        $this->stmnt = $this->db->prepare("SELECT TIME_TO_SEC(TIMEDIFF(NOW(), pe.fechaAlta)) AS intervalo, pe.idPedido, pe.idEstado, pe.observaciones, pe.fechaAlta,
             ROUND(SUM(p.precioVentaUnitario * d.cantidad), 2) AS total
             FROM pedido pe
             INNER JOIN pedidoDetalle d

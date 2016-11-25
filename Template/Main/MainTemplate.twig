@@ -21,8 +21,7 @@
             <p class="textoComida"> Menu Nº {{ numMenu }}:</p></br>
             <p class="textoComida">{{ prod.nombre }} por ${{ prod.precioVentaUnitario }}</p></br>
             <p class="textoComida">{{ prod.descripcion }}</p></br>
-            </br>
-            {% set numMenu = numMenu + 1 %}
+             {% set numMenu = numMenu + 1 %}
          {% endfor %}        
     {% endif %}
 </div>

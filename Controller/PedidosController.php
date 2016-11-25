@@ -115,6 +115,7 @@ class PedidosController extends Controller
     {
         $this->paginaCorrecta($this->pedidos->totalPedidos($_SESSION['idUsuario']));
         $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset']);
+        var_dump($this->dispatcher->pedidos);
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
     }    
@@ -127,9 +128,29 @@ class PedidosController extends Controller
         $_GET['offset'] .= "";
     }
 
+    public function verDetalle()
+    {
+        try
+        {
+            $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?",3);
+            $pedido = $this->pedidos->getPedido($_POST['idPedido']);
+            if(!$pedido) throw new valException('El pedido no es valido');
+            if( $pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
+        }
+        catch (valException $e)
+        {
+            echo $e->getMessage();
+        }
+        
+        $this->dispatcher->detalle = $this->pedidos->getDetalle($_POST['idPedido']);
+        var_dump($this->dispatcher->detalle);
+        $this->dispatcher->render("Backend/mostrarDetalle.php");
+
+    }
+
     public function cancelarPedido()
     {
-        echo "cancelar pedido";
+
         die;
     }
 
