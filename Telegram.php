@@ -48,13 +48,33 @@ require_once 'Utils/Const.php';
                 $menu = $menuModel->getMenuToday();
                 if ($menu) {
                     foreach ($menu as $clave=>$valor){
-                        $msg['text'] .=$menu[$clave];
-                         $msg['text'] .=$menu[$valor];
+                        $msg['text'] .= $menu[$clave];
+                         $msg['text'] .= $menu[$valor];
                     }
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para hoy';
                 }
                 $msg['reply_to_message_id'] = null;
+                break;
+            case '/hoy1':
+                $menu = $menuModel->getMenuToday();
+                foreach ($menu as $clave=>$valor){
+                        $msg['text'] .= $clave;
+                }
+                break;
+            case '/hoy2':
+                $menu = $menuModel->getMenuToday();
+                foreach ($menu as $clave=>$valor){
+                         $msg['text'] .= $valor;
+                }
+            break;
+            case '/hoy3':
+                $menu = $menuModel->getMenuToday();
+                 $msg['text'] .= $menu['nombre'];
+                break;
+            case '/hoy4':
+                $menu = $menuModel->getMenuToday();
+                $menu;
                 break;
             case '/maniana':
                 $msg['text'] = 'Hola ';
