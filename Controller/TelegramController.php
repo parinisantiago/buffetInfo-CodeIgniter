@@ -56,14 +56,17 @@ class TelegramController extends Controller {
                 $msg['reply_to_message_id'] = null;
                 break;
             case '/hoy':
+                $msg['text'] = 'Hola ';
                 $menu = $menuModel->getMenuToday();
                 if (!isset($menu)) {
                     $msg['text'] = 'El menú del día es: ' . $menu["nombre"] . ' ' . $menu["descripcion"];
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para hoy';
                 }
+                $msg['reply_to_message_id'] = null;
                 break;
             case '/maniana':
+                $msg['text'] = 'Hola ';
                 $today = getDate();
                 $fecha = $today['year'] . "-" . $today['mon'] . "-" . ($today['mday'] + 1);
                 $menu = $menuModel->getMenuByDia($fecha);
@@ -72,8 +75,9 @@ class TelegramController extends Controller {
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para mañana :(';
                 }
+                $msg['reply_to_message_id'] = null;
                 break;
-            default:
+                default:
                 $msg['text'] = 'Lo siento, no es un comando válido.' . PHP_EOL;
                 $msg['text'] .= 'Prueba /help para ver la lista de comandos disponibles';
                 break;
