@@ -47,7 +47,7 @@ require_once 'Utils/Const.php';
                 $msg['text'] = 'Hola ';
                 $menu = $menuModel->getMenuToday();
                 if ($menu) {
-                    $msg['text'] = 'El menú del día es: ' . $menu[nombre] . ' ' . $menu['descripcion'];
+                    $msg['text'] = 'El menú del día es: ' . $menu['nombre'] . ' ' . $menu['descripcion'];
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para hoy';
                 }
