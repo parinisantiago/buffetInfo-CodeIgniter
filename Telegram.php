@@ -57,6 +57,7 @@ require_once 'Utils/Const.php';
                 $msg['reply_to_message_id'] = null;
                 break;
             case '/hoy1':
+                
                 $menu = $menuModel->getMenuToday();
                 foreach ($menu as $clave=>$valor){
                         $msg['text'] .= $clave;
@@ -73,8 +74,9 @@ require_once 'Utils/Const.php';
                  $msg['text'] .= $menu['nombre'];
                 break;
             case '/hoy4':
+                
                 $menu = $menuModel->getMenuToday();
-                $menu;
+                $msg['text'] .= $menu;
                 break;
             case '/maniana':
                 $msg['text'] = 'Hola ';
