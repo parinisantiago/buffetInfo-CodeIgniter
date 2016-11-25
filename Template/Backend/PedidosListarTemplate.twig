@@ -18,9 +18,10 @@
         <tr>
             <th class="columnaAncha" id="estado">Estado</th>
             <th class="columnaAncha" id="observaciones">Observacioness</th>
-            <th class="columnaAncha" id="fechaAlta">fecha de alta</th>
-            <th class="columnaAncha" id="total">total</th>
-            <th id="acciones">Acciones</th>
+            <th class="columnaAncha" id="fechaAlta">Fecha de alta</th>
+            <th class="columnaAncha" id="total">Total</th>
+            <th id="acciones">Cancelar</th>
+            <th id="detalle">Detalle</th>
         </tr>
         </thead>
         <tbody>
@@ -33,16 +34,26 @@
                 <td headers="total">{{ pedido.total }}</td>
                 <td headers="fecha">{{ venta.fecha }}</td>
                 <td headers="acciones">
-                    {% if pedido.idEstado == "pendiente" %}
+                    {% if pedido.idEstado == "pendiente" and pedido.intervalo < 1800 %}
                         <form method="post" action="Loader.php?controller=PedidosController&method=cancelarPedido">
-                            <input name="idProducto" type="hidden" value={{ prod.idProducto }}>
+                            <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
                             <button class="botonTabla" type="submit" name="submitButton"
                                     onClick="return confirm('¿Está seguro?')"
                                     onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
                                 <img class="icono" src="images/eliminar.png" alt="eliminar"/>
                             </button>
                         </form>
+                    {% else %}
+                    No se puede cancelar
                     {% endif %}
+                </td>
+                <td headers="detalle">
+                    <form method="post" action="Loader.php?controller=PedidosController&method=verDetalle">
+                        <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
+                        <button class="botonTabla" type="submit" name="submitButton">
+                            <img class="icono" src="images/editar.png" alt="detalle"/>
+                        </button>
+                    </form>
                 </td>
             </tr>
         {% endfor %}
