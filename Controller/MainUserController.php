@@ -25,6 +25,7 @@ class MainUserController extends Controller
 
     public function index(){
         $this->dispatcher->menu = $this->menuModel->getMenuToday();
+        var_dump($this->menuModel->getMenuToday());
         $this->dispatcher->render("Main/MainTemplate.twig");
     }
 

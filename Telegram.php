@@ -48,6 +48,7 @@ require_once 'Utils/Const.php';
                 $menu = $menuModel->getMenuToday();
                 if ($menu) {
                     foreach ($menu as $clave=>$valor){
+                        $msg['text'] =$clave;
                         $msg['text'] =$valor;
                     }
                 } else {

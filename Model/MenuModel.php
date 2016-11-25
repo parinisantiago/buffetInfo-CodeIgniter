@@ -21,7 +21,7 @@ class MenuModel extends Model{
     }
     public function getMenuToday(){
         $today=getDate();
-        return $this->queryPreparadaSQL('
+        return $this->queryTodasLasFilas('
             SELECT m.foto, p.nombre, p.precioVentaUnitario, p.descripcion
             FROM menu m
             INNER JOIN menuProducto mp ON (mp.idMenu = m.idMenu)

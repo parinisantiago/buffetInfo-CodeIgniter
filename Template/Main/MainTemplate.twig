@@ -14,12 +14,16 @@
     {% else %}
         {% set numMenu =1 %}
         <p class="titleComida">Menu del día:</p>
-        
-        <img class="imageComida sombreado" src="uploads/{{ menu.foto }}" alt="foto del menu">
+        {% for prod in menu %}
+            {% if (numMenu == 1) %}
+                <img class="imageComida sombreado" src="uploads/{{ prod.foto }}" alt="foto del menu">
+            {% endif %}
             <p class="textoComida"> Menu Nº {{ numMenu }}:</p></br>
-            <p class="textoComida">{{ menu.nombre }} por ${{ menu.precioVentaUnitario }}</br>
-            <p class="textoComida">{{ menu.descripcion }}</p></br>
+            <p class="textoComida">{{ prod.nombre }} por ${{ prod.precioVentaUnitario }}</p></br>
+            <p class="textoComida">{{ prod.descripcion }}</p></br>
+            </br>
             {% set numMenu = numMenu + 1 %}
+         {% endfor %}        
     {% endif %}
 </div>
 
