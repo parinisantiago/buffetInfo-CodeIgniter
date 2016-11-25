@@ -44,7 +44,7 @@ include_once 'Model/MenuModel.php';
             case '/hoy':
                 $msg['text'] = 'Hola ';
                 $menu = $menuModel->getMenuToday();
-                if (!isset($menu)) {
+                if (isset($menu)) {
                     $msg['text'] = 'El menú del día es: ' . $menu["nombre"] . ' ' . $menu["descripcion"];
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para hoy';
@@ -56,7 +56,7 @@ include_once 'Model/MenuModel.php';
                 $today = getDate();
                 $fecha = $today['year'] . "-" . $today['mon'] . "-" . ($today['mday'] + 1);
                 $menu = $menuModel->getMenuByDia($fecha);
-                if (!isset($menu)) {
+                if (isset($menu)) {
                     $msg['text'] = 'El menú de mañana es: ' . $menu["nombre"] . ' ' . $menu["descripcion"];
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para mañana :(';
