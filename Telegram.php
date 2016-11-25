@@ -1,13 +1,6 @@
 <?php
-    require_once 'Utils/Const.php';
-    foreach ( glob ( "Controller/*Controller.php" ) as $app ) {
-        require_once $app;
-    }
-    foreach ( glob ( "Model/*Model.php" ) as $mod ) {
-        require_once $mod;
-    }
-    $controller=new TelegramController;
-      $returnArray = true;
+include_once 'Model/MenuModel.php';
+        $returnArray = true;
         $rawData = file_get_contents('php://input');
         $response = json_decode($rawData, $returnArray);
         $id_del_chat = $response['message']['chat']['id'];
