@@ -37,19 +37,28 @@ switch ($cmd) {
     case '/help':
         $msg['text']  = 'Los comandos disponibles son estos:' . PHP_EOL;
         $msg['text'] .= '/start Inicializa el bot';
-        $msg['text'] .= '/menú Muestra el menú del día';
+        $msg['text'] .= '/hoy Muestra el menú del día';
+        $msg['text'] .= '/maniana Muestra el menú de mañana';
         $msg['text'] .= '/help Muestra esta ayuda';
         $msg['reply_to_message_id'] = null;
         break;
     case '/hoy':
         $menu= $menuModel -> getMenuToday();
-        $msg['text']  = 'El menú del día es: '.$menu["nombre"].' '.$menu["descripcion"];
+        if (! isset($menu)){
+            $msg['text']  = 'El menú del día es: '.$menu["nombre"].' '.$menu["descripcion"];
+         }else{
+            $msg['text']  = 'No han planificado ningun menú para hoy';
+        }
         break;
     case '/maniana':
         $today=getDate();
         $fecha= $today['year']."-".$today['mon']."-".($today['mday']+1);
         $menu= $menuModel ->getMenuByDia($fecha);
-        $msg['text']  = 'El menú de mañana es: '.$menu["nombre"].' '.$menu["descripcion"];
+        if (! isset($menu)){
+            $msg['text']  = 'El menú de mañana es: '.$menu["nombre"].' '.$menu["descripcion"];
+        }else{
+            $msg['text']  = 'No han planificado ningun menú para mañana :(';
+        }
         break;
     default:
         $msg['text']  = 'Lo siento, no es un comando válido.' . PHP_EOL;
