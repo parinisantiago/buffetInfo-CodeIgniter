@@ -115,7 +115,6 @@ class PedidosController extends Controller
     {
         $this->paginaCorrecta($this->pedidos->totalPedidos($_SESSION['idUsuario']));
         $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset']);
-        var_dump($this->dispatcher->pedidos);
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
     }    
@@ -142,16 +141,43 @@ class PedidosController extends Controller
             echo $e->getMessage();
         }
         
-        $this->dispatcher->detalle = $this->pedidos->getDetalle($_POST['idPedido']);
-        var_dump($this->dispatcher->detalle);
-        $this->dispatcher->render("Backend/mostrarDetalle.php");
+        $this->dispatcher->detalles = $this->pedidos->getDetalle($_POST['idPedido']);
+        $this->dispatcher->render("Backend/mostrarDetalle.twig");
 
     }
 
     public function cancelarPedido()
     {
+        try
+        {
+            $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?",3);
+            $pedido = $this->pedidos->getPedido($_POST['idPedido']);
+            if(!$pedido) throw new valException('El pedido no es valido');
+            if( $pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
+            var_dump($pedido);
+            if(($pedido->idEstado != "pendiente") || ($pedido->intervalo > 1800))throw new valException("El pedido no cumple los requisitos para ser cancelado");
+        }
+        catch (valException $e)
+        {
+            echo $e->getMessage();
+        }
 
-        die;
+        $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
+        $this->pedidos->actualizarEstado("cancelado", $_POST['idPedido']);
+
+        foreach ($detalles as $detalle)
+        {
+            var_dump($detalle);
+
+            $this->producto->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
+        }
+
+        $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, "0");
+
+        $this->dispatcher->pag = 0;
+
+        $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
+
     }
 
 }
