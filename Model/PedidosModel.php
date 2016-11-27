@@ -24,7 +24,7 @@ class PedidosModel extends Model
     public function getPedido($id)
     {
         return $this->queryPreparadaSQL(
-            "SELECT *
+            "SELECT TIME_TO_SEC(TIMEDIFF(NOW(), fechaAlta)) AS intervalo, idPedido, idEstado, idUsuario
             FROM pedido
             WHERE idPedido = :id",
             array("id" => $id));
@@ -78,4 +78,12 @@ class PedidosModel extends Model
         return $this->queryPreparadaSQL("SELECT COUNT(*) AS total FROM pedido WHERE idUsuario = :idUsuario", array("idUsuario" => $idUsuario));
     }
 
+    public function actualizarEstado($idEstado, $idPedido)
+    {
+        return $this->query(
+            "UPDATE pedido
+             SET idEstado = :idEstado
+             WHERE idPedido = :idPedido",
+            array("idEstado" => $idEstado, "idPedido" => $idPedido));
+    }
 }
