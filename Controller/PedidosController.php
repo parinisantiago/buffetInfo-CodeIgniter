@@ -120,6 +120,7 @@ class PedidosController extends Controller
     }    
 
     public function paginaCorrecta($total){
+        var_dump($total);
         if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
         elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
         else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
@@ -145,6 +146,11 @@ class PedidosController extends Controller
         $this->dispatcher->render("Backend/mostrarDetalle.twig");
 
     }
+    
+    public function formCancelarPedido(){
+        $this->dispatcher->id = $_POST['idPedido'];
+        $this->dispatcher->render('Backend/cancerlarPedido.twig');
+    }
 
     public function cancelarPedido()
     {
@@ -167,7 +173,6 @@ class PedidosController extends Controller
 
         foreach ($detalles as $detalle)
         {
-            var_dump($detalle);
 
             $this->producto->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
         }
@@ -180,4 +185,29 @@ class PedidosController extends Controller
 
     }
 
+    public function pedidosRango()
+    {
+        try {
+            $this->validator->validarFecha($_POST['fechaInicio'], "la fecha posee un mal formato");
+            $this->validator->validarFecha($_POST['fechaFin'], "la fecha posee un mal formato");
+            $this->validator->varSet($_POST['submitButton2'], "tenes que entrar por el lugar adecuado");
+        } catch (valException $e) {
+            echo $e->getMessage();
+        }
+        $_GET['pag']=0;
+        $_GET['inicio']= $_POST['fechaInicio'];
+        $_GET['fin'] = $_POST['fechaFin'];
+        $this->mostrarPedidoRango();
+    }
+
+    public function mostrarPedidoRango()
+    {
+        $this->paginaCorrecta($this->pedidos->totalPedidosRango($_SESSION['idUsuario'], $_POST['fechaInicio'], $_POST['fechaFin']));
+       $this->dispatcher->pedidos = $this->pedidos->pedidosUsuariosRango($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset'], $_GET['inicio'], $_GET['fin']);
+        $this->dispatcher->pag = $_GET['pag'];
+        $this->dispatcher->inicio = $_GET['inicio'];
+        $this->dispatcher->fin = $_GET['fin'];
+        $this->dispatcher->rango = true;
+        $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
+    }
 }
