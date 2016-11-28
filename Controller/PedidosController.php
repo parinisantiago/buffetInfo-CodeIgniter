@@ -115,12 +115,12 @@ class PedidosController extends Controller
     {
         $this->paginaCorrecta($this->pedidos->totalPedidos($_SESSION['idUsuario']));
         $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset']);
-        var_dump($this->dispatcher->pedidos);
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
     }    
 
     public function paginaCorrecta($total){
+        var_dump($total);
         if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
         elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
         else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
@@ -142,16 +142,72 @@ class PedidosController extends Controller
             echo $e->getMessage();
         }
         
-        $this->dispatcher->detalle = $this->pedidos->getDetalle($_POST['idPedido']);
-        var_dump($this->dispatcher->detalle);
-        $this->dispatcher->render("Backend/mostrarDetalle.php");
+        $this->dispatcher->detalles = $this->pedidos->getDetalle($_POST['idPedido']);
+        $this->dispatcher->render("Backend/mostrarDetalle.twig");
 
+    }
+    
+    public function formCancelarPedido(){
+        $this->dispatcher->id = $_POST['idPedido'];
+        $this->dispatcher->render('Backend/cancerlarPedido.twig');
     }
 
     public function cancelarPedido()
     {
+        try
+        {
+            $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?",3);
+            $pedido = $this->pedidos->getPedido($_POST['idPedido']);
+            if(!$pedido) throw new valException('El pedido no es valido');
+            if( $pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
+            var_dump($pedido);
+            if(($pedido->idEstado != "pendiente") || ($pedido->intervalo > 1800))throw new valException("El pedido no cumple los requisitos para ser cancelado");
+        }
+        catch (valException $e)
+        {
+            echo $e->getMessage();
+        }
 
-        die;
+        $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
+        $this->pedidos->actualizarEstado("cancelado", $_POST['idPedido']);
+
+        foreach ($detalles as $detalle)
+        {
+
+            $this->producto->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
+        }
+
+        $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, "0");
+
+        $this->dispatcher->pag = 0;
+
+        $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
+
     }
 
+    public function pedidosRango()
+    {
+        try {
+            $this->validator->validarFecha($_POST['fechaInicio'], "la fecha posee un mal formato");
+            $this->validator->validarFecha($_POST['fechaFin'], "la fecha posee un mal formato");
+            $this->validator->varSet($_POST['submitButton2'], "tenes que entrar por el lugar adecuado");
+        } catch (valException $e) {
+            echo $e->getMessage();
+        }
+        $_GET['pag']=0;
+        $_GET['inicio']= $_POST['fechaInicio'];
+        $_GET['fin'] = $_POST['fechaFin'];
+        $this->mostrarPedidoRango();
+    }
+
+    public function mostrarPedidoRango()
+    {
+        $this->paginaCorrecta($this->pedidos->totalPedidosRango($_SESSION['idUsuario'], $_POST['fechaInicio'], $_POST['fechaFin']));
+       $this->dispatcher->pedidos = $this->pedidos->pedidosUsuariosRango($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset'], $_GET['inicio'], $_GET['fin']);
+        $this->dispatcher->pag = $_GET['pag'];
+        $this->dispatcher->inicio = $_GET['inicio'];
+        $this->dispatcher->fin = $_GET['fin'];
+        $this->dispatcher->rango = true;
+        $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
+    }
 }

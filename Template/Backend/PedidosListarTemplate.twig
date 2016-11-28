@@ -3,15 +3,36 @@
 {% block main %}
 
     <div>
+    <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=PedidosController&method=pedidosRango" method="post">
+
+        <label for="fechaInicio" class="formProducText">Fecha inicio:</label>
+        <input type="date" name="fechaInicio" id="fechaInicio" class="formProducinput" required>
+
+        <label for="fechaFin" class="formProducText">Fecha Fin:</label>
+        <input type="date" name="fechaFin" id="fechaFin" class="formProducinput" required>
+
+        <label for="submitButton2" hidden>Boton de envio:</label>
+        <input type="submit" id="submitButton2" name="submitButton2">
+
+    </form>
     <div class="paginas sombreado">
         <p> Página: {{ pag }}
         <p>
+            {% if rango %}
+                {% if pag != 0 %}
+                    <a class="boton" href="Loader.php?controller=PedidosController&method=mostrarPedidoRango&pag={{ pag - 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                        anterior</a>
+                {% endif %}
+                <a class="boton" href="Loader.php?controller=PedidosController&method=mostrarPedidoRango&pag={{ pag + 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                    Siguiente</a>
+            {% else %}
             {% if pag != 0 %}
                 <a class="boton" href="Loader.php?controller=PedidosController&method=verPedidos&pag={{ pag - 1 }}">Página
                     anterior</a>
             {% endif %}
             <a class="boton" href="Loader.php?controller=PedidosController&method=verPedidos&pag={{ pag + 1 }}">Página
                 Siguiente</a>
+            {% endif %}
     </div>
     <table class="tablaProductos sombreado">
         <thead>
@@ -35,11 +56,9 @@
                 <td headers="fecha">{{ venta.fecha }}</td>
                 <td headers="acciones">
                     {% if pedido.idEstado == "pendiente" and pedido.intervalo < 1800 %}
-                        <form method="post" action="Loader.php?controller=PedidosController&method=cancelarPedido">
+                        <form method="post" action="Loader.php?controller=PedidosController&method=formCancelarPedido">
                             <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
-                            <button class="botonTabla" type="submit" name="submitButton"
-                                    onClick="return confirm('¿Está seguro?')"
-                                    onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
+                            <button class="botonTabla" type="submit" name="submitButton">
                                 <img class="icono" src="images/eliminar.png" alt="eliminar"/>
                             </button>
                         </form>
