@@ -117,16 +117,15 @@ class PedidosController extends Controller
         $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset']);
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
-    }    
-
+    }
     public function paginaCorrecta($total){
-        var_dump($total);
         if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
         elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
         else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
         if ($_GET['offset'] < 0) $_GET['offset'] = 0;
         $_GET['offset'] .= "";
     }
+ 
 
     public function verDetalle()
     {
@@ -171,17 +170,17 @@ class PedidosController extends Controller
         $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
         $this->pedidos->actualizarEstado("cancelado", $_POST['idPedido']);
 
+        if(strlen($_POST['comentario']) > 0 ) $this->pedidos->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
+
         foreach ($detalles as $detalle)
         {
 
             $this->producto->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
         }
 
-        $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, "0");
+        $_GET['pag'] = 0;
 
-        $this->dispatcher->pag = 0;
-
-        $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
+        $this->verPedidos();
 
     }
 
@@ -203,7 +202,7 @@ class PedidosController extends Controller
     public function mostrarPedidoRango()
     {
         $this->paginaCorrecta($this->pedidos->totalPedidosRango($_SESSION['idUsuario'], $_POST['fechaInicio'], $_POST['fechaFin']));
-       $this->dispatcher->pedidos = $this->pedidos->pedidosUsuariosRango($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset'], $_GET['inicio'], $_GET['fin']);
+        $this->dispatcher->pedidos = $this->pedidos->pedidosUsuariosRango($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset'], $_GET['inicio'], $_GET['fin']);
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->inicio = $_GET['inicio'];
         $this->dispatcher->fin = $_GET['fin'];
