@@ -3,8 +3,12 @@
 {% block main %}
     <div>
     <div class="paginas sombreado">
+        {% if rol == '2' %}
     <a class="boton" href="Loader.php?controller=PedidosController&method=verPedidos&pag=0">Volver</a>
-    </div>
+        {% else %}
+            <a class="boton" href="Loader.php?controller=GestionPedidoController&method=verPedidos&pag=0">Volver</a>
+        {% endif %}
+            </div>
     <table class="tablaProductos sombreado">
     <thead>
     <tr>
