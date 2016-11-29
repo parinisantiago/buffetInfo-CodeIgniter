@@ -87,6 +87,15 @@ class PedidosModel extends Model
             array("idEstado" => $idEstado, "idPedido" => $idPedido));
     }
 
+    public function actualizarComentario($idEstado, $idPedido)
+    {
+        return $this->query(
+            "UPDATE pedido
+             SET observaciones = :idEstado
+             WHERE idPedido = :idPedido",
+            array("idEstado" => $idEstado, "idPedido" => $idPedido));
+    }
+
     public function  totalPedidosRango($idUsuario,$inicio,$fin)
     {
         return $this->queryPreparadaSQL("SELECT COUNT(*) AS total FROM pedido WHERE idUsuario = :idUsuario AND fechaBusqueda BETWEEN :inicio AND :fin", array("idUsuario" => $idUsuario, "inicio"=>$inicio, "fin"=>$fin));
@@ -118,4 +127,36 @@ class PedidosModel extends Model
         $this->stmnt->execute();
         return $this->stmnt ->fetchAll();
     }
+
+    public function getPedidosPendientes($limit, $offset)
+    {
+        return $this->queryOFFSET(
+            "SELECT pedido.idPedido, idEstado, fechaAlta, observaciones, usuario, ubicacion.nombre, 
+            ROUND(SUM(producto.precioVentaUnitario * pedidoDetalle.cantidad), 2) AS total
+            FROM pedido
+            INNER JOIN usuario
+            ON (pedido.idUsuario = usuario.idUsuario)
+            INNER JOIN ubicacion
+            ON (usuario.idUbicacion = ubicacion.idUbicacion)
+            INNER JOIN pedidoDetalle
+            ON (pedido.idPedido = pedidoDetalle.idPedido)
+            INNER JOIN producto
+            ON (pedidoDetalle.idProducto = producto.idProducto)
+            WHERE idEstado = 'pendiente'
+            GROUP BY pedido.idPedido
+            LIMIT :limit
+            OFFSET :offset",$limit, $offset);
+    }
+public function totalPedidosPendientes()
+{
+return $this->queryPreparadaSQL(
+"SELECT COUNT(*)
+            FROM pedido
+            INNER JOIN usuario
+            ON (pedido.idUsuario = usuario.idUsuario)
+            INNER JOIN ubicacion
+            ON (usuario.idUbicacion = ubicacion.idUbicacion)
+            
+            WHERE idEstado = 'pendiente'",array());
+}
 }
