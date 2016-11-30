@@ -44,7 +44,7 @@ require_once 'Utils/Const.php';
                 $msg['reply_to_message_id'] = null;
                 break;
             case '/hoy':
-                $msg['text'] = 'Hola los productos del menu del dia son:';
+                $msg['text'] = 'Hola los productos del menu del dia son: ';
                 $menu = $menuModel->getMenuToday();
                 if ($menu) {
                     foreach ($menu as $producto){
@@ -64,7 +64,7 @@ require_once 'Utils/Const.php';
                  $msg['text'] = 'Hola los productos del menu de mañana son:';
                  $today = getDate();
                 $fecha = $today['year'] . "-" . $today['mon'] . "-" . ($today['mday'] + 1);
-                $menu = $menuModel->getMenuByDia($fecha,1,0);
+                $menu = $menuModel->getMenuByDia(1,0,$fecha);
                 if ($menu) {
                     foreach ($menu as $producto){
                         $msg['text'] .= $producto->nombre;
