@@ -62,8 +62,7 @@ require_once 'Utils/Const.php';
                 break;
             case '/maniana':
                  $msg['text'] = 'Hola los productos del menu de mañana son:';
-                 $tomorrow = new DateTime('tomorrow');
-                $tomorrow->format('Y-m-d');
+                 $tomorrow = date("Y-m-d", strtotime('tomorrow'));
                 $menu = $menuModel->getMenuByDia(1,0,$tomorrow);
                 if ($menu) {
                     foreach ($menu as $producto){
