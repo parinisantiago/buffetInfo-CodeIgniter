@@ -67,7 +67,7 @@ require_once 'Utils/Const.php';
                 $menu = $menuModel->getMenuByDia(1,0,$fecha);
                 if ($menu) {
                     foreach ($menu as $producto){
-                        $msg['text'] .= $producto->nombre;
+                        $msg['text'] .= $fecha;
                          $msg['text'] .=', ';
                          $msg['text'] .= $producto->descripcion;
                           $msg['text'] .=', a un precio de $';
