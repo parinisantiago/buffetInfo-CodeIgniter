@@ -52,7 +52,7 @@ require_once 'Utils/Const.php';
                          $msg['text'] .=', ';
                          $msg['text'] .= $producto->descripcion;
                           $msg['text'] .=', a un precio de $';
-                          $msg['text'] .= $producto->precio;
+                          $msg['text'] .= $producto->precioVentaUnitario;
                           $msg['text'] .='.' . PHP_EOL;
                     }
                 } else {
@@ -71,7 +71,7 @@ require_once 'Utils/Const.php';
                          $msg['text'] .=', ';
                          $msg['text'] .= $producto->descripcion;
                           $msg['text'] .=', a un precio de $';
-                          $msg['text'] .= $producto->precio;
+                          $msg['text'] .= $producto->precioVentaUnitario;
                           $msg['text'] .='.' . PHP_EOL;
                     }
                 } else {
