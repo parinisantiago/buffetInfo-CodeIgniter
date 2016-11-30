@@ -44,12 +44,16 @@ require_once 'Utils/Const.php';
                 $msg['reply_to_message_id'] = null;
                 break;
             case '/hoy':
-                $msg['text'] = 'Hola ';
+                $msg['text'] = 'Hola los productos del menu del dia son:';
                 $menu = $menuModel->getMenuToday();
                 if ($menu) {
                     foreach ($menu as $producto){
                         $msg['text'] .= $producto->nombre;
+                         $msg['text'] .=', ';
                          $msg['text'] .= $producto->descripcion;
+                          $msg['text'] .=', a un precio de $';
+                          $msg['text'] .= $producto->precio;
+                          $msg['text'] .='.' . PHP_EOL;
                     }
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para hoy';
@@ -57,15 +61,19 @@ require_once 'Utils/Const.php';
                 $msg['reply_to_message_id'] = null;
                 break;
             case '/maniana':
-                $msg['text'] = 'Hola ';
-                $today = getDate();
+                 $msg['text'] = 'Hola los productos del menu de mañana son:';
+                 $today = getDate();
                 $fecha = $today['year'] . "-" . $today['mon'] . "-" . ($today['mday'] + 1);
                 $menu = $menuModel->getMenuByDia($fecha,1,0);
                 if ($menu) {
-                    $msg['text'] = 'El menú de mañana es: ';
-                    $msg['text'] .=$menu['nombre'];
-                    $msg['text'] .= ' ';
-                    $msg['text'] .=$menu["descripcion"]; 
+                    foreach ($menu as $producto){
+                        $msg['text'] .= $producto->nombre;
+                         $msg['text'] .=', ';
+                         $msg['text'] .= $producto->descripcion;
+                          $msg['text'] .=', a un precio de $';
+                          $msg['text'] .= $producto->precio;
+                          $msg['text'] .='.' . PHP_EOL;
+                    }
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para mañana :(';
                 }
