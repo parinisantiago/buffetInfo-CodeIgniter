@@ -62,12 +62,12 @@ require_once 'Utils/Const.php';
                 break;
             case '/maniana':
                  $msg['text'] = 'Hola los productos del menu de mañana son:';
-                 $today = getDate();
-                $fecha = $today['year'] . "-" . $today['mon'] . "-" . ($today['mday'] + 1);
-                $menu = $menuModel->getMenuByDia(1,0,$fecha);
+                 $tomorrow = new Date('tomorrow');
+                $tomorrow->format('Y-m-d');
+                $menu = $menuModel->getMenuByDia(1,0,$tomorrow);
                 if ($menu) {
                     foreach ($menu as $producto){
-                        $msg['text'] .= $fecha;
+                        $msg['text'] .= $producto->nombre;
                          $msg['text'] .=', ';
                          $msg['text'] .= $producto->descripcion;
                           $msg['text'] .=', a un precio de $';
