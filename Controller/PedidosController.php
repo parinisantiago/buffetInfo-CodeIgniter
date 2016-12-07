@@ -75,7 +75,8 @@ class PedidosController extends Controller
         }
         catch (valException $e)
         {
-            ECHO $e->getMessage();
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->hacerPedido();
         }
 
         //Primero hay que agregar el pedido y recuperar su id.
@@ -138,7 +139,9 @@ class PedidosController extends Controller
         }
         catch (valException $e)
         {
-            echo $e->getMessage();
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $_GET['pag'] = '0';
+            $this->verPedidos();
         }
         
         $this->dispatcher->detalles = $this->pedidos->getDetalle($_POST['idPedido']);
@@ -159,12 +162,13 @@ class PedidosController extends Controller
             $pedido = $this->pedidos->getPedido($_POST['idPedido']);
             if(!$pedido) throw new valException('El pedido no es valido');
             if( $pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
-            var_dump($pedido);
             if(($pedido->idEstado != "pendiente") || ($pedido->intervalo > 1800))throw new valException("El pedido no cumple los requisitos para ser cancelado");
         }
         catch (valException $e)
         {
-            echo $e->getMessage();
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->dispatcher->id = $_POST['idPedido'];
+            $this->dispatcher->render('Backend/cancerlarPedido.twig');
         }
 
         $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
@@ -191,7 +195,9 @@ class PedidosController extends Controller
             $this->validator->validarFecha($_POST['fechaFin'], "la fecha posee un mal formato");
             $this->validator->varSet($_POST['submitButton2'], "tenes que entrar por el lugar adecuado");
         } catch (valException $e) {
-            echo $e->getMessage();
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $_GET['pag'] = '0';
+            $this->verPedidos();
         }
         $_GET['pag']=0;
         $_GET['inicio']= $_POST['fechaInicio'];
