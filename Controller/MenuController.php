@@ -113,10 +113,10 @@ class MenuController extends Controller{
             $this->dispatcher->render("Backend/MenuAMTemplate.twig");
 
         } catch (valException $e){
-            $this->dispatcher->mensajeError = "error";
-            echo "upa, algo raro paso";
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->dispatcher->render("Backend/indexTemplate.twig");
         }
-        die;
+        
     }
 
     public function modificarMenu($menu)
@@ -144,7 +144,8 @@ class MenuController extends Controller{
             }
 
         } catch (valException $e){
-            echo $e->getMessage();
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->dispatcher->render("Backend/FormBalance.twig");   
         }
 
         $this->menuModel->eliminarMenu($idMenu);
@@ -152,7 +153,6 @@ class MenuController extends Controller{
         $idMenu2 = $this->menuModel->insertarMenu($fecha, $foto);
 
         foreach ($_POST['selectProdMult'] as $prod) {
-            var_dump($prod);
             $this->menuModel->insertarProd($idMenu2,$prod);
 
         }
