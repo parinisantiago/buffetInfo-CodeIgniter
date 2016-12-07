@@ -13,7 +13,7 @@ class MainUserController extends Controller
 
         parent::__contruct();
         $this->model = new MainUserModel();
-        $this->menuModel = new MenuModel();
+        $this->menuModel = new MenvuModel();
 
     }
 
@@ -25,7 +25,6 @@ class MainUserController extends Controller
 
     public function index(){
         $this->dispatcher->menu = $this->menuModel->getMenuToday();
-        var_dump($this->menuModel->getMenuToday());
         $this->dispatcher->render("Main/MainTemplate.twig");
     }
 
