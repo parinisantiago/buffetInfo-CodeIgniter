@@ -26,7 +26,6 @@ class GestionPedidoController extends Controller
         $_GET['pag'] = 0;
         $this->paginaCorrecta($this->pedidos->totalPedidosPendientes());
         $this->dispatcher->pedidos = $this->pedidos->getPedidosPendientes($this->conf->getConfiguracion()->cantPagina, $_GET['offset']);
-        var_dump($this->dispatcher->pedidos);
         $this->dispatcher->render('Backend/GestionPedidosListarTemplate.twig');
     }
 
@@ -57,7 +56,8 @@ class GestionPedidoController extends Controller
         }
         catch (valException $e)
         {
-            echo $e->getMessage();
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->dispatcher->render('Backend/GestionPedidosListarTemplate.twig');
         }
 
         $this->dispatcher->detalles = $this->pedidos->getDetalle($_POST['idPedido']);
@@ -81,7 +81,9 @@ class GestionPedidoController extends Controller
         }
         catch (valException $e)
         {
-            echo $e->getMessage();
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->dispatcher->id = $_POST['idPedido'];
+            $this->dispatcher->render('Backend/cancerlarPedido.twig');
         }
 
         $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
@@ -116,7 +118,9 @@ class GestionPedidoController extends Controller
         }
         catch (valException $e)
         {
-            echo $e->getMessage();
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->dispatcher->id = $_POST['idPedido'];
+            $this->dispatcher->render('Backend/aceptarPedido.twig');
         }
 
         $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
@@ -131,7 +135,7 @@ class GestionPedidoController extends Controller
             $venta['precioVentaUnitario'] = $detalle->precioVentaUnitario;
             $venta['cant'] = $detalle->cantidad;
 
-            echo ($this->venta->insertarVentaId($venta));
+            $this->venta->insertarVentaId($venta);
         }
 
         $_GET['pag'] = 0;
