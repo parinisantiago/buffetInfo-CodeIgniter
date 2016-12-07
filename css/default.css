@@ -18,7 +18,6 @@
 /* --- CUERPO --- */
 
 main{
-    margin-top: 5%;
     margin-right: 12%;
     width: 75%;
     float: right;
@@ -34,6 +33,10 @@ body{
     font-weight: bold;
     text-align: center;
     clear: both;
+}
+.tituloComida{
+    font-size: 20px;
+    font-weight: bold;
 }
 .imageComida{
     border-radius: 15px;
@@ -53,6 +56,9 @@ body{
     clear: both;
     overflow: visible;
     margin-bottom: 12%;
+}
+.textoIndex{
+    margin-bottom: 10%;
 }
 @media screen and (max-width: 851px) {
    .imageComida {
@@ -210,87 +216,17 @@ div > p > a{
     width: 75%;
 }
 /* -------calendario del manu ---- */
-#calendario{
-    text-align:center;
-    margin-top: -2%;
-    margin-bottom: 5%;
-    margin-left: 2%;
-    width:190px; /*tamaño minimo*/
-    padding: 1%;
-    background-color: #333;
-    color: white;
-    clear: right;
+
+.almanaque{
     float: left;
-}
-#cabezeraCalendario{
-    width: 100%;
-}
-#nombreMesDiv{
-    float: left;
-    width: 50%;
-    color:#A8A7A7;
-}
-#sigAnoDiv{
-    float: right;
-}
-.sigAno{
-    cursor:pointer;
-}
-#AnnoActual{
-    color:#A8A7A7;
-}
-.mes:hover{
-    cursor:pointer;
-    text-decoration: underline;
-}
-.hoja {
-    font-size: 8pt;
-    background-color: #A8A7A7;
-    font-style: normal;
-    font-weight: normal;
-    border: 1px solid #A8A7A7;
-}
-.diaMenu{
-    font-size: 9.0pt;
-    border: 1px solid #A8A7A7;
-}
-.diaMenu:hover{
-    text-decoration: underline;
-    cursor:pointer;
-    background-color: #A8A7A7;
-    color:#ffffff;
-}
-.hoy {
-   background-color: #A8A7A7;
-   color:#ffffff;
-}
-.domingo {
-   color: #A8A7A7;
-}
-.menu{
-    width: 100%;
-   color: #ffffff;
-   font-size: 8pt;
-   margin: 0px;
-   padding: 0px;
-   border: 1px solid #ffffff;
-   background-color: #A8A7A7;
+    margin-left: 5%;
+    clear: right
 }
 .mini{
     width: 25px;
     height: 25px;
 }
-.sem {
-  color:#A8A7A7;
-}
-td a:link{
-     text-decoration:none; 
-     color:#ffffff;
-}
-td a:visited{
-    text-decoration:none; 
-     color:#ffffff;
-}
+
 /* --- multiselect --- */
 .ms-container{
   background: transparent url('../img/switch.png') no-repeat 50% 50%;

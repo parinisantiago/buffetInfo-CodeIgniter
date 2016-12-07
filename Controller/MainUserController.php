@@ -13,7 +13,7 @@ class MainUserController extends Controller
 
         parent::__contruct();
         $this->model = new MainUserModel();
-        $this->menuModel = new MenvuModel();
+        $this->menuModel = new MenuModel();
 
     }
 
