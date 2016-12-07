@@ -34,7 +34,8 @@ class BalanceController extends Controller
             $fecha=$_POST['fecha'];
         }
         catch (valException $e){
-            echo "apa la bocha";
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->dispatcher->render("Backend/FormBalance.twig");
         }
 
 
@@ -101,7 +102,8 @@ class BalanceController extends Controller
             if ($fechaFin < $fechaInicio) throw new valException("La fecha de fin no puede ser inferior a la fecha de inicio");
         }
         catch (valException $e){
-            echo "apa la bocha";
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->dispatcher->render("Backend/FormBalance.twig");
         }
 
         //aca va a empezar la negrada de las fechas, agarranse de donde puedan porque son las 3 AM y ya no me da el bocho.
@@ -186,7 +188,8 @@ class BalanceController extends Controller
             $fecha=$_POST['fecha'];
         }
         catch (valException $e){
-            echo "apa la bocha";
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->dispatcher->render("Backend/FormBalance.twig");
         }
 
         $productos = $this->balance->productosEgresoDia($fecha);
@@ -264,7 +267,8 @@ class BalanceController extends Controller
             if ($fechaFin < $fechaInicio) throw new valException("La fecha de fin no puede ser inferior a la fecha de inicio");
         }
         catch (valException $e){
-            echo "apa la bocha";
+            $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->dispatcher->render("Backend/FormBalance.twig");  
         }
 
         $ingresos = $this->balance->ingresoRango($fechaInicio, $fechaFin);
