@@ -5,52 +5,50 @@
     <script>
         $( function() { $( "#datepicker" ).datepicker(); } );
     </script>
-    <div class="almanaque">
-    <div id="datepicker"></div>
-        <form method="post" action="Loader.php?controller=MenuController&method=menuDia&pag=0">
-            <input type="hidden" name="fecha" id="fecha" value="">
-            <input type="submit" value="Enviar" onclick="ponerFecha()" >
-        </form>
+    <div class="cabeceraTabla sombreado">
+        <div class="almanaque">
+            <div id="datepicker"></div>
+            <form method="post" action="Loader.php?controller=MenuController&method=menuDia&pag=0">
+                <input type="hidden" name="fecha" id="fecha" value="">
+                <input type="submit" value="Enviar" class="boton" onclick="ponerFecha()" >
+            </form>
+        </div>
+        <div id="nuevoMenu" >
+            <form id="formNuevoMenu" method="post" action="Loader.php?controller=MenuController&method=menuAM">
+                <input type="hidden" id="nuevoMenuValue" value="">
+                <input type="submit" class="boton" id="submitButton" value="Crear Menu" name="submitButton">
+            </form>
+        </div>
+    
+    {% if datos.foto != "" %}
+        <div class="paginas" >
+            <p class="numeroPagina"> Página: {{ pag }} </p>
+            {% if pag != 0 %}
+                <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag - 1 }}&fecha={{ fecha }}">Página anterior</a>
+            {% endif %}
+                <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag + 1 }}&fecha={{ fecha }}">Página Siguiente</a>
+        </div>
     </div>
-    <div>
-        <div id="nuevoMenu" class="nuevo sombreado">
-                <form id="formNuevoMenu" method="post" action="Loader.php?controller=MenuController&method=menuAM">
-                    <input type="hidden" id="nuevoMenuValue" value="">
-                    <input type="submit" class="boton" id="submitButton" value="Crear Menu" name="submitButton">
-                </form>
-            </div>
-        {% if datos.foto != "" %}
-            <div class="paginas sombreado" >
-                <p class="numeroPagina"> Página: {{ pag }} </p>
-                {% if pag != 0 %}
-                    <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag - 1 }}&fecha={{ fecha }}">Página anterior</a>
-                {% endif %}
-                    <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag + 1 }}&fecha={{ fecha }}">Página Siguiente</a>
-            </div>
-
-            
-
-     
-            <table class="tablaProductos sombreado">
-                <thead>
-                <tr>
-                    <th id="FechaD">Fecha</th>
-                    <th id="imagenD">Imagen</th>
-                    <th id="hablitiadoD">Habilitado</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr class="fila">
-                        <td headers="FechaD">{{ datos.fecha }}</td>
-                        <td headers="imagenD">
-                            <a  href="uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="uploads/{{ datos.foto }}" alt="foto del menu"></a>
-                        </td>
-                        <td headers="hablitiadoD"> {{ datos.habilitado }}</td>
-                    </tr>
-                </tbody>
-            </table>
-         
         <table class="tablaProductos sombreado">
+            <thead>
+            <tr>
+                <th id="FechaD">Fecha</th>
+                <th id="imagenD">Imagen</th>
+                <th id="hablitiadoD">Habilitado</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr class="fila">
+                    <td headers="FechaD">{{ datos.fecha }}</td>
+                    <td headers="imagenD">
+                        <a  href="uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="uploads/{{ datos.foto }}" alt="foto del menu"></a>
+                    </td>
+                    <td headers="hablitiadoD"> {{ datos.habilitado }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="tablaProductos sombreado tablaMenu">
             <thead>
                 <tr>
                     <th id="nombre">Nombre</th>
@@ -87,10 +85,10 @@
                 {% endfor %}
             </tbody>
         </table>
-        {% else %}
-            <div class="error">
-                <p>No hay un menu para este dia</p>
-            </div>
-        {% endif%}      
-    </div>
+    {% else %}
+    </div>    
+        <div class="error">
+            <p>No hay un menu para este dia</p>
+        </div>
+    {% endif%}      
 {% endblock %}

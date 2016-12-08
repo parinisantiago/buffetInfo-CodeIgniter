@@ -132,12 +132,14 @@ clear: both;
     text-align: center;
     color: #fff;
     background-color: #333;
-    padding: 5%;
+    padding: 2%;
+    padding-bottom: 2%;
     margin-left: 5%;
     width: 108%;
     z-index: 0;
     margin-bottom: 10%;
     border-spacing: 0px 0px;
+    margin-top: -1%;
 }
 .icono {
     width: 1.5em;
@@ -184,10 +186,12 @@ clear: both;
 .paginas{
     text-align: center;
     float: left;
+    width: 10%;
+    margin-top: -15%;
     color: white;
     position: relative;
     padding: 1%;
-    margin-left: 10%;;
+    margin-left: 50%;;
     background-color: #333;
     margin-bottom: 1%; 
     z-index: 8;
@@ -198,30 +202,37 @@ clear: both;
 div > p > a{
     z-index: 9;
 }
-.nuevo{
+#nuevoMenu{
     float: right;
     color: white;
     position: relative;
     padding: 2%;
     margin-right: 1%;
+    margin-top: -15%;
     margin-bottom: 1%; 
     background-color: #333;
    z-index: 8;
 }
-/* --- tabla de menu ---*/
 .tablaMenu{
-    float: right;
-    margin-top: -20%;
-    margin-right: -11%;
-    width: 75%;
+    margin-top: -10%;
 }
+/* --- tabla de menu ---*/
+.cabeceraTabla{
+    width: 108%;
+    margin-left: 5%;
+    background-color: #333;
+   
+}
+
 /* -------calendario del manu ---- */
 
 .almanaque{
-    float: left;
-    margin-left: 5%;
-    clear: right
+    width: 30%;
+    padding: 2%;
+    padding-bottom: 3%;
+    clear: right;
 }
+
 .mini{
     width: 25px;
     height: 25px;
