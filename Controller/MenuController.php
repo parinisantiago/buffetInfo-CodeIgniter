@@ -45,7 +45,8 @@ class MenuController extends Controller{
             $this->paginaCorrecta($this->menuModel->totalMenu());
             $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_POST['fecha']);
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
-            $this->dispatcher->datos = $this->dispatcher->menu[1];
+           var_dump($this->dispatcher->menu);
+           $this->dispatcher->datos = $this->dispatcher->menu[1];
             $this->dispatcher->fecha=$_POST['fecha'];
             $this->dispatcher->pag = $_GET['pag'];
             $this->dispatcher->method = "menuDia";
