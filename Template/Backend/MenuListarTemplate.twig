@@ -35,6 +35,7 @@
                 <th id="FechaD">Fecha</th>
                 <th id="imagenD">Imagen</th>
                 <th id="hablitiadoD">Habilitado</th>
+                <th id="acciones">Acciones</th>
             </tr>
             </thead>
             <tbody>
@@ -44,6 +45,20 @@
                         <a  href="uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="uploads/{{ datos.foto }}" alt="foto del menu"></a>
                     </td>
                     <td headers="hablitiadoD"> {{ datos.habilitado }}</td>
+                    <td headers="acciones">
+                        <form method="post" action= "Loader.php?controller=MenuController&method=menuAMMod&fecha={{ m.fecha }}" >
+                            <input  name="idProducto" type="hidden" value={{ m.idMenu }}>
+                            <button class="botonTabla" type="submit"  name="submitButton">
+                                <img class="icono" src="images/editar.png" alt= "editar la informacion" />
+                            </button>
+                        </form>
+                        <form method="post" action="Loader.php?controller=MenuController&method=menuEliminar">
+                            <input  name="idMenu" type="hidden" value={{ m.idMenu }} >
+                            <button class="botonTabla" type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
+                                <img class="icono" src="images/eliminar.png" alt= "eliminar" />
+                            </button>
+                        </form>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -56,7 +71,6 @@
                     <th id="stockMinimo">Stock Minimo</th>
                     <th id="precioVentaUnitario">Precio Venta Unitario</th>
                     <th id="descripcion">Descripcion</th>
-                    <th id="acciones">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -67,20 +81,6 @@
                         <td headers="stockMinimo"> {{ m.stockMinimo }}</td>
                         <td headers="precioVentaUnitario">{{ m.precioVentaUnitario }}</td>
                         <td headers="descripcion">{{ m.descripcion }}</td>
-                        <td headers="acciones">
-                            <form method="post" action= "Loader.php?controller=MenuController&method=menuAMMod&fecha={{ m.fecha }}" >
-                                <input  name="idProducto" type="hidden" value={{ m.idMenu }}>
-                                <button class="botonTabla" type="submit"  name="submitButton">
-                                    <img class="icono" src="images/editar.png" alt= "editar la informacion" />
-                                </button>
-                            </form>
-                            <form method="post" action="Loader.php?controller=MenuController&method=menuEliminar">
-                                <input  name="idMenu" type="hidden" value={{ m.idMenu }} >
-                                <button class="botonTabla" type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
-                                    <img class="icono" src="images/eliminar.png" alt= "eliminar" />
-                                </button>
-                            </form>
-                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
