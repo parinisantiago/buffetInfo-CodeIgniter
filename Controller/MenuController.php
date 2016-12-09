@@ -46,6 +46,7 @@ class MenuController extends Controller{
             $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_POST['fecha']);
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
            $this->dispatcher->datos = $this->dispatcher->menu[1];
+           var_dump($this->dispatcher->datos);
             $this->dispatcher->fecha=$_POST['fecha'];
             $this->dispatcher->pag = $_GET['pag'];
             $this->dispatcher->method = "menuDia";
@@ -102,7 +103,7 @@ class MenuController extends Controller{
 
         try{
 
-            $this->validator->varSet($_GET['fecha'], "estas zarpado en soga y en ratón");
+            $this->validator->varSet($_GET['fecha'], "no hay fecha");
             $fecha= $_GET['fecha'];
 
             if (! $this->menuModel->getMenuDia($fecha)) throw new valException("No existe el menu para modificar");
@@ -114,7 +115,7 @@ class MenuController extends Controller{
 
         } catch (valException $e){
             $this->dispatcher->mensajeError = $e -> getMessage();
-            $this->dispatcher->render("Backend/indexTemplate.twig");
+            $this->dispatcher->render("Backend/IndexTemplate.twig");
         }
         
     }
