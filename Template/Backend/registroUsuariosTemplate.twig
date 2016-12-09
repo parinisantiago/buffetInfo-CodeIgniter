@@ -1,7 +1,7 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
-    <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=UserController&method=usuarioAM" method="post">
+    <form name="formUser" class="formProduc clearfix sombreado" onsubmit="return valUsuario()" id="form" action="Loader.php?controller=UserController&method=usuarioAM" method="post">
 
         {% if user.idUsuario %}
             <input type='hidden' name='idUsuario' value={{user.idUsuario}}>
@@ -9,7 +9,7 @@
 
 
         <label for="usuario" class="formProducText">Nombre de Usuario:</label>
-        <input {% if user.usuario %} value="{{ user.usuario }}" {% endif %} type="text" name="usuario" id="usuario" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="15" pattern="^[a-zA-Z0-9]+$" autofocus required >
+        <input {% if user.usuario %} value="{{ user.usuario }}" {% endif %} type="text" name="usuario" id="usuario" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="15"  autofocus  >
 
         <label for="nombre" class="formProducText">Nombre:</label>
         <input {% if user.nombre %} value="{{ user.nombre }}" {% endif %} type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" required >
