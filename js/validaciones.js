@@ -165,7 +165,7 @@ function valUsuario() {
     document.getElementById("error").setAttribute("hidden","true");
 
 
-    var bol = true;
+    var bol = false;
     var form = document.getElementById("form");
     var text= document.getElementById("usuario");
     var pass = document.getElementById("clave");
@@ -177,31 +177,56 @@ function valUsuario() {
 
 
     if(valLetrasYNumeros(text, form)){
-        bol = false;
+        bol = true;
     }
     if(valLetrasYNumeros(pass, form))
     {
-        bol = false;
+        bol = true;
     }
     if(valPalabras(nombre, form))
     {
-        bol = false;
+        bol = true;
     }
     if(valPalabras(apellido, form))
     {
-        bol = false;
+        bol = true;
     }
     if(valNumeros(documento, form))
     {
-        bol = false;
+        bol = true;
     }
     if(valEmail(email, form))
     {
-        bol = false;
+        bol = true;
     }
     if(valNumeros(telefono, form))
     {
-        bol = false;
+        bol = true;
     }
     return(bol);
 }
+
+function valCompra() {
+
+
+    document.getElementById("error").setAttribute("hidden","true");
+
+
+    var bol = false;
+    var form = document.getElementById("compra");
+    var cant= document.getElementById("cantidad");
+    var pass = document.getElementById("precioUnitario");
+
+
+
+    if(valNumeros(cant, form)){
+        bol = true;
+    }
+    if(valNumeros(pass, form))
+    {
+        bol = true;
+    }
+
+    return(bol);
+}
+
