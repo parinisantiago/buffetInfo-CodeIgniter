@@ -9,7 +9,7 @@
 
 
         <label for="usuario" class="formProducText">Nombre de Usuario:</label>
-        <input {% if user.usuario %} value="{{ user.usuario }}" {% endif %} type="text" name="usuario" id="usuario" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="15"  autofocus  >
+        <input {% if user.usuario %} value="{{ user.usuario }}" {% endif %} type="text" name="usuario" id="usuario" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="15" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" autofocus required >
 
         <label for="nombre" class="formProducText">Nombre:</label>
         <input {% if user.nombre %} value="{{ user.nombre }}" {% endif %} type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" required >
