@@ -1,7 +1,8 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
-	<form name="formProduc" class="formProduc clearfix sombreado" action="Loader.php?controller=ProductoController&method=productosAMPost" method="post">
+	<form name="formProduc" class="formProduc clearfix sombreado" onsubmit="return valProducto()" id="producto"  action="Loader.php?controller=ProductoController&method=productosAMPost" method="post">
+
             {% if (producto.idProducto) %}
             <input type='hidden' name='idProducto' id="idProducto" value={{producto.idProducto}}>
             {% endif %}
