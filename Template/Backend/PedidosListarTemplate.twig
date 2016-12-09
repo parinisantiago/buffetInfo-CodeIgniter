@@ -16,24 +16,26 @@
 
     </form>
     </div>
-    <div class="paginas sombreado">
-        <p> Página: {{ pag }}
-        <p>
-            {% if rango %}
+    <div class="cabeceraTabla sombreado cabeceraPedidos">
+        <div class="paginas ">
+            <p> Página: {{ pag }}
+            <p>
+                {% if rango %}
+                    {% if pag != 0 %}
+                        <a class="boton" href="Loader.php?controller=PedidosController&method=mostrarPedidoRango&pag={{ pag - 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                            anterior</a>
+                    {% endif %}
+                    <a class="boton" href="Loader.php?controller=PedidosController&method=mostrarPedidoRango&pag={{ pag + 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                        Siguiente</a>
+                {% else %}
                 {% if pag != 0 %}
-                    <a class="boton" href="Loader.php?controller=PedidosController&method=mostrarPedidoRango&pag={{ pag - 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                    <a class="boton" href="Loader.php?controller=PedidosController&method=verPedidos&pag={{ pag - 1 }}">Página
                         anterior</a>
                 {% endif %}
-                <a class="boton" href="Loader.php?controller=PedidosController&method=mostrarPedidoRango&pag={{ pag + 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                <a class="boton" href="Loader.php?controller=PedidosController&method=verPedidos&pag={{ pag + 1 }}">Página
                     Siguiente</a>
-            {% else %}
-            {% if pag != 0 %}
-                <a class="boton" href="Loader.php?controller=PedidosController&method=verPedidos&pag={{ pag - 1 }}">Página
-                    anterior</a>
-            {% endif %}
-            <a class="boton" href="Loader.php?controller=PedidosController&method=verPedidos&pag={{ pag + 1 }}">Página
-                Siguiente</a>
-            {% endif %}
+                {% endif %}
+        </div>
     </div>
     <table class="tablaProductos sombreado">
         <thead>

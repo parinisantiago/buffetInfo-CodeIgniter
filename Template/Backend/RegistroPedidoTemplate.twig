@@ -2,37 +2,31 @@
 
 
 {% block main %}
-    <form name="formUser" class="formProduc clearfix sombreado"
-          action="Loader.php?controller=PedidosController&method=validarPedido" method="post">
+    <div class="pedidoOnline">
+        <form name="formUser" class="formProduc clearfix sombreado "
+              action="Loader.php?controller=PedidosController&method=validarPedido" method="post">
+            <input type="hidden" value="{{ idMenu }}" name="idMenu">
+            <table class="tablaProductos tablaPedidos">
+                <thead>
+                    <tr>
+                        <th id="nombre">Nombre</th>
+                        <th id="stock">Stock</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in menu %}
 
-        <input type="hidden" value="{{ idMenu }}" name="idMenu">
-
-        <table>
-            <thead>
-            <tr>
-                <th id="nombre">nombre</th>
-                <th id="stock">stock</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for m in menu %}
-
-                <tr>
-                    <th headers="nombre">{{ m.nombre }}</th>
-                    <th headers="stock">{{ m.stock }}</th>
-                </tr>
-
-            {% endfor %}
-            </tbody>
-        </table>
-
-        <label for="numPedidos">Cantidad de pedidos: </label>
-        <input type="number" id="numPedidos" name="numPedidos">
-
-        <label for="submit" hidden>Boton de envio: </label>
-        <input type="submit" id="submit" name="submit">
-
-
-    </form>
-
+                        <tr>
+                            <th headers="nombre">{{ m.nombre }}</th>
+                            <th headers="stock">{{ m.stock }}</th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <label for="numPedidos">Cantidad de pedidos: </label>
+            <input type="number" id="numPedidos" name="numPedidos">
+            <label for="submit" hidden>Boton de envio: </label>
+            <input type="submit" class="boton" id="submit" name="submit">
+        </form>
+    </div>
 {% endblock %}

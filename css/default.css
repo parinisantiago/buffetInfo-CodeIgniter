@@ -210,7 +210,7 @@ div > p > a{
     z-index: 9;
 }
 #nuevoMenu{
-    float: right;
+    
     color: white;
     position: relative;
     padding: 2%;
@@ -231,14 +231,18 @@ div > p > a{
     margin-top: 16%;
     height: 100px;
 }
-
+.cabeceraMenu{
+    height: 300px;
+}
 /* -------calendario del manu ---- */
 
 .almanaque{
+    float: left;
     width: 30%;
     padding: 2%;
     padding-bottom: 3%;
     clear: right;
+    margin-left: 35%;
 }
 
 .mini{
@@ -328,4 +332,15 @@ div > p > a{
   background-color: #08c;
 }
 
+.pedidoOnline{
+    margin-left: -40%;
+    width: 180%;
+    color: white;
+}
+.tablaPedidos{
+    margin-left:-8%;
+}
+.cabeceraPedidos{
+    margin-top: +18%;
+}
 

@@ -5,7 +5,7 @@
     <script>
         $( function() { $( "#datepicker" ).datepicker(); } );
     </script>
-    <div class="cabeceraTabla sombreado">
+    <div class="cabeceraTabla sombreado cabeceraMenu">
         <div class="almanaque">
             <div id="datepicker"></div>
             <form method="post" action="Loader.php?controller=MenuController&method=menuDia&pag=0">
@@ -21,7 +21,7 @@
         </div>
     
     {% if datos.foto != "" %}
-        <div class="paginas" >
+        <div class="paginas paginaMenu" >
             <p class="numeroPagina"> Página: {{ pag }} </p>
             {% if pag != 0 %}
                 <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag - 1 }}&fecha={{ fecha }}">Página anterior</a>
