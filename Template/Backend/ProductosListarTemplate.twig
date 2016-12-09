@@ -2,9 +2,8 @@
 
 {% block main %}
 
-    <div >
-        
-        <div class="paginas sombreado" >
+    <div class="cabeceraTabla sombreado">
+        <div class="paginas" >
                   <p class="numeroPagina"> Página: {{ pag }} </p>
             {% if rol == '0' %}
             {% if pag != 0 %}
@@ -17,55 +16,53 @@
                 {% endif %}
                 <a class="boton" href="/Loader.php?controller=ProductoController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente</a>
             {% endif  %}
-            </div>
-        <table class="tablaProductos sombreado">
-            <thead>
-            <tr>
-                <th class="columnaAncha" id="nombre">Nombre</th>
-                <th class="columnaAncha" id="marca">Marca</th>
-                <th id="stock">Stock</th>
-                <th id="stockMinimo">Stock Minimo</th>
-                <th id="categoria">Categoria</th>
-                <th class="columnaAncha" id="precioVentaUnitario">Precio de Venta Unitario</th>
-                <th id="descripcion">Descripcion</th>
-                <th id="acciones">Acciones</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            {% for prod in producto %}
-                {% if producto.eliminado == 0 %}
-                    <tr class="fila">
-                        <td headers="nombre">{{ prod.nombre }}</td>
-                        <td headers="marca"> {{ prod.marca }}</td>
-                        <td headers="stock"> {{ prod.stock }}</td>
-                        <td headers="stockMinimo">{{ prod.stockMinimo }}</td>
-                        <td headers="categoria">{{ prod.categoria }}</td>
-                        <td headers="precioVentaUnitario">{{ prod.precioVentaUnitario }}</td>
-                        <td headers="descripcion">{{ prod.descripcion }}</td>
-                        <td headers="acciones">
-                                <form method="post" action= "Loader.php?controller=ProductoController&method=productosAM" >
-                               
-                                <input  name="idProducto" type="hidden" value={{ prod.idProducto }}>
-                                <button class="botonTabla" type="submit"  name="submitButton">
-                                    <img class="icono" src="images/editar.png" alt= "editar la informacion" />
-                                </button>
-                            </form>
-                                <form method="post" action="Loader.php?controller=ProductoController&method=productosEliminar">
-                               
-                                <input  name="idProducto" type="hidden" value={{ prod.idProducto }} >
-                                <button class="botonTabla" type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
-                                    <img class="icono" src="images/eliminar.png" alt= "eliminar" />
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-               {% endif %}
-           {% endfor %}
-                </tbody>
-        </table>
-           
-       
+        </div>
     </div>
+    <table class="tablaProductos sombreado">
+        <thead>
+        <tr>
+            <th class="columnaAncha" id="nombre">Nombre</th>
+            <th class="columnaAncha" id="marca">Marca</th>
+            <th id="stock">Stock</th>
+            <th id="stockMinimo">Stock Minimo</th>
+            <th id="categoria">Categoria</th>
+            <th class="columnaAncha" id="precioVentaUnitario">Precio de Venta Unitario</th>
+            <th id="descripcion">Descripcion</th>
+            <th id="acciones">Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for prod in producto %}
+            {% if producto.eliminado == 0 %}
+                <tr class="fila">
+                    <td headers="nombre">{{ prod.nombre }}</td>
+                    <td headers="marca"> {{ prod.marca }}</td>
+                    <td headers="stock"> {{ prod.stock }}</td>
+                    <td headers="stockMinimo">{{ prod.stockMinimo }}</td>
+                    <td headers="categoria">{{ prod.categoria }}</td>
+                    <td headers="precioVentaUnitario">{{ prod.precioVentaUnitario }}</td>
+                    <td headers="descripcion">{{ prod.descripcion }}</td>
+                    <td headers="acciones">
+                            <form method="post" action= "Loader.php?controller=ProductoController&method=productosAM" >
+
+                            <input  name="idProducto" type="hidden" value={{ prod.idProducto }}>
+                            <button class="botonTabla" type="submit"  name="submitButton">
+                                <img class="icono" src="images/editar.png" alt= "editar la informacion" />
+                            </button>
+                        </form>
+                            <form method="post" action="Loader.php?controller=ProductoController&method=productosEliminar">
+
+                            <input  name="idProducto" type="hidden" value={{ prod.idProducto }} >
+                            <button class="botonTabla" type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
+                                <img class="icono" src="images/eliminar.png" alt= "eliminar" />
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+           {% endif %}
+       {% endfor %}
+            </tbody>
+    </table>
 
 {% endblock %}
