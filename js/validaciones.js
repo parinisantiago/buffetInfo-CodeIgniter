@@ -230,3 +230,66 @@ function valCompra() {
     return(bol);
 }
 
+function valConfig() {
+
+
+    document.getElementById("error").setAttribute("hidden","true");
+
+
+    var bol = false;
+    var form = document.getElementById("config");
+    var tit= document.getElementById("titulo");
+    var email = document.getElementById("email");
+    var lista = document.getElementById("lista");
+
+
+
+    if(valPalabras(tit, form)){
+        bol = true;
+    }
+    if(valEmail(email, form))
+    {
+        bol = true;
+    }
+    if(valNumeros(lista, form))
+    {
+        bol = true;
+    }
+    return(bol);
+}
+
+function valProducto() {
+    document.getElementById("error").setAttribute("hidden","true");
+
+
+    var bol = false;
+    var form = document.getElementById("producto");
+    var nombre = document.getElementById("nombre");
+    var marca= document.getElementById("marca");
+    var stock = document.getElementById("stock");
+    var stockMinimo = document.getElementById("stockMinimo");
+    var precioVentaUnitario = document.getElementById("precioVentaUnitario");
+
+
+    if(valPalabras(nombre, form)){
+        bol = true;
+    }
+    if(valPalabras(marca, form))
+    {
+        bol = true;
+    }
+    if(valNumeros(stock, form))
+    {
+        bol = true;
+    }
+    if(valNumeros(stockMinimo, form))
+    {
+        bol = true;
+    }
+    if(valNumeros(precioVentaUnitario, form))
+    {
+        bol = true;
+    }
+
+    return(bol);
+}
