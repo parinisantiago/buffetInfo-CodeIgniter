@@ -41,7 +41,7 @@ class VentaModel extends Model{
             FROM ingresoDetalle i 
             INNER JOIN producto p 
             ON (i.idProducto = p.idProducto) 
-            GROUP BY p.idProducto');
+            GROUP BY p.idProducto',array());
     }
     
     public function insertarVenta($vent){
