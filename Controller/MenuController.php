@@ -120,7 +120,7 @@ class MenuController extends Controller{
 
         } catch (valException $e){
             $this->dispatcher->mensajeError = $e -> getMessage();
-            $this->dispatcher->render("Backend/IndexTemplate.twig");
+            $this->menuAM();
         }
         
     }
