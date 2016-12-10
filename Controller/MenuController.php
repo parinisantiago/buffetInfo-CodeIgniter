@@ -1,14 +1,17 @@
 <?php
 require_once 'Controller/Controller.php';
+include_once 'Model/TelegramModel.php';
 
 class MenuController extends Controller{
     public $menuModel;
     public $productosModel;
+    public $telegramModel;
 
     public function __construct(){
         parent::__contruct();
         $this->menuModel= new MenuModel();
         $this->productosModel = new ProductosModel();
+        $this->telegramModel = new TelegramModel();
     }
 
     public function getPermission()
@@ -74,7 +77,10 @@ class MenuController extends Controller{
 
 
         $this->validateMenu($_POST);
-            if (!isset($_POST['idMenu'])) $this->agregarMenu($_POST);
+            if (!isset($_POST['idMenu'])){
+                $this->agregarMenu($_POST);
+                notificarTelegram ($_POST['fecha'])
+            }
             else $this->modificarMenu($_POST);
             if(!isset($_POST['un valor'])){
             $_GET['pag'] = 0;
@@ -244,5 +250,49 @@ class MenuController extends Controller{
         else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
         if ($_GET['offset'] < 0) $_GET['offset'] = 0;
         $_GET['offset'] .= "";
+    }
+    
+    public function notificarTelegram ($fecha){
+        $returnArray = true;
+        $rawData = file_get_contents('php://input');
+        $response = json_decode($rawData, $returnArray);
+        $id_del_chat = $response['message']['chat']['id'];
+        $regExp = '#^(\/[a-zA-Z0-9\/]+?)(\ .*?)$#i';
+        $tmp = preg_match($regExp, $response['message']['text'], $aResults);
+        if (isset($aResults[1])) {
+            $cmd = trim($aResults[1]);
+            $cmd_params = trim($aResults[2]);
+        } else {
+            $cmd = trim($response['message']['text']);
+            $cmd_params = '';
+        }
+        $msg = array();
+        $msg['chat_id'] = $response['message']['chat']['id'];
+        $msg['text'] = null;
+        $msg['disable_web_page_preview'] = true;
+        $msg['reply_to_message_id'] = $response['message']['message_id'];
+        $msg['reply_markup'] = null;
+        $msg['text'] = 'Hola ' . $response['message']['from']['first_name'] . PHP_EOL;
+        $msg['text'] = 'Se a añadido un menu para el dia ' . $fecha . PHP_EOL;
+        $menu = $menuModel->getMenuByDia(100,0,$fecha);
+        foreach ($menu as $producto){
+            $msg['text'] .= $producto->nombre;
+            $msg['text'] .=', ';
+            $msg['text'] .= $producto->descripcion;
+            $msg['text'] .=', a un precio de $';
+            $msg['text'] .= $producto->precioVentaUnitario;
+            $msg['text'] .='.' . PHP_EOL;
+        }
+        $msg['reply_to_message_id'] = null;
+        $url = 'https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/sendMessage';
+        $options = array(
+            'http' => array(
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
+                'content' => http_build_query($msg)
+            )
+        );
+        $context = stream_context_create($options);
+        $result = file_get_contents($url, false, $context);
     }
 }
