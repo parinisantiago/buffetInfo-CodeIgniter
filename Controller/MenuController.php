@@ -130,8 +130,12 @@ class MenuController extends Controller{
 
         try{
             $this->token();
-            $this->validator->varSet($_GET['fecha'], "no hay fecha");
-            $fecha= $_GET['fecha'];
+            if(!isset($_POST['fecha'])) {
+                $this->validator->varSet($_GET['fecha'], "no hay fecha");
+                $fecha = $_GET['fecha'];
+            } else {
+                $fecha = $_POST['fecha'];
+            }
 
             if (! $this->menuModel->getMenuDia($fecha)) throw new valException("No existe el menu para modificar");
             $this->dispatcher->menu = $this->menuModel->getMenuByDia(99,0,$fecha);
