@@ -75,14 +75,20 @@ class MenuController extends Controller{
         $this->validateMenu($_POST);
             if (!isset($_POST['idMenu'])) $this->agregarMenu($_POST);
             else $this->modificarMenu($_POST);
+            if(!isset($_POST['un valor'])){
             $_GET['pag'] = 0;
             $this->menu();
+            }
         }catch (valException $e){
             /* falta que setee post */
-
-            $this->dispatcher->error = $e->getMessage();
+            $_POST['un valor'] = true;
+            $this->dispatcher->mensajeError = $e->getMessage();
             $_GET['pag'] = 0;
-            $this->menu();
+
+            if(!isset($_POST['idMenu'])){
+                $this->menuAM();
+            }
+            else $this->menuAMMod();
         }
 
     }
@@ -108,6 +114,7 @@ class MenuController extends Controller{
 
             }
         } catch (valException $e) {
+            $_POST['un valor'] = true;
             $this->dispatcher->mensajeError = $e->getMessage();
             $this->dispatcher->valores = $_POST;
             $this->menuAM();
@@ -158,29 +165,30 @@ class MenuController extends Controller{
             foreach ($_POST['selectProdMult'] as $prod){
                 if (! $this->productosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
             }
+            $this->menuModel->eliminarMenu($idMenu);
 
+            $idMenu2 = $this->menuModel->insertarMenu($fecha, $foto);
+            foreach ($_POST['selectProdMult'] as $prod) {
+                $this->menuModel->insertarProd($idMenu2,$prod);
+
+            }
+            $_GET['pag'] = 0;
+            $_GET['fecha'] = $fecha;
+            $this->paginaCorrecta($this->menuModel->totalMenu());
+            $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_GET['fecha']);
+            //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
+            $this->dispatcher->datos = $this->dispatcher->menu[1];
+            $this->dispatcher->fecha=$_GET['fecha'];
+            $this->dispatcher->pag = $_GET['pag'];
+            $this->dispatcher->method = "menuDia";
         } catch (valException $e){
             $this->dispatcher->mensajeError = $e -> getMessage();
             $this->dispatcher->render("Backend/FormBalance.twig");   
         }
 
-        $this->menuModel->eliminarMenu($idMenu);
 
-        $idMenu2 = $this->menuModel->insertarMenu($fecha, $foto);
 
-        foreach ($_POST['selectProdMult'] as $prod) {
-            $this->menuModel->insertarProd($idMenu2,$prod);
 
-        }
-        $_GET['pag'] = 0;
-        $_GET['fecha'] = $fecha;
-        $this->paginaCorrecta($this->menuModel->totalMenu());
-        $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_GET['fecha']);
-        //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
-        $this->dispatcher->datos = $this->dispatcher->menu[1];
-        $this->dispatcher->fecha=$_GET['fecha'];
-        $this->dispatcher->pag = $_GET['pag'];
-        $this->dispatcher->method = "menuDia";
 
     }
 
@@ -196,7 +204,7 @@ class MenuController extends Controller{
         if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
 
         $this->validator->validarFecha($menu['fecha'], "Fecha no valida");
-        $this->validator->varSet($menu['selectProdMult'], "error");
+        $this->validator->varSet($menu['selectProdMult'], "Debe seleccionar por lo menos un producto para el menu");
 
         foreach ($menu['selectProdMult'] as $prod){
             if (! $this->productosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
