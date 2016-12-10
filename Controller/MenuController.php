@@ -162,7 +162,6 @@ class MenuController extends Controller{
 
         //validaciones
         try{
-            if( !$menu) throw new valException("no hay menu para este dia");
             if (($menu->idMenu != $idMenu)) throw new valException("La fecha elegida ya pertenece a otro menu");
             if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
             if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
