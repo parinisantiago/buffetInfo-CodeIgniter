@@ -1,5 +1,6 @@
 <?php
 include_once 'Model/MenuModel.php';
+include_once 'Model/TelegramModel.php';
 require_once 'Utils/Const.php';
 
         $returnArray = true;
@@ -79,13 +80,14 @@ require_once 'Utils/Const.php';
                 }
                 $msg['reply_to_message_id'] = null;
                 break;
-                default:
+            default:
                 $msg['text'] = 'Lo siento, no es un comando válido.' . PHP_EOL;
                 $msg['text'] .= 'Prueba /help para ver la lista de comandos disponibles';
                 break;
             case '/suscribir':
-                $response['id'];
-                $msg['text'] = $id_del_chat;
+                $telegramModel = new TelegramModel();
+                $menu = $menuModel->registrar($id_del_chat);
+                $msg['text'] =' Este chat a sido suscripto con exito.';
                 
         }
         //enviando respuesta
