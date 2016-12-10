@@ -89,7 +89,7 @@ class MenuController extends Controller{
             }
             else if(isset($_POST['idMenu']) && isset($_POST['fecha'])){
                 $menu = $this->menuModel->idMenu($_POST['idMenu']);
-                $_GET['fecha'] = $menu->fecha;
+                $_POST['fecha'] = $menu->fecha;
                 var_dump($_GET);
                 $this->menuAMMod();
 
