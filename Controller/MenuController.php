@@ -69,19 +69,22 @@ class MenuController extends Controller{
         /*valida que los parametros sean correctos y despues se fija si ya existe el menu*/
 
         try{
-        if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-        if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+
+
+
         $this->validateMenu($_POST);
+            if (!isset($_POST['idMenu'])) $this->agregarMenu($_POST);
+            else $this->modificarMenu($_POST);
+            $_GET['pag'] = 0;
+            $this->menu();
         }catch (valException $e){
             /* falta que setee post */
-            $this->dispatcher->mensajeError = $e->getMessage();
+
+            $this->dispatcher->error = $e->getMessage();
             $_GET['pag'] = 0;
             $this->menu();
         }
-        if (!isset($_POST['idMenu'])) $this->agregarMenu($_POST);
-        else $this->modificarMenu($_POST);
-        $_GET['pag'] = 0;
-        $this->menu();
+
     }
 
     public function agregarMenu($menu)
@@ -89,6 +92,9 @@ class MenuController extends Controller{
         $image = basename($_FILES['foto']['name']);
         $fecha = $_POST['fecha'];
         try {
+
+            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
 
             if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $image)) throw new valException("no se pudo guardar la imagen del menu");
 
