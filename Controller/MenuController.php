@@ -181,7 +181,7 @@ class MenuController extends Controller{
         if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
 
         $this->validator->validarFecha($menu['fecha'], "Fecha no valida");
-        $this->validator->varSet($menu['selectProdMult']);
+        $this->validator->varSet($menu['selectProdMult'], "error");
 
         foreach ($menu['selectProdMult'] as $prod){
             if (! $this->productosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
