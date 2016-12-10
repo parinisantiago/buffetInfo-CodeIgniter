@@ -275,7 +275,7 @@ class MenuController extends Controller{
             $msg['reply_markup'] = null;
             $msg['text'] = 'Hola ' . $response['message']['from']['first_name'] . PHP_EOL;
             $msg['text'] = 'Se a añadido un menu para el dia ' . $fecha . PHP_EOL;
-            $menu = $menuModel->getMenuByDia(100,0,$fecha);
+            $menu = $this->menuModel->getMenuByDia(100,0,$fecha);
             foreach ($menu as $producto){
                 $msg['text'] .= $producto->nombre;
                 $msg['text'] .=', ';
