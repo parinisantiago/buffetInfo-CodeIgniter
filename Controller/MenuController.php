@@ -131,7 +131,6 @@ class MenuController extends Controller{
 
         try{
             $this->token();
-            echo "entre";
             if(!isset($_POST['fecha'])) {
                 $this->validator->varSet($_GET['fecha'], "no hay fecha");
                 $fecha = $_GET['fecha'];
