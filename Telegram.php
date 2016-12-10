@@ -42,6 +42,7 @@ require_once 'Utils/Const.php';
                 $msg['text'] .= '/hoy Muestra el menú del día' . PHP_EOL;
                 $msg['text'] .= '/maniana Muestra el menú de mañana' . PHP_EOL;
                 $msg['text'] .= '/suscribir Suscribe a este bot' . PHP_EOL;
+                $msg['text'] .= '/desuscribir Cancela la suscripcion a este bot' . PHP_EOL;
                 $msg['text'] .= '/help Muestra esta ayuda' . PHP_EOL;
                 $msg['reply_to_message_id'] = null;
                 break;
@@ -63,8 +64,8 @@ require_once 'Utils/Const.php';
                 $msg['reply_to_message_id'] = null;
                 break;
             case '/maniana':
-                 $msg['text'] = 'Hola los productos del menu de mañana son:';
-                 $tomorrow = date("Y-m-d", strtotime('tomorrow'));
+                $msg['text'] = 'Hola los productos del menu de mañana son:';
+                $tomorrow = date("Y-m-d", strtotime('tomorrow'));
                 $menu = $menuModel->getMenuByDia(100,0,$tomorrow);
                 if ($menu) {
                     foreach ($menu as $producto){
@@ -80,16 +81,31 @@ require_once 'Utils/Const.php';
                 }
                 $msg['reply_to_message_id'] = null;
                 break;
+            case '/suscribir':
+                $telegramModel = new TelegramModel();
+                if ($telegramModel->buscar($id_del_chat)){
+                    $msg['text'] ='Este chat ya se encuentra suscripto.';
+                }else{
+                    $telegramModel->registrar($id_del_chat);
+                    $msg['text'] =' Este chat a sido suscripto con exito.';
+                }
+                $msg['reply_to_message_id'] = null;
+                break;
+            case '/desuscribir':
+                $telegramModel = new TelegramModel();
+                if ($telegramModel->buscar($id_del_chat)){
+                    $telegramModel->eliminar($id_del_chat);
+                    $msg['text'] ='Se ha cancelado la suscripcion con exito.';
+                }else{
+                    $msg['text'] ='Este chat no se encontraba suscripto.';
+                }
+                $msg['reply_to_message_id'] = null;
+                break;
             default:
                 $msg['text'] = 'Lo siento, no es un comando válido.' . PHP_EOL;
                 $msg['text'] .= 'Prueba /help para ver la lista de comandos disponibles';
                 break;
-            case '/suscribir':
-                $telegramModel = new TelegramModel();
-                $menu = $telegramModel->registrar($id_del_chat);
-                $msg['text'] =' Este chat a sido suscripto con exito.';
-                
-        }
+           }
         //enviando respuesta
         //original:
         //https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/setWebhook?url=https://grupo64.proyecto2016.linti.unlp.edu.ar/pruebasbot.php

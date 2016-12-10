@@ -6,6 +6,13 @@ class TelegramModel extends Model{
         parent::__construct();
     }
     
+     public function buscar($id){
+        return $this->queryPreparadaSQL('
+            SELECT idUsuario
+            FROM telegram
+            WHERE idUsuario = :idUsuario',
+            array('idUsuario' => $id));
+    }
     public function registrar($id){
         return $this->queryPreparadaSQL('
             INSERT INTO telegram (idUsuario)
