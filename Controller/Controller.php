@@ -38,7 +38,7 @@ class Controller
     protected function token(){
         $token = md5(uniqid(rand(), TRUE));
         Session::setValue($token, 'token');
-        $this->dispatcher->scrfToken = Session::getValue('token');
+        $this->dispatcher->scrfToken = Session::getValue('tokenScrf');
         var_dump($_SESSION['token']);
     }
 
