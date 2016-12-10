@@ -71,7 +71,6 @@ class MenuController extends Controller{
         try{
 
 
-
         $this->validateMenu($_POST);
             if (!isset($_POST['idMenu'])) $this->agregarMenu($_POST);
             else $this->modificarMenu($_POST);
@@ -88,7 +87,13 @@ class MenuController extends Controller{
             if(!isset($_POST['idMenu'])){
                 $this->menuAM();
             }
-            else $this->menuAMMod();
+            else if(isset($_POST['fecha'])){
+                $_GET['fecha'] =$_POST['fecha'];
+                $this->menuAMMod();
+
+            } else{
+                $this->menu();
+            }
         }
 
     }
@@ -124,7 +129,7 @@ class MenuController extends Controller{
     public function menuAMMod(){
 
         try{
-
+            $this->token();
             $this->validator->varSet($_GET['fecha'], "no hay fecha");
             $fecha= $_GET['fecha'];
 
@@ -132,12 +137,11 @@ class MenuController extends Controller{
             $this->dispatcher->menu = $this->menuModel->getMenuByDia(99,0,$fecha);
             $this->dispatcher->producto= $this->menuModel->getProdNotInMenu($this->dispatcher->menu['1']->idMenu);
             $this->dispatcher->datos = $this->dispatcher->menu[1];
-
             $this->dispatcher->render("Backend/MenuAMTemplate.twig");
 
         } catch (valException $e){
             $this->dispatcher->mensajeError = $e -> getMessage();
-            $this->dispatcher->render("Backend/IndexTemplate.twig");
+            $this->dispatcher->render("Backend/MenuListarTemplate.twig");
         }
         
     }
@@ -147,12 +151,14 @@ class MenuController extends Controller{
 
         $fecha = $_POST['fecha'];
         $idMenu = $_POST['idMenu'];
+
         $menu= $this->menuModel->getMenuDia($fecha);
 
         //validaciones
         try{
             if( (!$menu) && ($menu->idMenu != $idMenu)) throw new valException("La fecha elegida ya pertenece a otro menu");
-
+            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             if( ($_FILES['foto']['size'] == 0 )) $foto= $_POST['foto2'];
             else{
                 if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
@@ -182,8 +188,9 @@ class MenuController extends Controller{
             $this->dispatcher->pag = $_GET['pag'];
             $this->dispatcher->method = "menuDia";
         } catch (valException $e){
+            $_POST['un valor'] = true;
             $this->dispatcher->mensajeError = $e -> getMessage();
-            $this->dispatcher->render("Backend/FormBalance.twig");   
+            $this->menuAMMod();
         }
 
 
