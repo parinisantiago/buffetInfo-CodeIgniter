@@ -85,7 +85,7 @@ require_once 'Utils/Const.php';
                 break;
             case '/suscribir':
                 $response['id'];
-                $msg['text'] =var_dump( $id_del_chat);
+                $msg['text'] = $id_del_chat;
                 
         }
         //enviando respuesta
