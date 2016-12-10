@@ -69,6 +69,8 @@ class MenuController extends Controller{
         /*valida que los parametros sean correctos y despues se fija si ya existe el menu*/
 
         try{
+        if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+        if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
         $this->validateMenu($_POST);
         }catch (valException $e){
             /* falta que setee post */
@@ -87,6 +89,7 @@ class MenuController extends Controller{
         $image = basename($_FILES['foto']['name']);
         $fecha = $_POST['fecha'];
         try {
+
             if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $image)) throw new valException("no se pudo guardar la imagen del menu");
 
             if ($this->menuModel->getMenuDia($fecha)) throw new valException("Ya existe un menu para esta fecha");
