@@ -39,13 +39,12 @@ class Controller
         $token = md5(uniqid(rand(), TRUE));
         Session::setValue($token, 'tokenScrf');
         $this->dispatcher->tokenScrf = Session::getValue('tokenScrf');
-        var_dump($this->dispatcher->tokenScrf);
-        var_dump($_SESSION['token']);
+
     }
 
     protected function tokenIsValid($token)
     {
-        return(Session::getValue('token'));
+        return(Session::getValue('tokenScrf') == $token);
     }
 
 }
