@@ -130,6 +130,7 @@ class MenuController extends Controller{
 
         try{
             $this->token();
+            var_dump($_POST);
             if(!isset($_POST['fecha'])) {
                 $this->validator->varSet($_GET['fecha'], "no hay fecha");
                 $fecha = $_GET['fecha'];
