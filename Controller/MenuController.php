@@ -31,6 +31,7 @@ class MenuController extends Controller{
         $this->dispatcher->datos = $this->dispatcher->menu[1];
         $this->dispatcher->pag = $_GET['pag'];
         $this->dispatcher->method = "menu";
+        $this->token();
         $this->dispatcher->render("Backend/MenuListarTemplate.twig");
          
     }
@@ -130,6 +131,8 @@ class MenuController extends Controller{
     public function menuAMMod(){
 
         try{
+            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->token();
             if(!isset($_POST['fecha'])) {
                 $this->validator->varSet($_GET['fecha'], "no hay fecha");
@@ -209,10 +212,17 @@ class MenuController extends Controller{
 
     public function menuEliminar()
     {
-       $this->dispatcher->menuModel =$this ->menuModel->eliminarMenu($_POST["idMenu"]);
-        $_GET['pag'] = 0;
-        $this->dispatcher->method = "menu";
-        $this->menu();
+        try{
+            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+            $this->dispatcher->menuModel =$this ->menuModel->eliminarMenu($_POST["idMenu"]);
+            $_GET['pag'] = 0;
+            $this->dispatcher->method = "menu";
+            $this->menu();
+        } catch (valException $e){
+            $this->menu();
+        }
+
     }
 
     public function validateMenu($menu){

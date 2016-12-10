@@ -47,12 +47,16 @@
                 <td headers="hablitiadoD"> {{ datos.habilitado }}</td>
                 <td headers="acciones">
                     <form method="post" class="botonMenu" action= "Loader.php?controller=MenuController&method=menuAMMod&fecha={{ fecha }}" >
+                        <label for="tokenScrf" hidden> token Scrf: </label>
+                        <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
                         <input  name="idProducto" type="hidden" value={{ datos.idMenu }}>
                         <button class="botonTabla" type="submit"  name="submitButton">
                             <img class="icono" src="images/editar.png" alt= "editar la informacion" />
                         </button>
                     </form>
                     <form method="post" class="botonMenu" action="Loader.php?controller=MenuController&method=menuEliminar">
+                        <label for="tokenScrf" hidden> token Scrf: </label>
+                        <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
                         <input  name="idMenu" type="hidden" value={{ datos.idMenu }} >
                         <button class="botonTabla" type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
                             <img class="icono" src="images/eliminar.png" alt= "eliminar" />
