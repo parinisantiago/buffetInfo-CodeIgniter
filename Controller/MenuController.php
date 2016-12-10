@@ -60,6 +60,7 @@ class MenuController extends Controller{
     public function menuAM(){
         /*falta agregar que pregunte si le envian un m por parametro y que lo setee */
         $this->dispatcher->producto = $this->productosModel->getAllProducto(99,0);
+        $this->token();
         $this->dispatcher->render("Backend/MenuAMTemplate.twig");
     }
 

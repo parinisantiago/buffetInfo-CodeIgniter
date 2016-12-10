@@ -13,7 +13,6 @@ class Controller
     protected $validator;
 
     public function __contruct(){
-
         Session::init();
         $this->validator = new Validador();
         $this->dispatcher = new Dispatcher();
@@ -23,10 +22,9 @@ class Controller
     }
 
     public function getPermission(){
-
         return (true);
-
     }
+
     public function getRol(){
         return Session::getValue('rol');
     }
@@ -36,6 +34,19 @@ class Controller
         if (Session::userLogged()) $this->dispatcher->rol = Session::getValue('rol');
         else  $this->dispatcher->rol = "NaN";
     }
+
+    protected function token(){
+        $token = md5(uniqid(rand(), TRUE));
+        Session::setValue($token, 'token');
+        $this->dispatcher->scrfToken = Session::getValue('token');
+        var_dump($_SESSION['token']);
+    }
+
+    protected function tokenIsValid($token)
+    {
+        return(Session::getValue('token'));
+    }
+
 }
 
 ?>
