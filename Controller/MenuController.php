@@ -90,7 +90,6 @@ class MenuController extends Controller{
             else if(isset($_POST['idMenu']) && isset($_POST['fecha'])){
                 $menu = $this->menuModel->idMenu($_POST['idMenu']);
                 $_POST['fecha'] = $menu->fecha;
-                var_dump($_GET);
                 $this->menuAMMod();
 
             } else{
@@ -198,6 +197,8 @@ class MenuController extends Controller{
         } catch (valException $e){
             $_POST['un valor'] = true;
             $this->dispatcher->mensajeError = $e -> getMessage();
+            $menu = $this->menuModel->idMenu($_POST['idMenu']);
+            $_POST['fecha'] = $menu->fecha;
             $this->menuAMMod();
         }
 
