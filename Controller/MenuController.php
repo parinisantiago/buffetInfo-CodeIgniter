@@ -39,6 +39,7 @@ class MenuController extends Controller{
     public function menuDia(){
         /* muestra el menu para un dia en particular, le mande un try catch por las dudas de que pasen cualquier cosa por get */
        try{
+           $this->token();
            if (!isset($_POST['fecha'])){
                $_POST['fecha']=date("Y-m-d");
            }
