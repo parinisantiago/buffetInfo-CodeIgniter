@@ -85,7 +85,7 @@ require_once 'Utils/Const.php';
                 break;
             case '/suscribir':
                 $response['id'];
-                $msg['text'] = 'Te has suscrito al bot'.  var_dump($response['id']);
+                $msg['text'] =var_dump($msg['chat_id']);
                 
         }
         //enviando respuesta
