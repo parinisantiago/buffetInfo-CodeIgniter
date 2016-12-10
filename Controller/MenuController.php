@@ -46,7 +46,6 @@ class MenuController extends Controller{
             $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_POST['fecha']);
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
            $this->dispatcher->datos = $this->dispatcher->menu[1];
-           var_dump($this->dispatcher->datos);
             $this->dispatcher->fecha=$_POST['fecha'];
             $this->dispatcher->pag = $_GET['pag'];
             $this->dispatcher->method = "menuDia";
@@ -91,8 +90,9 @@ class MenuController extends Controller{
 
         $idMenu = $this->menuModel->insertarMenu($fecha, $image);
 
-        foreach ($menu['selectProdMult'] as $prod) {
 
+        foreach ($menu['selectProdMult'] as $prod) {
+            var_dump($prod);
             $this->menuModel->insertarProd($idMenu,$prod);
 
         }
