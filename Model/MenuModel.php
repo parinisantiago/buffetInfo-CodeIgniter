@@ -58,6 +58,17 @@ class MenuModel extends Model{
             WHERE m.eliminado = 0 and p.eliminado=0
             ORDER BY m.idMenu', array());
     }
+
+    public function idMenu($id)
+    {
+        return $this->queryPreparadaSQL('
+            SELECT *
+            FROM menu
+            WHERE idMenu = :id
+            AND eliminado = 0',
+            array("id" => $id));
+    }
+
     public function searchIdMenu($idMenu){
         return $this ->queryPreparadaSQL("
             SELECT m.idMenu,m.idProducto,m.fecha,m.foto,m.eliminado,p.nombre,p.stock,p.stockMinimo,p.precioVentaUnitario,p.descripcion,p.eliminado
