@@ -83,24 +83,24 @@ class MenuController extends Controller{
 
     public function agregarMenu($menu)
     {
-        $image= basename($_FILES['foto']['name']);
-        $fecha= $_POST['fecha'];
-        try{
-            if(! move_uploaded_file($_FILES['foto']['tmp_name'], files.$image)) throw new valException("no se pudo guardar la imagen del menu");
+        $image = basename($_FILES['foto']['name']);
+        $fecha = $_POST['fecha'];
+        try {
+            if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $image)) throw new valException("no se pudo guardar la imagen del menu");
 
-            if( $this->menuModel->getMenuDia($fecha)) throw new valException("Ya existe un menu para esta fecha");
+            if ($this->menuModel->getMenuDia($fecha)) throw new valException("Ya existe un menu para esta fecha");
 
-           $idMenu = $this->menuModel->insertarMenu($fecha, $image);
+            $idMenu = $this->menuModel->insertarMenu($fecha, $image);
 
 
             foreach ($menu['selectProdMult'] as $prod) {
-                $this->menuModel->insertarProd($idMenu,$prod);
+                $this->menuModel->insertarProd($idMenu, $prod);
 
             }
-        } catch (valException $e){
+        } catch (valException $e) {
             $this->dispatcher->mensajeError = $e->getMessage();
             $this->dispatcher->valores = $_POST;
-            $this->dispatcher->render("Backend/MenuAMTemplate.twig");
+            $this->menuAM();
         }
     }
 
@@ -120,7 +120,7 @@ class MenuController extends Controller{
 
         } catch (valException $e){
             $this->dispatcher->mensajeError = $e -> getMessage();
-            $this->menuAM();
+            $this->dispatcher->render("Backend/IndexTemplate.twig");
         }
         
     }
