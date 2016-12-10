@@ -88,10 +88,9 @@ class MenuController extends Controller{
                 $this->menuAM();
             }
             else if(isset($_POST['idMenu']) && isset($_POST['fecha'])){
-                var_dump($_POST['idMenu']);
                 $menu = $this->menuModel->idMenu($_POST['idMenu']);
-                var_dump($menu);
                 $_GET['fecha'] = $menu->fecha;
+                var_dump($_GET);
                 $this->menuAMMod();
 
             } else{
@@ -133,7 +132,7 @@ class MenuController extends Controller{
 
         try{
             $this->token();
-            var_dump($_POST);
+            echo "entre";
             if(!isset($_POST['fecha'])) {
                 $this->validator->varSet($_GET['fecha'], "no hay fecha");
                 $fecha = $_GET['fecha'];
