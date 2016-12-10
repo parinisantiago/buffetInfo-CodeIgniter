@@ -40,6 +40,7 @@ require_once 'Utils/Const.php';
                 $msg['text'] .= '/start Inicializa el bot' . PHP_EOL;
                 $msg['text'] .= '/hoy Muestra el menú del día' . PHP_EOL;
                 $msg['text'] .= '/maniana Muestra el menú de mañana' . PHP_EOL;
+                $msg['text'] .= '/suscribir Suscribe a este bot' . PHP_EOL;
                 $msg['text'] .= '/help Muestra esta ayuda' . PHP_EOL;
                 $msg['reply_to_message_id'] = null;
                 break;
@@ -82,6 +83,29 @@ require_once 'Utils/Const.php';
                 $msg['text'] = 'Lo siento, no es un comando válido.' . PHP_EOL;
                 $msg['text'] .= 'Prueba /help para ver la lista de comandos disponibles';
                 break;
+            case '/suscribir':    
+                // Standalone
+                $response = $telegram->setWebhook(['url' => 'https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/webhook']);
+
+                // Or if you are supplying a self-signed-certificate
+                $response = $telegram->setWebhook([
+                    'url' => 'https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/webhook',
+                    'certificate' => '/path/to/public_key_certificate.pub'
+                ]);
+
+                // Laravel - Setup a POST route.
+                $response = Telegram::setWebhook(['url' => 'https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/webhook']);
+
+                // Or if you are supplying a self-signed-certificate
+                $response = Telegram::setWebhook([
+                    'url' => 'https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/webhook',
+                    'certificate' => '/path/to/public_key_certificate.pub'
+                ]);
+                // Standalone
+                $updates = $telegram->getWebhookUpdates();
+
+                // Laravel - Put this inside the POST route /<token>/webhook
+                $updates = Telegram::getWebhookUpdates();
         }
         //enviando respuesta
         //original:
