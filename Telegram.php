@@ -86,7 +86,7 @@ require_once 'Utils/Const.php';
                 break;
             case '/suscribir':
                 $telegramModel = new TelegramModel();
-                $menu = $menuModel->registrar($id_del_chat);
+                $menu = $telegramModel->registrar($id_del_chat);
                 $msg['text'] =' Este chat a sido suscripto con exito.';
                 
         }
