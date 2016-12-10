@@ -253,7 +253,7 @@ class MenuController extends Controller{
     }
     
     public function notificarTelegram ($fecha){
-        $users= $telegraModel->getAll();
+        $users= $this->telegramModel->getAll();
         foreach ($users as $idUser){
             $returnArray = true;
             $rawData = file_get_contents('php://input');
