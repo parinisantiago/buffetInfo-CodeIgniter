@@ -83,29 +83,10 @@ require_once 'Utils/Const.php';
                 $msg['text'] = 'Lo siento, no es un comando válido.' . PHP_EOL;
                 $msg['text'] .= 'Prueba /help para ver la lista de comandos disponibles';
                 break;
-            case '/suscribir':    
-                // Standalone
-                $response = $telegram->setWebhook(['url' => 'https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/webhook']);
-
-                // Or if you are supplying a self-signed-certificate
-                $response = $telegram->setWebhook([
-                    'url' => 'https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/webhook',
-                    'certificate' => '/path/to/public_key_certificate.pub'
-                ]);
-
-                // Laravel - Setup a POST route.
-                $response = Telegram::setWebhook(['url' => 'https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/webhook']);
-
-                // Or if you are supplying a self-signed-certificate
-                $response = Telegram::setWebhook([
-                    'url' => 'https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/webhook',
-                    'certificate' => '/path/to/public_key_certificate.pub'
-                ]);
-                // Standalone
-                $updates = $telegram->getWebhookUpdates();
-
-                // Laravel - Put this inside the POST route /<token>/webhook
-                $updates = Telegram::getWebhookUpdates();
+            case '/suscribir':
+                $response['id'];
+                $msg['text'] = 'Te has suscrito al bot'.  var_dump($response['id']);
+                
         }
         //enviando respuesta
         //original:
