@@ -45,8 +45,7 @@ class MenuController extends Controller{
             $this->paginaCorrecta($this->menuModel->totalMenu());
             $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_POST['fecha']);
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
-           var_dump($this->dispatcher->menu);
-           $this->dispatcher->datos = $this->dispatcher->menu[1];
+           if(!empty($this->dispatcher->menu)) $this->dispatcher->datos = $this->dispatcher->menu[1];
             $this->dispatcher->fecha=$_POST['fecha'];
             $this->dispatcher->pag = $_GET['pag'];
             $this->dispatcher->method = "menuDia";
@@ -61,6 +60,7 @@ class MenuController extends Controller{
     public function menuAM(){
         /*falta agregar que pregunte si le envian un m por parametro y que lo setee */
         $this->dispatcher->producto = $this->productosModel->getAllProducto(99,0);
+        $this->token();
         $this->dispatcher->render("Backend/MenuAMTemplate.twig");
     }
 
@@ -84,24 +84,24 @@ class MenuController extends Controller{
 
     public function agregarMenu($menu)
     {
-        $image= basename($_FILES['foto']['name']);
-        $fecha= $_POST['fecha'];
-        try{
-            if(! move_uploaded_file($_FILES['foto']['tmp_name'], files.$image)) throw new valException("no se pudo guardar la imagen del menu");
+        $image = basename($_FILES['foto']['name']);
+        $fecha = $_POST['fecha'];
+        try {
+            if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $image)) throw new valException("no se pudo guardar la imagen del menu");
 
-            if( $this->menuModel->getMenuDia($fecha)) throw new valException("Ya existe un menu para esta fecha");
+            if ($this->menuModel->getMenuDia($fecha)) throw new valException("Ya existe un menu para esta fecha");
 
-           $idMenu = $this->menuModel->insertarMenu($fecha, $image);
+            $idMenu = $this->menuModel->insertarMenu($fecha, $image);
 
 
             foreach ($menu['selectProdMult'] as $prod) {
-                $this->menuModel->insertarProd($idMenu,$prod);
+                $this->menuModel->insertarProd($idMenu, $prod);
 
             }
-        } catch (valException $e){
+        } catch (valException $e) {
             $this->dispatcher->mensajeError = $e->getMessage();
             $this->dispatcher->valores = $_POST;
-            $this->dispatcher->render("Backend/MenuAMTemplate.twig");
+            $this->menuAM();
         }
     }
 
