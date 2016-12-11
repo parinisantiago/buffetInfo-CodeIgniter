@@ -7,6 +7,18 @@ class MenuModel extends Model{
         parent::__construct();
     }
 
+    public function getMenuToday2(){
+        $today=getDate();
+        return $this->queryTodasLasFilas('
+            SELECT m.idMenu, m.foto, p.nombre, p.precioVentaUnitario, p.descripcion
+            FROM menu m
+            INNER JOIN menuProducto mp ON (mp.idMenu = m.idMenu)
+            INNER JOIN producto p ON (mp.idProducto = p.idProducto)
+            WHERE m.fecha = :fecha and m.eliminado = 0 and p.eliminado =0 and m.habilitado = 0',
+            array('fecha' => $today['year']."-".$today['mon']."-".$today['mday']));
+    }
+
+
     public function getMenuByDia($limit, $offset, $fecha){
         return $this->queryOFFSETDIA('
             SELECT *  
@@ -15,7 +27,6 @@ class MenuModel extends Model{
             INNER JOIN producto p ON (mp.idProducto = p.idProducto)
             WHERE m.fecha = :fecha
             AND m.eliminado = 0
-            AND m.habilitado = 0
             LIMIT :limit
             OFFSET :offset
         ', $limit, $offset, $fecha);
@@ -27,7 +38,7 @@ class MenuModel extends Model{
             FROM menu m
             INNER JOIN menuProducto mp ON (mp.idMenu = m.idMenu)
             INNER JOIN producto p ON (mp.idProducto = p.idProducto)
-            WHERE m.fecha = :fecha and m.eliminado = 0 and p.eliminado =0 and m.habilitado=0',
+            WHERE m.fecha = :fecha and m.eliminado = 0 and p.eliminado =0 ',
             array('fecha' => $today['year']."-".$today['mon']."-".$today['mday']));
     }
     
