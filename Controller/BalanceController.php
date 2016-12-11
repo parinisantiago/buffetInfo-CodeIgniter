@@ -1,7 +1,7 @@
 <?php
 
-require_once (__DIR__.'/../uploads/libchart/libchart/classes/libchart.php');
-require_once (__DIR__.'/../uploads/fpdf_demo/fpdf.php');
+require_once (__DIR__.'/../libchart/libchart/classes/libchart.php');
+require_once (__DIR__.'/../fpdf_demo/fpdf.php');
 
 
 class BalanceController extends Controller
@@ -293,11 +293,7 @@ class BalanceController extends Controller
 
         foreach ($balances['egreso'] as $key => $value){
             if (!isset($balances['ingreso'][$key])) $total[$key] = (0 - $balances['egreso'][$key]).'';
-        }$oldmask = umask(0);
-
-
-        chmod(__DIR__.'/../uploads/libchart/libchart/classes/view/plot/Plot.php', 0777);
-        umask($oldmask);
+        }
 
         $image = imagecreatefrompng('uploads/demo.png');
         $image2 = imagecreatefrompng('uploads/demo2.png');
