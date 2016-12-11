@@ -4,11 +4,14 @@
 
     <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=GestionPedidoController&method=aceptarPedido" method="post">
 
+        <label for="tokenScrf" hidden> token Scrf: </label>
+        <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
+
     <label for="id" hidden>id</label>
     <input type="hidden" name="idPedido" id="idPedido" value="{{ id }}">
 
     <label for="comentario" class="formProducText">Motivo por el cual acepta el pedido:</label>
-    <textarea name="comentario" id="comentario" class="formProducinput"></textarea>
+    <textarea name="comentario" id="comentario" class="formProducinput" required></textarea>
 
     <label for="submitButton" hidden>Boton de envio:</label>
     <input type="submit" id="submitButton" name="submitButton">

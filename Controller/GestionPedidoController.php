@@ -67,6 +67,7 @@ class GestionPedidoController extends Controller
     }
 
     public function formCancelarPedido(){
+        $this->token();
         $this->dispatcher->id = $_POST['idPedido'];
         $this->dispatcher->render('Backend/cancerlarPedido.twig');
     }
@@ -75,6 +76,8 @@ class GestionPedidoController extends Controller
     {
         try
         {
+            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?",3);
             $pedido = $this->pedidos->getPedido($_POST['idPedido']);
             if(!$pedido) throw new valException('El pedido no es valido');
@@ -105,6 +108,7 @@ class GestionPedidoController extends Controller
     }
 
     public function formAceptarPedido(){
+        $this->token();
         $this->dispatcher->id = $_POST['idPedido'];
         $this->dispatcher->render('Backend/aceptarPedido.twig');
     }
@@ -112,6 +116,8 @@ class GestionPedidoController extends Controller
     public function aceptarPedido(){
         try
         {
+            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?",3);
             $pedido = $this->pedidos->getPedido($_POST['idPedido']);
             if(!$pedido) throw new valException('El pedido no es valido');
