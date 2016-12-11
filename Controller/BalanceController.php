@@ -129,6 +129,10 @@ class BalanceController extends Controller
             //me traigo los valores
             $ingresos = $this->balance->ingresoRango($fechaInicio, $fechaFin);
             $egresos = $this->balance->egresoRango($fechaInicio, $fechaFin);
+
+            var_dump($ingresos);
+            var_dump($egresos);
+            die;
             $total= array();
             $balances = array();
             //creo un arreglo simple porque de la base lo traigo en objetos. Esto me sirve para despues mergear los arreglos
