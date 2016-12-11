@@ -115,6 +115,7 @@ class PedidosController extends Controller
 
     public function verPedidos()
     {
+        $this->token();
         $this->paginaCorrecta($this->pedidos->totalPedidos($_SESSION['idUsuario']));
         $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset']);
         $this->dispatcher->pag = $_GET['pag'];
@@ -194,6 +195,9 @@ class PedidosController extends Controller
     public function pedidosRango()
     {
         try {
+
+            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->validator->validarFecha($_POST['fechaInicio'], "la fecha posee un mal formato");
             $this->validator->validarFecha($_POST['fechaFin'], "la fecha posee un mal formato");
             $this->validator->varSet($_POST['submitButton2'], "tenes que entrar por el lugar adecuado");
