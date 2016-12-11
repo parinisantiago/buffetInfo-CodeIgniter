@@ -48,7 +48,8 @@ class PedidosController extends Controller
         try
         {
             //primero valido que me hayan pasado todas las variables
-
+            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->validator->varSet($_POST['idMenu'], "sin menu, no hay validacion");
             $this->validator->varSet($_POST['submit'], "algo raro hiciste, keep trying");
             $this->validator->validarNumeros($_POST['numPedidos'], "Error en la cantidad", 2);
