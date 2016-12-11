@@ -5,7 +5,7 @@
     <div class="pedidoOnline">
         <form name="formUser" class="formProduc clearfix sombreado "
               action="Loader.php?controller=PedidosController&method=validarPedido" method="post">
-            <label for="tokenScrf" hidden> token Scrf: </label>
+            
             <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
            <input type="hidden" value="{{ idMenu }}" name="idMenu">
             <table class="tablaProductos tablaPedidos">
@@ -33,8 +33,7 @@
                             {% for i in  1 .. minimo.stock %}
                                 <option value="{{i}}" >{{ i }}</option>
                             {% endfor %}
-                            
-            <label for="submit" hidden>Boton de envio: </label>
+            </select>                
             <input type="submit" class="boton" id="submit" name="submit">
         </form>
     </div>
