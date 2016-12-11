@@ -30,8 +30,7 @@ class GestionPedidoController extends Controller
     }
 
     public function paginaCorrecta($total){
-        var_dump($this->conf->getConfiguracion());
-        var_dump($total);
+
         if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
         elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
         else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
