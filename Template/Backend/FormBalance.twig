@@ -5,7 +5,7 @@
     <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=BalanceController&method=balanceDia" method="post">
 
         <label for="fecha" class="formProducText">Día del balance:</label>
-        <input type="date" name="fecha" id="fecha" class="formProducinput" required>
+        <input type="date" name="fecha" id="fecha" class="formProducinput" value="{{ fecha }}" required>
 
         <label for="submitButton" hidden>Boton de envio:</label>
         <input type="submit" id="submitButton" name="submitButton">
@@ -15,10 +15,10 @@
     <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=BalanceController&method=balanceRango" method="post">
 
         <label for="fechaInicio" class="formProducText">Día del balance:</label>
-        <input type="date" name="fechaInicio" id="fechaInicio" class="formProducinput" required>
+        <input type="date" name="fechaInicio" id="fechaInicio" class="formProducinput" value="{{ fechaInicio }}" required>
 
         <label for="fechaFin" class="formProducText">Día del balance:</label>
-        <input type="date" name="fechaFin" id="fechaFin" class="formProducinput" required>
+        <input type="date" name="fechaFin" id="fechaFin" class="formProducinput" value="{{ fechaFin }}" required>
 
         <label for="submitButton2" hidden>Boton de envio:</label>
         <input type="submit" id="submitButton2" name="submitButton2">
