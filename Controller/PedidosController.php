@@ -194,6 +194,9 @@ class PedidosController extends Controller
             $this->validator->validarFecha($_POST['fechaInicio'], "la fecha posee un mal formato");
             $this->validator->validarFecha($_POST['fechaFin'], "la fecha posee un mal formato");
             $this->validator->varSet($_POST['submitButton2'], "tenes que entrar por el lugar adecuado");
+            $fechaInicio=$_POST['fechaInicio'];
+            $fechaFin=$_POST['fechaFin'];
+            if ($fechaFin < $fechaInicio) throw new valException("La fecha de fin no puede ser inferior a la fecha de inicio");
         } catch (valException $e) {
             $this->dispatcher->mensajeError = $e -> getMessage();
             $_GET['pag'] = '0';
