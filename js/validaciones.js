@@ -1,23 +1,23 @@
-function isValidDate(dateString, forn)
+function isValidDate(dateString, form)
 {
     var error=  document.createElement("P");
-    if( text.value.length == 0) {
-
+    if( dateString.value.length == 0) {
 
         error = document.createElement("P");
 
         error.setAttribute("class", "error");
         error.innerHTML = "Debe completar este campo";
-        form.insertBefore(error, text);
+        form.insertBefore(error, dateString);
         return true
     }
     // First check for the pattern
-    if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)){
-        error=  document.createElement("P");
+    alert((/(\d{1,2})-(\d{1,2})-(\d{4})/.exec(dateString.value) != dateString.value));
+    if((/(\d{1,2})-(\d{1,2})-(\d{4})/.exec(dateString.value) != dateString.value)){
 
+        error=  document.createElement("P");
         error.setAttribute("class", "error");
         error.innerHTML ="La fecha no posee un formato valido";
-        form.insertBefore(error, text);
+        form.insertBefore(error, dateString);
         return true;
     }
     // Parse the date parts to integers
@@ -33,7 +33,7 @@ function isValidDate(dateString, forn)
 
         error.setAttribute("class", "error");
         error.innerHTML ="el mes no es valido";
-        form.insertBefore(error, text);
+        form.insertBefore(error, dateString);
         return true;
 
     }
@@ -44,7 +44,7 @@ function isValidDate(dateString, forn)
 
         error.setAttribute("class", "error");
         error.innerHTML ="el dia no es valido";
-        form.insertBefore(error, text);
+        form.insertBefore(error, dateString);
         return true;
 
     }
@@ -368,3 +368,4 @@ function valMenu() {
     return(bol);
 
 }
+
