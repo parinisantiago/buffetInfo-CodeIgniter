@@ -18,7 +18,7 @@ class Validador{
     }
 
     public function validarFecha($var, $error){
-        if (!$this->tam($var, 25) || !$this->varSet($var, $error) ||  preg_match("/^[0-9]+$/", $var))
+        if (!$this->tam($var, 25) || !$this->varSet($var, $error) ||  preg_match("/(\d{4})-(\d{2})-(\d{2})/", $var))
             throw new valException($error);
     }
 
@@ -26,6 +26,7 @@ class Validador{
         if (!$this->tam($var, $tam) || !$this->varSet($var, $error) ||  !preg_match("/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/", $var))
             throw new valException($error);
     }
+    
     public function validarNumerosPunto($var, $error, $tam){
         if (!$this->tam($var, $tam) || !$this->varSet($var, $error) || !preg_match("/^[0-9\.0-9]+$/", $var))
             throw new valException($error);
