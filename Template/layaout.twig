@@ -15,7 +15,6 @@
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="js/validaciones.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -64,7 +63,8 @@
 
 </aside>
 
-<footer> {% block footer%} {{ config.mail }} {% endblock %}  </footer>
+<footer>     <script src="js/validaciones.js"></script>
+    {% block footer%} {{ config.mail }} {% endblock %}  </footer>
 
 
 </body>
