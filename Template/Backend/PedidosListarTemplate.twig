@@ -6,10 +6,10 @@
     <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=PedidosController&method=pedidosRango" method="post">
 
         <label for="fechaInicio" class="formProducText">Fecha inicio:</label>
-        <input type="date" name="fechaInicio" id="fechaInicio" class="formProducinput" required>
+        <input type="date" name="fechaInicio" id="fechaInicio" class="formProducinput" value="{{ fechaInicio }}" required>
 
         <label for="fechaFin" class="formProducText">Fecha Fin:</label>
-        <input type="date" name="fechaFin" id="fechaFin" class="formProducinput" required>
+        <input type="date" name="fechaFin" id="fechaFin" class="formProducinput" value="{{ fechaFin }}" required>
 
         <label for="submitButton2" hidden>Boton de envio:</label>
         <input type="submit" id="submitButton2" name="submitButton2">
