@@ -150,7 +150,7 @@ class PedidosModel extends Model
 public function totalPedidosPendientes()
 {
 return $this->queryPreparadaSQL(
-"SELECT COUNT(*)
+"SELECT COUNT(*) as total
             FROM pedido
             INNER JOIN usuario
             ON (pedido.idUsuario = usuario.idUsuario)
