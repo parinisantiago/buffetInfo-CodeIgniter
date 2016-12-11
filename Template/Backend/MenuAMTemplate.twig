@@ -3,7 +3,8 @@
 {% block main %}
 
  <script src="script/multiSelect.js" type="text/javascript"></script>
-  <script type="text/javascript" src="script/script.js"></script>
+
+    <script type="text/javascript" src="script/script.js"></script>
     <form id="menu" name="formMenu" enctype="multipart/form-data" class="formProduc clearfix sombreado" onsubmit="return valMenu()" action="Loader.php?controller=MenuController&method=menuAMPOST" method="post">
         <label for="tokenScrf" hidden> token Scrf: </label>
         <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
