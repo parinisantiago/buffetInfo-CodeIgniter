@@ -57,7 +57,7 @@ class BalanceModel extends Model
     function productosEgresoDia($fecha)
     {
         return $this->queryTodasLasFilas("
-            SELECT ROUND(SUM(cantidad),2) AS cant, p.nombre
+            SELECT cantidad AS cant, p.nombre
             FROM ingresoDetalle i
             INNER JOIN producto p 
             ON (p.idProducto = i.idProducto)
@@ -69,7 +69,7 @@ class BalanceModel extends Model
     function productosEgresoRango($fechaInicio, $fechaFin)
     {
         return $this->queryTodasLasFilas("
-            SELECT ROUND(SUM(cantidad),2) AS cant, p.nombre
+            SELECT SUM(cantidad) AS cant, p.nombre
             FROM ingresoDetalle i
             INNER JOIN producto p 
             ON (p.idProducto = i.idProducto)
