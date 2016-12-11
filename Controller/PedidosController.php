@@ -137,6 +137,9 @@ class PedidosController extends Controller
             $pedido = $this->pedidos->getPedido($_POST['idPedido']);
             if(!$pedido) throw new valException('El pedido no es valido');
             if( $pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
+            $this->dispatcher->detalles = $this->pedidos->getDetalle($_POST['idPedido']);
+            $this->dispatcher->render("Backend/mostrarDetalle.twig");
+
         }
         catch (valException $e)
         {
@@ -145,8 +148,6 @@ class PedidosController extends Controller
             $this->verPedidos();
         }
         
-        $this->dispatcher->detalles = $this->pedidos->getDetalle($_POST['idPedido']);
-        $this->dispatcher->render("Backend/mostrarDetalle.twig");
 
     }
     
@@ -164,6 +165,20 @@ class PedidosController extends Controller
             if(!$pedido) throw new valException('El pedido no es valido');
             if( $pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
             if(($pedido->idEstado != "pendiente") || ($pedido->intervalo > 1800))throw new valException("El pedido no cumple los requisitos para ser cancelado");
+            $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
+            $this->pedidos->actualizarEstado("cancelado", $_POST['idPedido']);
+
+            if(strlen($_POST['comentario']) > 0 ) $this->pedidos->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
+
+            foreach ($detalles as $detalle)
+            {
+
+                $this->producto->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
+            }
+
+            $_GET['pag'] = 0;
+
+            $this->verPedidos();
         }
         catch (valException $e)
         {
@@ -172,20 +187,7 @@ class PedidosController extends Controller
             $this->dispatcher->render('Backend/cancerlarPedido.twig');
         }
 
-        $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
-        $this->pedidos->actualizarEstado("cancelado", $_POST['idPedido']);
 
-        if(strlen($_POST['comentario']) > 0 ) $this->pedidos->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
-
-        foreach ($detalles as $detalle)
-        {
-
-            $this->producto->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
-        }
-
-        $_GET['pag'] = 0;
-
-        $this->verPedidos();
 
     }
 
@@ -198,15 +200,16 @@ class PedidosController extends Controller
             $fechaInicio=$_POST['fechaInicio'];
             $fechaFin=$_POST['fechaFin'];
             if ($fechaFin < $fechaInicio) throw new valException("La fecha de fin no puede ser inferior a la fecha de inicio");
+            $_GET['pag']=0;
+            $_GET['inicio']= $_POST['fechaInicio'];
+            $_GET['fin'] = $_POST['fechaFin'];
+            $this->mostrarPedidoRango();
         } catch (valException $e) {
             $this->dispatcher->mensajeError = $e -> getMessage();
             $_GET['pag'] = '0';
             $this->verPedidos();
         }
-        $_GET['pag']=0;
-        $_GET['inicio']= $_POST['fechaInicio'];
-        $_GET['fin'] = $_POST['fechaFin'];
-        $this->mostrarPedidoRango();
+
     }
 
     public function mostrarPedidoRango()
