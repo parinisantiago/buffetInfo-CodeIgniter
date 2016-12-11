@@ -133,6 +133,7 @@ class MenuController extends Controller{
                 $this->menuModel->insertarProd($idMenu, $prod);
 
             }
+            $this->dispatcher->fecha = $fecha;
         } catch (valException $e) {
             $_POST['un valor'] = true;
             $this->dispatcher->mensajeError = $e->getMessage();
