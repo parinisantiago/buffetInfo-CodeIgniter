@@ -170,7 +170,8 @@ class MenuController extends Controller{
 
     public function modificarMenu($menu)
     {
-
+        var_dump($_POST);
+        die;
         $fecha = $_POST['fecha'];
         $idMenu = $_POST['idMenu'];
 
@@ -180,9 +181,14 @@ class MenuController extends Controller{
         try{
             if(!$miMenu)  throw new valException("El menu que desea modificar no existe");
             if (($menu && $menu->idMenu != $idMenu)) throw new valException("La fecha elegida ya pertenece a otro menu");
+            if(isset($_POST['habilitado'])) throw new valException("No hay una habilitacion/deshabilitacion");
+            if($_POST['habilitado'] == "true") $habilitado = 0;
+            elseif ($_POST['habilitado'] == "false") $habilitado = 1;
+            else throw new valException("error en habilitado/deshabilitado");
             if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
             if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             if( ($_FILES['foto']['size'] == 0 )) $foto= $_POST['foto2'];
+
             else{
                 if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
                 else{
@@ -196,7 +202,7 @@ class MenuController extends Controller{
             }
             $this->menuModel->eliminarMenu($idMenu);
 
-            $idMenu2 = $this->menuModel->insertarMenu($fecha, $foto);
+            $idMenu2 = $this->menuModel->insertarMenu2($fecha, $foto, $habilitado);
             foreach ($_POST['selectProdMult'] as $prod) {
                 $this->menuModel->insertarProd($idMenu2,$prod);
 

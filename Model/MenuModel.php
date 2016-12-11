@@ -166,7 +166,28 @@ class MenuModel extends Model{
                 )
         );
     }
-     
+
+    public function insertarMenu2($fecha, $foto, $hab){
+
+        return $this -> lastId("
+            INSERT INTO menu(
+                fecha,
+                foto,
+                eliminado,
+                habilitado)
+            VALUES (
+                    :fecha,
+                    :foto,
+                    0,
+                    :hab)",
+            array(
+                'fecha' =>$fecha,
+                'foto' => $foto,
+                'hab' => $hab
+            )
+        );
+    }
+
     public function eliminarMenu($idMenu){
         return $this -> query(
             "UPDATE menu m 
