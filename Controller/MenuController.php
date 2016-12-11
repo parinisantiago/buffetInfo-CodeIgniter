@@ -31,8 +31,8 @@ class MenuController extends Controller{
         $this->paginaCorrecta($this->menuModel->totalMenu());
       
         $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$date);
-        if(empty($this->dispatcher->menu)){
-            $this->dispatcher->menu[1] = "vacio";
+        if(!isset($this->dispatcher->menu[1])){
+            $this->dispatcher->menu[1] = NULL;
         }
         $this->dispatcher->datos = $this->dispatcher->menu[1];
         $this->dispatcher->pag = $_GET['pag'];
@@ -53,8 +53,8 @@ class MenuController extends Controller{
             $this->paginaCorrecta($this->menuModel->totalMenu());
             $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_POST['fecha']);
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
-           if(empty($this->dispatcher->menu)){
-               $this->dispatcher->menu[1] = "vacio";
+           if(!isset($this->dispatcher->menu[1])){
+               $this->dispatcher->menu[1] = NULL;
            }
            $this->dispatcher->datos = $this->dispatcher->menu[1];
             $this->dispatcher->fecha=$_POST['fecha'];
