@@ -5,7 +5,7 @@
 
     <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=BalanceController&method=balanceDia" method="post">
         <label for="tokenScrf" hidden> token Scrf: </label>
-        <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
+        <input type="hidden" name="tokenScrf" value="{{ tokenScrf }}">
 
         <label for="fecha" class="formProducText">Día del balance:</label>
         
@@ -19,7 +19,7 @@
 
     <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=BalanceController&method=balanceRango" method="post">
         <label for="tokenScrf" hidden> token Scrf: </label>
-        <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
+        <input type="hidden" name="tokenScrf" value="{{ tokenScrf }}">
 
         <label for="fechaInicio" class="formProducText">Día inicio del balance:</label>
         <input type="text" name="fechaInicio" id="datepicker1" class="fecha fechaBalance" value="{{ fechaInicio }}"  required> 
