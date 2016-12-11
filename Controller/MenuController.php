@@ -170,8 +170,7 @@ class MenuController extends Controller{
 
     public function modificarMenu($menu)
     {
-        var_dump($_POST);
-        die;
+
         $fecha = $_POST['fecha'];
         $idMenu = $_POST['idMenu'];
 
