@@ -72,43 +72,44 @@ class PedidosController extends Controller
                 if ($producto->stock <  $cantidad) throw new valException("No hay suficiente cantidad de $producto->nombre para completar $cantidad pedidos");
             }
 
+
+            //Primero hay que agregar el pedido y recuperar su id.
+            //hay que agregar un pedido detalle.
+
+            $pedidoId = $this->pedidos->insertarPedido($_SESSION['idUsuario']);
+
+            //tengo que agregar los productos al detalle y despues descontar la cantidad en productos
+            //para que despues en el cancelar solo modificar los productos
+            //en el aceptar se hace lo que esta comentado en el foreach
+
+            foreach ($menuHoy as $producto)
+            {
+                $this->pedidos->insertPedidoDetalle($pedidoId, $producto->idProducto, $cantidad);
+                //actualizo el producto
+                $this->producto->actualizarCantProductos($producto->idProducto, $producto->stock - $cantidad);
+
+                /*
+                    $venta['idProducto'] = $producto->idProducto;
+                    $venta['precioVentaUnitario'] = $producto->precioVentaUnitario;
+                    $venta['cant'] = $cantidad;
+
+
+                    echo ($this->venta->insertarVentaId($venta));
+            */
+            }
+
+            $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, "0");
+
+            $this->dispatcher->pag = 0;
+
+            $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
+
         }
         catch (valException $e)
         {
             $this->dispatcher->mensajeError = $e -> getMessage();
             $this->hacerPedido();
         }
-
-        //Primero hay que agregar el pedido y recuperar su id.
-        //hay que agregar un pedido detalle.
-
-        $pedidoId = $this->pedidos->insertarPedido($_SESSION['idUsuario']);
-
-        //tengo que agregar los productos al detalle y despues descontar la cantidad en productos
-        //para que despues en el cancelar solo modificar los productos
-        //en el aceptar se hace lo que esta comentado en el foreach
-
-        foreach ($menuHoy as $producto)
-        {
-            $this->pedidos->insertPedidoDetalle($pedidoId, $producto->idProducto, $cantidad);
-            //actualizo el producto
-            $this->producto->actualizarCantProductos($producto->idProducto, $producto->stock - $cantidad);
-
-        /*
-            $venta['idProducto'] = $producto->idProducto;
-            $venta['precioVentaUnitario'] = $producto->precioVentaUnitario;
-            $venta['cant'] = $cantidad;
-
-
-            echo ($this->venta->insertarVentaId($venta));
-    */
-        }
-
-        $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, "0");
-
-        $this->dispatcher->pag = 0;
-
-        $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
 
     }
 
