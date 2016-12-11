@@ -37,7 +37,7 @@ class VentaModel extends Model{
 
     public function getAlltotales(){
         return $this -> queryTodasLasFilas('
-            SELECT COUNT(i.idProducto) AS total,SUM(i.precioUnitario * i.cantidad) AS cant,SUM(i.cantidad) AS vent, i.idProducto, p.nombre 
+            SELECT COUNT(i.idProducto) AS total,ROUND(SUM(i.precioUnitario * i.cantidad), 2) AS cant,SUM(i.cantidad) AS vent, i.idProducto, p.nombre 
             FROM ingresoDetalle i 
             INNER JOIN producto p 
             ON (i.idProducto = p.idProducto) 
