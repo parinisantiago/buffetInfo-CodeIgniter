@@ -356,14 +356,14 @@ function valProducto() {
 function valMenu() {
     document.getElementById("error").setAttribute("hidden","true");
 
-    var bol = false;
+    var bol = true;
     var form = document.getElementById("menu");
     var prod = document.getElementById("selectProdMult");
     var fecha= document.getElementById("datepicker");
 
     if(isValidDate(fecha, form))
     {
-        bol = true;
+        bol = false;
     }
     return(bol);
 
