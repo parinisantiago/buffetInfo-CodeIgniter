@@ -44,7 +44,13 @@
                 <td headers="imagenD">
                     <a  href="uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="uploads/{{ datos.foto }}" alt="foto del menu"></a>
                 </td>
-                <td headers="hablitiadoD"> {{ datos.habilitado }}</td>
+                <td headers="hablitiadoD">
+                    {% if datos.habilitado == '0' %}
+                        habilitado
+                   {% else %}
+                        deshabilitado
+                    {% endif %}
+                </td>
                 <td headers="acciones">
                     <form method="post" class="botonMenu" action= "Loader.php?controller=MenuController&method=menuAMMod&fecha={{ fecha }}" >
                         <label for="tokenScrf" hidden> token Scrf: </label>
