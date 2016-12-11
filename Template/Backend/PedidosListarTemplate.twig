@@ -4,6 +4,8 @@
 
     <div>
     <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=PedidosController&method=pedidosRango" method="post">
+        <label for="tokenScrf" hidden> token Scrf: </label>
+        <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
 
         <label for="fechaInicio" class="formProducText">Fecha inicio:</label>
         <input type="date" name="fechaInicio" id="fechaInicio" class="formProducinput" pattern="^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$" value="{{ fechaInicio }}" required>
