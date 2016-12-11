@@ -1,3 +1,62 @@
+function isValidDate(dateString, forn)
+{
+    var error=  document.createElement("P");
+    if( text.value.length == 0) {
+
+
+        error = document.createElement("P");
+
+        error.setAttribute("class", "error");
+        error.innerHTML = "Debe completar este campo";
+        form.insertBefore(error, text);
+        return true
+    }
+    // First check for the pattern
+    if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)){
+        error=  document.createElement("P");
+
+        error.setAttribute("class", "error");
+        error.innerHTML ="La fecha no posee un formato valido";
+        form.insertBefore(error, text);
+        return true;
+    }
+    // Parse the date parts to integers
+    var parts = dateString.split("/");
+    var day = parseInt(parts[1], 10);
+    var month = parseInt(parts[0], 10);
+    var year = parseInt(parts[2], 10);
+
+    // Check the ranges of month and year
+    if(month == 0 || month > 12){
+
+                error=  document.createElement("P");
+
+        error.setAttribute("class", "error");
+        error.innerHTML ="el mes no es valido";
+        form.insertBefore(error, text);
+        return true;
+
+    }
+
+    if(day == 0 || day > 39){
+
+        error=  document.createElement("P");
+
+        error.setAttribute("class", "error");
+        error.innerHTML ="el dia no es valido";
+        form.insertBefore(error, text);
+        return true;
+
+    }
+
+
+
+
+    // Check the range of the day
+    return false;
+}
+
+
 function valLetras(text, form){
 
     var error=  document.createElement("P");
@@ -292,4 +351,20 @@ function valProducto() {
     }
 
     return(bol);
+}
+
+function valMenu() {
+    document.getElementById("error").setAttribute("hidden","true");
+
+    var bol = false;
+    var form = document.getElementById("menu");
+    var prod = document.getElementById("selectProdMult");
+    var fecha= document.getElementById("datepicker");
+
+    if(isValidDate(fecha, form))
+    {
+        bol = true;
+    }
+    return(bol);
+
 }
