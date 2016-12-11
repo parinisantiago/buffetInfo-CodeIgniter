@@ -25,4 +25,10 @@ class TelegramModel extends Model{
             WHERE idUsuario = :idUsuario',
             array('idUsuario' => $id));
     }
+    public function getAll(){
+        return $this->queryPreparadaSQL('
+            SELECT idUsuario
+            FROM telegram',
+            array());
+    }
 }

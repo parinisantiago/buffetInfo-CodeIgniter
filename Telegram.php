@@ -84,10 +84,10 @@ require_once 'Utils/Const.php';
             case '/suscribir':
                 $telegramModel = new TelegramModel();
                 if ($telegramModel->buscar($id_del_chat)){
-                    $msg['text'] ='Este chat ya se encuentra suscripto.';
+                    $msg['text'] = 'Este chat ya se encuentra suscripto.' . PHP_EOL;
                 }else{
+                    $msg['text'] = 'Este chat a sido suscripto con exito.' . PHP_EOL;
                     $telegramModel->registrar($id_del_chat);
-                    $msg['text'] =' Este chat a sido suscripto con exito.';
                 }
                 $msg['reply_to_message_id'] = null;
                 break;
@@ -95,9 +95,9 @@ require_once 'Utils/Const.php';
                 $telegramModel = new TelegramModel();
                 if ($telegramModel->buscar($id_del_chat)){
                     $telegramModel->eliminar($id_del_chat);
-                    $msg['text'] ='Se ha cancelado la suscripcion con exito.';
+                    $msg['text'] ='Se ha cancelado la suscripcion con exito.' . PHP_EOL;
                 }else{
-                    $msg['text'] ='Este chat no se encontraba suscripto.';
+                    $msg['text'] ='Este chat no se encontraba suscripto.' . PHP_EOL;
                 }
                 $msg['reply_to_message_id'] = null;
                 break;
