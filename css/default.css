@@ -368,3 +368,8 @@ div > p > a{
 .gestionPedidoBoton{
     margin-left: 40%;
 }
+.fechaBalance{
+    float: right;
+    margin-right: 50%;
+    margin-top:-3%;
+}

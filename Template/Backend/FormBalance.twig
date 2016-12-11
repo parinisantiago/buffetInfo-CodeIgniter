@@ -1,16 +1,19 @@
 {% extends 'Template/Backend/IndexTemplate.twig' %}
 
 {% block main %}
+     <script type="text/javascript" src="script/script.js"></script>
 
     <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=BalanceController&method=balanceDia" method="post">
         <label for="tokenScrf" hidden> token Scrf: </label>
         <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
 
         <label for="fecha" class="formProducText">Día del balance:</label>
-        <input type="date" name="fecha" id="fecha" class="formProducinput" value="{{ fecha }}"  pattern="^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$" required>
-
+        
+        <input type="text" name="fecha" id="datepicker" class="fecha fechaBalance" value="{{ fecha }}"  > 
+        <script>$( function() {$( "#datepicker" ).datepicker();} );</script>
+        
         <label for="submitButton" hidden>Boton de envio:</label>
-        <input type="submit" id="submitButton" name="submitButton">
+        <input type="submit" class="boton" id="submitButton" name="submitButton" onclick="ponerFechaAM()">
 
     </form>
 
