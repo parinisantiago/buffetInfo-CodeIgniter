@@ -206,6 +206,16 @@ class MenuModel extends Model{
             SET m.eliminado =1 
             WHERE m.idMenu = :idMenu" , array('idMenu' => $idMenu));
     }
+    public function getMinimoMenu($fecha){
+        return $this -> query("
+            SELECT MIN(p.stock) 
+            FROM menu m INNER JOIN menuProducto mp ON (mp.idMenu = m.idMenu)
+                        INNER JOIN producto p ON (mp.idProducto = p.idProducto)
+            WHERE m.fecha = :fecha
+            AND m.eliminado = 0
+            ", array('fecha' => $fecha));
+       
+    }
 }
 ?>
 

@@ -30,6 +30,7 @@ class PedidosController extends Controller
         if ($menuHoy)
         {
             $this->token();
+            $this->dispatcher->minimo=$this->menu->getMinimoMenu(date('Y-m-d'));
             $this->dispatcher->idMenu= $menuHoy[0]->idMenu;
             $this->dispatcher->menu = $menuHoy;
             $this->dispatcher->render("Backend/RegistroPedidoTemplate.twig");
