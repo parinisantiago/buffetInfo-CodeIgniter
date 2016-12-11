@@ -13,3 +13,11 @@ function ponerFechaAM(){
     aux=formatear(aux);
     document.getElementById('datepicker').value=aux;
 }
+function ponerFechaDoble(){
+    var aux = document.getElementById('datepicker1').value
+    aux=formatear(aux);
+    document.getElementById('datepicker1').value=aux;
+    var aux2 = document.getElementById('datepicker2').value
+    aux2=formatear(aux2);
+    document.getElementById('datepicker2').value=aux2;
+}

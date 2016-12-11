@@ -22,13 +22,15 @@
         <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
 
         <label for="fechaInicio" class="formProducText">Día del balance:</label>
-        <input type="date" name="fechaInicio" id="fechaInicio" class="formProducinput" value="{{ fechaInicio }}"  pattern="^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$" required>
-
+        <input type="text" name="fechaInicio" id="datepicker1" class="fecha fechaBalance" value="{{ fechaInicio }}"  > 
+        <script>$( function() {$( "#datepicker1" ).datepicker();} );</script>
+        
         <label for="fechaFin" class="formProducText">Día del balance:</label>
-        <input type="date" name="fechaFin" id="fechaFin" class="formProducinput" value="{{ fechaFin }}"  pattern="^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$" required>
-
+        <input type="text" name="fechaFin" id="datepicker2" class="fecha fechaBalance" value="{{ fechaFin }}"  > 
+        <script>$( function() {$( "#datepicker2" ).datepicker();} );</script>
+        
         <label for="submitButton2" hidden>Boton de envio:</label>
-        <input type="submit" id="submitButton2" name="submitButton2">
+        <input type="submit" id="submitButton2" name="submitButton2" onclick="ponerFechaDoble()">
 
     </form>
 
