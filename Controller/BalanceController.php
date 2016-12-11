@@ -130,12 +130,14 @@ class BalanceController extends Controller
             $ingresos = $this->balance->ingresoRango($fechaInicio, $fechaFin);
             $egresos = $this->balance->egresoRango($fechaInicio, $fechaFin);
 
-            var_dump($ingresos);
-            var_dump($egresos);
-            die;
+            if(empty($ingresos) && empty($egreso)) throw new valException("NO hay datos para mostrar");
+
             $total= array();
             $balances = array();
             //creo un arreglo simple porque de la base lo traigo en objetos. Esto me sirve para despues mergear los arreglos
+
+
+
             foreach ($ingresos as $ingreso)
             {
                 $balances['ingreso'][''.$ingreso->fecha] = $ingreso->total;
