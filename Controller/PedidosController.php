@@ -29,6 +29,7 @@ class PedidosController extends Controller
         $menuHoy = $this->menu->getMenuByDia(99,0,date('Y-m-d'));
         if ($menuHoy)
         {
+            $this->token();
             $this->dispatcher->idMenu= $menuHoy[0]->idMenu;
             $this->dispatcher->menu = $menuHoy;
             $this->dispatcher->render("Backend/RegistroPedidoTemplate.twig");
@@ -154,6 +155,7 @@ class PedidosController extends Controller
     
     public function formCancelarPedido(){
         $this->dispatcher->id = $_POST['idPedido'];
+        $this->token();
         $this->dispatcher->render('Backend/cancerlarPedido.twig');
     }
 
@@ -161,6 +163,9 @@ class PedidosController extends Controller
     {
         try
         {
+
+            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?",3);
             $pedido = $this->pedidos->getPedido($_POST['idPedido']);
             if(!$pedido) throw new valException('El pedido no es valido');

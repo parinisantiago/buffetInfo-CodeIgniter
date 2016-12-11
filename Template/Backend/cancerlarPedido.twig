@@ -4,6 +4,9 @@
 
     <form name="formUser" class="formProduc clearfix sombreado" action={% if rol == '2' %}"Loader.php?controller=PedidosController&method=cancelarPedido" {% else %}"Loader.php?controller=GestionPedidoController&method=cancelarPedido" {% endif %}method="post">
 
+    <label for="tokenScrf" hidden> token Scrf: </label>
+    <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
+
         <label for="id" hidden>id</label>
         <input type="hidden" name="idPedido" id="idPedido" value="{{ id }}">
 
