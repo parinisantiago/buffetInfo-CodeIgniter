@@ -53,16 +53,14 @@
                 </td>
                 <td headers="acciones">
                     <form method="post" class="botonMenu" action= "Loader.php?controller=MenuController&method=menuAMMod&fecha={{ fecha }}" >
-                        <label for="tokenScrf" hidden> token Scrf: </label>
-                        <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
+                        <input type="hidden" name="tokenScrf" value="{{ tokenScrf }}">
                         <input  name="idProducto" type="hidden" value={{ datos.idMenu }}>
                         <button class="botonTabla" type="submit"  name="submitButton">
                             <img class="icono" src="images/editar.png" alt= "editar la informacion" />
                         </button>
                     </form>
                     <form method="post" class="botonMenu" action="Loader.php?controller=MenuController&method=menuEliminar">
-                        <label for="tokenScrf" hidden> token Scrf: </label>
-                        <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
+                        <input type="hidden" name="tokenScrf" value="{{ tokenScrf }}">
                         <input  name="idMenu" type="hidden" value={{ datos.idMenu }} >
                         <button class="botonTabla" type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
                             <img class="icono" src="images/eliminar.png" alt= "eliminar" />
@@ -87,7 +85,7 @@
             {% for m in menu %}
                 <tr class="fila">
                     <td headers="nombre">{{ m.nombre }}</td>
-                    <td headers="Stock"> {{ m.stock }}</td>
+                    <td headers="stock"> {{ m.stock }}</td>
                     <td headers="stockMinimo"> {{ m.stockMinimo }}</td>
                     <td headers="precioVentaUnitario">{{ m.precioVentaUnitario }}</td>
                     <td headers="descripcion">{{ m.descripcion }}</td>
