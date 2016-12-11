@@ -26,12 +26,12 @@
     <table class="tablaProductos sombreado">
         <thead>
         <tr>
-            <th class="columnaAncha" id="usuario">Usuario</th>
-            <th class="columnaAncha" id="ubicacion">Ubicacion</th>
-            <th class="columnaAncha" id="estado">Estado</th>
-            <th class="columnaAncha" id="observaciones">Observacioness</th>
+            <th id="usuario">Usuario</th>
+            <th id="ubicacion">Ubicacion</th>
+            <th id="estado">Estado</th>
+            <th id="observaciones">Observacioness</th>
             <th class="columnaAncha" id="fechaAlta">Fecha de alta</th>
-            <th class="columnaAncha" id="total">Total</th>
+            <th id="total">Total</th>
             <th class="columnaAncha" id="acciones">Cancelar</th>
             <th class="columnaAncha" id="detalle">Detalle</th>
             <th class="columnaAncha" id="aceptar">Aceptar</th>
@@ -47,12 +47,10 @@
                 <td headers="observaciones"> {{ pedido.observaciones }}</td>
                 <td headers="fechaAlta"> {{ pedido.fechaAlta }}</td>
                 <td headers="total">{{ pedido.total }}</td>
-                <td headers="fecha">{{ venta.fecha }}</td>
-
                 <td headers="acciones">
                         <form method="post" action="Loader.php?controller=GestionPedidoController&method=formCancelarPedido">
                             <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
-                            <button class="botonTabla" type="submit" name="submitButton">
+                            <button class="botonTabla gestionPedidoBoton" type="submit" name="submitButton">
                                 <img class="icono" src="images/eliminar.png" alt="eliminar"/>
                             </button>
                         </form>
@@ -60,15 +58,15 @@
                 <td headers="detalle">
                     <form method="post" action="Loader.php?controller=GestionPedidoController&method=verDetalle">
                         <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
-                        <button class="botonTabla" type="submit" name="submitButton">
-                            <img class="icono" src="images/editar.png" alt="detalle"/>
+                        <button class="botonTabla gestionPedidoBoton" type="submit" name="submitButton">
+                            <img class="icono" src="images/ver.png" alt="detalle"/>
                         </button>
                     </form>
                 </td>
                 <td headers="aceptar">
                     <form method="post" action="Loader.php?controller=GestionPedidoController&method=formAceptarPedido">
                         <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
-                        <button class="botonTabla" type="submit" name="submitButton">
+                        <button class="botonTabla gestionPedidoBoton" type="submit" name="submitButton">
                             <img class="icono" src="images/editar.png" alt="aceptar"/>
                         </button>
                     </form>
