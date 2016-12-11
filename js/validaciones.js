@@ -11,8 +11,10 @@ function isValidDate(dateString, form)
         return true
     }
     // First check for the pattern
-    alert((/(\d{1,2})-(\d{1,2})-(\d{4})/.exec(dateString.value) != dateString.value));
-    if((/(\d{1,2})-(\d{1,2})-(\d{4})/.exec(dateString.value) != dateString.value)){
+
+    fecha = /(\d{4})-(\d{2})-(\d{2})/.exec(dateString.value);
+    
+    if(fecha[0] != dateString.value){
 
         error=  document.createElement("P");
         error.setAttribute("class", "error");
@@ -20,37 +22,6 @@ function isValidDate(dateString, form)
         form.insertBefore(error, dateString);
         return true;
     }
-    // Parse the date parts to integers
-    var parts = dateString.split("/");
-    var day = parseInt(parts[1], 10);
-    var month = parseInt(parts[0], 10);
-    var year = parseInt(parts[2], 10);
-
-    // Check the ranges of month and year
-    if(month == 0 || month > 12){
-
-                error=  document.createElement("P");
-
-        error.setAttribute("class", "error");
-        error.innerHTML ="el mes no es valido";
-        form.insertBefore(error, dateString);
-        return true;
-
-    }
-
-    if(day == 0 || day > 39){
-
-        error=  document.createElement("P");
-
-        error.setAttribute("class", "error");
-        error.innerHTML ="el dia no es valido";
-        form.insertBefore(error, dateString);
-        return true;
-
-    }
-
-
-
 
     // Check the range of the day
     return false;
@@ -358,8 +329,8 @@ function valMenu() {
 
     var bol = true;
     var form = document.getElementById("menu");
-    var prod = document.getElementById("selectProdMult");
     var fecha= document.getElementById("datepicker");
+
 
     if(isValidDate(fecha, form))
     {
