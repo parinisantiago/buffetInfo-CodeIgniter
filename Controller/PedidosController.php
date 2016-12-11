@@ -51,7 +51,6 @@ class PedidosController extends Controller
         try
         {
             //primero valido que me hayan pasado todas las variables
-            $this->token();
 
             if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
             if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
@@ -108,6 +107,7 @@ class PedidosController extends Controller
             $this->dispatcher->pedidos = $this->pedidos->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, "0");
 
             $this->dispatcher->pag = 0;
+            $this->token();
 
             $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
 
