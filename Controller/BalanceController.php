@@ -1,7 +1,7 @@
 <?php
 
-require_once (__DIR__.'/../libchart/libchart/classes/libchart.php');
-require_once (__DIR__.'/../fpdf_demo/fpdf.php');
+require_once (__DIR__.'/../uploads/libchart/libchart/classes/libchart.php');
+require_once (__DIR__.'/../uploads/fpdf_demo/fpdf.php');
 
 
 class BalanceController extends Controller
