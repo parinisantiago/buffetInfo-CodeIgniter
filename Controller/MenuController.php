@@ -180,7 +180,7 @@ class MenuController extends Controller{
         try{
             if(!$miMenu)  throw new valException("El menu que desea modificar no existe");
             if (($menu && $menu->idMenu != $idMenu)) throw new valException("La fecha elegida ya pertenece a otro menu");
-            if(isset($_POST['habilitado'])) throw new valException("No hay una habilitacion/deshabilitacion");
+            if(!isset($_POST['habilitado'])) throw new valException("No hay una habilitacion/deshabilitacion");
             if($_POST['habilitado'] == "true") $habilitado = 0;
             elseif ($_POST['habilitado'] == "false") $habilitado = 1;
             else throw new valException("error en habilitado/deshabilitado");
