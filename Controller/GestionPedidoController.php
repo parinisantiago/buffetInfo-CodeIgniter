@@ -54,6 +54,9 @@ class GestionPedidoController extends Controller
             $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?",3);
             $pedido = $this->pedidos->getPedido($_POST['idPedido']);
             if(!$pedido) throw new valException('El pedido no es valido');
+
+            $this->dispatcher->detalles = $this->pedidos->getDetalle($_POST['idPedido']);
+            $this->dispatcher->render("Backend/mostrarDetalle.twig");
         }
         catch (valException $e)
         {
@@ -61,8 +64,6 @@ class GestionPedidoController extends Controller
             $this->dispatcher->render('Backend/GestionPedidosListarTemplate.twig');
         }
 
-        $this->dispatcher->detalles = $this->pedidos->getDetalle($_POST['idPedido']);
-        $this->dispatcher->render("Backend/mostrarDetalle.twig");
 
     }
 
@@ -82,6 +83,21 @@ class GestionPedidoController extends Controller
             $pedido = $this->pedidos->getPedido($_POST['idPedido']);
             if(!$pedido) throw new valException('El pedido no es valido');
             if(($pedido->idEstado != "pendiente"))throw new valException("El pedido no cumple los requisitos para ser cancelado");
+            $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
+            $this->pedidos->actualizarEstado("cancelado", $_POST['idPedido']);
+
+            if(strlen($_POST['comentario']) > 0 ) $this->pedidos->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
+
+            foreach ($detalles as $detalle)
+            {
+
+                $this->producto->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
+            }
+
+            $_GET['pag'] = 0;
+
+            $this->verPedidos();
+
         }
         catch (valException $e)
         {
@@ -90,20 +106,6 @@ class GestionPedidoController extends Controller
             $this->dispatcher->render('Backend/cancerlarPedido.twig');
         }
 
-        $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
-        $this->pedidos->actualizarEstado("cancelado", $_POST['idPedido']);
-
-        if(strlen($_POST['comentario']) > 0 ) $this->pedidos->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
-
-        foreach ($detalles as $detalle)
-        {
-
-            $this->producto->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
-        }
-
-        $_GET['pag'] = 0;
-
-        $this->verPedidos();
 
     }
 
@@ -122,6 +124,24 @@ class GestionPedidoController extends Controller
             $pedido = $this->pedidos->getPedido($_POST['idPedido']);
             if(!$pedido) throw new valException('El pedido no es valido');
             if(($pedido->idEstado != "pendiente"))throw new valException("El pedido no cumple los requisitos para ser cancelado");
+            $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
+            $this->pedidos->actualizarEstado("Entregado", $_POST['idPedido']);
+
+            if(strlen($_POST['comentario']) > 0 ) $this->pedidos->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
+
+            foreach ($detalles as $detalle)
+            {
+
+                $venta['idProducto'] = $detalle->idProducto;
+                $venta['precioVentaUnitario'] = $detalle->precioVentaUnitario;
+                $venta['cant'] = $detalle->cantidad;
+
+                $this->venta->insertarVentaId($venta);
+            }
+
+            $_GET['pag'] = 0;
+
+            $this->verPedidos();
         }
         catch (valException $e)
         {
@@ -130,24 +150,7 @@ class GestionPedidoController extends Controller
             $this->dispatcher->render('Backend/aceptarPedido.twig');
         }
 
-        $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
-        $this->pedidos->actualizarEstado("Entregado", $_POST['idPedido']);
 
-        if(strlen($_POST['comentario']) > 0 ) $this->pedidos->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
-
-        foreach ($detalles as $detalle)
-        {
-
-            $venta['idProducto'] = $detalle->idProducto;
-            $venta['precioVentaUnitario'] = $detalle->precioVentaUnitario;
-            $venta['cant'] = $detalle->cantidad;
-
-            $this->venta->insertarVentaId($venta);
-        }
-
-        $_GET['pag'] = 0;
-
-        $this->verPedidos();
 
     }
 }
