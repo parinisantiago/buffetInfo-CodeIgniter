@@ -1,5 +1,7 @@
 function isValidDate(dateString, form)
 {
+
+
     var error=  document.createElement("P");
     if( dateString.value.length == 0) {
 
@@ -11,10 +13,9 @@ function isValidDate(dateString, form)
         return true
     }
     // First check for the pattern
+    var fecha = /(\d{4})-(\d{2})-(\d{2})/.exec(dateString.value);
 
-    fecha = /(\d{4})-(\d{2})-(\d{2})/.exec(dateString.value);
-    
-    if(fecha[0] != dateString.value){
+    if( !fecha || fecha[0] != dateString.value){
 
         error=  document.createElement("P");
         error.setAttribute("class", "error");
