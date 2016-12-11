@@ -9,7 +9,7 @@
 
         <label for="fecha" class="formProducText">Día del balance:</label>
         
-        <input type="text" name="fecha" id="datepicker" class="fecha fechaBalance" value="{{ fecha }}"  > 
+        <input type="text" name="fecha" id="datepicker" class="fecha fechaBalance" value="{{ fecha }}"  required> 
         <script>$( function() {$( "#datepicker" ).datepicker();} );</script>
         
         <label for="submitButton" hidden>Boton de envio:</label>
@@ -21,12 +21,12 @@
         <label for="tokenScrf" hidden> token Scrf: </label>
         <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
 
-        <label for="fechaInicio" class="formProducText">Día del balance:</label>
-        <input type="text" name="fechaInicio" id="datepicker1" class="fecha fechaBalance" value="{{ fechaInicio }}"  > 
+        <label for="fechaInicio" class="formProducText">Día inicio del balance:</label>
+        <input type="text" name="fechaInicio" id="datepicker1" class="fecha fechaBalance" value="{{ fechaInicio }}"  required> 
         <script>$( function() {$( "#datepicker1" ).datepicker();} );</script>
         
-        <label for="fechaFin" class="formProducText">Día del balance:</label>
-        <input type="text" name="fechaFin" id="datepicker2" class="fecha fechaBalance" value="{{ fechaFin }}"  > 
+        <label for="fechaFin" class="formProducText">Día fin del balance:</label>
+        <input type="text" name="fechaFin" id="datepicker2" class="fecha fechaBalance" value="{{ fechaFin }}"  required> 
         <script>$( function() {$( "#datepicker2" ).datepicker();} );</script>
         
         <label for="submitButton2" hidden>Boton de envio:</label>
