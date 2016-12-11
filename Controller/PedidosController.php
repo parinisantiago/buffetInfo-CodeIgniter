@@ -203,6 +203,8 @@ class PedidosController extends Controller
             $_GET['pag']=0;
             $_GET['inicio']= $_POST['fechaInicio'];
             $_GET['fin'] = $_POST['fechaFin'];
+            $this->dispatcher->fechaInicio = $_POST['fechaInicio'];
+            $this->dispatcher->fechaFin = $_POST['fechaFin'];
             $this->mostrarPedidoRango();
         } catch (valException $e) {
             $this->dispatcher->fechaInicio = $_POST['fechaInicio'];
