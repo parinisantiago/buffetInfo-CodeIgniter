@@ -45,6 +45,7 @@ class ProductoController extends Controller
     public function productosAMPost(){
         try{
             $this->validarProductos($_POST);
+            if (isset($_POST['idProducto'])) $_POST["idProducto"] = "";
             if ($_POST["idProducto"] != ""){
                 $this->dispatcher->producto =$this ->productoModel->actualizarProducto($_POST);
             }else{
