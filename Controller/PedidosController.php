@@ -37,6 +37,8 @@ class PedidosController extends Controller
         else
         {
             $this->dispatcher->mensajeError = "No hay un menu para el dia de hoy, por lo que no se pueden hacer pedidos";
+            $this->token();
+
             $this->dispatcher->render("Backend/IndexTemplate.twig");
         }
     }
@@ -48,6 +50,8 @@ class PedidosController extends Controller
         try
         {
             //primero valido que me hayan pasado todas las variables
+            $this->token();
+
             if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
             if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->validator->varSet($_POST['idMenu'], "sin menu, no hay validacion");
@@ -141,6 +145,7 @@ class PedidosController extends Controller
             if(!$pedido) throw new valException('El pedido no es valido');
             if( $pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
             $this->dispatcher->detalles = $this->pedidos->getDetalle($_POST['idPedido']);
+            $this->token();
             $this->dispatcher->render("Backend/mostrarDetalle.twig");
 
         }
@@ -191,6 +196,7 @@ class PedidosController extends Controller
         {
             $this->dispatcher->mensajeError = $e -> getMessage();
             $this->dispatcher->id = $_POST['idPedido'];
+            $this->token();
             $this->dispatcher->render('Backend/cancerlarPedido.twig');
         }
 
@@ -234,6 +240,7 @@ class PedidosController extends Controller
         $this->dispatcher->inicio = $_GET['inicio'];
         $this->dispatcher->fin = $_GET['fin'];
         $this->dispatcher->rango = true;
+        $this->token();
         $this->dispatcher->render("Backend/PedidosListarTemplate.twig");
     }
 }

@@ -22,6 +22,7 @@ class BalanceController extends Controller
 
     function index()
     {
+        $this->token();
         $this->dispatcher->render("Backend/FormBalance.twig");
     }
 
@@ -30,6 +31,8 @@ class BalanceController extends Controller
 
         try
         {
+            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->validator->validarFecha($_POST['fecha'], "La fecha ingresada no es válida");
             $fecha=$_POST['fecha'];
             $ingreso = $this->balance->ingresoDia($fecha);
@@ -108,6 +111,8 @@ class BalanceController extends Controller
 
         try
         {
+            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->validator->validarFecha($_POST['fechaInicio'], "La fecha ingresada no es válida");
             $this->validator->validarFecha($_POST['fechaFin'], "La fecha ingresada no es válida");
             $fechaInicio=$_POST['fechaInicio'];
@@ -199,6 +204,7 @@ class BalanceController extends Controller
             $this->dispatcher->fechaInicio = $_POST['fechaInicio'];
             $this->dispatcher->fechaFin = $_POST['fechaFin'];
             $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->token();
             $this->dispatcher->render("Backend/FormBalance.twig");
         }
 
@@ -279,6 +285,7 @@ class BalanceController extends Controller
         }
         catch (valException $e){
             $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->token();
             $this->dispatcher->render("Backend/FormBalance.twig");
         }
 
@@ -374,6 +381,7 @@ class BalanceController extends Controller
         }
         catch (valException $e){
             $this->dispatcher->mensajeError = $e -> getMessage();
+            $this->token();
             $this->dispatcher->render("Backend/FormBalance.twig");  
         }
 
