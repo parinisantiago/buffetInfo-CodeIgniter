@@ -18,9 +18,8 @@ class Validador{
     }
 
     public function validarFecha($var, $error){
-        var_dump($var);
-        die;
-        if (!$this->tam($var, 25) || !$this->varSet($var, $error) ||  preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $var))
+        
+        if (!$this->tam($var, 25) || !$this->varSet($var, $error) ||  !preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $var))
             throw new valException($error);
     }
 
