@@ -5,9 +5,11 @@
         <img src="uploads/demo.png" alt="grafico ganancias">
         <img src="uploads/demo2.png" alt="grafico productos">
         {% if fecha %}
-            <form method="post" action="Loader.php?controller=BalanceController&method=exportarPDFDia" target="_blank">
+            <form method="post" action="Loader.php?controller=BalanceController&method=exportarPDF" target="_blank">
                 <label for="fecha" hidden></label>
-                <input  name="fecha" type="hidden" value={{ fecha }}>
+                <input  name="fechaInicio" type="hidden" value={{ fecha}}>
+                <label for="fechaFin" hidden></label>
+                <input  name="fechaFin" type="hidden" value={{ fecha }}>
                 <button class="botonTabla" type="submit"  name="submitButton"  onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" >
                     Exportar a PDF
                 </button>
