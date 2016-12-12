@@ -21,7 +21,7 @@ class BalanceModel extends Model
 
     function egresoDia($fecha)
     {
-        return $this->queryTodasLasFilas("
+        return $this->queryPreparadaSQL("
             SELECT ROUND(SUM(precioUnitario * cantidad), 2) AS total
             FROM compra
             WHERE fecha=:fecha AND eliminado = 0",
