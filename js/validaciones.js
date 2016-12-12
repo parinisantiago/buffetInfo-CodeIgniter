@@ -1,30 +1,5 @@
 function isValidDate(dateString, form)
 {
-
-
-    var error=  document.createElement("P");
-    if( dateString.value.length == 0) {
-
-        error = document.createElement("P");
-
-        error.setAttribute("class", "error");
-        error.innerHTML = "Debe completar este campo";
-        form.insertBefore(error, dateString);
-        return true
-    }
-    // First check for the pattern
-    var fecha = /(\d{4})-(\d{2})-(\d{2})/.exec(dateString.value);
-
-    if( !fecha || fecha[0] != dateString.value){
-
-        error=  document.createElement("P");
-        error.setAttribute("class", "error");
-        error.innerHTML ="La fecha no posee un formato valido";
-        form.insertBefore(error, dateString);
-        return true;
-    }
-
-    // Check the range of the day
     return false;
 }
 
