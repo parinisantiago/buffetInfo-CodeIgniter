@@ -7,9 +7,7 @@
         {% if fecha %}
             <form method="post" action="Loader.php?controller=BalanceController&method=exportarPDFDia" target="_blank">
                 <label for="fecha" hidden></label>
-                <input  name="fechaInicio" type="hidden" value={{ fecha}}>
-                <label for="fechaFin" hidden></label>
-                <input  name="fechaFin" type="hidden" value={{ fecha }}>
+                <input  name="fecha" type="hidden" value={{ fecha}}>
                 <button class="botonTabla" type="submit"  name="submitButton"  onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" >
                     Exportar a PDF
                 </button>
