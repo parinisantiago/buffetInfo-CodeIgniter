@@ -55,10 +55,10 @@ class MenuController extends Controller{
             var_dump($this->dispatcher->menu);
            var_dump($_POST['fecha']);
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
-           if(!isset($this->dispatcher->menu[1])){
-               $this->dispatcher->menu[1] = NULL;
+           if(!isset($this->dispatcher->menu[0])){
+               $this->dispatcher->menu[0] = NULL;
            }
-           $this->dispatcher->datos = $this->dispatcher->menu[1];
+           $this->dispatcher->datos = $this->dispatcher->menu[0];
             $this->dispatcher->fecha=$_POST['fecha'];
             $this->dispatcher->pag = $_GET['pag'];
             $this->dispatcher->method = "menuDia";
