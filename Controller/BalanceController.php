@@ -36,17 +36,15 @@ class BalanceController extends Controller
             $this->validator->validarFecha($_POST['fecha'], "La fecha ingresada no es válida");
             $fecha=$_POST['fecha'];
             $ingreso = $this->balance->ingresoDia($fecha);
+            $egreso = $this->balance->egresoDia($fecha);
 
-            if(empty($ingreso) && empty($egreso)) throw new valException("No hay datos que mostrar");
+            if(empty($egreso) && empty($ingreso)) throw new valException("No hay datos que mostrar");
 
-
-            if (empty($ingreso)) $ingreso = "0";
-            else $ingreso = $ingreso->total;
-
+            (empty($ingreso)) ? $ingreso = "0" : $ingreso = $ingreso->total;
 
 
-            if (empty($egreso))  $egreso = "0";
-            else $egreso = $egreso->total;
+
+            (empty($egreso)) ? $egreso = "0" : $egreso = $egreso->total;
 
             $balance = $ingreso - $egreso;
             $this->graficoBarraDia($fecha);
