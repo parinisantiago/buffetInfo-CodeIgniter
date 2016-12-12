@@ -38,7 +38,6 @@ class BalanceController extends Controller
             $ingreso = $this->balance->ingresoDia($fecha);
             $egreso = $this->balance->egresoDia($fecha);
 
-            var_dump($egreso); var_dump($ingreso);
 
             if(is_null($egreso->total) && is_null($ingreso->total)) throw new valException("No hay datos que mostrar");
 
@@ -48,8 +47,6 @@ class BalanceController extends Controller
 
             (empty($egreso->total)) ? $egreso = "0" : $egreso = $egreso->total;
 
-            var_dump($egreso);
-            var_dump($ingreso);
             $balance = $ingreso - $egreso;
             $this->graficoBarraDia($fecha);
             $this->graficoTortaDia($fecha);
@@ -172,7 +169,6 @@ class BalanceController extends Controller
 
             $val = true;
             foreach ($total as $t){
-                var_dump($t);
                 if ($t != 0) $val = false;
             }
 
