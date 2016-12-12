@@ -47,7 +47,9 @@ class MenuController extends Controller{
        try{
            $this->token();
            if (!isset($_POST['fecha'])){
-               $_POST['fecha']=date("Y-m-d");
+
+               if(isset($_GET['fecha']))  $_POST['fecha']=$_GET['fecha'];
+               else $_POST['fecha']=date("Y-m-d");
            }
             $this->validator->validarFecha($_POST['fecha'], "Fecha no valida");
             $this->paginaCorrecta($this->menuModel->totalMenu());
