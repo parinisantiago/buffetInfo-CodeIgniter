@@ -7,21 +7,19 @@
     <script type="text/javascript" src="script/script.js"></script>
 
     <form id="menu" name="formMenu" enctype="multipart/form-data" class="formProduc clearfix sombreado" onsubmit="return valMenu()" action="Loader.php?controller=MenuController&method=menuAMPOST" method="post">
-        <label for="tokenScrf" hidden> token Scrf: </label>
         <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
         <p  class="formProducText"> Productos del menu: </p>
 
         {% if datos %}
-            <label for="idMenu" hidden>idMenu</label>
             <input type="hidden" id="idMenu" class="idMenu" name="idMenu" value="{{ datos.idMenu }}">
             <label for="habilitado"  class="formProducText">habilitado:</label>
             {% if datos.habilitado == '0' %}
-                <input  type="radio" name="habilitado" id="habilitado"  class="formProducText" value="true"  checked> <p class="formProducText">Habilitado</p>
-                <input  type="radio" name="habilitado" id="habilitado"   class="formProducText" value="false"  > <p class="formProducText">Deshabilitado</p>
+                <input  type="radio" name="habilitado" class="formProducText" value="true"  checked> <p class="formProducText">Habilitado</p>
+                <input  type="radio" name="habilitado"  class="formProducText" value="false"  > <p class="formProducText">Deshabilitado</p>
 
             {% else %}
-                <input  type="radio" name="habilitado" id="habilitado"  class="formProducText" value="true"  > <p class="formProducText">Habilitado</p>
-                <input  type="radio" name="habilitado" id="habilitado"  class="formProducText" value="false" checked><p class="formProducText">Deshabilitado</p>
+                <input  type="radio" name="habilitado" class="formProducText" value="true"  > <p class="formProducText">Habilitado</p>
+                <input  type="radio" name="habilitado" class="formProducText" value="false" checked><p class="formProducText">Deshabilitado</p>
             {% endif %}
         {% endif %}
         <label for="selectProdMult" class="formProducText">Productos deshabilitado/ Prouctos habilitados</label>
