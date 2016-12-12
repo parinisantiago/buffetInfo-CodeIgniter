@@ -38,6 +38,7 @@ class BalanceController extends Controller
             $ingreso = $this->balance->ingresoDia($fecha);
             $egreso = $this->balance->egresoDia($fecha);
 
+            var_dump($egreso); var_dump($ingreso);
 
             if(is_null($egreso->total) && is_null($ingreso->total)) throw new valException("No hay datos que mostrar");
 
@@ -47,6 +48,8 @@ class BalanceController extends Controller
 
             (empty($egreso->total)) ? $egreso = "0" : $egreso = $egreso->total;
 
+            var_dump($egreso);
+            var_dump($ingreso);
             $balance = $ingreso - $egreso;
             $this->graficoBarraDia($fecha);
             $this->graficoTortaDia($fecha);
@@ -117,6 +120,10 @@ class BalanceController extends Controller
 
         try
         {
+            if (isset($_POST['fecha'])){
+                $_POST['fechaInicio'] = $_POST['fecha'];
+                $_POST['fechaFin'] = $_POST['fecha'];
+            }
             if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
             if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->validator->validarFecha($_POST['fechaInicio'], "La fecha ingresada no es válida");
@@ -169,6 +176,7 @@ class BalanceController extends Controller
 
             $val = true;
             foreach ($total as $t){
+                var_dump($t);
                 if ($t != 0) $val = false;
             }
 
@@ -207,7 +215,7 @@ class BalanceController extends Controller
             $chart->setDataSet($dataSet);
             $chart->render('uploads/demo.png');
             $image = imagecreatefrompng('uploads/demo.png');
-            imagejpeg($image, 'uploads/demo4.jpg', 100);
+            imagejpeg($image, 'uploads/demo3.jpg', 100);
 
 
             $this->dispatcher->fechaInicio = $fechaInicio;
