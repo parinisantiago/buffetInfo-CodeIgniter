@@ -37,17 +37,18 @@ class BalanceController extends Controller
             $fecha=$_POST['fecha'];
             $ingreso = $this->balance->ingresoDia($fecha);
 
-            (empty($ingreso->total)) ? $ingreso = "0" : $ingreso = $ingreso->total;
+            if(empty($ingreso) && empty($egreso)) throw new valException("No hay datos que mostrar");
 
 
-            $egreso = $this->balance->egresoDia($fecha);
-            var_dump($egreso);
-            var_dump($ingreso);
-            die;
-            (empty($egreso->total)) ? $egreso = "0" : $egreso = $egreso->total;
+            if (empty($ingreso)) $ingreso = "0";
+            else $ingreso = $ingreso->total;
+
+
+
+            if (empty($egreso))  $egreso = "0";
+            else $egreso = $egreso->total;
 
             $balance = $ingreso - $egreso;
-            if($balance == 0) throw new valException("No hay datos que mostrar");
             $this->graficoBarraDia($fecha);
             $this->graficoTortaDia($fecha);
 
