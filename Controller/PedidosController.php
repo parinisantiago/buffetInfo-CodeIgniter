@@ -65,7 +65,7 @@ class PedidosController extends Controller
 
             //si el menu de hoy no es como el de id, me estuvieron tocando las variables
 
-            if ($menuHoy[1] -> idMenu != $idMenu ) throw new valException("Algo raro hiciste, keep trying");
+            if ($menuHoy[0] -> idMenu != $idMenu ) throw new valException("Algo raro hiciste, keep trying");
 
             //ahora valido que haya suficientes productos para la cantidad de menus que me pidieron
 
