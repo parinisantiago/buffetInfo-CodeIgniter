@@ -40,14 +40,16 @@ class BalanceController extends Controller
 
             var_dump($egreso); var_dump($ingreso);
 
-            if(empty($egreso) && empty($ingreso)) throw new valException("No hay datos que mostrar");
+            if(empty($egreso->total) && empty($ingreso->total)) throw new valException("No hay datos que mostrar");
 
-            (empty($ingreso)) ? $ingreso = "0" : $ingreso = $ingreso->total;
+            (empty($ingreso->total)) ? $ingreso = "0" : $ingreso = $ingreso->total;
 
 
 
-            (empty($egreso)) ? $egreso = "0" : $egreso = $egreso->total;
+            (empty($egreso->total)) ? $egreso = "0" : $egreso = $egreso->total;
 
+            var_dump($egreso);
+            var_dump($ingreso);
             $balance = $ingreso - $egreso;
             $this->graficoBarraDia($fecha);
             $this->graficoTortaDia($fecha);
