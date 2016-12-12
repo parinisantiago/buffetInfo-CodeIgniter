@@ -7,6 +7,15 @@ class MenuModel extends Model{
         parent::__construct();
     }
 
+    public function totalProd($id){
+        return $this->queryPreparadaSQL('
+            SELECT COUNT(*) AS total  
+            FROM menuProducto mp
+            INNER JOIN menu m
+            WHERE m.fecha = : id
+            ', array("id" => $id));
+    }
+
     public function getMenuToday2(){
         $today=getDate();
         return $this->queryTodasLasFilas('

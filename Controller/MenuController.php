@@ -54,8 +54,7 @@ class MenuController extends Controller{
             $this->validator->validarFecha($_POST['fecha'], "Fecha no valida");
             $this->paginaCorrecta($this->menuModel->totalMenu());
             $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_POST['fecha']);
-            var_dump($this->dispatcher->menu);
-           var_dump($_POST['fecha']);
+
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
            if(!isset($this->dispatcher->menu[0])){
                $this->dispatcher->menu[0] = NULL;
