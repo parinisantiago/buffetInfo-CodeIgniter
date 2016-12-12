@@ -41,7 +41,9 @@ class BalanceController extends Controller
 
 
             $egreso = $this->balance->egresoDia($fecha);
-
+            var_dump($egreso);
+            var_dump($ingreso);
+            die;
             (empty($egreso->total)) ? $egreso = "0" : $egreso = $egreso->total;
 
             $balance = $ingreso - $egreso;
