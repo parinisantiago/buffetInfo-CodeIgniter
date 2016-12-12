@@ -38,6 +38,8 @@ class BalanceController extends Controller
             $ingreso = $this->balance->ingresoDia($fecha);
             $egreso = $this->balance->egresoDia($fecha);
 
+            var_dump($egreso); var_dump($ingreso);
+
             if(empty($egreso) && empty($ingreso)) throw new valException("No hay datos que mostrar");
 
             (empty($ingreso)) ? $ingreso = "0" : $ingreso = $ingreso->total;
