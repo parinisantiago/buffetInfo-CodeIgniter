@@ -28,6 +28,19 @@ class MenuModel extends Model{
             array('fecha' => $today['year']."-".$today['mon']."-".$today['mday']));
     }
 
+    public function getMenuByDia2($limit, $offset, $fecha){
+        return $this->queryOFFSETDIA('
+            SELECT *  
+            FROM menu m
+            INNER JOIN menuProducto mp ON (mp.idMenu = m.idMenu)
+            INNER JOIN producto p ON (mp.idProducto = p.idProducto)
+            WHERE m.fecha = :fecha
+            AND m.eliminado = 0
+            AND m.habilitado = 0
+            LIMIT :limit
+            OFFSET :offset
+        ', $limit, $offset, $fecha);
+    }
 
     public function getMenuByDia($limit, $offset, $fecha){
         return $this->queryOFFSETDIA('

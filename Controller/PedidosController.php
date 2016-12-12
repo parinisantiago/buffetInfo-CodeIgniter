@@ -26,7 +26,7 @@ class PedidosController extends Controller
     //le pasa el menu del dia a la vista, si no hay lo avisa.
     function hacerPedido()
     {
-        $menuHoy = $this->menu->getMenuByDia(99,0,date('Y-m-d'));
+        $menuHoy = $this->menu->getMenuByDia2(99,0,date('Y-m-d'));
         if ($menuHoy)
         {
             $this->token();
@@ -61,7 +61,7 @@ class PedidosController extends Controller
             //ahora que se que tengo todo me traigo el menu.
 
             $idMenu = $_POST['idMenu'];
-            $menuHoy = $this->menu->getMenuByDia(99,0,date('Y-m-d'));
+            $menuHoy = $this->menu->getMenuByDia2(99,0,date('Y-m-d'));
 
             //si el menu de hoy no es como el de id, me estuvieron tocando las variables
 
