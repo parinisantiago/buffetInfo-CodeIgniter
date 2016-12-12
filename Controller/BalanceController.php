@@ -81,7 +81,7 @@ class BalanceController extends Controller
         $chart->render('uploads/demo.png');
         $image = imagecreatefrompng('uploads/demo.png');
         imagejpeg($image, 'uploads/demo3.jpg', 100);
- 
+
     }
 
     protected function graficoBarraDia($fecha)
@@ -106,6 +106,8 @@ class BalanceController extends Controller
         $chart->setDataSet($dataSet);
         $chart->render('uploads/demo2.png');
         $image = imagecreatefrompng('uploads/demo2.png');
+        imagejpeg($image, 'uploads/demo3.jpg', 100);
+
     }
 
     function balanceRango()
