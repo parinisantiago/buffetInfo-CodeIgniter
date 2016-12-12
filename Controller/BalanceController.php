@@ -80,6 +80,8 @@ class BalanceController extends Controller
         $chart->setDataSet($dataSet);
         $chart->render('uploads/demo.png');
         $image = imagecreatefrompng('uploads/demo.png');
+        imagejpeg($image, 'uploads/demo3.jpg', 100);
+ 
     }
 
     protected function graficoBarraDia($fecha)
