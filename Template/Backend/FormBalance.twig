@@ -2,19 +2,7 @@
 
 {% block main %}
      <script type="text/javascript" src="script/script.js"></script>
-
-    <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=BalanceController&method=balanceDia" method="post">
-        <input type="hidden" name="tokenScrf" value="{{ tokenScrf }}">
-
-        <label for="fecha" class="formProducText">Día del balance:</label>
-        
-        <input type="text" name="fecha" id="datepicker" class="fecha fechaBalance" value="{{ fecha }}"  required> 
-        <script>$( function() {$( "#datepicker" ).datepicker();} );</script>
-        
-        <input type="submit" class="boton" id="submitButton" name="submitButton" onclick="ponerFechaAM()">
-
-    </form>
-
+    
     <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=BalanceController&method=balanceRango" method="post">
         <input type="hidden" name="tokenScrf" value="{{ tokenScrf }}">
 
