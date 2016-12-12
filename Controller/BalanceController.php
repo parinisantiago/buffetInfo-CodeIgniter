@@ -40,7 +40,7 @@ class BalanceController extends Controller
 
             var_dump($egreso); var_dump($ingreso);
 
-            if(empty($egreso->total) && empty($ingreso->total)) throw new valException("No hay datos que mostrar");
+            if(is_null($egreso->total) && is_null($ingreso->total)) throw new valException("No hay datos que mostrar");
 
             (empty($ingreso->total)) ? $ingreso = "0" : $ingreso = $ingreso->total;
 
