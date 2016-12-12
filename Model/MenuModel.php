@@ -217,7 +217,7 @@ class MenuModel extends Model{
             WHERE m.idMenu = :idMenu" , array('idMenu' => $idMenu));
     }
     public function getMinimoMenu($fecha){
-        return $this -> query("
+        return $this -> queryPreparadaSQL("
             SELECT MIN(p.stock) as minimo
             FROM menu m INNER JOIN menuProducto mp ON (mp.idMenu = m.idMenu)
                         INNER JOIN producto p ON (mp.idProducto = p.idProducto)
