@@ -218,7 +218,7 @@ class MenuModel extends Model{
     }
     public function getMinimoMenu($fecha){
         return $this -> query("
-            SELECT MIN(p.stock) 
+            SELECT MIN(p.stock) as minimo
             FROM menu m INNER JOIN menuProducto mp ON (mp.idMenu = m.idMenu)
                         INNER JOIN producto p ON (mp.idProducto = p.idProducto)
             WHERE m.fecha = :fecha
