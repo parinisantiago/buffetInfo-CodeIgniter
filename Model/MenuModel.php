@@ -13,6 +13,7 @@ class MenuModel extends Model{
             FROM menuProducto mp
             INNER JOIN menu m
             WHERE m.fecha = : id
+            AND m.eliminado = 0
             ', array("id" => $id));
     }
 

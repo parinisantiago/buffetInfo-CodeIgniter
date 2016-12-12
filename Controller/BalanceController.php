@@ -111,7 +111,7 @@ class BalanceController extends Controller
         $chart->setDataSet($dataSet);
         $chart->render('uploads/demo2.png');
         $image = imagecreatefrompng('uploads/demo2.png');
-        imagejpeg($image, 'uploads/demo3.jpg', 100);
+        imagejpeg($image, 'uploads/demo4.jpg', 100);
 
     }
 
@@ -195,6 +195,7 @@ class BalanceController extends Controller
             $chart->setDataSet($dataSet);
             $chart->render('uploads/demo2.png');
             $image = imagecreatefrompng('uploads/demo2.png');
+            imagejpeg($image, 'uploads/demo3.jpg', 100);
 
 
             //ahora vamos con los productos, a esto le hace falta alto refactoring pero estoy re podrido.
@@ -210,6 +211,8 @@ class BalanceController extends Controller
             $chart->setDataSet($dataSet);
             $chart->render('uploads/demo.png');
             $image = imagecreatefrompng('uploads/demo.png');
+            imagejpeg($image, 'uploads/demo4.jpg', 100);
+
 
             $this->dispatcher->fechaInicio = $fechaInicio;
             $this->dispatcher->fechaFin = $fechaFin;
