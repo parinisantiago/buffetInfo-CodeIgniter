@@ -1,5 +1,8 @@
 <?php
-//controlador para usuarios anónimos
+//controlador principal
+
+include("Controller.php");
+
 class MainUserController extends Controller
 {
     private $model;

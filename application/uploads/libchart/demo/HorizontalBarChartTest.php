@@ -1,6 +1,6 @@
 <?php
 	/* Libchart - PHP chart library
-	 * Copyright (C) 2005-2011 Jean-Marc Trémeaux (jm.tremeaux at gmail.com)
+	 * Copyright (C) 2005-2011 Jean-Marc Trï¿œmeaux (jm.tremeaux at gmail.com)
 	 * 
 	 * This program is free software: you can redistribute it and/or modify
 	 * it under the terms of the GNU General Public License as published by
@@ -43,6 +43,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-15" />
 </head>
 <body>
-	<img alt="Horizontal bars chart"  src="generated/demo2.png" style="border: 1px solid gray;"/>
+	<img alt="Horizontal bars chart" src="generated/demo2.png" style="border: 1px solid gray;"/>
 </body>
 </html>
