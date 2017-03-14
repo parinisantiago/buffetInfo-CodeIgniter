@@ -1,7 +1,9 @@
 <?php
 //controlador principal
 
-include("Controller.php");
+include_once("Controller.php");
+include_once(dirname(__DIR__)."/models/MainUserModel.php");
+include_once(dirname(__DIR__)."/models/MenuModel.php");
 
 class MainUserController extends Controller
 {
@@ -14,28 +16,34 @@ class MainUserController extends Controller
 
     public function __construct(){
 
-        parent::__contruct();
+        parent::__construct();
         $this->model = new MainUserModel();
         $this->menuModel = new MenuModel();
 
     }
 
     //carga el index para usuarios no logueados
-    public function init(){
+    public function init()
+    {
         if( Session::userLogged() )$this->callUserRolController();
         else $this->index();
     }
 
-    public function index(){
-        $this->dispatcher->menu = $this->menuModel->getMenuToday2();
-        $this->dispatcher->render("Main/MainTemplate.twig");
+    public function index()
+    {
+        $this->data['menu'] = $this->menuModel->getMenuByDia2();
+        $this->render('MainTemplate');
     }
 
-    public function initError($error){
-        if (Session::userLogged()) {
+    public function initError($error)
+    {
+        if (Session::userLogged())
+        {
             $this->selectRol(); //llama al controlador de la sesion correspondiente
             $this->controller->setMensajeError($error); //sete el mensaje de error en ese controlador, porque el dispatcher depende del controlador
-        } else {
+        }
+        else
+        {
             $this->dispatcher->mensajeError= $error;
             $this->index();
         }
