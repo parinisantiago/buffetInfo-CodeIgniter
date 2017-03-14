@@ -1,5 +1,7 @@
 <?php
 
+include_once(dirname(__DIR__)."/Utils/Const.php");
+
 class Model{
     protected $db;
     protected $stmnt;
