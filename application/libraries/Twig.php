@@ -1,238 +1,104 @@
-<?php
+﻿<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
 /**
- * Part of CodeIgniter Simple and Secure Twig
- *
- * @author     Kenji Suzuki <https://github.com/kenjis>
- * @license    MIT License
- * @copyright  2015 Kenji Suzuki
- * @link       https://github.com/kenjis/codeigniter-ss-twig
+ * Twig Library
  */
+require_once APPPATH . 'components/Twig/lib/Twig/Autoloader.php';
 
-// If you don't use Composer, uncomment below
-/*
-require_once APPPATH . 'third_party/Twig-1.xx.x/lib/Twig/Autoloader.php';
-Twig_Autoloader::register();
-*/
+/**
+ * Twig Template Library Wrapper
+ */
+class Twig {
 
-class Twig
+/**
+ * @var Twig_Environment
+ */
+ protected $twig_instance;
+ private $CI;
+
+/**
+ * Twig constructor
+ */
+ public function __construct() {
+
+    Twig_Autoloader::register();
+    $this->CI = & get_instance();
+
+    // All these settings might be loaded from
+    // the a config file if you want. Just store
+    // them there and fetch the values as:
+    // $this->CI->config->item(‘some_value’);
+    $laSettings['debug']            = false;
+    $laSettings['charset']          = 'utf-8';
+    $laSettings['base_template_class'] = 'Twig_Template';
+    $laSettings['cache']            = false;
+    $laSettings['auto_reload']      = true;
+    $laSettings['strict_variables'] = false;
+    $laSettings['optimizations']    = -1;
+
+    $loLoader  = new Twig_Loader_Filesystem(APPPATH.'views');
+    $this->twig_instance = new Twig_Environment($loLoader, $laSettings);
+
+	$this->ci_function_init();
+}
+
+
+
+public function ci_function_init_one($twig_name, $callable)
 {
-	private $config = [];
+   $this->twig_instance->addFunction(
+     new Twig_SimpleFunction($twig_name, $callable, array('is_safe' => array('html')))
+   );
+}
 
-	private $functions_asis = [
-		'base_url', 'site_url'
-	];
-	private $functions_safe = [
-		'form_open', 'form_close', 'form_error', 'set_value', 'form_hidden'
-	];
+public function ci_function_init()
+{
+  // url
+  $this->ci_function_init_one('base_url', 'base_url');
+  $this->ci_function_init_one('site_url', 'site_url');
+  $this->ci_function_init_one('current_url', 'current_url');
+  $this->ci_function_init_one('current_path', 'current_path');
 
-	/**
-	 * @var bool Whether functions are added or not
-	 */
-	private $functions_added = FALSE;
+  // form functions
+  $this->ci_function_init_one('form_open', 'form_open');
+  $this->ci_function_init_one('form_hidden', 'form_hidden');
+  $this->ci_function_init_one('form_input', 'form_input');
+  $this->ci_function_init_one('form_password', 'form_password');
+  $this->ci_function_init_one('form_upload', 'form_upload');
+  $this->ci_function_init_one('form_textarea', 'form_textarea');
+  $this->ci_function_init_one('form_dropdown', 'form_dropdown');
+  $this->ci_function_init_one('form_multiselect', 'form_multiselect');
+  $this->ci_function_init_one('form_fieldset', 'form_fieldset');
+  $this->ci_function_init_one('form_fieldset_close', 'form_fieldset_close');
+  $this->ci_function_init_one('form_checkbox', 'form_checkbox');
+  $this->ci_function_init_one('form_radio', 'form_radio');
+  $this->ci_function_init_one('form_submit', 'form_submit');
+  $this->ci_function_init_one('form_label', 'form_label');
+  $this->ci_function_init_one('form_reset', 'form_reset');
+  $this->ci_function_init_one('form_button', 'form_button');
+  $this->ci_function_init_one('form_close', 'form_close');
+  $this->ci_function_init_one('form_prep', 'form_prep');
+  $this->ci_function_init_one('set_value', 'set_value');
+  $this->ci_function_init_one('set_select', 'set_select');
+  $this->ci_function_init_one('set_checkbox', 'set_checkbox');
+  $this->ci_function_init_one('set_radio', 'set_radio');
+  $this->ci_function_init_one('form_open_multipart', 'form_open_multipart');
+}
 
-	/**
-	 * @var Twig_Environment
-	 */
-	private $twig;
 
-	/**
-	 * @var Twig_Loader_Filesystem
-	 */
-	private $loader;
 
-	public function __construct($params = [])
-	{
-		// default config
-		$this->config = [
-			'paths' => [VIEWPATH],
-			'cache' => APPPATH . 'cache/twig',
-		];
+/**
+ * __call
+ * @param string $method
+ * @param array $args
+ * @throws Exception
+*/
+public function __call($method, $args)
+{
+    if ( ! method_exists($this->twig_instance, $method)) {
+        throw new Exception("Undefined method $method attempt in the Twig class.");
+    }
 
-		$this->config = array_merge($this->config, $params);
-
-		if (isset($params['functions']))
-		{
-			$this->functions_asis = 
-				array_unique(
-					array_merge($this->functions_asis, $params['functions'])
-				);
-		}
-		if (isset($params['functions_safe']))
-		{
-			$this->functions_safe = 
-				array_unique(
-					array_merge($this->functions_safe, $params['functions_safe'])
-				);
-		}
-	}
-
-	protected function resetTwig()
-	{
-		$this->twig = null;
-		$this->createTwig();
-	}
-
-	protected function createTwig()
-	{
-		// $this->twig is singleton
-		if ($this->twig !== null)
-		{
-			return;
-		}
-
-		if (ENVIRONMENT === 'production')
-		{
-			$debug = FALSE;
-		}
-		else
-		{
-			$debug = TRUE;
-		}
-
-		if ($this->loader === null)
-		{
-			$this->loader = new \Twig_Loader_Filesystem($this->config['paths']);
-		}
-
-		$twig = new \Twig_Environment($this->loader, [
-			'cache'      => $this->config['cache'],
-			'debug'      => $debug,
-			'autoescape' => TRUE,
-		]);
-
-		if ($debug)
-		{
-			$twig->addExtension(new \Twig_Extension_Debug());
-		}
-
-		$this->twig = $twig;
-	}
-
-	protected function setLoader($loader)
-	{
-		$this->loader = $loader;
-	}
-
-	/**
-	 * Registers a Global
-	 * 
-	 * @param string $name  The global name
-	 * @param mixed  $value The global value
-	 */
-	public function addGlobal($name, $value)
-	{
-		$this->createTwig();
-		$this->twig->addGlobal($name, $value);
-	}
-
-	/**
-	 * Renders Twig Template and Set Output
-	 * 
-	 * @param string $view   Template filename without `.twig`
-	 * @param array  $params Array of parameters to pass to the template
-	 */
-	public function display($view, $params = [])
-	{
-		$CI =& get_instance();
-		$CI->output->set_output($this->render($view, $params));
-	}
-
-	/**
-	 * Renders Twig Template and Returns as String
-	 * 
-	 * @param string $view   Template filename without `.twig`
-	 * @param array  $params Array of parameters to pass to the template
-	 * @return string
-	 */
-	public function render($view, $params = [])
-	{
-		$this->createTwig();
-		// We call addFunctions() here, because we must call addFunctions()
-		// after loading CodeIgniter functions in a controller.
-		$this->addFunctions();
-
-		$view = $view . '.twig';
-		return $this->twig->render($view, $params);
-	}
-
-	protected function addFunctions()
-	{
-		// Runs only once
-		if ($this->functions_added)
-		{
-			return;
-		}
-
-		// as is functions
-		foreach ($this->functions_asis as $function)
-		{
-			if (function_exists($function))
-			{
-				$this->twig->addFunction(
-					new \Twig_SimpleFunction(
-						$function,
-						$function
-					)
-				);
-			}
-		}
-
-		// safe functions
-		foreach ($this->functions_safe as $function)
-		{
-			if (function_exists($function))
-			{
-				$this->twig->addFunction(
-					new \Twig_SimpleFunction(
-						$function,
-						$function,
-						['is_safe' => ['html']]
-					)
-				);
-			}
-		}
-
-		// customized functions
-		if (function_exists('anchor'))
-		{
-			$this->twig->addFunction(
-				new \Twig_SimpleFunction(
-					'anchor',
-					[$this, 'safe_anchor'],
-					['is_safe' => ['html']]
-				)
-			);
-		}
-
-		$this->functions_added = TRUE;
-	}
-
-	/**
-	 * @param string $uri
-	 * @param string $title
-	 * @param array  $attributes [changed] only array is acceptable
-	 * @return string
-	 */
-	public function safe_anchor($uri = '', $title = '', $attributes = [])
-	{
-		$uri = html_escape($uri);
-		$title = html_escape($title);
-		
-		$new_attr = [];
-		foreach ($attributes as $key => $val)
-		{
-			$new_attr[html_escape($key)] = html_escape($val);
-		}
-
-		return anchor($uri, $title, $new_attr);
-	}
-
-	/**
-	 * @return \Twig_Environment
-	 */
-	public function getTwig()
-	{
-		$this->createTwig();
-		return $this->twig;
-	}
+    $this->CI->output->append_output( call_user_func_array(array($this->twig_instance, $method), $args) );
+}
 }
