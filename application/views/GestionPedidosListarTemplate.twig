@@ -1,4 +1,4 @@
-{% extends 'Template/Backend/IndexTemplate.twig' %}
+{% extends 'IndexTemplate.twig' %}
 
 {% block main %}
     <div class="cabeceraTabla sombreado">
@@ -8,17 +8,17 @@
             <p>
                 {% if rango %}
                     {% if pag != 0 %}
-                        <a class="boton" href="Loader.php?controller=GestionPedidoController&method=verPedidos&pag={{ pag - 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                        <a class="boton" href="/GestionPedidoController/verPedidos?pag={{ pag - 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
                             anterior</a>
                     {% endif %}
-                    <a class="boton" href="Loader.php?controller=GestionPedidoController&method=verPedidos&pag={{ pag + 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                    <a class="boton" href="/GestionPedidoController/verPedidos?pag={{ pag + 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
                         Siguiente</a>
                 {% else %}
                     {% if pag != 0 %}
-                        <a class="boton" href="Loader.php?controller=GestionPedidoController&method=verPedidos&pag={{ pag - 1 }}">Página
+                        <a class="boton" href="/GestionPedidoController/verPedidos?pag={{ pag - 1 }}">Página
                             anterior</a>
                     {% endif %}
-                    <a class="boton" href="Loader.php?controller=GestionPedidoController&method=verPedidos&pag={{ pag + 1 }}">Página
+                    <a class="boton" href="/GestionPedidoController/verPedidos?pag={{ pag + 1 }}">Página
                         Siguiente</a>
                 {% endif %}
         </div>
@@ -48,7 +48,7 @@
                 <td headers="fechaAlta"> {{ pedido.fechaAlta }}</td>
                 <td headers="total">{{ pedido.total }}</td>
                 <td headers="acciones">
-                        <form method="post" action="Loader.php?controller=GestionPedidoController&method=formCancelarPedido">
+                        <form method="post" action="/GestionPedidoController/formCancelarPedido">
                             <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
                             <button class="botonTabla gestionPedidoBoton" type="submit" name="submitButton">
                                 <img class="icono" src="images/eliminar.png" alt="eliminar"/>
@@ -56,7 +56,7 @@
                         </form>
                 </td>
                 <td headers="detalle">
-                    <form method="post" action="Loader.php?controller=GestionPedidoController&method=verDetalle">
+                    <form method="post" action="/GestionPedidoController/verDetalle">
                         <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
                         <button class="botonTabla gestionPedidoBoton" type="submit" name="submitButton">
                             <img class="icono" src="images/ver.png" alt="detalle"/>
@@ -64,7 +64,7 @@
                     </form>
                 </td>
                 <td headers="aceptar">
-                    <form method="post" action="Loader.php?controller=GestionPedidoController&method=formAceptarPedido">
+                    <form method="post" action="/GestionPedidoController/formAceptarPedido">
                         <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
                         <button class="botonTabla gestionPedidoBoton" type="submit" name="submitButton">
                             <img class="icono" src="images/editar.png" alt="aceptar"/>

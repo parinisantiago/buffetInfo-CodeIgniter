@@ -1,4 +1,4 @@
-{% extends 'Template/Backend/IndexTemplate.twig' %}
+{% extends 'IndexTemplate.twig' %}
 
 {% block main %}
     <script type="text/javascript" src="script/script.js"></script>
@@ -8,13 +8,13 @@
     <div class="cabeceraTabla sombreado cabeceraMenu">
         <div class="almanaque">
             <div id="datepicker"></div>
-            <form method="post" action="Loader.php?controller=MenuController&method=menuDia&pag=0">
+            <form method="post" action="/MenuController/menuDia?pag=0">
                 <input type="hidden" name="fecha" id="fecha" value="">
                 <input type="submit" value="Enviar" class="boton" onclick="ponerFecha()" >
             </form>
         </div>
         <div id="nuevoMenu" >
-            <form id="formNuevoMenu" method="post" action="Loader.php?controller=MenuController&method=menuAM">
+            <form id="formNuevoMenu" method="post" action="/MenuController/menuAM">
                 <input type="hidden" id="nuevoMenuValue" value="">
                 <input type="submit" class="boton" id="submitButton" value="Crear Menu" name="submitButton">
             </form>
@@ -24,9 +24,9 @@
         <div class="paginas paginaMenu" >
             <p class="numeroPagina"> Página: {{ pag }} </p>
             {% if pag != 0 %}
-                <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag - 1 }}&fecha={{ fecha }}">Página anterior</a>
+                <a class="boton" href="/MenuController/{{ method }}?pag={{ pag - 1 }}&fecha={{ fecha }}">Página anterior</a>
             {% endif %}
-                <a class="boton" href="/Loader.php?controller=MenuController&method={{ method }}&pag={{ pag + 1 }}&fecha={{ fecha }}">Página Siguiente</a>
+                <a class="boton" href="/MenuController/{{ method }}?pag={{ pag + 1 }}&fecha={{ fecha }}">Página Siguiente</a>
         </div>
     </div>
     <table class="tablaProductos sombreado">
@@ -52,14 +52,14 @@
                     {% endif %}
                 </td>
                 <td headers="acciones">
-                    <form method="post" class="botonMenu" action= "Loader.php?controller=MenuController&method=menuAMMod&fecha={{ fecha }}" >
+                    <form method="post" class="botonMenu" action= "/MenuController/menuAMMod?fecha={{ fecha }}" >
                         <input type="hidden" name="tokenScrf" value="{{ tokenScrf }}">
                         <input  name="idProducto" type="hidden" value={{ datos.idMenu }}>
                         <button class="botonTabla" type="submit"  name="submitButton">
                             <img class="icono" src="images/editar.png" alt= "editar la informacion" />
                         </button>
                     </form>
-                    <form method="post" class="botonMenu" action="Loader.php?controller=MenuController&method=menuEliminar">
+                    <form method="post" class="botonMenu" action="/MenuController/menuEliminar">
                         <input type="hidden" name="tokenScrf" value="{{ tokenScrf }}">
                         <input  name="idMenu" type="hidden" value={{ datos.idMenu }} >
                         <button class="botonTabla" type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">

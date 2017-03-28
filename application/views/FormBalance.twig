@@ -1,9 +1,9 @@
-{% extends 'Template/Backend/IndexTemplate.twig' %}
+{% extends 'IndexTemplate.twig' %}
 
 {% block main %}
      <script type="text/javascript" src="script/script.js"></script>
     
-    <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=BalanceController&method=balanceRango" method="post">
+    <form name="formUser" class="formProduc clearfix sombreado" action="/BalanceController/balanceRango" method="post">
         <input type="hidden" name="tokenScrf" value="{{ tokenScrf }}">
 
         <label for="fechaInicio" class="formProducText">Día inicio del balance:</label>

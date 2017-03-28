@@ -5,31 +5,31 @@
 
     {% if rol == "1" or  rol == "0" %}
     <li class="asideItem">
-        <a href="Loader.php?controller=ProductoController&method=productosAM">Alta de productos</a>
+        <a href="/ProductoController/productosAM">Alta de productos</a>
     </li>
     
     <li class="asideItem">
-        <a href="Loader.php?controller=ProductoController&method=productosListar&pag=0">Listado de productos</a>
+        <a href="/ProductoController/productosListar?pag=0">Listado de productos</a>
     </li>
     
     <li class="asideItem">
-            <a href="Loader.php?controller=VenderController&method=vender&pag=0">Ventas de productos</a>
+            <a href="/VenderController/vender?pag=0">Ventas de productos</a>
     </li>
 
     <li class="asideItem">
-            <a href="Loader.php?controller=ComprarController&method=compraListar&pag=0">Compras de productos</a>
+            <a href="/ComprarController/compraListar?pag=0">Compras de productos</a>
     </li>
 
         <li class="asideItem">
-            <a href="Loader.php?controller=MenuController&method=menuDia&pag=0&fecha={{"now"|date("Y-m-d") }}">Administracion del Menu</a>
+            <a href="/MenuController/menuDia?pag=0&fecha={{"now"|date("Y-m-d") }}">Administracion del Menu</a>
         </li>
 
         <li class="asideItem">
-            <a href="Loader.php?controller=BalanceController&method=index">Balance</a>
+            <a href="/BalanceController/index">Balance</a>
         </li>
 
         <li class="asideItem">
-            <a href="Loader.php?controller=GestionPedidoController&method=mostrarPedidos">Gestión de Pedidos</a>
+            <a href="/GestionPedidoController/mostrarPedidos">Gestión de Pedidos</a>
         </li>
 
 
@@ -37,30 +37,30 @@
 
     {% if rol == "1" %}
         <li class="asideItem">
-            <a href="Loader.php?controller=vistaProdController&method=listadoFaltantes&pag=0">Productos faltantes</a>
+            <a href="/vistaProdController/listadoFaltantes?pag=0">Productos faltantes</a>
         </li>
         <li class="asideItem">
-            <a href="Loader.php?controller=vistaProdController&method=listadoStockMinimo&pag=0">Productos con stock minimo</a>
+            <a href="/vistaProdController/istadoStockMinimo?pag=0">Productos con stock minimo</a>
         </li>
     {%endif%}
     
 
     {% if rol == "0" %}
         <li class="asideItem">
-            <a href="Loader.php?controller=UserController&method=abmUsuario&pag=0">Usuarios</a>
+            <a href="/UserController/abmUsuario?pag=0">Usuarios</a>
         </li>
 
         <li class="asideItem">
-            <a href="Loader.php?controller=ConfigController&method=configuracionSitio">Configuracion del sitio</a>
+            <a href="/ConfigController/configuracionSitio">Configuracion del sitio</a>
         </li>
     {%endif%}
     
     {% if rol == "2" %}
         <li class="asideItem">
-            <a href="Loader.php?controller=PedidosController&method=hacerPedido">Hacer pedido Online</a>
+            <a href="/PedidosController/hacerPedido">Hacer pedido Online</a>
         </li>
         <li class="asideItem">
-            <a href="Loader.php?controller=PedidosController&method=verPedidos&pag=0">Ver mis pedidos</a>
+            <a href="/PedidosController/verPedidos?pag=0">Ver mis pedidos</a>
         </li>
     {%endif%}
 

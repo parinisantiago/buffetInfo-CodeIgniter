@@ -1,4 +1,4 @@
-{% extends 'Template/Backend/IndexTemplate.twig' %}
+{% extends 'IndexTemplate.twig' %}
 
 {% block main %}
 
@@ -6,9 +6,9 @@
         <div class="paginas sombreado" >
             <p> Página: {{ pag }} <p>
             {% if pag != 0 %}
-                <a class="boton" href="/Loader.php?controller=VenderController&method=venderListar&pag={{ pag - 1 }}">Página anterior</a>
+                <a class="boton" href="/VenderController/venderListar?pag={{ pag - 1 }}">Página anterior</a>
             {% endif %}
-            <a class="boton" href="/Loader.php?controller=VenderController&method=venderListar&pag={{ pag + 1 }}">Página Siguiente</a>
+            <a class="boton" href="/VenderController/venderListar?pag={{ pag + 1 }}">Página Siguiente</a>
         </div>
     </div>
     <table class="tablaProductos sombreado" >
@@ -32,14 +32,14 @@
                 <td headers="precioVentaUnitario">{{ venta.precioUnitario }}</td>
                 <td headers="fecha">{{ venta.fecha }}</td>
                 <td headers="acciones">
-                    <form method="post" action="Loader.php?controller=VenderController&method=VentaAMTemplate">
+                    <form method="post" action="/VenderController/VentaAMTemplate">
                         <label for="idProducto" hidden></label>
                         <input name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
                         <button class="botonTabla" type="submit" name="submitButton">
                             <img class="icono" src="images/editar.png" alt= "editar la informacion" />
                         </button>
                     </form>
-                    <form method="post" action="Loader.php?controller=VenderController&method=ventaEliminar">
+                    <form method="post" action="/VenderController/ventaEliminar">
                         <label for="idIngresoDetalle" hidden></label>
                         <input  name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
                         <label for="cantidad" hidden></label>

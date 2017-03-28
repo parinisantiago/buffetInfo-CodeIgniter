@@ -1,8 +1,8 @@
-{% extends 'Template/Backend/IndexTemplate.twig' %}
+{% extends 'IndexTemplate.twig' %}
 
 {% block main %}
 
-    <form name="formUser" class="formProduc clearfix sombreado" action={% if rol == '2' %}"Loader.php?controller=PedidosController&method=cancelarPedido" {% else %}"Loader.php?controller=GestionPedidoController&method=cancelarPedido" {% endif %}method="post">
+    <form name="formUser" class="formProduc clearfix sombreado" action={% if rol == '2' %}"/PedidosController/cancelarPedido" {% else %}"/GestionPedidoController/cancelarPedido" {% endif %}method="post">
 
     <label for="tokenScrf" hidden> token Scrf: </label>
     <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">

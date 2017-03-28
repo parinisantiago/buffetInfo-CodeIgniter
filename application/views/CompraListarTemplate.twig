@@ -1,16 +1,16 @@
-{% extends 'Template/Backend/IndexTemplate.twig' %}
+{% extends 'IndexTemplate.twig' %}
 
 {% block main %}
     <div class="cabeceraTabla sombreado">
         <div class="nuevo">
-            <a class="boton" href="Loader.php?controller=ComprarController&method=compraAM">Nueva compras</a>
+            <a class="boton" href="/ComprarController/compraAM">Nueva compras</a>
         </div>
         <div class="paginas" >
             <p> Página: {{ pag }} <p>
             {% if pag != 0 %}
-                <a class="boton" href="/Loader.php?controller=ComprarController&method={{ method }}&pag={{ pag - 1 }}">Página anterior</a>
+                <a class="boton" href="/ComprarController/{{ method }}?pag={{ pag - 1 }}">Página anterior</a>
             {% endif %}
-            <a class="boton" href="/Loader.php?controller=ComprarController&method={{ method }}&pag={{ pag + 1 }}">Página Siguiente </a>
+            <a class="boton" href="/ComprarController/{{ method }}?pag={{ pag + 1 }}">Página Siguiente </a>
         </div>
     </div>    
     <table class="tablaProductos sombreado">
@@ -41,14 +41,14 @@
                      {%endif%}
                     </td>
                     <td headers="acciones">
-                        <form method="post" action="Loader.php?controller=ComprarController&method=compraAM">
+                        <form method="post" action="/ComprarController/compraAM">
                             <label hidden></label>
                             <input name="idCompra" type="hidden" value={{ compra.idCompra }}>
                             <button class="botonTabla" type="submit" name="submitButton">
                                 <img class= "icono" src="images/editar.png" alt= "editar la informacion" />
                             </button>
                         </form>
-                        <form method="post" action="Loader.php?controller=ComprarController&method=compraEliminar">
+                        <form method="post" action="/ComprarController/compraEliminar">
                             <input name="idCompra" type="hidden" value={{ compra.idCompra }}>
                             <button class="botonTabla" type="submit" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
                                 <img class="icono" src="images/eliminar.png" alt= "eliminar" />

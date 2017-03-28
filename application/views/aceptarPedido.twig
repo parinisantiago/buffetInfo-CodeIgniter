@@ -1,8 +1,8 @@
- {% extends 'Template/Backend/IndexTemplate.twig' %}
+ {% extends 'IndexTemplate.twig' %}
 
 {% block main %}
 
-    <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=GestionPedidoController&method=aceptarPedido" method="post">
+    <form name="formUser" class="formProduc clearfix sombreado" action="/GestionPedidoController/aceptarPedido" method="post">
 
         <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
 

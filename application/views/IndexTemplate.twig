@@ -1,4 +1,4 @@
-{% extends 'Template/layaout.twig' %}
+{% extends 'layaout.twig' %}
 
 {% block nav %}
     <ul class="navbar" id="navbar">
@@ -14,13 +14,13 @@
             </p>
         </li>
         <li>
-            <p class="boton" id="logoutBoton"><a class="botonLink" href="Loader.php?controller=MainUserController&method=cerrarSesion">Cerrar Sesion</a></p>
+            <p class="boton" id="logoutBoton"><a class="botonLink" href="/MainUserController/cerrarSesion">Cerrar Sesion</a></p>
         </li>
     </ul>
 {% endblock %}
 
 {% block aside %}
 
-    {{ include('Template/Backend/BackendAsideTemplate.twig') }}
+    {{ include('BackendAsideTemplate.twig') }}
 
 {% endblock %}

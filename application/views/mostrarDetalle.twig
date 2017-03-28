@@ -1,12 +1,12 @@
-{% extends 'Template/Backend/IndexTemplate.twig' %}
+{% extends 'IndexTemplate.twig' %}
 
 {% block main %}
     <div class="cabeceraTabla sombreado">
         <div class="paginas ">
             {% if rol == '2' %}
-                <a class="boton" href="Loader.php?controller=PedidosController&method=verPedidos&pag=0">Volver</a>
+                <a class="boton" href="/PedidosController/verPedidos?pag=0">Volver</a>
             {% else %}
-                <a class="boton" href="Loader.php?controller=GestionPedidoController&method=verPedidos&pag=0">Volver</a>
+                <a class="boton" href="/GestionPedidoController/verPedidos?pag=0">Volver</a>
             {% endif %}
         </div>
     </div>        

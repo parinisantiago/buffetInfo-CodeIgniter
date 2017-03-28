@@ -1,10 +1,10 @@
-{% extends 'Template/Backend/IndexTemplate.twig' %}
+{% extends 'IndexTemplate.twig' %}
 
 
 {% block main %}
     <div class="pedidoOnline">
         <form name="formUser" class="formProduc clearfix sombreado "
-              action="Loader.php?controller=PedidosController&method=validarPedido" method="post">
+              action="/PedidosController/validarPedido" method="post">
             
             <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
            <input type="hidden" value="{{ idMenu }}" name="idMenu">

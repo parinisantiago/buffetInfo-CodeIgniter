@@ -1,10 +1,10 @@
-{% extends 'Template/Backend/IndexTemplate.twig' %}
+{% extends 'IndexTemplate.twig' %}
 
 {% block main %}
     <script type="text/javascript" src="script/script.js"></script>
 
     <div>
-    <form name="formUser" class="formProduc clearfix sombreado" action="Loader.php?controller=PedidosController&method=pedidosRango" method="post">
+    <form name="formUser" class="formProduc clearfix sombreado" action="/PedidosController/pedidosRango" method="post">
         <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
 
         <label for="fechaInicio" class="formProducText">Fecha inicio:</label>
@@ -28,17 +28,17 @@
             <p>
                 {% if rango %}
                     {% if pag != 0 %}
-                        <a class="boton" href="Loader.php?controller=PedidosController&method=mostrarPedidoRango&pag={{ pag - 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                        <a class="boton" href="/PedidosController/mostrarPedidoRango?pag={{ pag - 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
                             anterior</a>
                     {% endif %}
-                    <a class="boton" href="Loader.php?controller=PedidosController&method=mostrarPedidoRango&pag={{ pag + 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                    <a class="boton" href="/PedidosController/mostrarPedidoRango?pag={{ pag + 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
                         Siguiente</a>
                 {% else %}
                 {% if pag != 0 %}
-                    <a class="boton" href="Loader.php?controller=PedidosController&method=verPedidos&pag={{ pag - 1 }}">Página
+                    <a class="boton" href="/PedidosController/verPedidos?pag={{ pag - 1 }}">Página
                         anterior</a>
                 {% endif %}
-                <a class="boton" href="Loader.php?controller=PedidosController&method=verPedidos&pag={{ pag + 1 }}">Página
+                <a class="boton" href="/PedidosController/verPedidos?pag={{ pag + 1 }}">Página
                     Siguiente</a>
                 {% endif %}
         </div>
@@ -64,7 +64,7 @@
                 <td headers="total">{{ pedido.total }}</td>
                 <td headers="acciones">
                     {% if pedido.idEstado == "pendiente" and pedido.intervalo < 1800 %}
-                        <form method="post" action="Loader.php?controller=PedidosController&method=formCancelarPedido">
+                        <form method="post" action="/PedidosController/formCancelarPedido">
                             <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
                             <button class="botonTabla" type="submit" name="submitButton">
                                 <img class="icono" src="images/eliminar.png" alt="eliminar"/>
@@ -75,7 +75,7 @@
                     {% endif %}
                 </td>
                 <td headers="detalle">
-                    <form method="post" action="Loader.php?controller=PedidosController&method=verDetalle">
+                    <form method="post" action="/PedidosController/verDetalle">
                         <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
                         <button class="botonTabla botonUserOnline" type="submit" name="submitButton">
                             <img class="icono" src="images/editar.png" alt="detalle"/>

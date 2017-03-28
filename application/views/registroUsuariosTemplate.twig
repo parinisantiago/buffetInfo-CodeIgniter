@@ -1,7 +1,7 @@
-{% extends 'Template/Backend/IndexTemplate.twig' %}
+{% extends 'IndexTemplate.twig' %}
 
 {% block main %}
-    <form name="formUser" class="formProduc clearfix sombreado" onsubmit="return valUsuario()" id="form" action="Loader.php?controller=UserController&method=usuarioAM" method="post">
+    <form name="formUser" class="formProduc clearfix sombreado" onsubmit="return valUsuario()" id="form" action="/UserController/usuarioAM" method="post">
 
         {% if user.idUsuario %}
             <input type='hidden' name='idUsuario' value={{user.idUsuario}}>

@@ -1,4 +1,4 @@
-{% extends 'Template/Backend/IndexTemplate.twig' %}
+{% extends 'IndexTemplate.twig' %}
 
 {% block main %}
 
@@ -6,7 +6,7 @@
 
     <script type="text/javascript" src="script/script.js"></script>
 
-    <form id="menu" name="formMenu" enctype="multipart/form-data" class="formProduc clearfix sombreado" onsubmit="return valMenu()" action="Loader.php?controller=MenuController&method=menuAMPOST" method="post">
+    <form id="menu" name="formMenu" enctype="multipart/form-data" class="formProduc clearfix sombreado" onsubmit="return valMenu()" action="/MenuController/menuAMPOST" method="post">
         <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
         <p  class="formProducText"> Productos del menu: </p>
 

@@ -1,7 +1,7 @@
-{% extends 'Template/Backend/IndexTemplate.twig' %}
+{% extends 'IndexTemplate.twig' %}
 
 {% block main %}
-    <form name="formUser" class="formProduc clearfix sombreado" action="/Loader.php?controller=VenderController&method=modVenta&method=post">
+    <form name="formUser" class="formProduc clearfix sombreado" action="/VenderController/modVenta" method="post">
 
         <label for="idIngresoDetalle" hidden>Id detalle:</label>
         <input type='hidden' id='idIngresoDetalle' name='idIngresoDetalle' value={{venta.idIngresoDetalle}}>
