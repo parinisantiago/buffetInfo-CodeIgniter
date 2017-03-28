@@ -1,6 +1,6 @@
 <?php
 include_once("Model.php");
-class MainUserModel extends Model
+class MainModel extends Model
 {
 
     public function __construct()

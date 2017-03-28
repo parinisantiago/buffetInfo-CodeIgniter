@@ -2,22 +2,19 @@
 //controlador principal
 
 include_once("Controller.php");
-include_once(dirname(__DIR__)."/models/MainUserModel.php");
+include_once(dirname(__DIR__) . "/models/MainModel.php");
 include_once(dirname(__DIR__)."/models/MenuModel.php");
 
-class MainUserController extends Controller
+class MainController extends Controller
 {
     private $model;
-    private $user;
-    private $usernamePOST;
-    private $passPOST;
     private $controller;
     private $menuModel;
 
     public function __construct(){
 
         parent::__construct();
-        $this->model = new MainUserModel();
+        $this->model = new MainModel();
         $this->menuModel = new MenuModel();
 
     }
@@ -25,7 +22,10 @@ class MainUserController extends Controller
     //carga el index para usuarios no logueados
     public function init()
     {
-        if( Session::userLogged() )$this->callUserRolController();
+        if( Session::userLogged() ){
+            $this->controller = new BackendController();
+            $this->controller->index();
+        }
         else $this->index();
     }
 
@@ -49,12 +49,6 @@ class MainUserController extends Controller
         }
     }
 
-    public function callUserRolController()
-    {
-        $this->selectRol();
-        $this->controller -> index();
-        return true;
-    }
 
 
     public function cerrarSesion()
@@ -63,24 +57,6 @@ class MainUserController extends Controller
         $this->index();
     }
 
-    protected function selectRol()
-    {
-        switch (Session::getValue('rol')) {
-            //dependiendo del idRol del usuario, instanciamos el rol correspondiente y llamamos a su index();
-            case '0':
-                $this->controller = new BackendController();
-                break;
-            case '1':
-                $this->controller = new BackendController();
-                break;
-            case '2':
-                $this->controller = new BackendController();
-                break;
-            default:
-                throw new Exception("usuario no valido");
-
-        }
-    }
 
 }
 
