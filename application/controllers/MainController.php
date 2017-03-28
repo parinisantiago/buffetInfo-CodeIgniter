@@ -28,8 +28,8 @@ class MainController extends Controller
         }
         else
         {
-            $this->data['menu'] = $this->menuModel->getMenuByDia2();
-            $this->render('MainTemplate');
+            $this->data['menu'] = $this->menuModel->getMenuByDia2(NULL, NULL, NULL);
+            $this->display('MainTemplate.twig');
         }
     }
 
