@@ -1,5 +1,5 @@
 <?php
-require_once 'Controller/Controller.php';
+require_once 'Controller.php';
 /*
  * Esta clase encapsula el comportamiento comun de los 2 tipos de usuario que 
  * pueden llegar al backend Admin y Gestion
@@ -11,8 +11,8 @@ class BackendController extends Controller{
     public $categoriaModel;
 
     public function __construct(){
-            parent::__contruct();
-            $this->model = new MainUserModel();
+            parent::__construct();
+            $this->model = new MainModel();
             $this->rolModel = new RolModel();
             $this->productoModel = new ProductosModel();
             $this->categoriaModel = new CategoriaModel();
@@ -26,11 +26,11 @@ class BackendController extends Controller{
     }
 
     public function index(){
-        $this->dispatcher->render("Backend/IndexTemplate.twig");
+        $this->display("Backend/IndexTemplate.twig");
     }
 
     public function setMensajeError($error){
-        $this->dispatcher->mensajeError = $error;
+        $this->addData('mensajeError', $error);
         $this->index();
     }
 
