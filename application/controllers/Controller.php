@@ -38,10 +38,10 @@ class Controller extends CI_controller
         else  $this->data['rol'] = "NaN";
     }
 
-    protected function render($view){
+    protected function display($view){
         $this->load->library('twig');
         $this->data['config'] = $this->getConfig();
-        $this->twig->display($view,$this->data);
+        $this->twig->render($view,$this->data);
     }
 
     protected function token(){
@@ -56,6 +56,10 @@ class Controller extends CI_controller
         return(Session::getValue('tokenScrf') == $token);
     }
 
+    protected function addData($key, $value)
+    {
+        $this->data[$key] = $value;
+    }
 }
 
 ?>
