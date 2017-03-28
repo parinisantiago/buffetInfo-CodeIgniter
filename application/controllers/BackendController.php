@@ -1,5 +1,10 @@
 <?php
 require_once 'Controller.php';
+require_once 'MainController.php';
+require_once(dirname(__DIR__).'/models/RolModel.php');
+require_once(dirname(__DIR__).'/models/ProductosModel.php');
+require_once(dirname(__DIR__).'/models/CategoriaModel.php');
+
 /*
  * Esta clase encapsula el comportamiento comun de los 2 tipos de usuario que 
  * pueden llegar al backend Admin y Gestion
@@ -26,7 +31,17 @@ class BackendController extends Controller{
     }
 
     public function index(){
-        $this->display("Backend/IndexTemplate.twig");
+        try
+        {
+            if (!$this->getPermission()) throw new Exception('El usuario no posee permisos para acceder a esta funcionalidad');
+            $this->display("IndexTemplate.twig");
+        }
+        catch (Exception $e)
+        {
+            $this->addData('mensajeError', $e->getMessage());
+            $main = new MainController();
+            $main->index();
+        }
     }
 
     public function setMensajeError($error){
