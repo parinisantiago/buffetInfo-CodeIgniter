@@ -3,7 +3,7 @@
 /**
  * Twig Library
  */
-require_once APPPATH . 'components/Twig/lib/Twig/Autoloader.php';
+require_once APPPATH . 'third_party/Twig/lib/Twig/Autoloader.php';
 
 /**
  * Twig Template Library Wrapper
@@ -16,7 +16,7 @@ class Twig {
  protected $twig_instance;
  private $CI;
 
-/**
+/**S
  * Twig constructor
  */
  public function __construct() {
