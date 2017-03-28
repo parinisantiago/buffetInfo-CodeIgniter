@@ -28,7 +28,7 @@ class MainController extends Controller
         }
         else $this->index();
     }
-
+    
     public function index()
     {
         $this->data['menu'] = $this->menuModel->getMenuByDia2();
