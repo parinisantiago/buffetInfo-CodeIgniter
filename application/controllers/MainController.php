@@ -4,6 +4,7 @@
 include_once("Controller.php");
 include_once(dirname(__DIR__) . "/models/MainModel.php");
 include_once(dirname(__DIR__)."/models/MenuModel.php");
+include_once("BackendController.php");
 
 class MainController extends Controller
 {
@@ -11,45 +12,26 @@ class MainController extends Controller
     private $controller;
     private $menuModel;
 
-    public function __construct(){
-
+    public function __construct()
+    {
         parent::__construct();
         $this->model = new MainModel();
         $this->menuModel = new MenuModel();
-
     }
 
-    //carga el index para usuarios no logueados
-    public function init()
+    public function index()
     {
-        if( Session::userLogged() ){
+        if( Session::userLogged() )
+        {
             $this->controller = new BackendController();
             $this->controller->index();
         }
-        else $this->index();
-    }
-    
-    public function index()
-    {
-        $this->data['menu'] = $this->menuModel->getMenuByDia2();
-        $this->render('MainTemplate');
-    }
-
-    public function initError($error)
-    {
-        if (Session::userLogged())
-        {
-            $this->selectRol(); //llama al controlador de la sesion correspondiente
-            $this->controller->setMensajeError($error); //sete el mensaje de error en ese controlador, porque el dispatcher depende del controlador
-        }
         else
         {
-            $this->dispatcher->mensajeError= $error;
-            $this->index();
+            $this->data['menu'] = $this->menuModel->getMenuByDia2();
+            $this->render('MainTemplate');
         }
     }
-
-
 
     public function cerrarSesion()
     {
