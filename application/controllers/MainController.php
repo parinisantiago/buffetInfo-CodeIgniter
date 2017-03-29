@@ -8,15 +8,12 @@ include_once("BackendController.php");
 
 class MainController extends Controller
 {
-    private $model;
     private $controller;
-    private $menuModel;
 
     public function __construct()
     {
         parent::__construct();
-        $this->model = new MainModel();
-        $this->menuModel = new MenuModel();
+        $this->load->model('MenuModel');
     }
 
     public function index()
@@ -28,7 +25,7 @@ class MainController extends Controller
         }
         else
         {
-            $this->data['menu'] = $this->menuModel->getMenuByDia2(NULL, NULL, NULL);
+            $this->data['menu'] = $this->MenuModel->getMenuToday2();
             $this->display('MainTemplate.twig');
         }
     }
