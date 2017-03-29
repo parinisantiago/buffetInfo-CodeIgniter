@@ -14,7 +14,7 @@ class MenuModel extends Model{
         $this->db->join('menu m');
         $this->db->where('m.fecha',$id);
         $this->db->where('m.eliminado', 0);
-        $this->db->get()->result();
+        return $this->db->get()->result();
         /* return $this->queryPreparadaSQL('
              SELECT COUNT(*) AS total
              FROM menuProducto mp
@@ -34,7 +34,7 @@ class MenuModel extends Model{
         $this->db->where('m.eliminado', 0);
         $this->db->where('p.eliminado', 0);
         $this->db->where('m.habilitado', 0);
-        $this->db->get()->result();
+        return $this->db->get()->result();
        /* return $this->queryTodasLasFilas('
             SELECT m.idMenu, m.foto, p.nombre, p.precioVentaUnitario, p.descripcion
             FROM menu m
@@ -54,7 +54,7 @@ class MenuModel extends Model{
         $this->db->where('m.habilitado', 0);
         $this->db->limit($limit);
         $this->db->offset($offset);
-        $this->db->get()->result();
+        return $this->db->get()->result();
 /*
         return $this->queryOFFSETDIA('
             SELECT *  
@@ -79,7 +79,7 @@ class MenuModel extends Model{
         $this->db->where('m.eliminado', 0);
         $this->db->limit($limit);
         $this->db->offset($offset);
-        $this->db->get()->result();
+        return $this->db->get()->result();
 /*
         return $this->queryOFFSETDIA('
             SELECT *  
@@ -101,7 +101,7 @@ class MenuModel extends Model{
         $this->db->where('m.fecha', $today['year']."-".$today['mon']."-".$today['mday']);
         $this->db->where('m.eliminado', 0);
         $this->db->where('p.eliminado', 0);
-        $this->db->get()->result();
+        return $this->db->get()->result();
 
         /*
                 return $this->queryTodasLasFilas('
@@ -121,7 +121,7 @@ class MenuModel extends Model{
         $this->db->where('eliminado', 0);
         $this->db->where('stock >', 0);
         $this->db->where_not('idProducto', $this->db->select('idProducto')->from('menuProducto')->where('idMenu',$idMenu));
-        $this->db->get()->result();
+        return $this->db->get()->result();
 
   /*      return $this -> queryTodasLasFilas('
         SELECT * 
@@ -138,7 +138,7 @@ class MenuModel extends Model{
         $this->db->from('menu');
         $this->db->where('fecha', $fecha);
         $this->db->where('eliminado', 0);
-        $this->db->get()->result();
+        return $this->db->get()->result();
 
         /*   return $this->queryPreparadaSQL('
                SELECT *
@@ -155,7 +155,7 @@ class MenuModel extends Model{
         $this->db->where('m.eliminado', 0);
         $this->db->where('p.eliminado', 0);
         $this->db->order_by('m.idMenu', 'ASC');
-        $this->db->get()->result();
+        return $this->db->get()->result();
 
         /*return $this->queryPreparadaSQL('
             SELECT COUNT(*) AS total  
@@ -170,7 +170,7 @@ class MenuModel extends Model{
         $this->db->from('menu');
         $this->db->where('idMenu', $id);
         $this->db->where('eliminado', 0);
-        $this->db->get()->result();
+        return $this->db->get()->result();
 
         /*  return $this->queryPreparadaSQL('
               SELECT *
@@ -187,7 +187,7 @@ class MenuModel extends Model{
         $this->db->where('m.eliminado', 0);
         $this->db->where('p.eliminado', 0);
         $this->db->where('m.idMenu', $idMenu);
-        $this->db->get()->result();
+        return $this->db->get()->result();
 
 
         /*    return $this ->queryPreparadaSQL("
@@ -205,7 +205,7 @@ class MenuModel extends Model{
         $this->db->order_by('p.nombre', 'ASC');
         $this->db->limit($limit);
         $this->db->offset($offset);
-        $this->db->get()->result();
+        return $this->db->get()->result();
 
         /* return $this -> queryOFFSET('
              SELECT m.idMenu,m.idProducto,m.fecha,m.foto, m.eliminado,p.nombre,p.stock,p.stockMinimo,p.precioVentaUnitario,p.descripcion,p.eliminado
@@ -227,7 +227,7 @@ class MenuModel extends Model{
         $this->db->order_by('p.nombre', 'ASC');
         $this->db->limit($limit);
         $this->db->offset($offset);
-        $this->db->get()->result();
+        return $this->db->get()->result();
 
         /*   return $this -> queryOFFSETDIA('
                SELECT m.idMenu,m.idProducto,m.fecha,m.foto, m.eliminado,p.nombre,p.stock,p.stockMinimo,p.precioVentaUnitario,p.descripcion,p.eliminado
@@ -291,7 +291,7 @@ class MenuModel extends Model{
         $this->db->where('mp.idMenu', $idMenu);
         $this->db->limit($limit);
         $this->db->offset($offset);
-        $this->db->get()->result();
+        return $this->db->get()->result();
        /* $this->stmnt = $this->db->prepare("
             SELECT m.idMenu,mp.idProducto,m.fecha,m.foto, m.eliminado,p.nombre,p.stock,p.stockMinimo,p.precioVentaUnitario,p.descripcion,p.eliminado
             FROM menuProducto mp
@@ -382,7 +382,7 @@ class MenuModel extends Model{
         $this->db->join('producto p', 'mp.idProducto = p.idProducto');
         $this->db->where('m.fecha',$fecha);
         $this->db->where('m.eliminado',0);
-        $this->db->get()->result();
+        return $this->db->get()->insert();
 
     /*    return $this -> queryPreparadaSQL("
             SELECT MIN(p.stock) as minimo
