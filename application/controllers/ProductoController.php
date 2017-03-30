@@ -1,24 +1,16 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: piturro
- * Date: 31/10/16
- * Time: 09:46
- */
+include_once('Controller.php');
+include_once('MainController.php');
+include_once(dirname(__DIR__).'/models/ProductosModel.php');
+include_once(dirname(__DIR__).'/models/CategoriaModel.php');
 class ProductoController extends Controller
 {
-    public $model;
-    public $rolModel;
-    public $productoModel;
-    public $categoriaModel;
 
     public function __construct(){
-        parent::__contruct();
-        $this->model = new MainUserModel();
-        $this->rolModel = new RolModel();
-        $this->productoModel = new ProductosModel();
-        $this->categoriaModel = new CategoriaModel();
+        parent::__construct();
+        $this->load->model('ProductosModel');
+        $this->load->model('CategoriaModel');
     }
 
     public function getPermission()
@@ -29,42 +21,44 @@ class ProductoController extends Controller
     }
 
     public function productosListar(){
-        $this->paginaCorrecta($this->productoModel->totalProductos());
-        $this->dispatcher->producto = $this->productoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
-        $this->dispatcher->pag = $_GET['pag'];
-        $this->dispatcher->method = "ProductosListar";
-        $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
+        $this->paginaCorrecta($this->ProductoModel->totalProductos());
+        $this->addData('producto', $this->ProductoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
+        $this->addData('pag', $_GET['pag']);
+        $this->addData('method', "ProductosListar");
+        $this->display("ProductosListarTemplate.twig");
     }
     public function productosAM(){
         if (isset($_POST["idProducto"])){
-            $this->dispatcher->producto =$this ->productoModel->searchIdProducto($_POST["idProducto"]);
+            $this->addData('producto', $this->ProductoModel->searchIdProducto($_POST["idProducto"]));
         }
-        $this->dispatcher->categoria =$this ->categoriaModel->getAllCategorias();
-        $this->dispatcher->render("Backend/ProductosAMTemplate.twig");
+        $this->addData('categoria',$this ->CategoriaModel->getAllCategorias());
+        $this->display("ProductosAMTemplate.twig");
     }
     public function productosAMPost(){
         try{
             $this->validarProductos($_POST);
             if (isset($_POST['idProducto'])){
-                $this->dispatcher->producto =$this ->productoModel->actualizarProducto($_POST);
+                $this->addData('producto',$this ->ProductoModel->actualizarProducto($_POST));
             }else{
-                $this->dispatcher->producto =$this ->productoModel->insertarProducto($_POST);
+                $this->addData('producto',$this ->ProductoModel->insertarProducto($_POST));
             }
             $_GET['pag'] = 0;
-            $this->dispatcher->method = "ProductosListar";
+            $this->addData('method', "ProductosListar");
             $this->productosListar();
-        } catch (valException $e){
-            $this->dispatcher->producto = $_POST;
-            $this->dispatcher->mensajeError = $e->getMessage();
+        } catch (Exception $e){
+            $this->addData('producto',$_POST);
+            $this->addData('mensajeError', $e->getMessage());
             $this->productosAM();
         }
     }
+
     public function productosEliminar(){
-        $this->dispatcher->producto =$this ->productoModel->deleteProducto($_POST["idProducto"]);
+        $this->addData('producto', $this ->ProductoModel->deleteProducto($_POST["idProducto"]));
         $_GET['pag'] = 0;
-        $this->dispatcher->method = "ProductosListar";
+        $this->addData('method', "ProductosListar");
         $this->productosListar();
     }
+
     public function validarProductos($var){
         $this->validator->varSet($var['submit'],"Presione el boton de submit");
         $this->validator->validarStringEspeciales($var['nombre'],"Error: el campo 'Nombre' solo admite letras.",25);
@@ -73,7 +67,7 @@ class ProductoController extends Controller
         $this->validator->validarNumeros($var['stockMinimo'],"Error: el 'Stock Minimo' nombre solo admite letras.",3);
         $this->validator->validarNumeros($var['idCategoria'],"No existe la categoria.",3);
         $this->validator->validarNumerosPunto($var['precioVentaUnitario'],"Error: solo se admite el formato xxx.xx",5);
-        if (! $this->categoriaModel->getCategoriaById($var['idCategoria'])) throw new valException("Error:No existe la categoria");
+        if (! $this->CategoriaModel->getCategoriaById($var['idCategoria'])) throw new valException("Error:No existe la categoria");
     }
 
 
