@@ -4,11 +4,9 @@
 
 include_once(dirname(__DIR__)."/Utils/Validador.php");
 include_once(dirname(__DIR__)."/Utils/Session.php");
-include_once(dirname(__DIR__)."/models/configuracionModel.php");
 
 class Controller extends CI_controller
 {
-    protected $conf;
     protected $validator;
     protected $data;
 
