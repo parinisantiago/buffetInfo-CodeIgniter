@@ -3,7 +3,7 @@
 //Clase "abstracta" de controller, todos los controllers conocer el dispatcher y se fijan los permisos del usuario asociado al controller
 
 include_once(dirname(__DIR__)."/Utils/Validador.php");
-include_once(dirname(__DIR__)."/Utils/Session.php");
+include_once(dirname(__DIR__) . "/libraries/Session.php");
 
 class Controller extends CI_controller
 {
