@@ -47,7 +47,7 @@ class UserController extends Controller
 
     public function insertUsuario(){
 
-        if ($this->UserModel->userExist($_POST['nombreUsuario'])) throw new Exception("El usuario ya existe");
+        if ($this->UserModel->userExist($_POST['usuario'])) throw new Exception("El usuario ya existe");
         $this->UserModel->addUser($_POST['usuario'], $_POST['nombre'], $_POST['apellido'],$_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'],$_POST['idRol'], $_POST['idUbicacion']);
     }
 
