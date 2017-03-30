@@ -1,5 +1,6 @@
 <?php
 include_once('Controller.php');
+include_once('MainController.php');
 include_once(dirname(__DIR__)."/models/UserModel.php");
 include_once(dirname(__DIR__)."/models/RolModel.php");
 
@@ -38,8 +39,7 @@ class UserController extends Controller
 
     public function abmUsuario()
     {
-        $paginas = $this->UserModel->totalUsuario();
-        $this->paginaCorrecta($paginas[0]);
+        $this->paginaCorrecta($this->UserModel->totalUsuario());
         $this->addData('users', $this->UserModel->getAllUser($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
         $this->addData('pag', $_GET['pag']);
         $this->display('abmUsuarios.twig');
@@ -72,7 +72,7 @@ class UserController extends Controller
 
     public function eliminarUsuario()
     {
-
+        try{
         if (!isset($_POST['submitButton'])) throw new Exception("Apreta el botón de eliminar macho");
 
         if (!isset($_POST['idUsuario'])) throw new Exception("Faltan datos para poder eliminar el usuario");
@@ -82,7 +82,12 @@ class UserController extends Controller
 
         $_GET['pag'] = 0;
         $this->abmUsuario();
-
+        } catch (Exception $e)
+        {
+            $this->addData('mensajeError', $e->getMessage());
+            $main = new MainController();
+            $main->index();
+        }
     }
 
     public function registroUsuario()
@@ -125,11 +130,18 @@ class UserController extends Controller
     }
 
     public function paginaCorrecta($total){
+        try{
         if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
         elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
         else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
         if ($_GET['offset'] < 0) $_GET['offset'] = 0;
         $_GET['offset'] .= "";
+        }catch (Exception $e)
+        {
+            $this->addData('mensajeError', $e->getMessage());
+            $main = new MainController();
+            $main->index();
+        }
     }
 
 }
