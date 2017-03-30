@@ -1,38 +1,34 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: piturro
- * Date: 29/10/16
- * Time: 19:47
- */
 class UserController extends Controller
 {
-    public $model;
-    public $rolModel;
-    public $productoModel;
-    public $categoriaModel;
-    public $ventaModel;
-    public $compraModel;
-    public $menuModel;
-
     public function __construct(){
-        parent::__contruct();
-        $this->model = new MainUserModel();
-        $this->rolModel = new RolModel();
-        $this->productoModel = new ProductosModel();
-        $this->categoriaModel = new CategoriaModel();
-        $this->ventaModel = new VentaModel();
-        $this->compraModel= new CompraModel();
-        $this->menuModel= new MenuModel();
+        parent::__construct();
+        $this->load->model('UserModel');
+        $this->load->model('RolModel');
+        $this->load->model('ProductosModel');
+        $this->load->model('CategoriaModel');
+        $this->load->model('VentaModel');
+        $this->load->model('CompraModel');
+        $this->load->model('MenuModel');
     }
 
     public function index(){
-        $this->dispatcher->render("Backend/IndexTemplate.twig");
+        try
+        {
+            if (!$this->getPermission()) throw new Exception('El usuario no posee permisos para acceder a esta funcionalidad');
+            $this->display("IndexTemplate.twig");
+        }
+        catch (Exception $e)
+        {
+            $this->addData('mensajeError', $e->getMessage());
+            $main = new MainController();
+            $main->index();
+        }
     }
 
     public function setMensajeError($error){
-        $this->dispatcher->mensajeError = $error;
+        $this->addData('mensajeError', $error);
         $this->index();
     }
 
@@ -44,16 +40,17 @@ class UserController extends Controller
 
     public function abmUsuario()
     {
-        $this->paginaCorrecta($this->model->totalUsuario());
-        $this->dispatcher->users = $this->model->getAllUser($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
-        $this->dispatcher->pag = $_GET['pag'];
-        $this->dispatcher->render('Backend/abmUsuarios.twig');
+        $paginas = $this->UserModel->totalUsuario();
+        $this->paginaCorrecta($paginas[0]);
+        $this->addData('users', $this->UserModel->getAllUser($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
+        $this->addData('pag', $_GET['pag']);
+        $this->display('abmUsuarios.twig');
     }
 
     public function insertUsuario(){
 
-        if ($this->model->userExist($_POST['nombreUsuario'])) throw new Exception("El usuario ya existe");
-        $this->model->addUser($_POST['usuario'], $_POST['nombre'], $_POST['apellido'],$_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'],$_POST['idRol'], $_POST['idUbicacion']);
+        if ($this->UserModel->userExist($_POST['nombreUsuario'])) throw new Exception("El usuario ya existe");
+        $this->UserModel->addUser($_POST['usuario'], $_POST['nombre'], $_POST['apellido'],$_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'],$_POST['idRol'], $_POST['idUbicacion']);
     }
 
 
@@ -64,13 +61,13 @@ class UserController extends Controller
             $this->validarUsuario(); //realiza validaciones mediante expresiones regulares
 
             if (!isset($_POST['idUsuario'])) $this->insertUsuario();
-            else if ((Session::getValue('modUserId') == $_POST['idUsuario']) && ($this->model->userExistInDB($_POST['usuario'])->usuario == $_POST['usuario'])) $this->model->modUser($_POST['idUsuario'], $_POST['usuario'], $_POST['nombre'], $_POST['apellido'], $_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'], $_POST['idRol'], $_POST['idUbicacion'], $_POST['habilitado']); //si es el usaurio guardado, lo modifica
+            else if ((Session::getValue('modUserId') == $_POST['idUsuario']) && ($this->UserModel->userExistInDB($_POST['usuario'])->usuario == $_POST['usuario'])) $this->UserModel->modUser($_POST['idUsuario'], $_POST['usuario'], $_POST['nombre'], $_POST['apellido'], $_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'], $_POST['idRol'], $_POST['idUbicacion'], $_POST['habilitado']); //si es el usaurio guardado, lo modifica
             else throw new Exception('Error: El id de usuario se vio modificado durante la operacion');
             $_GET['pag'] = 0;
             $this->abmUsuario();
-        }  catch (valException $e){
-            $this->dispatcher->user = $_POST;
-            $this->dispatcher->mensajeError = $e->getMessage();
+        }  catch (Exception $e){
+            $this->addData('user', $_POST);
+            $this->addData('mensajeError', $e->getMessage());
             $this->registroUsuario();
         }
     }
@@ -83,7 +80,7 @@ class UserController extends Controller
         if (!isset($_POST['idUsuario'])) throw new Exception("Faltan datos para poder eliminar el usuario");
         else $idUsuario = $_POST['idUsuario'];
 
-        $this->model->deleteUser($idUsuario);
+        $this->UserModel->deleteUser($idUsuario);
 
         $_GET['pag'] = 0;
         $this->abmUsuario();
@@ -92,9 +89,9 @@ class UserController extends Controller
 
     public function registroUsuario()
     {
-        $this->dispatcher->ubicacion = $this->rolModel->getAllUbicacion();
-        $this->dispatcher->rols = $this->rolModel->getAllRols(); //para poder crear el listado de roles
-        $this->dispatcher->render("Backend/registroUsuariosTemplate.twig");
+        $this->addData('ubicacion', $this->rolModel->getAllUbicacion());
+        $this->addData('rols', $this->rolModel->getAllRols()); //para poder crear el listado de roles
+        $this->display("registroUsuariosTemplate.twig");
     }
 
     public function modificarUsuario()
@@ -102,12 +99,12 @@ class UserController extends Controller
         try{
             if (! isset($_POST['submitButton'])) throw new Exception('Apreta el boton de modificar macho');
             if (! isset($_POST['idUsuario'])) throw new Exception('Como vas a modificar un usuario sin ID?');
-            if (! $this->model->getUserById($_POST['idUsuario'])) throw new Exception('Id invalido');
-            Session::setValue($this->model->getUserById($_POST['idUsuario'])->idUsuario, 'modUserId'); //se guarda el usuario a modificar, para validar que no se cambie el valor del input del id.
-            $this->dispatcher->user = $this->model->getUserById($_POST['idUsuario']);
+            if (! $this->UserModel->getUserById($_POST['idUsuario'])) throw new Exception('Id invalido');
+            Session::setValue($this->UserModel->getUserById($_POST['idUsuario'])->idUsuario, 'modUserId'); //se guarda el usuario a modificar, para validar que no se cambie el valor del input del id.
+            $this->addData('user' , $this->UserModel->getUserById($_POST['idUsuario']));
             $this->registroUsuario();
-        } catch (valException $e){
-            $this->dispatcher->mensajeError = $e->getMessage();
+        } catch (Exception $e){
+            $this->addData('mensajeError', $e->getMessage());
             $this->registroUsuario();
         }
     }
