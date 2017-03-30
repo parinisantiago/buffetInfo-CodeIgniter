@@ -161,7 +161,8 @@ class ProductosModel extends Model{
         $this->db->where_not('p.eliminado', 0);
         $this->db->where('p.stock <=', 'p.stockMinimo');
         $this->db->where_not('p.stock', 0);
-        return $this->db->get()->result();
+        $total = $this->db->get()->result();
+        return $total[0];
  /*       return $this -> queryPreparadaSQL(
             "SELECT COUNT(*) AS total
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
@@ -190,7 +191,8 @@ class ProductosModel extends Model{
         $this->db->join('categoria c', 'p.idCategoria = c.idCategoria');
         $this->db->where('p.eliminado', 0);
         $this->db->where('p.stock', 0);
-        return $this->db->get()->result();
+        $total = $this->db->get()->result();
+        return $total[0];
 
 /*        return $this -> queryPreparadaSQL(
             "SELECT COUNT(*) AS total
@@ -204,7 +206,8 @@ class ProductosModel extends Model{
         $this->db->join('categoria c', 'p.idCategoria = c.idCategoria');
         $this->db->where('p.eliminado', 0);
         $this->db->where('p.stock >', 0);
-        return $this->db->get()->result();
+        $total = $this->db->get()->result();
+        return $total[0];
         /*  return $this->queryPreparadaSQL('SELECT COUNT(*) AS total   FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria)
                   WHERE p.eliminado = 0 AND p.stock > 0', array());*/
     }
