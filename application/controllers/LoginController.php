@@ -22,8 +22,7 @@ class LoginController extends Controller
             $this->user = $this->UserModel->getUser($_POST['username'], $_POST['pass']);
             $this->setSession();
         }
-        $this->controller = new MainController();
-        $this->controller->index();
+        $this->display('IndexTemplate.twig');
     }
 
     private function setSession()
@@ -53,8 +52,7 @@ class LoginController extends Controller
         catch (Exception $e)
         {
             $this->addData('mensajeError',$e->getMessage());
-            $this->controller = new MainController();
-            $this->controller->index();
+            $this->display('MainTemplate.twig');
         }
         return true;
     }
