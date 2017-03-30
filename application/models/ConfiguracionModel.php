@@ -2,7 +2,7 @@
 
 require_once("Model.php");
 
-class configuracionModel extends Model
+class ConfiguracionModel extends Model
 {
 
     public function __construct(){
@@ -10,11 +10,24 @@ class configuracionModel extends Model
     }
 
     public function getConfiguracion(){
-        return $this->queryPreparadaSQL("SELECT * FROM configuracion", array());
+        $this->db->select('*');
+        $this->db->from('configuracion');
+        $this->db->get()->result();
+        /*return $this->queryPreparadaSQL("SELECT * FROM configuracion", array());*/
     }
 
     public function updateConf($Prod){
-         $this -> query("
+        $data = array(
+            'titulo' => $Prod["titulo"],
+            'descripcion' => $Prod["descripcion"],
+            'mail' => $Prod["email"],
+            'cantPagina' => $Prod["lista"],
+            'habilitado' => $Prod["habilitado"],
+            'mensajeHabilitado' => $Prod["mensaje"]
+        );
+        $this->db->update('configuracion', $data);
+
+        /* $this -> query("
             UPDATE configuracion
             SET titulo = :titulo,
                 descripcion = :descripcion,
@@ -28,7 +41,7 @@ class configuracionModel extends Model
                 'cantPagina' => $Prod["lista"],
                 'habilitado' => $Prod["habilitado"],
                 'mensajeHabilitado' => $Prod["mensaje"],
-                ));
+                ));*/
     }
 
 }
