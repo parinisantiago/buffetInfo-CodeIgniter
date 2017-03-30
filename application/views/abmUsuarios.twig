@@ -8,7 +8,7 @@
         <div class="paginas" >
             <p> Página: {{ pag }} <p>
             {% if pag != 0 %}
-                <a class="boton" href="/UserControllerabmUsuario?pag={{ pag - 1 }}">Página anterior</a>
+                <a class="boton" href="/UserController/abmUsuario?pag={{ pag - 1 }}">Página anterior</a>
             {% endif %}
                 <a class="boton" href="/UserController/abmUsuario?pag={{ pag + 1 }}">Página Siguiente</a>
         </div>
