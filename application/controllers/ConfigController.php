@@ -7,7 +7,7 @@ class ConfigController extends Controller
 
 
     public function __construct(){
-        parent::__contruct();
+        parent::__construct();
         $this->load->model('UserModel');
         $this->load->model('RolModel');
         $this->load->model('ProductosModel');
