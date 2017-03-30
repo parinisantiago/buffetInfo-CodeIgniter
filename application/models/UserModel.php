@@ -34,7 +34,9 @@ class UserModel extends Model
         $this->db->select('clave');
         $this->db->from('usuario');
         $this->db->where('clave', $pass);
-    /*    return $this -> queryPreparadaSQL('SELECT clave FROM usuario WHERE clave = :pass', array('pass' => $pass));*/
+        return $this->db->get()->result();
+
+        /*    return $this -> queryPreparadaSQL('SELECT clave FROM usuario WHERE clave = :pass', array('pass' => $pass));*/
     }
 
     public function getUser($username, $pass)
