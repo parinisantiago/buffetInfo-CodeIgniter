@@ -38,7 +38,7 @@ class Controller extends CI_controller
 
     protected function display($view){
         $this->load->library('twig');
-        $this->data['config'] = $this->getConfig();
+        $this->addData('config',$this->getConfig());
         $this->twig->render($view,$this->data);
     }
 

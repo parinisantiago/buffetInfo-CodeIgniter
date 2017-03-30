@@ -8,13 +8,6 @@ class ConfigController extends Controller
 
     public function __construct(){
         parent::__construct();
-        $this->load->model('UserModel');
-        $this->load->model('RolModel');
-        $this->load->model('ProductosModel');
-        $this->load->model('CategoriaModel');
-        $this->load->model('VentaModel');
-        $this->load->model('CompraModel');
-        $this->load->model('MenuModel');
     }
 
     public function index(){

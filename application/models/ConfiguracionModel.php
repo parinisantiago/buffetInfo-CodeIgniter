@@ -12,7 +12,8 @@ class ConfiguracionModel extends Model
     public function getConfiguracion(){
         $this->db->select('*');
         $this->db->from('configuracion');
-        $this->db->get()->result();
+        $config = $this->db->get()->result();
+        return $config[0];
         /*return $this->queryPreparadaSQL("SELECT * FROM configuracion", array());*/
     }
 
