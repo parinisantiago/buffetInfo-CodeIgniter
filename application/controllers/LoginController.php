@@ -28,7 +28,6 @@ class LoginController extends Controller
 
     private function setSession()
     {
-        var_dump($this->user[0]);
         Session::setValue( $this -> user[0] -> usuario, 'username');
         Session::setValue( $this -> user[0] -> idRol, 'rol');
         Session::setValue( $this-> user[0] -> idUsuario, 'idUsuario');
