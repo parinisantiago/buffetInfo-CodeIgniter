@@ -6,7 +6,6 @@ include_once(dirname(__DIR__).'/controllers/MainController.php');
 class LoginController extends Controller
 {
 
-    private $model;
     private $user;
     private $controller;
 
@@ -29,9 +28,10 @@ class LoginController extends Controller
 
     private function setSession()
     {
-        Session::setValue( $this -> user -> usuario, 'username');
-        Session::setValue( $this -> user -> idRol, 'rol');
-        Session::setValue( $this-> user -> idUsuario, 'idUsuario');
+        var_dump($this->user[0]);
+        Session::setValue( $this -> user[0] -> usuario, 'username');
+        Session::setValue( $this -> user[0] -> idRol, 'rol');
+        Session::setValue( $this-> user[0] -> idUsuario, 'idUsuario');
         Session::setValue(true, 'logged');
     }
 
@@ -42,14 +42,14 @@ class LoginController extends Controller
         $this->validator->varSet($_POST['submit'], "Presione el boton de submit");
 
         $this->validator->validarString($_POST['username'], "Error: En usuario o contraseña", 15);
-        if ($this->model->isDeleted($_POST['username'])) throw new Exception("El usuario a sido eliminado");
+        if ($this->UserModel->isDeleted($_POST['username'])) throw new Exception("El usuario a sido eliminado");
 
         $this->validator->validarString($_POST['pass'], "Error: En usuario o contraseña", 15);
 
-        if (!$this->model->userExist($_POST['username'])) throw new Exception("Error: El usuario no existe");
+        if (!$this->UserModel->userExist($_POST['username'])) throw new Exception("Error: El usuario no existe");
 
 
-        elseif (!$this->model->passDontMissmatch($_POST['pass'])) throw new Exception("Contraseña incorrecta");
+        elseif (!$this->UserModel->passDontMissmatch($_POST['pass'])) throw new Exception("Contraseña incorrecta");
         }
         catch (Exception $e)
         {
