@@ -31,6 +31,8 @@ class LoginController extends Controller
         Session::setValue( $this -> user[0] -> idRol, 'rol');
         Session::setValue( $this-> user[0] -> idUsuario, 'idUsuario');
         Session::setValue(true, 'logged');
+        $this->addData('rol', Session::getValue('rol'));
+
     }
 
     public function validateLogin()
