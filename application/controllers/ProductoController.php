@@ -21,15 +21,15 @@ class ProductoController extends Controller
     }
 
     public function productosListar(){
-        $this->paginaCorrecta($this->ProductoModel->totalProductos());
-        $this->addData('producto', $this->ProductoModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
+        $this->paginaCorrecta($this->ProductosModel->totalProductos());
+        $this->addData('producto', $this->ProductosModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
         $this->addData('pag', $_GET['pag']);
         $this->addData('method', "ProductosListar");
         $this->display("ProductosListarTemplate.twig");
     }
     public function productosAM(){
         if (isset($_POST["idProducto"])){
-            $this->addData('producto', $this->ProductoModel->searchIdProducto($_POST["idProducto"]));
+            $this->addData('producto', $this->ProductosModel->searchIdProducto($_POST["idProducto"]));
         }
         $this->addData('categoria',$this ->CategoriaModel->getAllCategorias());
         $this->display("ProductosAMTemplate.twig");
@@ -38,9 +38,9 @@ class ProductoController extends Controller
         try{
             $this->validarProductos($_POST);
             if (isset($_POST['idProducto'])){
-                $this->addData('producto',$this ->ProductoModel->actualizarProducto($_POST));
+                $this->addData('producto',$this ->ProductosModel->actualizarProducto($_POST));
             }else{
-                $this->addData('producto',$this ->ProductoModel->insertarProducto($_POST));
+                $this->addData('producto',$this ->ProductosModel->insertarProducto($_POST));
             }
             $_GET['pag'] = 0;
             $this->addData('method', "ProductosListar");
@@ -53,7 +53,7 @@ class ProductoController extends Controller
     }
 
     public function productosEliminar(){
-        $this->addData('producto', $this ->ProductoModel->deleteProducto($_POST["idProducto"]));
+        $this->addData('producto', $this ->ProductosModel->deleteProducto($_POST["idProducto"]));
         $_GET['pag'] = 0;
         $this->addData('method', "ProductosListar");
         $this->productosListar();
