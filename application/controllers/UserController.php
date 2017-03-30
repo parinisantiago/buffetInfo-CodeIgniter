@@ -1,4 +1,7 @@
 <?php
+include_once('Controller.php');
+include_once(dirname(__DIR__)."/models/UserModel.php");
+include_once(dirname(__DIR__)."/models/RolModel.php");
 
 class UserController extends Controller
 {
@@ -6,11 +9,6 @@ class UserController extends Controller
         parent::__construct();
         $this->load->model('UserModel');
         $this->load->model('RolModel');
-        $this->load->model('ProductosModel');
-        $this->load->model('CategoriaModel');
-        $this->load->model('VentaModel');
-        $this->load->model('CompraModel');
-        $this->load->model('MenuModel');
     }
 
     public function index(){
@@ -89,8 +87,8 @@ class UserController extends Controller
 
     public function registroUsuario()
     {
-        $this->addData('ubicacion', $this->rolModel->getAllUbicacion());
-        $this->addData('rols', $this->rolModel->getAllRols()); //para poder crear el listado de roles
+        $this->addData('ubicacion', $this->RolModel->getAllUbicacion());
+        $this->addData('rols', $this->RolModel->getAllRols()); //para poder crear el listado de roles
         $this->display("registroUsuariosTemplate.twig");
     }
 
