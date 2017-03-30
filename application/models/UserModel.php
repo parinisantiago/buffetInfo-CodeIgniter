@@ -190,7 +190,8 @@ class UserModel extends Model
         $this->db->select('COUNT(*) AS total');
         $this->db->from('usuario');
         $this->db->where('eliminado', 0);
-        return $this->db->get()->result();
+        $total = $this->db->get()->result();
+        return $total[0];
        /* return $this->queryPreparadaSQL('SELECT COUNT(*) AS total FROM usuario WHERE eliminado = 0',array());*/
     }
 
