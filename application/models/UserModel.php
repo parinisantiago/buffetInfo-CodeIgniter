@@ -24,7 +24,8 @@ class UserModel extends Model
         $this->db->select('usuario');
         $this->db->from('usuario');
         $this->db->where('usuario', $username);
-        return $this->db->get()->result();
+        $exist = $this->db->get()->result();
+        return $exist[0];
         /* return $this->queryPreparadaSQL('SELECT usuario FROM usuario WHERE usuario = :username', array('username'=> $username));*/
     }
 
@@ -93,7 +94,8 @@ class UserModel extends Model
         $this->db->from('usuario');
         $this->db->where('idUsuario', $idUsuario);
         $this->db->where('eliminado', 0);
-        return $this->db->get()->result();
+        $user = $this->db->get()->result();
+        return $user[0];
 
         /*    return $this -> queryPreparadaSQL('SELECT * FROM usuario WHERE idUsuario = :idUsuario AND eliminado = 0', array('idUsuario' => $idUsuario));*/
     }
