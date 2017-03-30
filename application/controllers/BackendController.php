@@ -1,26 +1,15 @@
 <?php
 require_once 'Controller.php';
 require_once 'MainController.php';
-require_once(dirname(__DIR__).'/models/RolModel.php');
-require_once(dirname(__DIR__).'/models/ProductosModel.php');
-require_once(dirname(__DIR__).'/models/CategoriaModel.php');
-
 /*
  * Esta clase encapsula el comportamiento comun de los 2 tipos de usuario que 
  * pueden llegar al backend Admin y Gestion
  */
 class BackendController extends Controller{
-    public $model;
-    public $rolModel;
-    public $productoModel;
-    public $categoriaModel;
 
     public function __construct(){
             parent::__construct();
-            $this->model = new MainModel();
-            $this->rolModel = new RolModel();
-            $this->productoModel = new ProductosModel();
-            $this->categoriaModel = new CategoriaModel();
+
     }
 
     public function getPermission()
