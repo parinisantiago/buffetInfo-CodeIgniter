@@ -2,7 +2,7 @@
 //controlador principal
 
 include_once("Controller.php");
-include_once(dirname(__DIR__) . "/models/MainModel.php");
+include_once(dirname(__DIR__) . "/models/UserModel.php");
 include_once(dirname(__DIR__)."/models/MenuModel.php");
 include_once("BackendController.php");
 

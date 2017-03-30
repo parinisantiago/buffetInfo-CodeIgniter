@@ -1,6 +1,6 @@
 <?php
 
-include_once(dirname(__DIR__).'/models/MainModel.php');
+include_once(dirname(__DIR__) . '/models/UserModel.php');
 include_once(dirname(__DIR__).'/controllers/MainController.php');
 
 class LoginController extends Controller
@@ -13,15 +13,14 @@ class LoginController extends Controller
     public function __construct(){
 
         parent::__construct();
-        $this->model = new MainModel();
+        $this->load->model('UserModel');
 
     }
 
     public function index(){
         if (! Session::userLogged()) {
             $this->validateLogin();
-            $this->user = $this->model->getUser($_POST['username'], $_POST['pass']);
-            var_dump($this->user);
+            $this->user = $this->UserModel->getUser($_POST['username'], $_POST['pass']);
             $this->setSession();
         }
         $this->controller = new MainController();
