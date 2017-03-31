@@ -5,9 +5,7 @@ include_once(dirname(__DIR__).'/controllers/MainController.php');
 
 class LoginController extends Controller
 {
-
-    private $user;
-    private $controller;
+    
 
     public function __construct(){
 
