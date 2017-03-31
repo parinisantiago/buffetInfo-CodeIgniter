@@ -3,9 +3,6 @@ require_once 'Controller.php';
 include_once dirname(__DIR__).'/models/TelegramModel.php';
 
 class MenuController extends Controller{
-    public $menuModel;
-    public $productosModel;
-    public $telegramModel;
 
     public function __construct(){
         parent::__construct();
