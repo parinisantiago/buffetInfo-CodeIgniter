@@ -1,5 +1,5 @@
 <?php
-require_once 'Controller/BackendController.php';
+require_once 'BackendController.php';
 class vistaProdController extends BackendController{
     
     public function getPermission(){
@@ -8,7 +8,7 @@ class vistaProdController extends BackendController{
     }
 
     public function setMensajeError($error){
-        $this->dispatcher->mensajeError = $error;
+        $this->addData('mensajeError', $error);
         $this->index();
     }
     
@@ -18,18 +18,18 @@ class vistaProdController extends BackendController{
 
     public function listadoFaltantes(){
 
-        $this->paginaCorrecta($this->productoModel-> totalProductosFaltantes());
-        $this->dispatcher->producto = $this->productoModel->listarProductosFaltantes($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
-        $this->dispatcher->pag = $_GET['pag'];
-        $this->dispatcher->method = "listadoFaltantes";
-        $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
+        $this->paginaCorrecta($this->ProductoModel-> totalProductosFaltantes());
+        $this->addData('producto', $this->ProductoModel->listarProductosFaltantes($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
+        $this->addData('pag', $_GET['pag']);
+        $this->addData('method', "listadoFaltantes");
+        $this->display("ProductosListarTemplate.twig");
 
     }
     public function listadoStockMinimo(){
-        $this->paginaCorrecta($this->productoModel-> totalProductosStockMinimo());
-        $this->dispatcher->producto = $this->productoModel->listarProductosStockMinimo($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
-        $this->dispatcher->pag = $_GET['pag'];
-        $this->dispatcher->method = "listadoStockMinimo";
-        $this->dispatcher->render("Backend/ProductosListarTemplate.twig");
+        $this->paginaCorrecta($this->ProductoModel-> totalProductosStockMinimo());
+        $this->addData('producto', $this->ProductoModel->listarProductosStockMinimo($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        $this->addData('pag', $_GET['pag']);
+        $this->addData('method', "listadoStockMinimo");
+        $this->display("ProductosListarTemplate.twig");
     }
 }
