@@ -36,13 +36,13 @@ class ProductosModel extends Model{
     }
 
     public function searchIdProducto($idProd){
-        $this->db->select('SELECT p.nombre, p.marca, p.stock, p.stockMinimo, p.precioVentaUnitario, p.descripcion, p.idProducto,c.nombre as categoria, c.idCategoria');
+        $this->db->select('p.nombre, p.marca, p.stock, p.stockMinimo, p.precioVentaUnitario, p.descripcion, p.idProducto,c.nombre as categoria, c.idCategoria');
         $this->db->from('producto p');
         $this->db->join('categoria c', 'p.idCategoria = c.idCategoria');
         $this->db->where('p.eliminado', 0);
         $this->db->where('p.idProducto', $idProd);
-        return $this->db->get()->result();
-
+        $prod = $this->db->get()->result();
+        return $prod[0];
       /*  return $this ->queryPreparadaSQL(
                 "SELECT p.nombre, p.marca, p.stock, p.stockMinimo, p.precioVentaUnitario, p.descripcion, p.idProducto,c.nombre as categoria, c.idCategoria
                 FROM producto p INNER JOIN categoria c ON (p.idCategoria = c.idCategoria )
