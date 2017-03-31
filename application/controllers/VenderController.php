@@ -19,7 +19,7 @@ class VenderController extends Controller{
 
     public function vender(){
         $this->paginaCorrecta($this->ProductosModel->totalProductos());
-        $this->addData('producto', $this->ProductosModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        $this->addData('producto', $this->ProductosModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
         $this->addData('pag', $_GET['pag']);
         $this->display("BackendVenderTemplate.twig");
     }
@@ -35,7 +35,7 @@ class VenderController extends Controller{
     } 
     public function venderListar(){
         $this->paginaCorrecta($this->VentaModel->totalVenta());
-        $this->addData('ventas', $this->VentaModel->getAllVenta($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        $this->addData('ventas', $this->VentaModel->getAllVenta($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
         $this->addData('totales', $this->VentaModel->getAlltotales());
         $this->addData('pag', $_GET['pag']);
         $this->display("venderListarTemplate.twig");
