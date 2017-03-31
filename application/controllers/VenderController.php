@@ -44,7 +44,7 @@ class VenderController extends Controller{
         $this->validator->varSet($_POST["submitButton"], "Presione el boton de modificacion");
         $this->validator->varSet($_POST['idIngresoDetalle'], "Error: la venta deseada no ah sido encontrada");
         $this->addData('venta', $this->VentaModel->getVentaById($_POST['idIngresoDetalle']));
-        $this->display("VentaAMTemplate.twig");
+        $this->display("VenderAMTemplate.twig");
     }
     public function modVenta(){
         try{

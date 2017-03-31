@@ -32,7 +32,7 @@
                 <td headers="precioVentaUnitario">{{ venta.precioUnitario }}</td>
                 <td headers="fecha">{{ venta.fecha }}</td>
                 <td headers="acciones">
-                    <form method="post" action="/VenderController/VentaAMTemplate">
+                    <form method="post" action="/VenderController/ventaModificar">
                         <label for="idProducto" hidden></label>
                         <input name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
                         <button class="botonTabla" type="submit" name="submitButton">
