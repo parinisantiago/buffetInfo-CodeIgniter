@@ -14,7 +14,7 @@ class VentaModel extends Model{
         $this->db->join('ingresoDetalle i', 'p.idProducto=i.idProducto');
         $this->db->where('i.eliminado', 0);
         $total = $this->db->get()->result();
-        return $total;
+        return $total[0];
        /* return $this->queryPreparadaSQL('
             SELECT COUNT(*) AS total 
             FROM producto p 
