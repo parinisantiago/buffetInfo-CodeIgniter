@@ -21,7 +21,7 @@ class VenderController extends Controller{
         $this->paginaCorrecta($this->ProductosModel->totalProductos());
         $this->addData('producto', $this->ProductosModel->getAllProducto($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
         $this->addData('pag', $_GET['pag']);
-        $this->display("BackendVenderTemplate.twig");
+        $this->display("VenderTemplate.twig");
     }
     public function venta(){
         $this->validator->varSet($_POST['submitButton'],"Presione el boton de envio");
