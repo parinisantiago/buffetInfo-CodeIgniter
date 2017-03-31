@@ -38,7 +38,7 @@ class VenderController extends Controller{
         $this->addData('ventas', $this->VentaModel->getAllVenta($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
         $this->addData('totales', $this->VentaModel->getAlltotales());
         $this->addData('pag', $_GET['pag']);
-        $this->display("venderListarTemplate.twig");
+        $this->display("VenderListarTemplate.twig");
     }
     public function ventaModificar(){
         $this->validator->varSet($_POST["submitButton"], "Presione el boton de modificacion");
