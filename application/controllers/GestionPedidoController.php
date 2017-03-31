@@ -3,18 +3,12 @@
 
 class GestionPedidoController extends Controller
 {
-    private $pedidos;
-    private $menu;
-    private $venta;
-    private $producto;
 
     function __construct()
     {
-        parent::__contruct();
-        $this->pedidos = new PedidosModel();
-        $this->menu = new MenuModel();
-        $this->venta = new VentaModel();
-        $this->producto = new ProductosModel();
+        parent::__construct();
+        $this->load->model('PedidosModel');
+        $this->load->model('VentaModel');
     }
 
     public function getPermission(){
@@ -24,9 +18,9 @@ class GestionPedidoController extends Controller
 
     public function mostrarPedidos(){
         $_GET['pag'] = 0;
-        $this->paginaCorrecta($this->pedidos->totalPedidosPendientes());
-        $this->dispatcher->pedidos = $this->pedidos->getPedidosPendientes($this->conf->getConfiguracion()->cantPagina, $_GET['offset']);
-        $this->dispatcher->render('Backend/GestionPedidosListarTemplate.twig');
+        $this->paginaCorrecta($this->PedidosModel->totalPedidosPendientes());
+        $this->addData('pedidos', $this->PedidosModel->getPedidosPendientes($this->conf->getConfiguracion()->cantPagina, $_GET['offset']));
+        $this->display('GestionPedidosListarTemplate.twig');
     }
 
     public function paginaCorrecta($total){
@@ -40,10 +34,10 @@ class GestionPedidoController extends Controller
 
     public function verPedidos()
     {
-        $this->paginaCorrecta($this->pedidos->totalPedidosPendientes());
-        $this->dispatcher->pedidos = $this->pedidos->getPedidosPendientes($this->conf->getConfiguracion()->cantPagina, $_GET['offset']);
-        $this->dispatcher->pag = $_GET['pag'];
-        $this->dispatcher->render('Backend/GestionPedidosListarTemplate.twig');
+        $this->paginaCorrecta($this->PedidosModel->totalPedidosPendientes());
+        $this->addData('pedidos', $this->PedidosModel->getPedidosPendientes($this->conf->getConfiguracion()->cantPagina, $_GET['offset']));
+        $this->addData('pag', $_GET['pag']);
+        $this->display('GestionPedidosListarTemplate.twig');
     }
 
 
@@ -52,16 +46,16 @@ class GestionPedidoController extends Controller
         try
         {
             $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?",3);
-            $pedido = $this->pedidos->getPedido($_POST['idPedido']);
+            $pedido = $this->PedidosModel->getPedido($_POST['idPedido']);
             if(!$pedido) throw new valException('El pedido no es valido');
 
-            $this->dispatcher->detalles = $this->pedidos->getDetalle($_POST['idPedido']);
-            $this->dispatcher->render("Backend/mostrarDetalle.twig");
+            $this->addData('detalles', $this->PedidosModel->getDetalle($_POST['idPedido']));
+            $this->display("mostrarDetalle.twig");
         }
-        catch (valException $e)
+        catch (Exception $e)
         {
-            $this->dispatcher->mensajeError = $e -> getMessage();
-            $this->dispatcher->render('Backend/GestionPedidosListarTemplate.twig');
+            $this->addData('mensajeError', $e -> getMessage());
+            $this->display('GestionPedidosListarTemplate.twig');
         }
 
 
@@ -69,8 +63,8 @@ class GestionPedidoController extends Controller
 
     public function formCancelarPedido(){
         $this->token();
-        $this->dispatcher->id = $_POST['idPedido'];
-        $this->dispatcher->render('Backend/cancerlarPedido.twig');
+        $this->addData('id', $_POST['idPedido']);
+        $this->display('cancerlarPedido.twig');
     }
 
     public function cancelarPedido()
@@ -80,18 +74,18 @@ class GestionPedidoController extends Controller
             if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
             if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?",3);
-            $pedido = $this->pedidos->getPedido($_POST['idPedido']);
+            $pedido = $this->PedidosModel->getPedido($_POST['idPedido']);
             if(!$pedido) throw new valException('El pedido no es valido');
             if(($pedido->idEstado != "pendiente"))throw new valException("El pedido no cumple los requisitos para ser cancelado");
-            $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
-            $this->pedidos->actualizarEstado("cancelado", $_POST['idPedido']);
+            $detalles = $this->PedidosModel->getDetalle($_POST['idPedido']);
+            $this->PedidosModel->actualizarEstado("cancelado", $_POST['idPedido']);
 
-            if(strlen($_POST['comentario']) > 0 ) $this->pedidos->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
+            if(strlen($_POST['comentario']) > 0 ) $this->PedidosModel->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
 
             foreach ($detalles as $detalle)
             {
 
-                $this->producto->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
+                $this->PedidosModel->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
             }
 
             $_GET['pag'] = 0;
@@ -99,11 +93,11 @@ class GestionPedidoController extends Controller
             $this->verPedidos();
 
         }
-        catch (valException $e)
+        catch (Exception $e)
         {
-            $this->dispatcher->mensajeError = $e -> getMessage();
-            $this->dispatcher->id = $_POST['idPedido'];
-            $this->dispatcher->render('Backend/cancerlarPedido.twig');
+            $this->addData('mensajeError', $e -> getMessage());
+            $this->addData('id', $_POST['idPedido']);
+            $this->display('cancerlarPedido.twig');
         }
 
 
@@ -111,8 +105,8 @@ class GestionPedidoController extends Controller
 
     public function formAceptarPedido(){
         $this->token();
-        $this->dispatcher->id = $_POST['idPedido'];
-        $this->dispatcher->render('Backend/aceptarPedido.twig');
+        $this->addData('id', $_POST['idPedido']);
+        $this->display('aceptarPedido.twig');
     }
 
     public function aceptarPedido(){
@@ -121,13 +115,13 @@ class GestionPedidoController extends Controller
             if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
             if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?",3);
-            $pedido = $this->pedidos->getPedido($_POST['idPedido']);
+            $pedido = $this->PedidosModel->getPedido($_POST['idPedido']);
             if(!$pedido) throw new valException('El pedido no es valido');
             if(($pedido->idEstado != "pendiente"))throw new valException("El pedido no cumple los requisitos para ser cancelado");
-            $detalles = $this->pedidos->getDetalle($_POST['idPedido']);
-            $this->pedidos->actualizarEstado("Entregado", $_POST['idPedido']);
+            $detalles = $this->PedidosModel->getDetalle($_POST['idPedido']);
+            $this->PedidosModel->actualizarEstado("Entregado", $_POST['idPedido']);
 
-            if(strlen($_POST['comentario']) > 0 ) $this->pedidos->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
+            if(strlen($_POST['comentario']) > 0 ) $this->PedidosModel->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
 
             foreach ($detalles as $detalle)
             {
@@ -136,18 +130,18 @@ class GestionPedidoController extends Controller
                 $venta['precioVentaUnitario'] = $detalle->precioVentaUnitario;
                 $venta['cant'] = $detalle->cantidad;
 
-                $this->venta->insertarVentaId($venta);
+                $this->VentaModel->insertarVentaId($venta);
             }
 
             $_GET['pag'] = 0;
 
             $this->verPedidos();
         }
-        catch (valException $e)
+        catch (Exception $e)
         {
-            $this->dispatcher->mensajeError = $e -> getMessage();
-            $this->dispatcher->id = $_POST['idPedido'];
-            $this->dispatcher->render('Backend/aceptarPedido.twig');
+            $this->addData('mensajeError', $e -> getMessage());
+            $this->addData('id', $_POST['idPedido']);
+            $this->display('aceptarPedido.twig');
         }
 
 
