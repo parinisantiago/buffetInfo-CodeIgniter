@@ -7,28 +7,44 @@ class TelegramModel extends Model{
     }
     
      public function buscar($id){
-        return $this->queryPreparadaSQL('
+        $this->db->select('idUsuario');
+        $this->db->from('telegram');
+        $this->db->where('idUsuario', $id);
+        return $this->db->get()->result();
+        /*return $this->queryPreparadaSQL('
             SELECT idUsuario
             FROM telegram
             WHERE idUsuario = :idUsuario',
-            array('idUsuario' => $id));
+            array('idUsuario' => $id));*/
     }
     public function registrar($id){
-        return $this->queryPreparadaSQL('
+         $data = array(
+             'idUsuario' => $id
+         );
+         $this->db->result('telegram', $data);
+
+
+       /* return $this->queryPreparadaSQL('
             INSERT INTO telegram (idUsuario)
             VALUES (:idUsuario)',
-            array('idUsuario' => $id));
+            array('idUsuario' => $id));*/
     }
     public function eliminar($id){
-        return $this->queryPreparadaSQL('
+        $this->db->where('idUsuario', $id);
+        $this->db->delete('telegram');
+
+       /* return $this->queryPreparadaSQL('
             DELETE FROM telegram
             WHERE idUsuario = :idUsuario',
-            array('idUsuario' => $id));
+            array('idUsuario' => $id));*/
     }
     public function getAll(){
-        return $this->queryPreparadaSQL('
+        $this->db->select('idUsuario');
+        $this->db->from('telegram');
+        return $this->db->get()->result();
+/*        return $this->queryPreparadaSQL('
             SELECT idUsuario
             FROM telegram',
-            array());
+            array());*/
     }
 }
