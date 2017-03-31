@@ -36,7 +36,7 @@
                         <label for="idProducto" hidden></label>
                         <input name="idIngresoDetalle" type="hidden" value={{ venta.idIngresoDetalle }}>
                         <button class="botonTabla" type="submit" name="submitButton">
-                            <img class="icono" src="images/editar.png" alt= "editar la informacion" />
+                            <img class="icono" src="http://proyecto/public/images/editar.png" alt= "editar la informacion" />
                         </button>
                     </form>
                     <form method="post" action="/VenderController/ventaEliminar">
@@ -49,7 +49,7 @@
                         <label for="cant" hidden></label>
                         <input  name="cant" type="hidden" value={{ venta.cantidad }}>
                         <button class="botonTabla"  type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" >
-                          <img class="icono" src="images/eliminar.png" alt= "eliminar" />
+                          <img class="icono" src="http://proyecto/public/images/eliminar.png" alt= "eliminar" />
                         </button>
                     </form>
                 </td>
