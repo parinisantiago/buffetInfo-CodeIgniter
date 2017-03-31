@@ -1,7 +1,7 @@
 <?php
 
-require_once (__DIR__.'/../libchart/libchart/classes/libchart.php');
-require_once (__DIR__.'/../fpdf_demo/fpdf.php');
+require_once (__DIR__ . '/../third_party/libchart/libchart/classes/libchart.php');
+require_once (__DIR__ . '/../third_party/fpdf_demo/fpdf.php');
 
 
 class BalanceController extends Controller
@@ -16,14 +16,14 @@ class BalanceController extends Controller
 
     function __construct()
     {
-        parent::__contruct();
-        $this->balance = new BalanceModel();
+        parent::__construct();
+        $this->load->model('BalanceModel');
     }
 
     function index()
     {
         $this->token();
-        $this->dispatcher->render("Backend/FormBalance.twig");
+        $this->display("FormBalance.twig");
     }
 
     function balanceDia()
@@ -35,8 +35,8 @@ class BalanceController extends Controller
             if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
             $this->validator->validarFecha($_POST['fecha'], "La fecha ingresada no es válida");
             $fecha=$_POST['fecha'];
-            $ingreso = $this->balance->ingresoDia($fecha);
-            $egreso = $this->balance->egresoDia($fecha);
+            $ingreso = $this->BalanceModel->ingresoDia($fecha);
+            $egreso = $this->BalanceModel->egresoDia($fecha);
 
 
             if(is_null($egreso->total) && is_null($ingreso->total)) throw new valException("No hay datos que mostrar");
@@ -52,12 +52,12 @@ class BalanceController extends Controller
             $this->graficoBarraDia($fecha);
             $this->graficoTortaDia($fecha);
 
-            $this->dispatcher->fecha = $fecha;
-            $this->dispatcher->render('Backend/balanceTemplate.twig');
+            $this->addData('fecha', $fecha);
+            $this->display('balanceTemplate.twig');
         }
-        catch (valException $e){
-            $this->dispatcher->fecha = $_POST['fecha'];
-            $this->dispatcher->mensajeError = $e -> getMessage();
+        catch (Exception $e){
+            $this->addData('fecha', $_POST['fecha']);
+            $this->addData('mensajeError', $e -> getMessage());
             $this->index();
         }
 
@@ -68,7 +68,7 @@ class BalanceController extends Controller
 
     protected function graficoTortaDia($fecha)
     {
-        $totalProductos = $this->balance->productosEgresoDia($fecha);
+        $totalProductos = $this->BalanceModel->productosEgresoDia($fecha);
 
 
         $chart = new PieChart(500, 250);
@@ -89,12 +89,12 @@ class BalanceController extends Controller
 
     protected function graficoBarraDia($fecha)
     {
-        $ingreso = $this->balance->ingresoDia($fecha);
+        $ingreso = $this->BalanceModel->ingresoDia($fecha);
 
         (empty($ingreso->total)) ? $ingreso = "0" : $ingreso = $ingreso->total;
 
 
-        $egreso = $this->balance->egresoDia($fecha);
+        $egreso = $this->BalanceModel->egresoDia($fecha);
 
         (empty($egreso->total)) ? $egreso = "0" : $egreso = $egreso->total;
 
@@ -138,8 +138,8 @@ class BalanceController extends Controller
 
 
             //me traigo los valores
-            $ingresos = $this->balance->ingresoRango($fechaInicio, $fechaFin);
-            $egresos = $this->balance->egresoRango($fechaInicio, $fechaFin);
+            $ingresos = $this->BalanceModel->ingresoRango($fechaInicio, $fechaFin);
+            $egresos = $this->BalanceModel->egresoRango($fechaInicio, $fechaFin);
 
             if(empty($ingresos) && empty($egreso)) throw new valException("NO hay datos para mostrar");
 
@@ -215,16 +215,16 @@ class BalanceController extends Controller
             imagejpeg($image, 'uploads/demo3.jpg', 100);
 
 
-            $this->dispatcher->fechaInicio = $fechaInicio;
-            $this->dispatcher->fechaFin = $fechaFin;
-            $this->dispatcher->render('Backend/balanceTemplate.twig');
+            $this->addData('fechaInicio', $fechaInicio);
+            $this->addData('fechaFin', $fechaFin);
+            $this->display('balanceTemplate.twig');
         }
-        catch (valException $e){
-            $this->dispatcher->fechaInicio = $_POST['fechaInicio'];
-            $this->dispatcher->fechaFin = $_POST['fechaFin'];
-            $this->dispatcher->mensajeError = $e -> getMessage();
+        catch (Exception $e){
+            $this->addData('fechaInicio', $_POST['fechaInicio']);
+            $this->addData('fechaFin', $_POST['fechaFin']);
+            $this->addData('mensajeError', $e -> getMessage());
             $this->token();
-            $this->dispatcher->render("Backend/FormBalance.twig");
+            $this->display("FormBalance.twig");
         }
 
 
@@ -238,13 +238,13 @@ class BalanceController extends Controller
             $this->validator->validarFecha($_POST['fecha'], "La fecha ingresada no es válida");
             $fecha=$_POST['fecha'];
 
-            $productos = $this->balance->productosEgresoDia($fecha);
-            $ingreso = $this->balance->ingresoDia($fecha);
+            $productos = $this->BalanceModel->productosEgresoDia($fecha);
+            $ingreso = $this->BalanceModel->ingresoDia($fecha);
 
             (empty($ingreso->total)) ? $ingreso = "0" : $ingreso = $ingreso->total;
 
 
-            $egreso = $this->balance->egresoDia($fecha);
+            $egreso = $this->BalanceModel->egresoDia($fecha);
 
             (empty($egreso->total)) ? $egreso = "0" : $egreso = $egreso->total;
 
@@ -302,10 +302,10 @@ class BalanceController extends Controller
             ob_end_flush();
 
         }
-        catch (valException $e){
-            $this->dispatcher->mensajeError = $e -> getMessage();
+        catch (Exception $e){
+            $this->addData('mensajeError', $e -> getMessage());
             $this->token();
-            $this->dispatcher->render("Backend/FormBalance.twig");
+            $this->display("FormBalance.twig");
         }
 
     }
@@ -318,8 +318,8 @@ class BalanceController extends Controller
             $fechaInicio=$_POST['fechaInicio'];
             $fechaFin=$_POST['fechaFin'];
             if ($fechaFin < $fechaInicio) throw new valException("La fecha de fin no puede ser inferior a la fecha de inicio");
-            $ingresos = $this->balance->ingresoRango($fechaInicio, $fechaFin);
-            $egresos = $this->balance->egresoRango($fechaInicio, $fechaFin);
+            $ingresos = $this->BalanceModel->ingresoRango($fechaInicio, $fechaFin);
+            $egresos = $this->BalanceModel->egresoRango($fechaInicio, $fechaFin);
             $total= array();
             $balances = array();
 
@@ -379,7 +379,7 @@ class BalanceController extends Controller
             $pdf->Ln();
             $pdf->SetFont('Arial','B',10);
 
-            $productos = $this->balance->productosEgresoRango($fechaInicio, $fechaFin);
+            $productos = $this->BalanceModel->productosEgresoRango($fechaInicio, $fechaFin);
 
             foreach ($productos as $producto) {
 
@@ -398,10 +398,10 @@ class BalanceController extends Controller
             $pdf->Output();
             ob_end_flush();
         }
-        catch (valException $e){
-            $this->dispatcher->mensajeError = $e -> getMessage();
+        catch (Exception $e){
+            $this->addData('mensajeError', $e -> getMessage());
             $this->token();
-            $this->dispatcher->render("Backend/FormBalance.twig");  
+            $this->display("FormBalance.twig");
         }
 
 
