@@ -27,7 +27,7 @@ class vistaProdController extends BackendController{
     }
     public function listadoStockMinimo(){
         $this->paginaCorrecta($this->ProductoModel-> totalProductosStockMinimo());
-        $this->addData('producto', $this->ProductoModel->listarProductosStockMinimo($this->conf->getConfiguracion()->cantPagina,$_GET['offset']);
+        $this->addData('producto', $this->ProductoModel->listarProductosStockMinimo($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
         $this->addData('pag', $_GET['pag']);
         $this->addData('method', "listadoStockMinimo");
         $this->display("ProductosListarTemplate.twig");
