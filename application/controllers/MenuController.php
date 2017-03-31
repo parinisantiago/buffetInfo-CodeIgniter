@@ -1,6 +1,6 @@
 <?php
-require_once 'Controller/Controller.php';
-include_once 'Model/TelegramModel.php';
+require_once 'Controller.php';
+include_once dirname(__DIR__).'/models/TelegramModel.php';
 
 class MenuController extends Controller{
     public $menuModel;
@@ -8,10 +8,10 @@ class MenuController extends Controller{
     public $telegramModel;
 
     public function __construct(){
-        parent::__contruct();
-        $this->menuModel= new MenuModel();
-        $this->productosModel = new ProductosModel();
-        $this->telegramModel = new TelegramModel();
+        parent::__construct();
+        $this->load->model('MenuModel');
+        $this->load->model('ProductosModel');
+        $this->load->model('TelegramModel');
     }
 
     public function getPermission()
@@ -28,17 +28,17 @@ class MenuController extends Controller{
          * agregar un marco de color sobre la fecha seleccionada en el calendario
          */
         $date= date('Y-m-d');
-        $this->paginaCorrecta($this->menuModel->totalMenu());
-      
-        $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$date);
-        if(!isset($this->dispatcher->menu[1])){
-            $this->dispatcher->menu[1] = NULL;
+        $this->paginaCorrecta($this->MenuModel->totalMenu());
+
+        $this->addData('menu', $this->MenuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$date));
+        if(!isset($this->data['menu'][1])){
+            $this->data['menu'][1] = NULL;
         }
-        $this->dispatcher->datos = $this->dispatcher->menu[1];
-        $this->dispatcher->pag = $_GET['pag'];
-        $this->dispatcher->method = "menu";
+        $this->addData('datos', $this->data['menu'][1]);
+        $this->addData('pag', $_GET['pag']);
+        $this->addData('method', "menu");
         $this->token();
-        $this->dispatcher->render("Backend/MenuListarTemplate.twig");
+        $this->display("MenuListarTemplate.twig");
          
     }
 
@@ -52,30 +52,30 @@ class MenuController extends Controller{
                else $_POST['fecha']=date("Y-m-d");
            }
             $this->validator->validarFecha($_POST['fecha'], "Fecha no valida");
-            $this->paginaCorrecta($this->menuModel->totalMenu());
-            $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_POST['fecha']);
+            $this->paginaCorrecta($this->MenuModel->totalMenu());
+            $this->addData('menu', $this->MenuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_POST['fecha']));
 
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
-           if(!isset($this->dispatcher->menu[0])){
-               $this->dispatcher->menu[0] = NULL;
+           if(!isset($this->data['menu'][0])){
+               $this->data['menu'][0] = NULL;
            }
-           $this->dispatcher->datos = $this->dispatcher->menu[0];
-            $this->dispatcher->fecha=$_POST['fecha'];
-            $this->dispatcher->pag = $_GET['pag'];
-            $this->dispatcher->method = "menuDia";
-            $this->dispatcher->render("Backend/MenuListarTemplate.twig");
+            $this->addData('datos', $this->data['menu'][0]);
+            $this->addData('fecha', $_POST['fecha']);
+            $this->addData('pag', $_GET['pag']);
+            $this->addData('method', "menuDia");
+            $this->display("MenuListarTemplate.twig");
 
 
-        } catch (valException $e){
-            $this->dispatcher->mensajeError = $e->getMessage();
+        } catch (Exception $e){
+            $this->addData('mensajeError', $e->getMessage());
             $this->menu();
         }
     }
     public function menuAM(){
         /*falta agregar que pregunte si le envian un m por parametro y que lo setee */
-        $this->dispatcher->producto = $this->productosModel->getAllProducto(99,0);
+        $this->addData('producto', $this->ProductosModel->getAllProducto(99,0));
         $this->token();
-        $this->dispatcher->render("Backend/MenuAMTemplate.twig");
+        $this->display("MenuAMTemplate.twig");
     }
 
     public function menuAMPOST()
@@ -98,14 +98,14 @@ class MenuController extends Controller{
         }catch (valException $e){
             /* falta que setee post */
             $_POST['un valor'] = true;
-            $this->dispatcher->mensajeError = $e->getMessage();
+            $this->addData('mensajeError', $e->getMessage());
             $_GET['pag'] = 0;
 
             if(!isset($_POST['idMenu'])){
                 $this->menuAM();
             }
             else if(isset($_POST['idMenu']) && isset($_POST['fecha'])){
-                $menu = $this->menuModel->idMenu($_POST['idMenu']);
+                $menu = $this->MenuModel->idMenu($_POST['idMenu']);
                 $_POST['fecha'] = $menu->fecha;
                 $this->menuAMMod();
 
@@ -127,20 +127,20 @@ class MenuController extends Controller{
 
             if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $image)) throw new valException("no se pudo guardar la imagen del menu");
 
-            if ($this->menuModel->getMenuDia($fecha)) throw new valException("Ya existe un menu para esta fecha");
+            if ($this->MenuModel->getMenuDia($fecha)) throw new valException("Ya existe un menu para esta fecha");
 
-            $idMenu = $this->menuModel->insertarMenu($fecha, $image);
+            $idMenu = $this->MenuModel->insertarMenu($fecha, $image);
 
 
             foreach ($menu['selectProdMult'] as $prod) {
-                $this->menuModel->insertarProd($idMenu, $prod);
+                $this->MenuModel->insertarProd($idMenu, $prod);
 
             }
-            $this->dispatcher->fecha = $fecha;
-        } catch (valException $e) {
+            $this->addData('fecha', $fecha);
+        } catch (Exception $e) {
             $_POST['un valor'] = true;
-            $this->dispatcher->mensajeError = $e->getMessage();
-            $this->dispatcher->valores = $_POST;
+            $this->addData('mensajeError', $e->getMessage());
+            $this->addData('valores', $_POST);
             $this->menuAM();
         }
     }
@@ -159,14 +159,14 @@ class MenuController extends Controller{
             }
 
             if (! $this->menuModel->getMenuDia($fecha)) throw new valException("No existe el menu para modificar");
-            $this->dispatcher->menu = $this->menuModel->getMenuByDia(99,0,$fecha);
-            $this->dispatcher->producto= $this->menuModel->getProdNotInMenu($this->dispatcher->menu['0']->idMenu);
-            $this->dispatcher->datos = $this->dispatcher->menu[0];
-            $this->dispatcher->render("Backend/MenuAMTemplate.twig");
+            $this->addData('menu', $this->MenuModel->getMenuByDia(99,0,$fecha));
+            $this->addData('producto', $this->menuModel->getProdNotInMenu($this->data['menu']['0']->idMenu));
+            $this->addData('datos', $this->data['menu'][0]);
+            $this->display("MenuAMTemplate.twig");
 
-        } catch (valException $e){
-            $this->dispatcher->mensajeError = $e -> getMessage();
-            $this->dispatcher->render("Backend/MenuListarTemplate.twig");
+        } catch (Exception $e){
+            $this->addData('mensajeError', $e -> getMessage());
+            $this->display("MenuListarTemplate.twig");
         }
         
     }
@@ -177,8 +177,8 @@ class MenuController extends Controller{
         $fecha = $_POST['fecha'];
         $idMenu = $_POST['idMenu'];
 
-        $menu= $this->menuModel->getMenuDia($fecha);
-        $miMenu = $this->menuModel->idMenu($idMenu);
+        $menu= $this->MenuModel->getMenuDia($fecha);
+        $miMenu = $this->MenuModel->idMenu($idMenu);
         //validaciones
         try{
             if(!$miMenu)  throw new valException("El menu que desea modificar no existe");
@@ -200,28 +200,28 @@ class MenuController extends Controller{
             }
 
             foreach ($_POST['selectProdMult'] as $prod){
-                if (! $this->productosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
+                if (! $this->ProductosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
             }
-            $this->menuModel->eliminarMenu($idMenu);
+            $this->MenuModel->eliminarMenu($idMenu);
 
-            $idMenu2 = $this->menuModel->insertarMenu2($fecha, $foto, $habilitado);
+            $idMenu2 = $this->MenuModel->insertarMenu2($fecha, $foto, $habilitado);
             foreach ($_POST['selectProdMult'] as $prod) {
-                $this->menuModel->insertarProd($idMenu2,$prod);
+                $this->MenuModel->insertarProd($idMenu2,$prod);
 
             }
             $_GET['pag'] = 0;
             $_GET['fecha'] = $fecha;
-            $this->paginaCorrecta($this->menuModel->totalMenu());
-            $this->dispatcher->menu = $this->menuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_GET['fecha']);
+            $this->paginaCorrecta($this->MenuModel->totalMenu());
+            $this->addData('menu', $this->MenuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_GET['fecha']));
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
-            $this->dispatcher->datos = $this->dispatcher->menu[1];
-            $this->dispatcher->fecha=$_GET['fecha'];
-            $this->dispatcher->pag = $_GET['pag'];
-            $this->dispatcher->method = "menuDia";
-        } catch (valException $e){
+            $this->addData('datos', $this->data['menu'][1]);
+            $this->addData('fecha', $_GET['fecha']);
+            $this->addData('pag', $_GET['pag']);
+            $this->addData('method', "menuDia");
+        } catch (Exception $e){
             $_POST['un valor'] = true;
-            $this->dispatcher->mensajeError = $e -> getMessage();
-            $menu = $this->menuModel->idMenu($_POST['idMenu']);
+            $this->addData('mensajeError', $e -> getMessage());
+            $menu = $this->MenuModel->idMenu($_POST['idMenu']);
             $_POST['fecha'] = $menu->fecha;
             $this->menuAMMod();
         }
@@ -237,9 +237,9 @@ class MenuController extends Controller{
         try{
             if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
             if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
-            $this->dispatcher->menuModel =$this ->menuModel->eliminarMenu($_POST["idMenu"]);
+            $this->addData('menuModel', $this ->MenuModel->eliminarMenu($_POST["idMenu"]));
             $_GET['pag'] = 0;
-            $this->dispatcher->method = "menu";
+            $this->addData('method', "menu");
             $this->menu();
         } catch (valException $e){
             $this->menu();
@@ -255,7 +255,7 @@ class MenuController extends Controller{
         $this->validator->varSet($menu['selectProdMult'], "Debe seleccionar por lo menos un producto para el menu");
 
         foreach ($menu['selectProdMult'] as $prod){
-            if (! $this->productosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
+            if (! $this->ProductosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
         }
 
     }
@@ -269,7 +269,7 @@ class MenuController extends Controller{
     }
     
     public function notificarTelegram ($fecha){
-        $users= $this->telegramModel->getAll();
+        $users= $this->TelegramModel->getAll();
         foreach ($users as $idUser){
             $returnArray = true;
             $rawData = file_get_contents('php://input');
@@ -291,7 +291,7 @@ class MenuController extends Controller{
             $msg['reply_markup'] = null;
             $msg['text'] = 'Hola ' . $response['message']['from']['first_name'] . PHP_EOL;
             $msg['text'] = 'Se a añadido un menu para el dia ' . $fecha . PHP_EOL;
-            $menu = $this->menuModel->getMenuByDia(100,0,$fecha);
+            $menu = $this->MenuModel->getMenuByDia(100,0,$fecha);
             foreach ($menu as $producto){
                 $msg['text'] .= $producto->nombre;
                 $msg['text'] .=', ';
