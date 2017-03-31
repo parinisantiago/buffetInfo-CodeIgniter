@@ -13,8 +13,8 @@ class VentaModel extends Model{
         $this->db->from('producto p');
         $this->db->join('ingresoDetalle i', 'p.idProducto=i.idProducto');
         $this->db->where('i.eliminado', 0);
-        $this->db->get()->result();
-
+        $total = $this->db->get()->result();
+        return $total;
        /* return $this->queryPreparadaSQL('
             SELECT COUNT(*) AS total 
             FROM producto p 
@@ -28,7 +28,7 @@ class VentaModel extends Model{
         $this->db->select('*');
         $this->db->from('ingresoDetalle i');
         $this->db->where('i.idIngresoDetalle', $id);
-        $this->db->get()->result();
+        return $this->db->get()->result();
     /*    return $this->queryPreparadaSQL('
             SELECT * 
             FROM ingresoDetalle i 
@@ -43,7 +43,7 @@ class VentaModel extends Model{
         $this->db->where('i.eliminado', 0);
         $this->db->limit($limit);
         $this->db->offset($offset);
-        $this->db->get()->result();
+        return $this->db->get()->result();
      /*   return $this -> queryOFFSET('
             SELECT i.idIngresoDetalle ,p.idProducto, p.nombre, p.marca,i.cantidad, i.precioUnitario,i.descripcion, i.fecha
             FROM producto p
@@ -59,7 +59,7 @@ class VentaModel extends Model{
         $this->db->from('ingresoDetalle i');
         $this->db->join('producto p', 'i.idProducto = p.idProducto');
         $this->db->group_by('p.idProducto');
-        $this->db->get()->result();
+        return $this->db->get()->result();
         /*return $this -> queryTodasLasFilas('
             SELECT COUNT(i.idProducto) AS total,ROUND(SUM(i.precioUnitario * i.cantidad), 2) AS cant,SUM(i.cantidad) AS vent, i.idProducto, p.nombre 
             FROM ingresoDetalle i 
