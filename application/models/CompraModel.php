@@ -9,7 +9,7 @@ class CompraModel extends Model{
     public function totalCompras(){
 
         $this->db->select('COUNT(*) AS total');
-        $this->db->form('compra c');
+        $this->db->from('compra c');
         $this->db->join('proveedor pr', 'c.idProveedor=pr.idProveedor');
         $this->db->join('producto p', 'p.idProducto=c.idProducto');
         $this->db->where('c.eliminado', 0);
@@ -24,7 +24,7 @@ class CompraModel extends Model{
     }
     public function getAllCompras($limit, $offset){
         $this->db->select('c.idCompra, p.nombre, p.marca, c.cantidad, c.precioUnitario, pr.proveedor, c.fecha, c.fotoFactura');
-        $this->db->form('compra c');
+        $this->db->from('compra c');
         $this->db->join('proveedor pr', 'c.idProveedor=pr.idProveedor');
         $this->db->join('producto p', 'p.idProducto=c.idProducto');
         $this->db->where('c.eliminado', 0);
@@ -44,7 +44,7 @@ class CompraModel extends Model{
     }
      public function siguienteId(){
          $this->db->select('MAX(idCompra) as idCompra');
-         $this->db->form('compra');
+         $this->db->from('compra');
          $total = $this->db->get()->result();
          return $total[0];
 
@@ -52,7 +52,7 @@ class CompraModel extends Model{
     }
      public function searchIdCompra($idComp){
          $this->db->select('c.idCompra,c.idProducto,c.idProveedor, p.nombre, p.marca, c.cantidad, c.precioUnitario, pr.proveedor, c.fecha,c.fotoFactura');
-         $this->db->form('compra c');
+         $this->db->from('compra c');
          $this->db->join('proveedor pr', 'c.idProveedor=pr.idProveedor');
          $this->db->join('producto p', 'p.idProducto=c.idProducto');
          $this->db->where('c.eliminado', 0);
@@ -67,7 +67,7 @@ class CompraModel extends Model{
     
     public function searchIdProveedor($idProv){
         $this->db->select('pr.idProveedor');
-        $this->db->form('proveedor pr');
+        $this->db->from('proveedor pr');
         $this->db->where('pr.idProveedor', $idProv);
         return $this->db->get()->result();
 
@@ -79,7 +79,7 @@ class CompraModel extends Model{
     public function getAllProveedor($limit, $offset){
 
         $this->db->select('pr.idProveedor, pr.proveedor, pr.proveedorCuit');
-        $this->db->form('proveedor pr');
+        $this->db->from('proveedor pr');
         $this->db->limit($limit);
         $this->db->offset($offset);
         return $this->db->get()->result();
