@@ -13,7 +13,7 @@ class ProductosModel extends Model{
         $this->db->where('p.eliminado', 0);
         $this->db->where('p.stock >', 0);
         $this->db->limit($limit);
-        $this->db->limit($offset);
+        $this->db->offset($offset);
         return $this->db->get()->result();
 
      /*   return $this -> queryOFFSET(
