@@ -28,8 +28,8 @@ class VenderController extends Controller{
         $this->validator->validarNumeros($_POST['idProducto'],"Error: no se ah encontrado la venta deseada", 3);
         $this->validator->validarNumeros($_POST['cant'],"Error: este campo solo acepta numeros", 3);
         if ($_POST['cant'] < 1) throw new Exception("Error:Cantidad inferior a 1");
-        if (! $this->ProductoModel->searchIdProducto($_POST['idProducto'])) throw new Exception("Error:no se ah encontrado el producto deseado");
-        $this->ProductoModel->actualizarCantProductos($_POST['idProducto'], $_POST['stock'] - $_POST['cant']);
+        if (! $this->ProductosModel->searchIdProducto($_POST['idProducto'])) throw new Exception("Error:no se ah encontrado el producto deseado");
+        $this->ProductosModel->actualizarCantProductos($_POST['idProducto'], $_POST['stock'] - $_POST['cant']);
         $this->VentaModel->insertarVenta($_POST);
         $this->vender();
     } 
@@ -53,9 +53,9 @@ class VenderController extends Controller{
             $this->validator->validarNumeros($_POST["stockViejo"], "Error: este campo solo acepta numeros", 2);
             $this->validator->validarNumeros($_POST["stock"], "Error: este campo solo acepta numeros", 2);
             $this->validator->validarNumeros($_POST["idProducto"], "Error: no se a encontrado el producto deseado", 2);
-            $stock = $this->ProductoModel->searchIdProducto($_POST["idProducto"])->stock + $_POST["stockViejo"] - $_POST["stock"];
+            $stock = $this->ProductosModel->searchIdProducto($_POST["idProducto"])->stock + $_POST["stockViejo"] - $_POST["stock"];
             if ($stock <= 0) throw new Exception("Error: la cantidad vendida supera el stock actual de productos");
-            $this->ProductoModel->actualizarCantProductos($_POST['idProducto'], $stock);
+            $this->ProductosModel->actualizarCantProductos($_POST['idProducto'], $stock);
             $this->VentaModel->actualizarVenta($_POST['stock'], $_POST['idIngresoDetalle']);
             $_GET['pag'] = 0;
             $this -> venderListar();
@@ -68,9 +68,9 @@ class VenderController extends Controller{
     public function ventaEliminar(){
         $this->validator->varSet($_POST['submitButton'], "Presione el botón de eliminar");
         $this->validator->varSet($_POST['idIngresoDetalle'], "Error: la venta deseada no existe.");
-        $valor = $this->ProductoModel->searchIdProducto($_POST['idProducto'])->stock + $_POST['cantidad'];
+        $valor = $this->ProductosModel->searchIdProducto($_POST['idProducto'])->stock + $_POST['cantidad'];
         $valor .= '';
-        $this->ProductoModel->actualizarCantProductos($_POST['idProducto'],$valor);
+        $this->ProductosModel->actualizarCantProductos($_POST['idProducto'],$valor);
         $this->VentaModel->eliminarVenta($_POST['idIngresoDetalle']);
         $_GET['pag'] = 0;
         $this->venderListar();
