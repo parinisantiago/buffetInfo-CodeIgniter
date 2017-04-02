@@ -37,7 +37,7 @@
                     <td headers="fecha">{{ compra.fecha }}</td>
                     <td headers="foto">
                      {% if compra.fotoFactura != "" %}
-                    <a  href="uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini" src="uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a>
+                    <a  href="uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini" src="http:/proyecto/application/uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a>
                      {%endif%}
                     </td>
                     <td headers="acciones">
@@ -45,13 +45,13 @@
                             <label hidden></label>
                             <input name="idCompra" type="hidden" value={{ compra.idCompra }}>
                             <button class="botonTabla" type="submit" name="submitButton">
-                                <img class= "icono" src="images/editar.png" alt= "editar la informacion" />
+                                <img class= "icono" src="http:/proyecto/public/images/editar.png" alt= "editar la informacion" />
                             </button>
                         </form>
                         <form method="post" action="/ComprarController/compraEliminar">
                             <input name="idCompra" type="hidden" value={{ compra.idCompra }}>
                             <button class="botonTabla" type="submit" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
-                                <img class="icono" src="images/eliminar.png" alt= "eliminar" />
+                                <img class="icono" src="http:/proyecto/public/images/eliminar.png" alt= "eliminar" />
                             </button>
                         </form>
                     </td>
