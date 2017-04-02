@@ -50,16 +50,20 @@ class MenuController extends Controller{
            }
             $this->validator->validarFecha($_POST['fecha'], "Fecha no valida");
             $this->paginaCorrecta($this->MenuModel->totalMenu());
+
+
             $this->addData('menu', $this->MenuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_POST['fecha']));
 
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
            if(!isset($this->data['menu'][0])){
+               echo "entro";
                $this->data['menu'][0] = NULL;
            }
             $this->addData('datos', $this->data['menu'][0]);
             $this->addData('fecha', $_POST['fecha']);
             $this->addData('pag', $_GET['pag']);
             $this->addData('method', "menuDia");
+            var_dump($this->data);
             $this->display("MenuListarTemplate.twig");
 
 
