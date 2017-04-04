@@ -80,8 +80,10 @@ class MenuModel extends Model{
         $this->db->where('m.eliminado', 0);
         $this->db->limit($limit);
         $this->db->offset($offset);
-        return $this->db->get()->result();
-/*
+        $menu = $this->db->get()->result();
+        if(empty($menu)) return false;
+        else return $menu;
+        /*
         return $this->queryOFFSETDIA('
             SELECT *  
             FROM menu m
@@ -319,6 +321,7 @@ class MenuModel extends Model{
              'habilitado' => 0
          );
          $this->db->insert('menu', $data);
+         return $this->db->insert_id();
    /*     return $this -> lastId("
             INSERT INTO menu(
                 fecha,
