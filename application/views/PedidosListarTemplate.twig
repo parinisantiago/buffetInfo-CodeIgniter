@@ -1,7 +1,7 @@
 {% extends 'IndexTemplate.twig' %}
 
 {% block main %}
-    <script type="text/javascript" src="script/script.js"></script>
+    <script type="text/javascript" src="../publicscript/script.js"></script>
 
     <div>
     <form name="formUser" class="formProduc clearfix sombreado" action="/PedidosController/pedidosRango" method="post">
@@ -67,7 +67,7 @@
                         <form method="post" action="/PedidosController/formCancelarPedido">
                             <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
                             <button class="botonTabla" type="submit" name="submitButton">
-                                <img class="icono" src="images/eliminar.png" alt="eliminar"/>
+                                <img class="icono" src="../public/images/eliminar.png" alt="eliminar"/>
                             </button>
                         </form>
                     {% else %}
@@ -78,7 +78,7 @@
                     <form method="post" action="/PedidosController/verDetalle">
                         <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
                         <button class="botonTabla botonUserOnline" type="submit" name="submitButton">
-                            <img class="icono" src="images/editar.png" alt="detalle"/>
+                            <img class="icono" src="../public/images/editar.png" alt="detalle"/>
                         </button>
                     </form>
                 </td>
