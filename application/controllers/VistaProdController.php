@@ -1,7 +1,12 @@
 <?php
 require_once 'BackendController.php';
-class vistaProdController extends BackendController{
-    
+class VistaProdController extends BackendController{
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function getPermission(){
         Session::init();  
         return (Session::getValue('rol') == '1');
@@ -18,16 +23,16 @@ class vistaProdController extends BackendController{
 
     public function listadoFaltantes(){
 
-        $this->paginaCorrecta($this->ProductoModel-> totalProductosFaltantes());
-        $this->addData('producto', $this->ProductoModel->listarProductosFaltantes($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
+        $this->paginaCorrecta($this->ProductosModel-> totalProductosFaltantes());
+        $this->addData('producto', $this->ProductosModel->listarProductosFaltantes($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
         $this->addData('pag', $_GET['pag']);
         $this->addData('method', "listadoFaltantes");
         $this->display("ProductosListarTemplate.twig");
 
     }
     public function listadoStockMinimo(){
-        $this->paginaCorrecta($this->ProductoModel-> totalProductosStockMinimo());
-        $this->addData('producto', $this->ProductoModel->listarProductosStockMinimo($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
+        $this->paginaCorrecta($this->ProductosModel-> totalProductosStockMinimo());
+        $this->addData('producto', $this->ProductosModel->listarProductosStockMinimo($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
         $this->addData('pag', $_GET['pag']);
         $this->addData('method', "listadoStockMinimo");
         $this->display("ProductosListarTemplate.twig");
