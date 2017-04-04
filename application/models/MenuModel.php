@@ -351,6 +351,7 @@ class MenuModel extends Model{
         );
 
        $this->db->insert('menu', $data);
+       return $this->db->insert_id();
         /*return $this -> lastId("
             INSERT INTO menu(
                 fecha,
