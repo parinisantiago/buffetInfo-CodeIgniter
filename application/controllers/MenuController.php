@@ -49,7 +49,7 @@ class MenuController extends Controller{
                else $_POST['fecha']=date("Y-m-d");
            }
             $this->validator->validarFecha($_POST['fecha'], "Fecha no valida");
-            $this->paginaCorrecta($this->MenuModel->totalMenu());
+            $this->paginaCorrecta($this->MenuModel->totalProd($_POST['fecha']));
 
 
             $this->addData('menu', $this->MenuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_POST['fecha']));
@@ -213,6 +213,7 @@ class MenuController extends Controller{
             $this->paginaCorrecta($this->MenuModel->totalMenu());
             $this->addData('menu', $this->MenuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_GET['fecha']));
             //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
+            if(!isset($this->data['menu'][1])) $this->data['menu'][1] = NULL;
             $this->addData('datos', $this->data['menu'][1]);
             $this->addData('fecha', $_GET['fecha']);
             $this->addData('pag', $_GET['pag']);

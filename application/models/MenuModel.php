@@ -11,7 +11,7 @@ class MenuModel extends Model{
 
         $this->db->select('COUNT(*) as total');
         $this->db->from('menuProducto mp');
-        $this->db->join('menu m');
+        $this->db->join('menu m', 'mp.idMenu = m.idMenu');
         $this->db->where('m.fecha',$id);
         $this->db->where('m.eliminado', 0);
         $total = $this->db->get()->result();
@@ -143,8 +143,9 @@ class MenuModel extends Model{
         $this->db->from('menu');
         $this->db->where('fecha', $fecha);
         $this->db->where('eliminado', 0);
-        return $this->db->get()->result();
-
+        $menu = $this->db->get()->result();
+        if(empty($menu)) return false;
+        else return $menu[0];
         /*   return $this->queryPreparadaSQL('
                SELECT *
                FROM menu
@@ -175,8 +176,9 @@ class MenuModel extends Model{
         $this->db->from('menu');
         $this->db->where('idMenu', $id);
         $this->db->where('eliminado', 0);
-        return $this->db->get()->result();
-
+        $menu = $this->db->get()->result();
+        if(empty($menu)) return false;
+        else return $menu[0];
         /*  return $this->queryPreparadaSQL('
               SELECT *
               FROM menu
