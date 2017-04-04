@@ -111,8 +111,8 @@ class PedidosModel extends Model
         $this->db->select('COUNT(*) AS total');
         $this->db->from('pedido');
         $this->db->where('idUsuario', $idUsuario);
-        return $this->db->get()->result();
-
+        $total = $this->db->get()->result();
+        return $total[0];
       /*  return $this->queryPreparadaSQL("SELECT COUNT(*) AS total FROM pedido WHERE idUsuario = :idUsuario", array("idUsuario" => $idUsuario));*/
     }
 
@@ -239,7 +239,7 @@ public function totalPedidosPendientes()
     $this->db->join('ubicacion', 'usuario.idUbicacion = ubicacion.idUbicacion');
     $this->db->where('idEstado', 'pendiente');
     $total = $this->db->get()->result();
-    return $total;
+    return $total[0];
   /*  return $this->queryPreparadaSQL(
 "SELECT COUNT(*) as total
             FROM pedido
