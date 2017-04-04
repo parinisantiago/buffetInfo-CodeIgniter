@@ -42,7 +42,7 @@
             <tr class="fila">
                 <td headers="FechaD">{{ datos.fecha }}</td>
                 <td headers="imagenD">
-                    <a  href="http:/proyecto/uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="http:/proyecto/uploads/{{ datos.foto }}" alt="foto del menu"></a>
+                    <a  href="../public/uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="../public/proyecto/uploads/{{ datos.foto }}" alt="foto del menu"></a>
                 </td>
                 <td headers="hablitiadoD">
                     {% if datos.habilitado == '0' %}
@@ -56,14 +56,14 @@
                         <input type="hidden" name="tokenScrf" value="{{ tokenScrf }}">
                         <input  name="idProducto" type="hidden" value={{ datos.idMenu }}>
                         <button class="botonTabla" type="submit"  name="submitButton">
-                            <img class="icono" src="http:/proyecto/public/images/editar.png" alt= "editar la informacion" />
+                            <img class="icono" src="../public/images/editar.png" alt= "editar la informacion" />
                         </button>
                     </form>
                     <form method="post" class="botonMenu" action="/MenuController/menuEliminar">
                         <input type="hidden" name="tokenScrf" value="{{ tokenScrf }}">
                         <input  name="idMenu" type="hidden" value={{ datos.idMenu }} >
                         <button class="botonTabla" type="submit"  name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
-                            <img class="icono" src="http:/proyecto/public/images/eliminar.png" alt= "eliminar" />
+                            <img class="icono" src="../public/images/eliminar.png" alt= "eliminar" />
                         </button>
                     </form>
                 </td>
