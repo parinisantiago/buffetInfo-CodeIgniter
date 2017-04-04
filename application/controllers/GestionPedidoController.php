@@ -1,5 +1,5 @@
 <?php
-
+include_once ("Controller.php");
 
 class GestionPedidoController extends Controller
 {
