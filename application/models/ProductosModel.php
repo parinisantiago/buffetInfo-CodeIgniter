@@ -141,8 +141,8 @@ class ProductosModel extends Model{
         $this->db->from('producto p');
         $this->db->join('categoria c', 'p.idCategoria = c.idCategoria');
         $this->db->where('p.eliminado', 0);
-        $this->db->where('p.stock <=', 'p.stockMinimo');
-        $this->db->where_not('p.stock', 0);
+        $this->db->where('p.stock <= p.stockMinimo');
+        $this->db->where('p.stock !=', 0);
         $this->db->limit($limit);
         $this->db->offset($offset);
         return $this->db->get()->result();
@@ -158,9 +158,9 @@ class ProductosModel extends Model{
         $this->db->select('COUNT(*) AS total');
         $this->db->from('producto p');
         $this->db->join('categoria c', 'p.idCategoria = c.idCategoria');
-        $this->db->where_not('p.eliminado', 0);
-        $this->db->where('p.stock <=', 'p.stockMinimo');
-        $this->db->where_not('p.stock', 0);
+        $this->db->where('p.eliminado !=', 0);
+        $this->db->where('p.stock <= p.stockMinimo');
+        $this->db->where('p.stock !=', 0);
         $total = $this->db->get()->result();
         return $total[0];
  /*       return $this -> queryPreparadaSQL(
