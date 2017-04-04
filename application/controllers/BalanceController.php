@@ -2,7 +2,7 @@
 
 require_once (__DIR__ . '/../third_party/libchart/libchart/classes/libchart.php');
 require_once (__DIR__ . '/../third_party/fpdf_demo/fpdf.php');
-
+include_once ("Controller.php");
 
 class BalanceController extends Controller
 {
@@ -81,9 +81,9 @@ class BalanceController extends Controller
 
         $chart->setTitle('Cantidad de productos vendidos para el dia ' . $fecha);
         $chart->setDataSet($dataSet);
-        $chart->render('uploads/demo.png');
-        $image = imagecreatefrompng('uploads/demo.png');
-        imagejpeg($image, 'uploads/demo3.jpg', 100);
+        $chart->render(files.'demo.png');
+        $image = imagecreatefrompng(files.'demo.png');
+        imagejpeg($image, files.'demo3.jpg', 100);
 
     }
 
@@ -107,9 +107,9 @@ class BalanceController extends Controller
         $chart->setTitle('Balance para el dia ' . $fecha);
         $chart->setTitle('Balance para el dia ' . $fecha);
         $chart->setDataSet($dataSet);
-        $chart->render('uploads/demo2.png');
-        $image = imagecreatefrompng('uploads/demo2.png');
-        imagejpeg($image, 'uploads/demo4.jpg', 100);
+        $chart->render(files.'demo2.png');
+        $image = imagecreatefrompng(files.'demo2.png');
+        imagejpeg($image, files.'demo4.jpg', 100);
 
     }
 
@@ -124,8 +124,9 @@ class BalanceController extends Controller
             }
             if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
             if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
-            $this->validator->validarFecha($_POST['fechaInicio'], "La fecha ingresada no es válida");
-            $this->validator->validarFecha($_POST['fechaFin'], "La fecha ingresada no es válida");
+
+            $this->validator->validarFecha($_POST['fechaInicio'], "La fecha inicio no es válida");
+            $this->validator->validarFecha($_POST['fechaFin'], "La fecha fin no es válida");
             $fechaInicio=$_POST['fechaInicio'];
             $fechaFin=$_POST['fechaFin'];
             if ($fechaFin < $fechaInicio) throw new valException("La fecha de fin no puede ser inferior a la fecha de inicio");
@@ -140,7 +141,6 @@ class BalanceController extends Controller
             //me traigo los valores
             $ingresos = $this->BalanceModel->ingresoRango($fechaInicio, $fechaFin);
             $egresos = $this->BalanceModel->egresoRango($fechaInicio, $fechaFin);
-
             if(empty($ingresos) && empty($egreso)) throw new valException("NO hay datos para mostrar");
 
             $total= array();
@@ -159,18 +159,20 @@ class BalanceController extends Controller
             {
                 $balances['egreso'][''.$egreso->fecha] = $egreso->total;
             }
-
             //hago la cuentita de ingreso - egreso, si no hay egreso le mando solo el ingreso
+
+            if(isset($balances['ingreso'])){
             foreach ($balances['ingreso'] as $key => $value){
                 if (isset($balances['egreso'][$key])) $total[$key] = ($balances['ingreso'][$key] - $balances['egreso'][$key]).'';
                 else $total[$key] = $balances['ingreso'][$key];
             }
-
-            //hago la validacion de nuevo por si existen egresos pero no ingresos.
+            }
+            //hago la validacion de nuevo por si existen egresos pero no ingresos
+            if(isset($balances['egreso'])){
             foreach ($balances['egreso'] as $key => $value){
                 if (!isset($balances['ingreso'][$key])) $total[$key] = (0 - $balances['egreso'][$key]).'';
             }
-
+            }
 
             $val = true;
             foreach ($total as $t){
@@ -194,9 +196,9 @@ class BalanceController extends Controller
             $chart->getPlot()->getPalette()->barColorSet = new ColorSet($colores, 0.7);
             $chart->setTitle('Cantidad de productos vendidos para el dia ' . $fechaInicio . 'Hasta el dia' . $fechaFin);
             $chart->setDataSet($dataSet);
-            $chart->render('uploads/demo2.png');
-            $image = imagecreatefrompng('uploads/demo2.png');
-            imagejpeg($image, 'uploads/demo3.jpg', 100);
+            $chart->render(files.'demo2.png');
+            $image = imagecreatefrompng(files.'demo2.png');
+            imagejpeg($image, files.'demo3.jpg', 100);
 
 
             //ahora vamos con los productos, a esto le hace falta alto refactoring pero estoy re podrido.
@@ -210,9 +212,9 @@ class BalanceController extends Controller
             }
             $chart->setTitle('Cantidad de productos vendidos para el dia ' . $fechaInicio .'hasta el dia' . $fechaFin);
             $chart->setDataSet($dataSet);
-            $chart->render('uploads/demo.png');
-            $image = imagecreatefrompng('uploads/demo.png');
-            imagejpeg($image, 'uploads/demo3.jpg', 100);
+            $chart->render(files.'demo.png');
+            $image = imagecreatefrompng(files.'demo.png');
+            imagejpeg($image, files.'demo3.jpg', 100);
 
 
             $this->addData('fechaInicio', $fechaInicio);
@@ -249,10 +251,10 @@ class BalanceController extends Controller
             (empty($egreso->total)) ? $egreso = "0" : $egreso = $egreso->total;
 
             $balance = $ingreso - $egreso;
-            $image = imagecreatefrompng('uploads/demo.png');
-            $image2 = imagecreatefrompng('uploads/demo2.png');
-            imagejpeg($image, 'uploads/demo3.jpg', 100);
-            imagejpeg($image2, 'uploads/demo4.jpg', 100);
+            $image = imagecreatefrompng(files.'demo.png');
+            $image2 = imagecreatefrompng(files.'demo2.png');
+            imagejpeg($image, files.'demo3.jpg', 100);
+            imagejpeg($image2, files.'demo4.jpg', 100);
 
 
             ob_start();
@@ -272,7 +274,7 @@ class BalanceController extends Controller
             $pdf->SetFont('Arial','B',14);
             $pdf->Cell(30,10,'Grafico Barra');
             $pdf->Ln();
-            $pdf->Image('uploads/demo4.jpg');
+            $pdf->Image(files.'demo4.jpg');
 
             $pdf->AddPage();
             $pdf->SetFont('Arial','B',14);
@@ -295,7 +297,7 @@ class BalanceController extends Controller
             $pdf->SetFont('Arial','B',14);
             $pdf->Cell(30,10,'Grafico Torta');
             $pdf->Ln();
-            $pdf->Image('uploads/demo3.jpg');
+            $pdf->Image(files.'demo3.jpg');
 
 
             $pdf->Output();
@@ -345,10 +347,10 @@ class BalanceController extends Controller
 
 
 
-            $image = imagecreatefrompng('uploads/demo.png');
-            $image2 = imagecreatefrompng('uploads/demo2.png');
-            imagejpeg($image, 'uploads/demo3.jpg', 100);
-            imagejpeg($image2, 'uploads/demo4.jpg', 100);
+            $image = imagecreatefrompng(files.'demo.png');
+            $image2 = imagecreatefrompng(files.'demo2.png');
+            imagejpeg($image, files.'demo3.jpg', 100);
+            imagejpeg($image2, files.'demo4.jpg', 100);
 
             ob_start();
             $pdf = new FPDF();
@@ -368,7 +370,7 @@ class BalanceController extends Controller
             $pdf->SetFont('Arial','B',14);
             $pdf->Cell(30,10,'Grafico Barra');
             $pdf->Ln();
-            $pdf->Image('uploads/demo4.jpg');
+            $pdf->Image(files.'demo4.jpg');
 
             $pdf->AddPage();
             $pdf->SetFont('Arial','B',14);
@@ -392,7 +394,7 @@ class BalanceController extends Controller
             $pdf->SetFont('Arial','B',14);
             $pdf->Cell(30,10,'Grafico Torta');
             $pdf->Ln();
-            $pdf->Image('uploads/demo3.jpg');
+            $pdf->Image(files.'demo3.jpg');
 
 
             $pdf->Output();

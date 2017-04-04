@@ -16,8 +16,8 @@ class BalanceModel extends Model
         $this->db->where('fecha', $fecha);
         $this->db->where('eliminado', 0);
         $total = $this->db->get()->result();
-        return $total[0];
-
+        if(empty($total)) return false;
+        else return $total[0];
     /*   return $this->queryPreparadaSQL("
             SELECT ROUND(SUM(precioUnitario * cantidad), 2) AS total
             FROM ingresoDetalle
@@ -33,8 +33,8 @@ class BalanceModel extends Model
         $this->db->where('fecha', $fecha);
         $this->db->where('eliminado', 0);
         $total = $this->db->get()->result();
-        return $total[0];
-
+        if(empty($total)) return false;
+        else return $total[0];
       /*  return $this->queryPreparadaSQL("
             SELECT ROUND(SUM(precioUnitario * cantidad), 2) AS total
             FROM compra
@@ -52,8 +52,7 @@ class BalanceModel extends Model
         $this->db->where('fecha >=', $fechaInicio);
         $this->db->where('fecha <=', $fechaFin);
         $this->db->group_by('fecha');
-        $total = $this->db->get()->result();
-        return $total[0];
+        return $this->db->get()->result();
 
 /*        return $this->queryTodasLasFilas("
             SELECT ROUND(SUM(precioUnitario * cantidad), 2) AS total, fecha
@@ -73,8 +72,8 @@ class BalanceModel extends Model
         $this->db->where('fecha >=', $fechaInicio);
         $this->db->where('fecha <=', $fechaFin);
         $this->db->group_by('fecha');
-        $total = $this->db->get()->result();
-        return $total[0];
+        return $this->db->get()->result();
+
 
     /*    return $this->queryTodasLasFilas("
             SELECT ROUND(SUM(precioUnitario * cantidad), 2) AS total, fecha
