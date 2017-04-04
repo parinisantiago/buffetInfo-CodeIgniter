@@ -118,12 +118,14 @@ class MenuModel extends Model{
     
     public function getProdNotInMenu($idMenu)
     {
+        $subquery = $this->db->select('idProducto')->from('menuProducto')->where('idMenu',$idMenu)->get()->result_id->queryString;
         $this->db->select('*');
         $this->db->from('producto');
         $this->db->where('eliminado', 0);
         $this->db->where('eliminado', 0);
         $this->db->where('stock >', 0);
-        $this->db->where_not('idProducto', $this->db->select('idProducto')->from('menuProducto')->where('idMenu',$idMenu));
+        $this->db->where("idProducto NOT IN ($subquery)", NULL, FALSE);
+
         return $this->db->get()->result();
 
   /*      return $this -> queryTodasLasFilas('

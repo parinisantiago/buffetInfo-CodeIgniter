@@ -157,9 +157,9 @@ class MenuController extends Controller{
                 $fecha = $_POST['fecha'];
             }
 
-            if (! $this->menuModel->getMenuDia($fecha)) throw new valException("No existe el menu para modificar");
+            if (! $this->MenuModel->getMenuDia($fecha)) throw new valException("No existe el menu para modificar");
             $this->addData('menu', $this->MenuModel->getMenuByDia(99,0,$fecha));
-            $this->addData('producto', $this->menuModel->getProdNotInMenu($this->data['menu']['0']->idMenu));
+            $this->addData('producto', $this->MenuModel->getProdNotInMenu($this->data['menu']['0']->idMenu));
             $this->addData('datos', $this->data['menu'][0]);
             $this->display("MenuAMTemplate.twig");
 
