@@ -1,7 +1,7 @@
 {% extends 'IndexTemplate.twig' %}
 
 {% block main %}
-    <script type="text/javascript" src="/public/script/script.js"></script>
+    <script type="text/javascript" src="../public/script/script.js"></script>
     <script>
         $( function() { $( "#datepicker" ).datepicker(); } );
     </script>
@@ -42,7 +42,7 @@
             <tr class="fila">
                 <td headers="FechaD">{{ datos.fecha }}</td>
                 <td headers="imagenD">
-                    <a  href="../public/uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="../public/proyecto/uploads/{{ datos.foto }}" alt="foto del menu"></a>
+                    <a  href="../public/uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="../public/uploads/{{ datos.foto }}" alt="foto del menu"></a>
                 </td>
                 <td headers="hablitiadoD">
                     {% if datos.habilitado == '0' %}
