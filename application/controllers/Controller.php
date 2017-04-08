@@ -58,6 +58,21 @@ class Controller extends CI_controller
     {
         $this->data[$key] = $value;
     }
+
+    protected function permissions()
+    {
+        try
+        {
+            if (!$this->getPermission()) throw new Exception('El usuario no posee permisos para acceder a esta funcionalidad');
+            return true;
+        }
+        catch (Exception $e)
+        {
+            $this->addData('mensajeError', $e->getMessage());
+            $main = new MainController();
+            $main->index();
+        }
+    }
 }
 
 ?>
