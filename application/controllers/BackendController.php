@@ -19,18 +19,9 @@ class BackendController extends Controller{
         return (($rol == '0') || ($rol == '1'));
     }
 
-    public function index(){
-        try
-        {
-            if (!$this->getPermission()) throw new Exception('El usuario no posee permisos para acceder a esta funcionalidad');
-            $this->display("IndexTemplate.twig");
-        }
-        catch (Exception $e)
-        {
-            $this->addData('mensajeError', $e->getMessage());
-            $main = new MainController();
-            $main->index();
-        }
+    public function index()
+    {
+       if($this->permissions()) $this->display("IndexTemplate.twig");
     }
 
     public function setMensajeError($error){
