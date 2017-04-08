@@ -202,7 +202,7 @@ class BalanceController extends Controller
 
 
             //ahora vamos con los productos, a esto le hace falta alto refactoring pero estoy re podrido.
-            $productos = $this->balance->productosEgresoRango($fechaInicio, $fechaFin);
+            $productos = $this->BalanceModel->productosEgresoRango($fechaInicio, $fechaFin);
             $chart = new PieChart(500, 250);
             $dataSet = new XYDataSet();
 
@@ -335,17 +335,21 @@ class BalanceController extends Controller
                 $balances['egreso'][''.$egreso->fecha] = $egreso->total;
             }
 
-            foreach ($balances['ingreso'] as $key => $value){
-                if (isset($balances['egreso'][$key])) $total[$key] = ($balances['ingreso'][$key] - $balances['egreso'][$key]).'';
-                else $total[$key] = $balances['ingreso'][$key];
+            if(isset($balances['ingreso'])) {
+
+                foreach ($balances['ingreso'] as $key => $value) {
+                    if (isset($balances['egreso'][$key])) $total[$key] = ($balances['ingreso'][$key] - $balances['egreso'][$key]) . '';
+                    else $total[$key] = $balances['ingreso'][$key];
+                }
             }
 
+            if(isset($balances['egreso'])) {
 
-            foreach ($balances['egreso'] as $key => $value){
-                if (!isset($balances['ingreso'][$key])) $total[$key] = (0 - $balances['egreso'][$key]).'';
+                foreach ($balances['egreso'] as $key => $value) {
+                    if (!isset($balances['ingreso'][$key])) $total[$key] = (0 - $balances['egreso'][$key]) . '';
+                }
+
             }
-
-
 
             $image = imagecreatefrompng(files.'demo.png');
             $image2 = imagecreatefrompng(files.'demo2.png');
@@ -384,8 +388,6 @@ class BalanceController extends Controller
             $productos = $this->BalanceModel->productosEgresoRango($fechaInicio, $fechaFin);
 
             foreach ($productos as $producto) {
-
-
                 $pdf->Cell(50,10,$producto->nombre);
                 $pdf->Cell(50,10,$producto->cant);
                 $pdf->Ln();
