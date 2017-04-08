@@ -21,14 +21,16 @@ class VistaProdController extends BackendController{
 
 
 
-    public function listadoFaltantes(){
-
-        $this->paginaCorrecta($this->ProductosModel-> totalProductosFaltantes());
-        $this->addData('producto', $this->ProductosModel->listarProductosFaltantes($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
-        $this->addData('pag', $_GET['pag']);
-        $this->addData('method', "listadoFaltantes");
-        $this->display("ProductosListarTemplate.twig");
-
+    public function listadoFaltantes()
+    {
+        if($this->permissions())
+        {
+            $this->paginaCorrecta($this->ProductosModel-> totalProductosFaltantes());
+            $this->addData('producto', $this->ProductosModel->listarProductosFaltantes($this->conf->getConfiguracion()->cantPagina,$_GET['offset']));
+            $this->addData('pag', $_GET['pag']);
+            $this->addData('method', "listadoFaltantes");
+            $this->display("ProductosListarTemplate.twig");
+        }
     }
     public function listadoStockMinimo(){
         $this->paginaCorrecta($this->ProductosModel-> totalProductosStockMinimo());
