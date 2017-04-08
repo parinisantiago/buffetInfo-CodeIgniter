@@ -6,7 +6,6 @@ include_once(dirname(__DIR__).'/controllers/MainController.php');
 class LoginController extends Controller
 {
 
-
     public function __construct(){
 
         parent::__construct();
@@ -15,12 +14,21 @@ class LoginController extends Controller
     }
 
     public function index(){
-        if (! Session::userLogged()) {
-            $this->validateLogin();
-            $this->user = $this->UserModel->getUser($_POST['username'], $_POST['pass']);
-            $this->setSession();
-        }
+        try
+        {
+            if (! Session::userLogged()) {
+                $this->validateLogin();
+                $this->user = $this->UserModel->getUser($_POST['username'], $_POST['pass']);
+                $this->setSession();
+            }
         $this->display('IndexTemplate.twig');
+        }
+        catch (Exception $e)
+        {
+            $this->addData('mensajeError',$e->getMessage());
+            $this->display('MainTemplate.twig');
+        }
+        return true;
     }
 
     private function setSession()
@@ -35,8 +43,7 @@ class LoginController extends Controller
 
     public function validateLogin()
     {
-        try
-        {
+
         $this->validator->varSet($_POST['submit'], "Presione el boton de submit");
 
         $this->validator->validarString($_POST['username'], "Error: En usuario o contraseña", 15);
@@ -48,13 +55,7 @@ class LoginController extends Controller
 
 
         elseif (!$this->UserModel->passDontMissmatch($_POST['pass'])) throw new Exception("Contraseña incorrecta");
-        }
-        catch (Exception $e)
-        {
-            $this->addData('mensajeError',$e->getMessage());
-            $this->display('MainTemplate.twig');
-        }
-        return true;
+
     }
 
 
