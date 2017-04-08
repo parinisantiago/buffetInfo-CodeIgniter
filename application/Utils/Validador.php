@@ -1,7 +1,5 @@
 <?php
 
-require_once 'valException.php';
-
 class Validador{
     public function validarString( $var, $error, $tam ){
         if (!$this->varSet($var, $error) || !$this->tam($var, $tam) || !preg_match("/^[a-zA-Z0-9]+$/", $var) )
