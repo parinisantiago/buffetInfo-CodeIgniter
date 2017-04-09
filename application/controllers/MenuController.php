@@ -4,7 +4,8 @@ include_once dirname(__DIR__).'/models/TelegramModel.php';
 
 class MenuController extends Controller{
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('MenuModel');
         $this->load->model('ProductosModel');
@@ -18,218 +19,241 @@ class MenuController extends Controller{
         return (($rol == '0') || ($rol == '1'));
     }
 
-    public function menu(){
+    public function menu()
+    {
         /*deberia mostrar los menu para el dia que llegue como parametro
          * si no hay parametros muestra el de hoy
          * tambien numeros de paginas
          * agregar un marco de color sobre la fecha seleccionada en el calendario
          */
-        $date= date('Y-m-d');
-        $this->paginaCorrecta($this->MenuModel->totalMenu());
 
-        $this->addData('menu', $this->MenuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$date));
-        if(!isset($this->data['menu'][1])){
-            $this->data['menu'][1] = NULL;
-        }
-        $this->addData('datos', $this->data['menu'][1]);
-        $this->addData('pag', $_GET['pag']);
-        $this->addData('method', "menu");
-        $this->token();
-        $this->display("MenuListarTemplate.twig");
-         
-    }
-
-    public function menuDia(){
-        /* muestra el menu para un dia en particular, le mande un try catch por las dudas de que pasen cualquier cosa por get */
-       try{
-           $this->token();
-           if (!isset($_POST['fecha'])){
-
-               if(isset($_GET['fecha']))  $_POST['fecha']=$_GET['fecha'];
-               else $_POST['fecha']=date("Y-m-d");
-           }
-            $this->validator->validarFecha($_POST['fecha'], "Fecha no valida");
-            $this->paginaCorrecta($this->MenuModel->totalProd($_POST['fecha']));
-
-
-            $this->addData('menu', $this->MenuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_POST['fecha']));
-            //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
-
-           if(!isset($this->data['menu'][0])){
-               $this->data['menu'][0] = NULL;
-           }
-            $this->addData('datos', $this->data['menu'][0]);
-            $this->addData('fecha', $_POST['fecha']);
+        if($this->permissions())
+        {
+            $date = date('Y-m-d');
+            $this->paginaCorrecta($this->MenuModel->totalMenu());
+            $this->addData('menu', $this->MenuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina, $_GET['offset'], $date));
+            if (!isset($this->data['menu'][1])) $this->data['menu'][1] = NULL;
+            $this->addData('datos', $this->data['menu'][1]);
             $this->addData('pag', $_GET['pag']);
-            $this->addData('method', "menuDia");
+            $this->addData('method', "menu");
+            $this->token();
             $this->display("MenuListarTemplate.twig");
-
-
-        } catch (Exception $e){
-            $this->addData('mensajeError', $e->getMessage());
-            $this->menu();
         }
     }
-    public function menuAM(){
+
+    public function menuDia()
+    {
+        /* muestra el menu para un dia en particular, le mande un try catch por las dudas de que pasen cualquier cosa por get */
+        if($this->permissions())
+        {
+            try
+            {
+                $this->token();
+                if (!isset($_POST['fecha']))
+                {
+                    if (isset($_GET['fecha'])) $_POST['fecha'] = $_GET['fecha'];
+                    else $_POST['fecha'] = date("Y-m-d");
+                }
+                $this->validator->validarFecha($_POST['fecha'], "Fecha no valida");
+                $this->paginaCorrecta($this->MenuModel->totalProd($_POST['fecha']));
+
+
+                $this->addData('menu', $this->MenuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina, $_GET['offset'], $_POST['fecha']));
+                //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
+
+                if (!isset($this->data['menu'][0])) $this->data['menu'][0] = NULL;
+                $this->addData('datos', $this->data['menu'][0]);
+                $this->addData('fecha', $_POST['fecha']);
+                $this->addData('pag', $_GET['pag']);
+                $this->addData('method', "menuDia");
+                $this->display("MenuListarTemplate.twig");
+            }
+            catch (Exception $e)
+            {
+                $this->addData('mensajeError', $e->getMessage());
+                $this->menu();
+            }
+        }
+    }
+
+    public function menuAM()
+    {
         /*falta agregar que pregunte si le envian un m por parametro y que lo setee */
-        $this->addData('producto', $this->ProductosModel->getAllProducto(99,0));
-        $this->token();
-        $this->display("MenuAMTemplate.twig");
+        if($this->permissions())
+        {
+            $this->addData('producto', $this->ProductosModel->getAllProducto(99, 0));
+            $this->token();
+            $this->display("MenuAMTemplate.twig");
+        }
     }
 
     public function menuAMPOST()
     {
         /*valida que los parametros sean correctos y despues se fija si ya existe el menu*/
-
-        try{
-
-
-        $this->validateMenu($_POST);
-            if (!isset($_POST['idMenu'])){
-                $this->agregarMenu($_POST);
-                $this->notificarTelegram($_POST['fecha']);
+        if($this->permissions())
+        {
+            try
+            {
+                $this->validateMenu($_POST);
+                if (!isset($_POST['idMenu']))
+                {
+                    $this->agregarMenu($_POST);
+                    $this->notificarTelegram($_POST['fecha']);
+                }
+                else $this->modificarMenu($_POST);
+                if (!isset($_POST['un valor']))
+                {
+                    $_GET['pag'] = 0;
+                    $this->menu();
+                }
             }
-            else $this->modificarMenu($_POST);
-            if(!isset($_POST['un valor'])){
-            $_GET['pag'] = 0;
-            $this->menu();
-            }
-        }catch (valException $e){
-            /* falta que setee post */
-            $_POST['un valor'] = true;
-            $this->addData('mensajeError', $e->getMessage());
-            $_GET['pag'] = 0;
+            catch (Exception $e)
+            {
+                /* falta que setee post */
+                $_POST['un valor'] = true;
+                $this->addData('mensajeError', $e->getMessage());
+                $_GET['pag'] = 0;
 
-            if(!isset($_POST['idMenu'])){
-                $this->menuAM();
-            }
-            else if(isset($_POST['idMenu']) && isset($_POST['fecha'])){
-                $menu = $this->MenuModel->idMenu($_POST['idMenu']);
-                $_POST['fecha'] = $menu->fecha;
-                $this->menuAMMod();
+                if (!isset($_POST['idMenu'])) $this->menuAM();
+                else if (isset($_POST['idMenu']) && isset($_POST['fecha']))
+                {
+                    $menu = $this->MenuModel->idMenu($_POST['idMenu']);
+                    $_POST['fecha'] = $menu->fecha;
+                    $this->menuAMMod();
+                }
+                else $this->menu();
 
-            } else{
-                $this->menu();
             }
         }
-
     }
 
     public function agregarMenu($menu)
     {
-        $image = basename($_FILES['foto']['name']);
-        $fecha = $_POST['fecha'];
-        try {
+        if($this->permissions())
+        {
+            $image = basename($_FILES['foto']['name']);
+            $fecha = $_POST['fecha'];
+            try
+            {
+                if (!isset($_POST['tokenScrf'])) throw new Exception("no hay un token de validación");
+                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new Exception("el token no es valido");
 
-            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+                if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $image)) throw new Exception("no se pudo guardar la imagen del menu");
 
-            if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $image)) throw new valException("no se pudo guardar la imagen del menu");
+                if ($this->MenuModel->getMenuDia($fecha)) throw new Exception("Ya existe un menu para esta fecha");
 
-            if ($this->MenuModel->getMenuDia($fecha)) throw new valException("Ya existe un menu para esta fecha");
+                $idMenu = $this->MenuModel->insertarMenu($fecha, $image);
 
-            $idMenu = $this->MenuModel->insertarMenu($fecha, $image);
-
-
-            foreach ($menu['selectProdMult'] as $prod) {
-                $this->MenuModel->insertarProd($idMenu, $prod);
-
+                foreach ($menu['selectProdMult'] as $prod)
+                {
+                    $this->MenuModel->insertarProd($idMenu, $prod);
+                }
+                $this->addData('fecha', $fecha);
             }
-            $this->addData('fecha', $fecha);
-        } catch (Exception $e) {
-            $_POST['un valor'] = true;
-            $this->addData('mensajeError', $e->getMessage());
-            $this->addData('valores', $_POST);
-            $this->menuAM();
+            catch (Exception $e)
+            {
+                $_POST['un valor'] = true;
+                $this->addData('mensajeError', $e->getMessage());
+                $this->addData('valores', $_POST);
+                $this->menuAM();
+            }
         }
     }
 
-    public function menuAMMod(){
+    public function menuAMMod()
+    {
+        if($this->permissions())
+        {
+            try
+            {
+                if (!isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+                $this->token();
+                if (!isset($_POST['fecha']))
+                {
+                    $this->validator->varSet($_GET['fecha'], "no hay fecha");
+                    $fecha = $_GET['fecha'];
+                }
+                else $fecha = $_POST['fecha'];
 
-        try{
-            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
-            $this->token();
-            if(!isset($_POST['fecha'])) {
-                $this->validator->varSet($_GET['fecha'], "no hay fecha");
-                $fecha = $_GET['fecha'];
-            } else {
-                $fecha = $_POST['fecha'];
+                if (!$this->MenuModel->getMenuDia($fecha)) throw new valException("No existe el menu para modificar");
+                $this->addData('menu', $this->MenuModel->getMenuByDia(99, 0, $fecha));
+                $this->addData('producto', $this->MenuModel->getProdNotInMenu($this->data['menu']['0']->idMenu));
+                $this->addData('datos', $this->data['menu'][0]);
+                $this->display("MenuAMTemplate.twig");
+
             }
-
-            if (! $this->MenuModel->getMenuDia($fecha)) throw new valException("No existe el menu para modificar");
-            $this->addData('menu', $this->MenuModel->getMenuByDia(99,0,$fecha));
-            $this->addData('producto', $this->MenuModel->getProdNotInMenu($this->data['menu']['0']->idMenu));
-            $this->addData('datos', $this->data['menu'][0]);
-            $this->display("MenuAMTemplate.twig");
-
-        } catch (Exception $e){
-            $this->addData('mensajeError', $e -> getMessage());
-            $this->display("MenuListarTemplate.twig");
+            catch (Exception $e)
+            {
+                $this->addData('mensajeError', $e->getMessage());
+                $this->display("MenuListarTemplate.twig");
+            }
         }
-        
     }
 
     public function modificarMenu($menu)
     {
+        if($this->permissions())
+        {
+            $fecha = $_POST['fecha'];
+            $idMenu = $_POST['idMenu'];
+            $menu = $this->MenuModel->getMenuDia($fecha);
+            $miMenu = $this->MenuModel->idMenu($idMenu);
+            //validaciones
+            try
+            {
+                if (!$miMenu) throw new valException("El menu que desea modificar no existe");
+                if (($menu && $menu->idMenu != $idMenu)) throw new valException("La fecha elegida ya pertenece a otro menu");
+                if (!isset($_POST['habilitado'])) throw new valException("No hay una habilitacion/deshabilitacion");
+                if ($_POST['habilitado'] == "true") $habilitado = 0;
+                elseif ($_POST['habilitado'] == "false") $habilitado = 1;
+                else throw new valException("error en habilitado/deshabilitado");
+                if (!isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+                if (($_FILES['foto']['size'] == 0)) $foto = $_POST['foto2'];
 
-        $fecha = $_POST['fecha'];
-        $idMenu = $_POST['idMenu'];
-
-        $menu= $this->MenuModel->getMenuDia($fecha);
-        $miMenu = $this->MenuModel->idMenu($idMenu);
-        //validaciones
-        try{
-            if(!$miMenu)  throw new valException("El menu que desea modificar no existe");
-            if (($menu && $menu->idMenu != $idMenu)) throw new valException("La fecha elegida ya pertenece a otro menu");
-            if(!isset($_POST['habilitado'])) throw new valException("No hay una habilitacion/deshabilitacion");
-            if($_POST['habilitado'] == "true") $habilitado = 0;
-            elseif ($_POST['habilitado'] == "false") $habilitado = 1;
-            else throw new valException("error en habilitado/deshabilitado");
-            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
-            if( ($_FILES['foto']['size'] == 0 )) $foto= $_POST['foto2'];
-
-            else{
-                if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
-                else{
-                    $foto= basename($_FILES['foto']['name']);
-                    if(! move_uploaded_file($_FILES['foto']['tmp_name'], files.$foto)) throw new valException("no se pudo guardar la imagen del menu");
+                else
+                {
+                    if (!($_FILES['foto']['type'] == 'image/png' || $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
+                    else
+                    {
+                        $foto = basename($_FILES['foto']['name']);
+                        if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $foto)) throw new valException("no se pudo guardar la imagen del menu");
+                    }
                 }
-            }
 
-            foreach ($_POST['selectProdMult'] as $prod){
-                if (! $this->ProductosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
-            }
-            $this->MenuModel->eliminarMenu($idMenu);
+                foreach ($_POST['selectProdMult'] as $prod)
+                {
+                    if (!$this->ProductosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
+                }
+                $this->MenuModel->eliminarMenu($idMenu);
 
-            $idMenu2 = $this->MenuModel->insertarMenu2($fecha, $foto, $habilitado);
-            foreach ($_POST['selectProdMult'] as $prod) {
-                $this->MenuModel->insertarProd($idMenu2,$prod);
+                $idMenu2 = $this->MenuModel->insertarMenu2($fecha, $foto, $habilitado);
+                foreach ($_POST['selectProdMult'] as $prod)
+                {
+                    $this->MenuModel->insertarProd($idMenu2, $prod);
 
+                }
+                $_GET['pag'] = 0;
+                $_GET['fecha'] = $fecha;
+                $this->paginaCorrecta($this->MenuModel->totalMenu());
+                $this->addData('menu', $this->MenuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina, $_GET['offset'], $_GET['fecha']));
+                //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
+                if (!isset($this->data['menu'][1])) $this->data['menu'][1] = NULL;
+                $this->addData('datos', $this->data['menu'][1]);
+                $this->addData('fecha', $_GET['fecha']);
+                $this->addData('pag', $_GET['pag']);
+                $this->addData('method', "menuDia");
             }
-            $_GET['pag'] = 0;
-            $_GET['fecha'] = $fecha;
-            $this->paginaCorrecta($this->MenuModel->totalMenu());
-            $this->addData('menu', $this->MenuModel->getMenuByDia($this->conf->getConfiguracion()->cantPagina,$_GET['offset'],$_GET['fecha']));
-            //$this->dispatcher->productos = $this->menuModel->getProductos($this->conf->getConfiguracion()->cantPagina,$_GET['offset'])
-            if(!isset($this->data['menu'][1])) $this->data['menu'][1] = NULL;
-            $this->addData('datos', $this->data['menu'][1]);
-            $this->addData('fecha', $_GET['fecha']);
-            $this->addData('pag', $_GET['pag']);
-            $this->addData('method', "menuDia");
-        } catch (Exception $e){
-            $_POST['un valor'] = true;
-            $this->addData('mensajeError', $e -> getMessage());
-            $menu = $this->MenuModel->idMenu($_POST['idMenu']);
-            $_POST['fecha'] = $menu->fecha;
-            $this->menuAMMod();
+            catch (Exception $e)
+            {
+                $_POST['un valor'] = true;
+                $this->addData('mensajeError', $e->getMessage());
+                $menu = $this->MenuModel->idMenu($_POST['idMenu']);
+                $_POST['fecha'] = $menu->fecha;
+                $this->menuAMMod();
+            }
         }
-
-
-
-
-
     }
 
     public function menuEliminar()
@@ -247,20 +271,23 @@ class MenuController extends Controller{
 
     }
 
-    public function validateMenu($menu){
+    public function validateMenu($menu)
+    {
         if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
 
         $this->validator->validarFecha($menu['fecha'], "Fecha no valida");
         if(!isset($menu['selectProdMult'])) $menu['selectProdMult'] = NULL;
         $this->validator->varSet($menu['selectProdMult'], "Debe seleccionar por lo menos un producto para el menu");
 
-        foreach ($menu['selectProdMult'] as $prod){
+        foreach ($menu['selectProdMult'] as $prod)
+        {
             if (! $this->ProductosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
         }
 
     }
 
-    public function paginaCorrecta($total){
+    public function paginaCorrecta($total)
+    {
         if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
         elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
         else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
@@ -268,18 +295,23 @@ class MenuController extends Controller{
         $_GET['offset'] .= "";
     }
     
-    public function notificarTelegram ($fecha){
+    public function notificarTelegram ($fecha)
+    {
         $users= $this->TelegramModel->getAll();
-        foreach ($users as $idUser){
+        foreach ($users as $idUser)
+        {
             $returnArray = true;
             $rawData = file_get_contents('php://input');
             $response = json_decode($rawData, $returnArray);
             $regExp = '#^(\/[a-zA-Z0-9\/]+?)(\ .*?)$#i';
             $tmp = preg_match($regExp, $response['message']['text'], $aResults);
-            if (isset($aResults[1])) {
+            if (isset($aResults[1]))
+            {
                 $cmd = trim($aResults[1]);
                 $cmd_params = trim($aResults[2]);
-            } else {
+            }
+            else
+            {
                 $cmd = trim($response['message']['text']);
                 $cmd_params = '';
             }
@@ -292,7 +324,8 @@ class MenuController extends Controller{
             $msg['text'] = 'Hola ' . $response['message']['from']['first_name'] . PHP_EOL;
             $msg['text'] = 'Se a añadido un menu para el dia ' . $fecha . PHP_EOL;
             $menu = $this->MenuModel->getMenuByDia(100,0,$fecha);
-            foreach ($menu as $producto){
+            foreach ($menu as $producto)
+            {
                 $msg['text'] .= $producto->nombre;
                 $msg['text'] .=', ';
                 $msg['text'] .= $producto->descripcion;
