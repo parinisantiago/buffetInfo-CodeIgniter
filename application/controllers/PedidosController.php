@@ -3,8 +3,8 @@
 include_once ("Controller.php");
 class PedidosController extends Controller
 {
-
-    public function getPermission(){
+    public function getPermission()
+    {
         Session::init();
         return ((Session::getValue('rol') == '2' ));
     }
@@ -21,28 +21,28 @@ class PedidosController extends Controller
     //le pasa el menu del dia a la vista, si no hay lo avisa.
     function hacerPedido()
     {
-        $menuHoy = $this->MenuModel->getMenuByDia2(99,0,date('Y-m-d'));
-        if ($menuHoy)
-        {
-            $this->token();
-            $this->addData('minimo', $this->MenuModel->getMinimoMenu(date('Y-m-d')));
-            $this->addData('idMenu', $menuHoy[0]->idMenu);
-            $this->addData('menu', $menuHoy);
-            $this->display("RegistroPedidoTemplate.twig");
-        }
-        else
-        {
-            $this->addData('mensajeError', "No hay un menu para el dia de hoy, por lo que no se pueden hacer pedidos");
-            $this->token();
-
-            $this->display("IndexTemplate.twig");
+        if($this->permissions()) {
+            $menuHoy = $this->MenuModel->getMenuByDia2(99, 0, date('Y-m-d'));
+            if ($menuHoy)
+            {
+                $this->token();
+                $this->addData('minimo', $this->MenuModel->getMinimoMenu(date('Y-m-d')));
+                $this->addData('idMenu', $menuHoy[0]->idMenu);
+                $this->addData('menu', $menuHoy);
+                $this->display("RegistroPedidoTemplate.twig");
+            }
+            else
+            {
+                $this->addData('mensajeError', "No hay un menu para el dia de hoy, por lo que no se pueden hacer pedidos");
+                $this->token();
+                $this->display("IndexTemplate.twig");
+            }
         }
     }
 
     function validarPedido()
     {
         //bueno, vamos con las validaciones YAY :D
-
         try
         {
             //primero valido que me hayan pasado todas las variables
@@ -64,15 +64,12 @@ class PedidosController extends Controller
 
             //ahora valido que haya suficientes productos para la cantidad de menus que me pidieron
 
-
             $cantidad = $_POST['numPedidos'];
-
 
             foreach ($menuHoy as $producto)
             {
                 if ($producto->stock <  $cantidad) throw new valException("No hay suficiente cantidad de $producto->nombre para completar $cantidad pedidos");
             }
-
 
             //Primero hay que agregar el pedido y recuperar su id.
             //hay que agregar un pedido detalle.
@@ -93,10 +90,8 @@ class PedidosController extends Controller
                     $venta['idProducto'] = $producto->idProducto;
                     $venta['precioVentaUnitario'] = $producto->precioVentaUnitario;
                     $venta['cant'] = $cantidad;
-
-
                     echo ($this->venta->insertarVentaId($venta));
-            */
+                */
             }
 
             $this->addData('pedidos', $this->PedidosModel->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, "0"));
@@ -105,25 +100,27 @@ class PedidosController extends Controller
             $this->token();
 
             $this->display("PedidosListarTemplate.twig");
-
         }
         catch (Exception $e)
         {
             $this->addData('mensajeError', $e -> getMessage());
             $this->hacerPedido();
         }
-
     }
 
     public function verPedidos()
     {
-        $this->token();
-        $this->paginaCorrecta($this->PedidosModel->totalPedidos($_SESSION['idUsuario']));
-        $this->addData('pedidos', $this->PedidosModel->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset']));
-        $this->addData('pag', $_GET['pag']);
-        $this->display("PedidosListarTemplate.twig");
+        if($this->permissions())
+        {
+            $this->token();
+            $this->paginaCorrecta($this->PedidosModel->totalPedidos($_SESSION['idUsuario']));
+            $this->addData('pedidos', $this->PedidosModel->pedidosUsuarios($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset']));
+            $this->addData('pag', $_GET['pag']);
+            $this->display("PedidosListarTemplate.twig");
+        }
     }
-    public function paginaCorrecta($total){
+    public function paginaCorrecta($total)
+    {
         if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
         elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
         else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
@@ -134,91 +131,93 @@ class PedidosController extends Controller
 
     public function verDetalle()
     {
-        try
-        {
-            $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?",3);
-            $pedido = $this->PedidosModel->getPedido($_POST['idPedido']);
-            if(!$pedido) throw new valException('El pedido no es valido');
-            if( $pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
-            $this->addData('detalles', $this->PedidosModel->getDetalle($_POST['idPedido']));
-            $this->token();
-            $this->display("mostrarDetalle.twig");
+        if($this->permissions()) {
+            try
+            {
+                $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?", 3);
+                $pedido = $this->PedidosModel->getPedido($_POST['idPedido']);
+                if (!$pedido) throw new valException('El pedido no es valido');
+                if ($pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
+                $this->addData('detalles', $this->PedidosModel->getDetalle($_POST['idPedido']));
+                $this->token();
+                $this->display("mostrarDetalle.twig");
 
+            }
+            catch (Exception $e)
+            {
+                $this->addData('mensajeError', $e->getMessage());
+                $_GET['pag'] = '0';
+                $this->verPedidos();
+            }
         }
-        catch (Exception $e)
-        {
-            $this->addData('mensajeError', $e -> getMessage());
-            $_GET['pag'] = '0';
-            $this->verPedidos();
-        }
-        
-
     }
     
-    public function formCancelarPedido(){
-        $this->addData('id', $_POST['idPedido']);
-        $this->token();
-        $this->display('cancerlarPedido.twig');
-    }
-
-    public function cancelarPedido()
+    public function formCancelarPedido()
     {
-        try
+        if($this->permissions())
         {
-
-            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
-            $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?",3);
-            $pedido = $this->PedidosModel->getPedido($_POST['idPedido']);
-            if(!$pedido) throw new valException('El pedido no es valido');
-            if( $pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
-            if(($pedido->idEstado != "pendiente") || ($pedido->intervalo > 1800))throw new valException("El pedido no cumple los requisitos para ser cancelado");
-            $detalles = $this->PedidosModel->getDetalle($_POST['idPedido']);
-            $this->PedidosModel->actualizarEstado("cancelado", $_POST['idPedido']);
-
-            if(strlen($_POST['comentario']) > 0 ) $this->PedidosModel->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
-
-            foreach ($detalles as $detalle)
-            {
-
-                $this->ProductosModel->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
-            }
-
-            $_GET['pag'] = 0;
-
-            $this->verPedidos();
-        }
-        catch (Exception $e)
-        {
-            $this->addData('mensajeError', $e -> getMessage());
             $this->addData('id', $_POST['idPedido']);
             $this->token();
             $this->display('cancerlarPedido.twig');
         }
+    }
 
+    public function cancelarPedido()
+    {
+        if($this->permissions())
+        {
+            try
+            {
+                if (!isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
+                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+                $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?", 3);
+                $pedido = $this->PedidosModel->getPedido($_POST['idPedido']);
+                if (!$pedido) throw new valException('El pedido no es valido');
+                if ($pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
+                if (($pedido->idEstado != "pendiente") || ($pedido->intervalo > 1800)) throw new valException("El pedido no cumple los requisitos para ser cancelado");
+                $detalles = $this->PedidosModel->getDetalle($_POST['idPedido']);
+                $this->PedidosModel->actualizarEstado("cancelado", $_POST['idPedido']);
 
+                if (strlen($_POST['comentario']) > 0) $this->PedidosModel->actualizarComentario($_POST['comentario'], $_POST['idPedido']);
 
+                foreach ($detalles as $detalle)
+                {
+                    $this->ProductosModel->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
+                }
+                $_GET['pag'] = 0;
+                $this->verPedidos();
+            }
+            catch (Exception $e)
+            {
+                $this->addData('mensajeError', $e->getMessage());
+                $this->addData('id', $_POST['idPedido']);
+                $this->token();
+                $this->display('cancerlarPedido.twig');
+            }
+        }
     }
 
     public function pedidosRango()
     {
-        try {
-
-            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+        try
+        {
+            if (! isset($_POST['tokenScrf'])) throw new Exception("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new Exception("el token no es valido");
             $this->validator->validarFecha($_POST['fechaInicio'], "la fecha posee un mal formato");
             $this->validator->validarFecha($_POST['fechaFin'], "la fecha posee un mal formato");
             $this->validator->varSet($_POST['submitButton2'], "tenes que entrar por el lugar adecuado");
             $fechaInicio=$_POST['fechaInicio'];
             $fechaFin=$_POST['fechaFin'];
-            if ($fechaFin < $fechaInicio) throw new valException("La fecha de fin no puede ser inferior a la fecha de inicio");
+            if ($fechaFin < $fechaInicio) throw new Exception("La fecha de fin no puede ser inferior a la fecha de inicio");
             $_GET['pag']=0;
             $_GET['inicio']= $_POST['fechaInicio'];
             $_GET['fin'] = $_POST['fechaFin'];
             $this->addData('fechaInicio', $_POST['fechaInicio']);
             $this->addData('fechaFin', $_POST['fechaFin']);
             $this->mostrarPedidoRango();
-        } catch (Exception $e) {
+        }
+        catch (Exception $e)
+        {
             $this->addData('fechaInicio', $_POST['fechaInicio']);
             $this->addData('fechaFin', $_POST['fechaFin']);
             $this->addData('mensajeError', $e -> getMessage());
@@ -230,13 +229,16 @@ class PedidosController extends Controller
 
     public function mostrarPedidoRango()
     {
-        $this->paginaCorrecta($this->PedidosModel->totalPedidosRango($_SESSION['idUsuario'], $_POST['fechaInicio'], $_POST['fechaFin']));
-        $this->addData('pedidos', $this->PedidosModel->pedidosUsuariosRango($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset'], $_GET['inicio'], $_GET['fin']));
-        $this->addData('pag', $_GET['pag']);
-        $this->addData('inicio', $_GET['inicio']);
-        $this->addData('fin', $_GET['fin']);
-        $this->addData('rango', true);
-        $this->token();
-        $this->display("PedidosListarTemplate.twig");
+        if($this->permissions())
+        {
+            $this->paginaCorrecta($this->PedidosModel->totalPedidosRango($_SESSION['idUsuario'], $_POST['fechaInicio'], $_POST['fechaFin']));
+            $this->addData('pedidos', $this->PedidosModel->pedidosUsuariosRango($_SESSION['idUsuario'], $this->conf->getConfiguracion()->cantPagina, $_GET['offset'], $_GET['inicio'], $_GET['fin']));
+            $this->addData('pag', $_GET['pag']);
+            $this->addData('inicio', $_GET['inicio']);
+            $this->addData('fin', $_GET['fin']);
+            $this->addData('rango', true);
+            $this->token();
+            $this->display("PedidosListarTemplate.twig");
+        }
     }
 }
