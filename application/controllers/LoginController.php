@@ -45,10 +45,9 @@ class LoginController extends Controller
     {
         $this->validator->varSet($_POST['submit'], "Presione el boton de submit");
         $this->validator->validarString($_POST['username'], "Error: En usuario o contraseña", 15);
-        if ($this->UserModel->isDeleted($_POST['username'])) throw new Exception("El usuario a sido eliminado");
         $this->validator->validarString($_POST['pass'], "Error: En usuario o contraseña", 15);
-        if (!$this->UserModel->userExist($_POST['username'])) throw new Exception("Error: El usuario no existe");
-        elseif (!$this->UserModel->passDontMissmatch($_POST['pass'])) throw new Exception("Contraseña incorrecta");
+        if (empty($this->UserModel->selectUser($_POST['username'], $_POST['pass']))) throw new Exception("El usuario o contraseña son incorrectos");
+
     }
 
 

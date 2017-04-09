@@ -8,6 +8,16 @@ class UserModel extends Model
         parent::__construct();
     }
 
+    public function selectUser($username, $pass)
+    {
+        $this->db->select('usuario');
+        $this->db->from('usuario');
+        $this->db->where('usuario', $username);
+        $this->db->where('clave', $pass);
+        $this->db->where('eliminado', 0);
+        return $this->db->get()->result();
+    }
+
     public function userExist($username)
     {
         $this->db->select('usuario');
@@ -15,7 +25,7 @@ class UserModel extends Model
         $this->db->where('usuario', $username);
         $this->db->where('eliminado', 0);
         $this->db->where('habilitado', 0);
-        return $this->db->get()->result();
+        return !empty($this->db->get()->result());
         /* return $this->queryPreparadaSQL('SELECT usuario FROM usuario WHERE usuario = :username AND eliminado = 0 AND habilitado = 0', array('username'=> $username));*/
     }
 
@@ -34,7 +44,7 @@ class UserModel extends Model
         $this->db->select('clave');
         $this->db->from('usuario');
         $this->db->where('clave', $pass);
-        return $this->db->get()->result();
+        return !empty($this->db->get()->result());
 
         /*    return $this -> queryPreparadaSQL('SELECT clave FROM usuario WHERE clave = :pass', array('pass' => $pass));*/
     }
@@ -86,7 +96,7 @@ class UserModel extends Model
         $this->db->from('usuario');
         $this->db->where('usuario', $username);
         $this->db->where('eliminado', 1);
-        return $this->db->get()->result();
+        return empty($this->db->get()->result());
 
         /*return $this->queryPreparadaSQL('SELECT eliminado FROM usuario WHERE usuario = :username AND eliminado = 1 ', array('username' => $username));*/
     }
