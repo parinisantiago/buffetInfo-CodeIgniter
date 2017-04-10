@@ -136,8 +136,8 @@ class PedidosController extends Controller
             {
                 $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?", 3);
                 $pedido = $this->PedidosModel->getPedido($_POST['idPedido']);
-                if (!$pedido) throw new valException('El pedido no es valido');
-                if ($pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
+                if (!$pedido) throw new Exception('El pedido no es valido');
+                if ($pedido->idUsuario != $_SESSION['idUsuario']) throw new Exception('El pedido no pertenece al usuario');
                 $this->addData('detalles', $this->PedidosModel->getDetalle($_POST['idPedido']));
                 $this->token();
                 $this->display("mostrarDetalle.twig");
@@ -168,13 +168,13 @@ class PedidosController extends Controller
         {
             try
             {
-                if (!isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+                if (!isset($_POST['tokenScrf'])) throw new Exception("no hay un token de validación");
+                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new Exception("el token no es valido");
                 $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?", 3);
                 $pedido = $this->PedidosModel->getPedido($_POST['idPedido']);
-                if (!$pedido) throw new valException('El pedido no es valido');
-                if ($pedido->idUsuario != $_SESSION['idUsuario']) throw new valException('El pedido no pertenece al usuario');
-                if (($pedido->idEstado != "pendiente") || ($pedido->intervalo > 1800)) throw new valException("El pedido no cumple los requisitos para ser cancelado");
+                if (!$pedido) throw new Exception('El pedido no es valido');
+                if ($pedido->idUsuario != $_SESSION['idUsuario']) throw new Exception('El pedido no pertenece al usuario');
+                if (($pedido->idEstado != "pendiente") || ($pedido->intervalo > 1800)) throw new Exception("El pedido no cumple los requisitos para ser cancelado");
                 $detalles = $this->PedidosModel->getDetalle($_POST['idPedido']);
                 $this->PedidosModel->actualizarEstado("cancelado", $_POST['idPedido']);
 

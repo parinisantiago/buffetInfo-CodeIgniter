@@ -35,7 +35,8 @@ class PedidosModel extends Model
         $this->db->select('TIME_TO_SEC(TIMEDIFF(NOW(), fechaAlta)) AS intervalo, idPedido, idEstado, idUsuario');
         $this->db->from('pedido');
         $this->db->where('idPedido', $id);
-        return $this->db->get()->result();
+        $pedido = $this->db->get()->result();
+        return $pedido[0];
         /*return $this->queryPreparadaSQL(
             "SELECT TIME_TO_SEC(TIMEDIFF(NOW(), fechaAlta)) AS intervalo, idPedido, idEstado, idUsuario
             FROM pedido
@@ -126,7 +127,6 @@ class PedidosModel extends Model
         );
         $this->db->where('idPedido', $idPedido);
         $this->db->update('pedido', $data);
-        return $this->db->get()->result();
 
       /*  return $this->query(
             "UPDATE pedido
@@ -142,7 +142,6 @@ class PedidosModel extends Model
         );
         $this->db->where('idPedido', $idPedido);
         $this->db->update('pedido', $data);
-        return $this->db->get()->result();
        /* return $this->query(
             "UPDATE pedido
              SET observaciones = :idEstado
