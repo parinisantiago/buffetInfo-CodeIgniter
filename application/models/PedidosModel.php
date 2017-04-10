@@ -14,18 +14,20 @@ class PedidosModel extends Model
         $fecha = date('Y-m-d');
         $observaciones = "sin observaciones";
         $data = array(
-            'idEstad'=>'pendiente',
+            'idEstado'=>'pendiente',
             'fechaAlta'=>$today,
             'idUsuario'=>$idUsuario,
             'observaciones'=>$observaciones,
             'fechaBusqueda'=>$fecha
         );
         $this->db->insert('pedido', $data);
-      /*  return $this->lastId(
-          "INSERT INTO pedido(idEstado, fechaAlta,idUsuario, observaciones, fechaBusqueda)
-           VALUES ('pendiente', :fechaAlta, :idUsuario, :observaciones, :fechaBusqueda)",
-            array('fechaAlta'=>$today, 'idUsuario'=>$idUsuario, 'observaciones'=>$observaciones, 'fechaBusqueda'=>$fecha)
-        );*/
+        return $this->db->insert_id();
+
+        /*  return $this->lastId(
+            "INSERT INTO pedido(idEstado, fechaAlta,idUsuario, observaciones, fechaBusqueda)
+             VALUES ('pendiente', :fechaAlta, :idUsuario, :observaciones, :fechaBusqueda)",
+              array('fechaAlta'=>$today, 'idUsuario'=>$idUsuario, 'observaciones'=>$observaciones, 'fechaBusqueda'=>$fecha)
+          );*/
     }
 
     public function getPedido($id)
@@ -49,6 +51,7 @@ class PedidosModel extends Model
             "cantidad"=>$cantidad
         );
         $this->db->insert('pedidoDetalle', $data);
+        return $this->db->insert_id();
 
         /*      return $this->lastId("
                 INSERT INTO pedidoDetalle(idPedido, idProducto, cantidad)

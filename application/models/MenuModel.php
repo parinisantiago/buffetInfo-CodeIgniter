@@ -391,7 +391,7 @@ class MenuModel extends Model{
         $this->db->join('producto p', 'mp.idProducto = p.idProducto');
         $this->db->where('m.fecha',$fecha);
         $this->db->where('m.eliminado',0);
-        return $this->db->get()->insert();
+        return $this->db->get()->result();
 
     /*    return $this -> queryPreparadaSQL("
             SELECT MIN(p.stock) as minimo

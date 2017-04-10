@@ -47,8 +47,8 @@ class PedidosController extends Controller
         {
             //primero valido que me hayan pasado todas las variables
 
-            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+            if (! isset($_POST['tokenScrf'])) throw new Exception("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new Exception("el token no es valido");
             $this->validator->varSet($_POST['idMenu'], "sin menu, no hay validacion");
             $this->validator->varSet($_POST['submit'], "algo raro hiciste, keep trying");
             $this->validator->validarNumeros($_POST['numPedidos'], "Error en la cantidad", 2);
@@ -60,7 +60,7 @@ class PedidosController extends Controller
 
             //si el menu de hoy no es como el de id, me estuvieron tocando las variables
 
-            if ($menuHoy[0] -> idMenu != $idMenu ) throw new valException("Algo raro hiciste, keep trying");
+            if ($menuHoy[0] -> idMenu != $idMenu ) throw new Exception("Algo raro hiciste, keep trying");
 
             //ahora valido que haya suficientes productos para la cantidad de menus que me pidieron
 
@@ -68,7 +68,7 @@ class PedidosController extends Controller
 
             foreach ($menuHoy as $producto)
             {
-                if ($producto->stock <  $cantidad) throw new valException("No hay suficiente cantidad de $producto->nombre para completar $cantidad pedidos");
+                if ($producto->stock <  $cantidad) throw new Exception("No hay suficiente cantidad de $producto->nombre para completar $cantidad pedidos");
             }
 
             //Primero hay que agregar el pedido y recuperar su id.
