@@ -29,6 +29,7 @@ class ConfigController extends Controller
     public function configuracionSitio()
     {
         if($this->permissions()) $this->display("ConfiguracionTemplate.twig");
+        else $this->setMensajeError('Debes iniciar sesion para acceder a este sitio');
     }
 
     public function changeConf()
