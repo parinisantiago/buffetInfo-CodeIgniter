@@ -39,7 +39,7 @@ class UserModel extends Model
         die;
         if(isset($exist[0])) return $exist[0];
         else {
-            $exist[0] = null;
+            $exist[0] = '-1 NAN -1';
             return $exist[0];
         }
         /* return $this->queryPreparadaSQL('SELECT usuario FROM usuario WHERE usuario = :username', array('username'=> $username));*/
