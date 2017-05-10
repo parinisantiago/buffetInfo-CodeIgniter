@@ -18,7 +18,7 @@ class Session
 
     public static function getValue($key){
        if ( isset($_SESSION[$key])) return($_SESSION[$key]);
-       else return false;
+       else return '-1 NaN -1';
     }
 
     public static function userLogged(){
