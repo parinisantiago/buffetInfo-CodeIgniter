@@ -20,6 +20,8 @@ class LoginController extends Controller
             {
                 $this->validateLogin();
                 $this->user = $this->UserModel->getUser($_POST['username'], $_POST['pass']);
+                var_dump($this->user);
+                if($this->user['habilitado'] == "1") $this->noHabilitado();
                 $this->setSession();
             }
             $this->display('IndexTemplate.twig');

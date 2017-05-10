@@ -21,7 +21,10 @@ class Controller extends CI_controller
         $this->rol();
         $this->load->model('MenuModel');
     }
-
+    public function noHabilitado(){
+        $this->addData("mensajeError", "el usuario no esta habilitado");
+        $this->display('MainTemplate.twig');
+    }
     public function getConfig()
     {
 	    return $this->conf->getConfiguracion();
