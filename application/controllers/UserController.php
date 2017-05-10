@@ -60,9 +60,12 @@ class UserController extends Controller
             {
                 $this->validarUsuario(); //realiza validaciones mediante expresiones regulares
                 if (!isset($_POST['idUsuario'])) $this->insertUsuario();
-                else if (($this->UserModel->userExistInDB($_POST['usuario']) == $_POST['usuario'])) $this->UserModel->modUser($_POST['idUsuario'], $_POST['usuario'], $_POST['nombre'], $_POST['apellido'], $_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'], $_POST['idRol'], $_POST['idUbicacion'], $_POST['habilitado']); //si es el usaurio guardado, lo modifica
-                else throw new Exception('No tiene permitido modificar su nombre de usuario');
-                $_GET['pag'] = 0;
+                else {
+                    if($this->UserModel->userExistInDB($_POST['usuario'])) {
+                        if (($this->UserModel->userExistInDB($_POST['usuario']) == $_POST['usuario'])) $this->UserModel->modUser($_POST['idUsuario'], $_POST['usuario'], $_POST['nombre'], $_POST['apellido'], $_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'], $_POST['idRol'], $_POST['idUbicacion'], $_POST['habilitado']); //si es el usaurio guardado, lo modifica
+                        else throw new Exception('No tiene permitido modificar su nombre de usuario');
+                    } else {$this->UserModel->modUser($_POST['idUsuario'], $_POST['usuario'], $_POST['nombre'], $_POST['apellido'], $_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'], $_POST['idRol'], $_POST['idUbicacion'], $_POST['habilitado']);}
+                }$_GET['pag'] = 0;
                 $this->abmUsuario();
             }
             catch (Exception $e)
