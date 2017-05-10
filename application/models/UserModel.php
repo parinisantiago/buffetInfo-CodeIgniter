@@ -35,8 +35,6 @@ class UserModel extends Model
         $this->db->from('usuario');
         $this->db->where('usuario', $username);
         $exist = $this->db->get()->result();
-        var_dump($exist[0]);
-        die;
         if(isset($exist[0])) return $exist[0];
         else {
             $exist[0] = '-1 NAN -1';
