@@ -62,6 +62,8 @@ class UserController extends Controller
                 if (!isset($_POST['idUsuario'])) $this->insertUsuario();
                 else{
                     if(isset($this->UserModel->userExistInDB($_POST['usuario'])->usuario)) {
+                        var_dump($this->UserModel->userExistInDB($_POST['usuario'])->usuario);
+                        die;
                         if ($this->UserModel->userExistInDB($_POST['usuario'])->usuario == $_POST['usuario']) $this->UserModel->modUser($_POST['idUsuario'], $_POST['usuario'], $_POST['nombre'], $_POST['apellido'], $_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'], $_POST['idRol'], $_POST['idUbicacion'], $_POST['habilitado']); //si es el usaurio guardado, lo modifica
                         else throw new Exception('el usuario ya existe');
                     } else $this->UserModel->modUser($_POST['idUsuario'], $_POST['usuario'], $_POST['nombre'], $_POST['apellido'], $_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'], $_POST['idRol'], $_POST['idUbicacion'], $_POST['habilitado']);
