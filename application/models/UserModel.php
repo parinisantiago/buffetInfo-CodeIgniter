@@ -36,7 +36,10 @@ class UserModel extends Model
         $this->db->where('usuario', $username);
         $exist = $this->db->get()->result();
         if(isset($exist[0])) return $exist[0];
-        else return false;
+        else {
+            $exist[0] = null;
+            return $exist[0];
+        }
         /* return $this->queryPreparadaSQL('SELECT usuario FROM usuario WHERE usuario = :username', array('username'=> $username));*/
     }
 
