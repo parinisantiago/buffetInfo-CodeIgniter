@@ -60,6 +60,7 @@ class UserController extends Controller
             {
                 $this->validarUsuario(); //realiza validaciones mediante expresiones regulares
                 if (!isset($_POST['idUsuario'])) $this->insertUsuario();
+                if(!isset($this->UserModel->userExistInDB($_POST['usuario'])->usuario)) throw new Exception('No se peude modificar el nombre de usuario');
                 else if ((Session::getValue('modUserId') == $_POST['idUsuario']) && ($this->UserModel->userExistInDB($_POST['usuario'])->usuario == $_POST['usuario'])) $this->UserModel->modUser($_POST['idUsuario'], $_POST['usuario'], $_POST['nombre'], $_POST['apellido'], $_POST['clave'], $_POST['documento'], $_POST['email'], $_POST['telefono'], $_POST['idRol'], $_POST['idUbicacion'], $_POST['habilitado']); //si es el usaurio guardado, lo modifica
                 else throw new Exception('Error: El id de usuario se vio modificado durante la operacion');
                 $_GET['pag'] = 0;
