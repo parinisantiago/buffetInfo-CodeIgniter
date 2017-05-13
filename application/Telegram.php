@@ -1,6 +1,6 @@
 <?php
-include_once 'Model/MenuModel.php';
-include_once 'Model/TelegramModel.php';
+//include_once 'models/MenuModel.php';
+//include_once 'models/TelegramModel.php';
 require_once 'Utils/Const.php';
 
         $returnArray = true;
@@ -22,7 +22,7 @@ require_once 'Utils/Const.php';
         }
 
 //armado respuesta
-        $menuModel = new MenuModel();
+        //$menuModel = new MenuModel();
         $msg = array();
         $msg['chat_id'] = $response['message']['chat']['id'];
         $msg['text'] = null;
@@ -48,8 +48,8 @@ require_once 'Utils/Const.php';
                 break;
             case '/hoy':
                 $msg['text'] = 'Hola los productos del menu del dia son: ';
-                $menu = $menuModel->getMenuToday();
-                if ($menu) {
+                //$menu = $menuModel->getMenuToday();
+                /*if ($menu) {
                     foreach ($menu as $producto){
                         $msg['text'] .= $producto->nombre;
                          $msg['text'] .=', ';
@@ -60,13 +60,13 @@ require_once 'Utils/Const.php';
                     }
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para hoy';
-                }
+                }*/
                 $msg['reply_to_message_id'] = null;
                 break;
             case '/maniana':
                 $msg['text'] = 'Hola los productos del menu de mañana son:';
                 $tomorrow = date("Y-m-d", strtotime('tomorrow'));
-                $menu = $menuModel->getMenuByDia(100,0,$tomorrow);
+               /* $menu = $menuModel->getMenuByDia(100,0,$tomorrow);
                 if ($menu) {
                     foreach ($menu as $producto){
                         $msg['text'] .= $producto->nombre;
@@ -78,27 +78,27 @@ require_once 'Utils/Const.php';
                     }
                 } else {
                     $msg['text'] = 'No han planificado ningun menú para mañana :(';
-                }
+                }*/
                 $msg['reply_to_message_id'] = null;
                 break;
             case '/suscribir':
-                $telegramModel = new TelegramModel();
+                /*$telegramModel = new TelegramModel();
                 if ($telegramModel->buscar($id_del_chat)){
                     $msg['text'] = 'Este chat ya se encuentra suscripto.' . PHP_EOL;
                 }else{
                     $msg['text'] = 'Este chat a sido suscripto con exito.' . PHP_EOL;
                     $telegramModel->registrar($id_del_chat);
-                }
+                }*/
                 $msg['reply_to_message_id'] = null;
                 break;
             case '/desuscribir':
-                $telegramModel = new TelegramModel();
+                /*$telegramModel = new TelegramModel();
                 if ($telegramModel->buscar($id_del_chat)){
                     $telegramModel->eliminar($id_del_chat);
                     $msg['text'] ='Se ha cancelado la suscripcion con exito.' . PHP_EOL;
                 }else{
                     $msg['text'] ='Este chat no se encontraba suscripto.' . PHP_EOL;
-                }
+                }*/
                 $msg['reply_to_message_id'] = null;
                 break;
             default:
@@ -109,7 +109,7 @@ require_once 'Utils/Const.php';
         //enviando respuesta
         //original:
         //https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/setWebhook?url=https://grupo64.proyecto2016.linti.unlp.edu.ar/pruebasbot.php
-        $url = 'https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/sendMessage';
+        $url = 'https://api.telegram.org/bot383650181:AAGPzLovM1KS6wRjtlrw7aQaD4RplEUTrto/sendMessage';
 
         $options = array(
             'http' => array(
