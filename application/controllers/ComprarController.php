@@ -33,7 +33,8 @@ class ComprarController extends Controller{
         {
             if (isset($_POST["idCompra"]))
             { //modificar una compra
-                $this->addData('compra', $this->CompraModel->searchIdCompra($_POST["idCompra"]));
+                $compra = $this->CompraModel->searchIdCompra($_POST["idCompra"]);
+                $this->addData('compra', $compra[0]);
             }
             //crear una compra nueva
             $this->addData('proveedor', $this->CompraModel->getAllProveedor(99999, 0));
@@ -63,7 +64,7 @@ class ComprarController extends Controller{
                 if ($_POST["idCompra"] != "")
                 {
                     $compra = $this->CompraModel->searchIdCompra($_POST['idCompra']);
-                    $nuevoStock = $producto->stock - $compra->cantidad + $_POST['cantidad'];
+                    $nuevoStock = $producto->stock - $compra[0]->cantidad + $_POST['cantidad'];
                     if ($nuevoStock < 0) throw new Exception("No se puede modificar la compra porque quedaria sin stock el producto");
                     $this->ProductosModel->actualizarCantProductos($producto->idProducto, $nuevoStock);
                     $this->addData('compra', $this->CompraModel->actualizarCompra($_POST));
@@ -83,26 +84,35 @@ class ComprarController extends Controller{
             {
                 $this->addData('ventas', $_POST);
                 $this->addData('mensajeError', $e->getMessage());
-                $this->compraAM();
+                $this->compraListar();
             }
         }
     }
     public function compraEliminar()
     {
+        try{
         if($this->permissions())
         {
             $this->validator->varSet($_POST['idCompra'], "Error: no existe la compra");
             $this->validator->varSet($_POST['submitButton'], "Presione el boton de submit");
             $compra = $this->CompraModel->searchIdCompra($_POST['idCompra']);
-            $producto = $this->ProductosModel->searchIdProducto($compra->idProducto);
-            $nuevoStock = $producto->stock - $compra->cantidad;
+            $producto = $this->ProductosModel->searchIdProducto($compra[0]->idProducto);
+            $nuevoStock = $producto->stock - $compra[0]->cantidad;
             if ($nuevoStock < 0) throw new Exception("Error: no se puede eliminar la compra, ya que se han vendido productos");
             $nuevoStock .= "";
             $this->ProductosModel->actualizarCantProductos($producto->idProducto, $nuevoStock);
-            $this->addData('compra', $this->CompraModel->eliminarCompra($compra->idCompra));
+            $compra = $this->CompraModel->eliminarCompra($compra[0]->idCompra);
+            $this->addData('compra', $compra[0]);
             $_GET['pag'] = 0;
             $this->addData('method', "CompraListar");
             $this->compraListar();
+        }
+        }catch (Exception $e){
+            $this->addData('mensajeError', $e->getMessage());
+            $_GET['pag'] = 0;
+            $this->addData('method', "CompraListar");
+            $this->compraListar();
+
         }
     }
     public function subirFoto()
