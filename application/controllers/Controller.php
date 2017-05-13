@@ -19,6 +19,7 @@ class Controller extends CI_controller
         $this->validator = new Validador();
         $this->conf = new ConfiguracionModel();
         $this->rol();
+        $this->habilitado();
         $this->load->model('MenuModel');
     }
     public function noHabilitado(){
@@ -40,6 +41,12 @@ class Controller extends CI_controller
         return Session::getValue('rol');
     }
 
+    protected function habilitado()
+    {
+        if (Session::userLogged()) $this->data['userHabilitado'] = Session::getValue('userHabilitado');
+        else  $this->data['userHabilitado'] = "NaN";
+    }
+
     protected function rol()
     {
         if (Session::userLogged()) $this->data['rol'] = Session::getValue('rol');
@@ -50,6 +57,7 @@ class Controller extends CI_controller
     {
         $this->load->library('twig');
         $this->addData('config',$this->getConfig());
+        //var_dump($this->data);
         $this->twig->render($view,$this->data);
     }
 

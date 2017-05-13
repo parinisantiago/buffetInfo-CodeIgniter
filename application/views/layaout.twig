@@ -50,7 +50,7 @@
     </p>
 </div>
 {% endif %}
-{% if (config.habilitado == 'false') and (not (rol == '0'))%}
+{% if(((config.habilitado == 'false') and (not (rol == '0'))) or (userHabilitado == '1') and(not(rol == '0'))) %}
     <main><div class="error sombreado"><p> {{ config.mensajeHabilitado }}</p></div></main>
 {% else %}
 
