@@ -57,11 +57,13 @@ class VenderController extends Controller{
 
     public function ventaModificar()
     {
+
         if($this->permissions())
         {
             $this->validator->varSet($_POST["submitButton"], "Presione el boton de modificacion");
             $this->validator->varSet($_POST['idIngresoDetalle'], "Error: la venta deseada no ah sido encontrada");
-            $this->addData('venta', $this->VentaModel->getVentaById($_POST['idIngresoDetalle']));
+            $venta = $this->VentaModel->getVentaById($_POST['idIngresoDetalle']);
+            $this->addData('venta', $venta[0]);
             $this->display("VenderAMTemplate.twig");
         }
     }
@@ -110,10 +112,17 @@ class VenderController extends Controller{
 
     public function paginaCorrecta($total)
     {
-        if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
-        elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
-        else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
-        if ($_GET['offset'] < 0) $_GET['offset'] = 0;
-        $_GET['offset'] .= "";
+        try {
+            if (!isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
+            elseif ($total->total <= $_GET['pag'] * $this->conf->getConfiguracion()->cantPagina) {
+                $_GET['pag'] = 0;
+                $_GET['offset'] = 0;
+            } else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
+            if ($_GET['offset'] < 0) $_GET['offset'] = 0;
+            $_GET['offset'] .= "";
+        }catch (Exception $e)
+        {
+            $this->addData('mensajeError', $e->getMessage());
+        }
     }
 }
