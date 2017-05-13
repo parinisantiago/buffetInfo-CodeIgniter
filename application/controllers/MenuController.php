@@ -316,7 +316,7 @@ class MenuController extends Controller{
                 $cmd_params = '';
             }
             $msg = array();
-            $msg['chat_id'] =  $idUser;
+            $msg['chat_id'] =  $idUser->idUsuario;
             $msg['text'] = null;
             $msg['disable_web_page_preview'] = true;
             $msg['reply_to_message_id'] = $response['message']['message_id'];
