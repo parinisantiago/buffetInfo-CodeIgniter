@@ -107,7 +107,7 @@ class ComprarController extends Controller{
     }
     public function subirFoto()
     {
-        $target_path = "uploads/";
+        $target_path = "public/uploads/";
         $target_path = $target_path . basename( $_FILES['uploadedfile']['name']);
         $aux = move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path);
         $_POST["fotoFactura"]=basename( $_FILES['uploadedfile']['name']);
