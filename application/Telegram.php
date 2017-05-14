@@ -172,7 +172,7 @@ switch ($cmd) {
         break;
 }
 
-$url = 'https://api.telegram.org/bot123456780:hakfHFT35kvdkfhkffdgdkgh878sfsfskghs/sendMessage';
+$url = 'https://api.telegram.org/bot291943743:AAEcF3EIv94WlYatJ9nZWl90KkT5lg2AMzo/sendMessage';
 
 $options = array(
     'http' => array(
