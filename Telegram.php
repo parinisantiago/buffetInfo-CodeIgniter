@@ -151,7 +151,7 @@ $msg['reply_to_message_id'] = $response['message']['message_id'];
 $msg['reply_markup'] = null;
 
 switch ($cmd) {
-    case '/start':
+    case '/start'sfsa:
         $msg['text']  = 'Hola ' . $response['message']['from']['first_name'] . PHP_EOL;
         $msg['text'] .= '¿Como puedo ayudarte? Puedes utilizar el comando /help';
         $msg['reply_to_message_id'] = null;
