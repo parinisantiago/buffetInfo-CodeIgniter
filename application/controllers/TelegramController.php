@@ -1,6 +1,9 @@
 <?php
 
 require_once 'Controller.php';
+include_once dirname(__DIR__).'/models/TelegramModel.php';
+include_once dirname(__DIR__).'/models/MenuModel.php';
+include_once dirname(__DIR__).'/models/ProductosModel.php';
 
 class TelegramController extends Controller
 {
@@ -8,7 +11,8 @@ class TelegramController extends Controller
     {
         parent::__construct();
         $this->load->model('MenuModel');
-        $this->load->model('ProductosModel()');
+        $this->load->model('ProductosModel');
+        $this->load->model('TelegramModel');
     }
 
     public function responder()
@@ -101,7 +105,21 @@ class TelegramController extends Controller
 
         exit(0);
     }
-
+    public function menuHoy(){
+        return $this->MenuModel->getMenuToday();
+    }
+    public function menuDia($tomorrow){
+        return $this->MenuModel->getMenuByDia(100,0,$tomorrow);
+    }
+    public function buscarTelegram($id_del_chat){
+        return $this->TelegramModel->buscar($id_del_chat);
+    }
+    public function registrarTelegram($id_del_chat){
+        return $this->TelegramModel->registrar($id_del_chat);
+    }
+    public function eliminarTelegram($id_del_chat){
+        return $this->TelegramModel->eliminar($id_del_chat);
+    }
 }
 
 ?>
