@@ -108,7 +108,7 @@ require_once 'controllers/TelegramController.php';
         //enviando respuesta
         //original:
         //https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/setWebhook?url=https://grupo64.proyecto2016.linti.unlp.edu.ar/pruebasbot.php
-        $url = 'https://api.telegram.org/bot383650181:AAGPzLovM1KS6wRjtlrw7aQaD4RplEUTrto/sendMessage';
+        $url = 'https://api.telegram.org/bot291943743:AAH7pfhTwtgq4gUPM1Syl9LIE7OVj-ikWao/sendMessage';
 
         $options = array(
             'http' => array(

@@ -90,7 +90,7 @@ class TelegramController extends Controller
         //enviando respuesta
         //original:
         //https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/setWebhook?url=https://grupo64.proyecto2016.linti.unlp.edu.ar/pruebasbot.php
-        $url = 'https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/sendMessage';
+        $url = 'https://api.telegram.org/bot291943743:AAH7pfhTwtgq4gUPM1Syl9LIE7OVj-ikWao/sendMessage';
 
         $options = array(
             'http' => array(
