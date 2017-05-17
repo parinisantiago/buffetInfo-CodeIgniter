@@ -148,7 +148,7 @@ class BalanceController extends Controller
                 //me traigo los valores
                 $ingresos = $this->BalanceModel->ingresoRango($fechaInicio, $fechaFin);
                 $egresos = $this->BalanceModel->egresoRango($fechaInicio, $fechaFin);
-                if (empty($ingresos) && empty($egreso)) throw new valException("NO hay datos para mostrar");
+                if (empty($ingresos) && empty($egreso)) throw new Exception("NO hay datos para mostrar");
 
                 $total = array();
                 $balances = array();
