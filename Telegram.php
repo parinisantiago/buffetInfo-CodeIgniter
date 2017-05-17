@@ -159,20 +159,20 @@ switch ($cmd) {
     case '/help':
         $msg['text']  = 'Los comandos disponibles son estos:' . PHP_EOL;
         $msg['text'] .= '/start Inicializa el bot';
-        $msg['text'] .= '/menú Muestra el menú del día';
+        $msg['text'] .= '/menu Muestra el menu del dia';
         $msg['text'] .= '/help Muestra esta ayuda';
         $msg['reply_to_message_id'] = null;
         break;
-    case '/menú':
-        $msg['text']  = 'El menú del día es ensalada tropical';
+    case '/menu':
+        $msg['text']  = 'El menu del dia es ensalada tropical';
         break;
     default:
-        $msg['text']  = 'Lo siento, no es un comando válido.' . PHP_EOL;
+        $msg['text']  = 'Lo siento, no es un comando valido.' . PHP_EOL;
         $msg['text'] .= 'Prueba /help para ver la lista de comandos disponibles';
         break;
 }
 
-$url = 'https://api.telegram.org/bot291943743:AAEcF3EIv94WlYatJ9nZWl90KkT5lg2AMzo/sendMessage';
+$url = 'https://api.telegram.org/bot338244442:AAEvXW9VYM6RVz44bAcxVKINiwC6jYVogIM/sendMessage';
 
 $options = array(
     'http' => array(
