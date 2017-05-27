@@ -1,0 +1,26 @@
+{% extends 'layaout.twig' %}
+
+{% block nav %}
+    <ul class="navbar" id="navbar">
+        <li>
+            <p id="textoBienvida">Bienvenido
+            {% if rol == "0" %}
+                Administrador
+            {% elseif rol == "1"%}
+                Gestion
+             {% else %}
+                Usuario On-line
+            {%endif%}
+            </p>
+        </li>
+        <li>
+            <p class="boton" id="logoutBoton"><a class="botonLink" href="/MainController/cerrarSesion">Cerrar Sesion</a></p>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block aside %}
+
+    {{ include('BackendAsideTemplate.twig') }}
+
+{% endblock %}

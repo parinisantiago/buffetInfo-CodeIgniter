@@ -1,0 +1,21 @@
+ {% extends 'IndexTemplate.twig' %}
+
+{% block main %}
+
+    <form name="formUser" class="formProduc clearfix sombreado" action="/GestionPedidoController/aceptarPedido" method="post">
+
+        <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
+
+    <input type="hidden" name="idPedido" id="idPedido" value="{{ id }}">
+
+    <label for="comentario" class="formProducText">Motivo por el cual acepta el pedido:</label>
+    <textarea name="comentario" id="comentario" class="formProducinput" required></textarea>
+
+    <label for="submitButton" hidden>Boton de envio:</label>
+    <input type="submit" id="submitButton" name="submitButton">
+
+    </form>
+
+
+
+{% endblock %}

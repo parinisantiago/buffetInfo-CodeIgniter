@@ -1,0 +1,62 @@
+{% extends 'IndexTemplate.twig' %}
+
+{% block main %}
+    <div class="cabeceraTabla sombreado">
+        <div class="nuevo">
+            <a class="boton" href="/ComprarController/compraAM">Nueva compras</a>
+        </div>
+        <div class="paginas" >
+            <p> Página: {{ pag }} <p>
+            {% if pag != 0 %}
+                <a class="boton" href="/ComprarController/{{ method }}?pag={{ pag - 1 }}">Página anterior</a>
+            {% endif %}
+            <a class="boton" href="/ComprarController/{{ method }}?pag={{ pag + 1 }}">Página Siguiente </a>
+        </div>
+    </div>    
+    <table class="tablaProductos sombreado">
+        <thead>
+            <tr>
+                <th id="nombre">Nombre</th>
+                <th id="marca">Marca</th>
+                <th id="cantidad">Cantidad</th>
+                <th id="precioUnitario">Precio Unitario</th>
+                <th id="proveedor">Proveedor</th>
+                <th id="fecha">Fecha Compra</th>
+                <th id="foto">Foto Factura</th>
+                <th id="acciones">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for compra in compras %}
+                <tr class="fila">
+                    <td headers="nombre">{{ compra.nombre }}</td>
+                    <td headers="marca"> {{ compra.marca }}</td>
+                    <td headers="cantidad"> {{ compra.cantidad }}</td>
+                    <td headers="precioUnitario">{{ compra.precioUnitario }}</td>
+                    <td headers="proveedor">{{ compra.proveedor }}</td>
+                    <td headers="fecha">{{ compra.fecha }}</td>
+                    <td headers="foto">
+                     {% if compra.fotoFactura != "" %}
+                    <a  href="../public/uploads/{{ compra.fotoFactura }}" target="_blank"><img class="mini" src="../public/uploads/{{ compra.fotoFactura }}" alt="foto de la factura"></a>
+                     {%endif%}
+                    </td>
+                    <td headers="acciones">
+                        <form method="post" action="/ComprarController/compraAM">
+                            <label hidden></label>
+                            <input name="idCompra" type="hidden" value={{ compra.idCompra }}>
+                            <button class="botonTabla" type="submit" name="submitButton">
+                                <img class= "icono" src="../public/images/editar.png" alt= "editar la informacion" />
+                            </button>
+                        </form>
+                        <form method="post" action="/ComprarController/compraEliminar">
+                            <input name="idCompra" type="hidden" value={{ compra.idCompra }}>
+                            <button class="botonTabla" type="submit" name="submitButton" onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')">
+                                <img class="icono" src="../public/images/eliminar.png" alt= "eliminar" />
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

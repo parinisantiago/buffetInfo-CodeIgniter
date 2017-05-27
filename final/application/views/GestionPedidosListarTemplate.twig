@@ -1,0 +1,78 @@
+{% extends 'IndexTemplate.twig' %}
+
+{% block main %}
+    <div class="cabeceraTabla sombreado">
+
+        <div class="paginas">
+            <p> Página: {{ pag }}
+            <p>
+                {% if rango %}
+                    {% if pag != 0 %}
+                        <a class="boton" href="/GestionPedidoController/verPedidos?pag={{ pag - 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                            anterior</a>
+                    {% endif %}
+                    <a class="boton" href="/GestionPedidoController/verPedidos?pag={{ pag + 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                        Siguiente</a>
+                {% else %}
+                    {% if pag != 0 %}
+                        <a class="boton" href="/GestionPedidoController/verPedidos?pag={{ pag - 1 }}">Página
+                            anterior</a>
+                    {% endif %}
+                    <a class="boton" href="/GestionPedidoController/verPedidos?pag={{ pag + 1 }}">Página
+                        Siguiente</a>
+                {% endif %}
+        </div>
+    </div>    
+    <table class="tablaProductos sombreado">
+        <thead>
+        <tr>
+            <th id="usuario">Usuario</th>
+            <th id="ubicacion">Ubicacion</th>
+            <th id="estado">Estado</th>
+            <th id="observaciones">Observacioness</th>
+            <th class="columnaAncha" id="fechaAlta">Fecha de alta</th>
+            <th id="total">Total</th>
+            <th class="columnaAncha" id="acciones">Cancelar</th>
+            <th class="columnaAncha" id="detalle">Detalle</th>
+            <th class="columnaAncha" id="aceptar">Aceptar</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for pedido in pedidos %}
+            <tr class="fila">
+                <td headers="usuario">{{ pedido.usuario }}</td>
+                <td headers="ubicacion">{{ pedido.nombre }}</td>
+                <td headers="estado">{{ pedido.idEstado }}</td>
+                <td headers="observaciones"> {{ pedido.observaciones }}</td>
+                <td headers="fechaAlta"> {{ pedido.fechaAlta }}</td>
+                <td headers="total">{{ pedido.total }}</td>
+                <td headers="acciones">
+                        <form method="post" action="/GestionPedidoController/formCancelarPedido">
+                            <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
+                            <button class="botonTabla gestionPedidoBoton" type="submit" name="submitButton">
+                                <img class="icono" src="images/eliminar.png" alt="eliminar"/>
+                            </button>
+                        </form>
+                </td>
+                <td headers="detalle">
+                    <form method="post" action="/GestionPedidoController/verDetalle">
+                        <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
+                        <button class="botonTabla gestionPedidoBoton" type="submit" name="submitButton">
+                            <img class="icono" src="images/ver.png" alt="detalle"/>
+                        </button>
+                    </form>
+                </td>
+                <td headers="aceptar">
+                    <form method="post" action="/GestionPedidoController/formAceptarPedido">
+                        <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
+                        <button class="botonTabla gestionPedidoBoton" type="submit" name="submitButton">
+                            <img class="icono" src="images/editar.png" alt="aceptar"/>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

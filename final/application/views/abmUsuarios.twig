@@ -1,0 +1,62 @@
+{% extends 'IndexTemplate.twig' %}
+
+{% block main %}
+     <div class="cabeceraTabla sombreado">
+         <div class="nuevo">
+           <a class="boton" href="/UserController/registroUsuario"> Registrar Usuario </a>
+        </div>
+        <div class="paginas" >
+            <p> Página: {{ pag }} <p>
+            {% if pag != 0 %}
+                <a class="boton" href="/UserController/abmUsuario?pag={{ pag - 1 }}">Página anterior</a>
+            {% endif %}
+                <a class="boton" href="/UserController/abmUsuario?pag={{ pag + 1 }}">Página Siguiente</a>
+        </div>
+    </div>    
+    <table class="tablaProductos sombreado">
+        <thead>
+            <tr>
+                <th class="columnaAncha" id="nombreUsuario">Nombre Usuario</th>
+                <th id="nombre">Nombre</th>
+                <th id="apellido">Apellido</th>
+                <th id="documento">Documento</th>
+                <th id="email">email</th>
+                <th id="telefono">telefon</th>
+                <th id="rol">rol</th>
+                <th id="ubicacion">ubicacion</th>
+                <th id="acciones">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for user in users %}
+                <tr class="fila">
+                    <td headers="nombreUsuario">{{ user.usuario }}</td>
+                    <td headers="nombre"> {{ user.nombre }}</td>
+                    <td headers="apellido"> {{ user.apellido }}</td>
+                    <td headers="documento">{{ user.documento }}</td>
+                    <td headers="email">{{ user.email }}</td>
+                    <td headers="telefono">{{ user.telefono }}</td>
+                    <td headers="rol">{{ user.rol }}</td>
+                    <td headers="ubicacion">{% if user.rol == "Cliente Online" %}{{ user.ubicacion }} {% else %} ------ {% endif %}</td>
+                    <td headers="acciones">
+                        <form method="post" action="/UserController/modificarUsuario">
+                            <label for="idUsuario" hidden></label>
+                            <input  name="idUsuario" type="hidden" value={{ user.idUsuario }}>
+                            <button class="botonTabla" type="submit"  name="submitButton">
+                                <img class="icono" src="http://proyecto/public/images/editar.png" alt= "editar la informacion" />
+                            </button>
+                        </form>
+                        <form method="post" action="/UserController/eliminarUsuario">
+                            <label for="idUsuario" hidden></label>
+                            <input  name="idUsuario" type="hidden" value={{ user.idUsuario }}>
+                            <button class="botonTabla" type="submit"  name="submitButton"  onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" >
+                                <img class="icono" src="http://proyecto/public/images/eliminar.png" alt= "eliminar" />
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

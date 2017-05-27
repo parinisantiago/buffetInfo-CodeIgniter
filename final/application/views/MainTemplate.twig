@@ -1,0 +1,30 @@
+{% extends 'layaout.twig' %}
+
+{% block nav %}
+
+    {{ include('MainNavTemplate.twig') }}
+
+{% endblock %}
+
+{% block main %}
+
+<div class="textoIndex">
+    {% if menu is empty %}
+        <p class="titleComida">No hay ningun menu para el día de hoy.</p>
+    {% else %}
+        {% set numProd =1 %}
+        <p class="titleComida">El menu del día es:</p>
+        {% for prod in menu %}
+            {% if numProd == 1 %}
+                <img class="imageComida sombreado" src="../public/uploads/{{ prod.foto }}" alt="foto del menu">
+           {% endif %} 
+            <p class="tituloComida"> Producto Nº {{ numProd }}:</p>
+            <p class="textoComida">{{ prod.nombre }} por ${{ prod.precioVentaUnitario }}</p></br>
+            <p class="textoComida">{{ prod.descripcion }}</p></br>
+            {% set numProd = numProd + 1 %}
+        {% endfor %}        
+    {% endif %}
+</div>
+
+
+{% endblock %}

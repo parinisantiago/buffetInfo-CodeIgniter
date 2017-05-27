@@ -1,0 +1,71 @@
+{% extends 'IndexTemplate.twig' %}
+
+{% block main %}
+    <form name="formUser" class="formProduc clearfix sombreado" onsubmit="return valUsuario()" id="form" action="/UserController/usuarioAM" method="post">
+
+        {% if user.idUsuario %}
+            <input type='hidden' name='idUsuario' value={{user.idUsuario}}>
+        {% endif %}
+
+
+        <label for="usuario" class="formProducText">Nombre de Usuario:</label>
+        <input {% if user.usuario %} value="{{ user.usuario }}" {% endif %} type="text" name="usuario" id="usuario" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="15" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" autofocus required >
+
+        <label for="nombre" class="formProducText">Nombre:</label>
+        <input {% if user.nombre %} value="{{ user.nombre }}" {% endif %} type="text" name="nombre" id="nombre" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" required >
+
+        <label for="apellido" class="formProducText">Apellido:</label>
+        <input {% if user.apellido %} value="{{ user.apellido }}" {% endif %} type="text" name="apellido" id="apellido" class="formProducinput"  placeholder="No se admiten número ni caracteres especiales, solo acentos" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" required >
+
+        <label for="documento" class="formProducText">Dni:</label>
+        <input {% if user.documento %} value="{{ user.documento }}" {% endif %} type="text" name="documento" id="documento" class="formProducinput"  placeholder="Solo se admiten numeros" maxlength="8" pattern="^[0-9]+$" required >
+
+        <label for="email" class="formProducText">Email:</label>
+        <input {% if user.email %} value="{{ user.email }}" {% endif %} type="email" name="email" id="email" class="formProducinput"  placeholder="ejemplo@email.com" maxlength="25" pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required >
+
+        <label for="clave" class="formProducText">Contraseña:</label>
+        <input {% if user.clave %} value="{{ user.clave }}" {% endif %} type="password" name="clave" id="clave" class="formProducinput"  placeholder="Solo se admiten numeros o letras simples" maxlength="15" pattern="^[a-zA-Z0-9]+$" required >
+
+        <label for="telefono" class="formProducText">Telefono:</label>
+        <input {% if user.telefono %} value="{{ user.telefono }}" {% endif %} type="text" name="telefono" id="telefono" class="formProducinput"  placeholder="Solo se admiten numeros" maxlength="25" pattern="^[0-9]+$" required >
+
+        <label for="idRol" class="formProducText">Rol: </label>
+        <select id="idRol" name="idRol" class="formProducinput" required>
+        {% for rol in rols %}
+            {% if user.idRol == rol.idRol %}
+            <option value="{{ rol.idRol }}" selected>{{ rol.nombre }}</option>
+            {% else %}
+                <option value="{{ rol.idRol }}" >{{ rol.nombre }}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        <label for="idUbicacion" class="formProducText">Ubicacion: </label>
+        <select id="idUbicacion" name="idUbicacion" class="formProducinput">
+            {% for ubi in ubicacion %}
+                {% if user.idUbicacion == ubi.idUbicacion %}
+                    <option value="{{ ubi.idUbicacion }}" selected>{{ ubi.nombre }}</option>
+                {% else %}
+                    <option value="{{ ubi.idUbicacion }}" >{{ ubi.nombre }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+
+        {% if user.idUsuario %}
+            <label for="habilitado" class="formProducText">Habilitado: </label>
+            {% if user.habilitado == '0' %}
+                <input  type="radio" name="habilitado" id="habilitado" value="0"  checked> Habilitado
+                <input  type="radio" name="habilitado" id="habilitado" value="1"  > Deshabilitado
+
+            {% else %}
+                <input  type="radio" name="habilitado" id="habilitado" value="0"  > Habilitado
+                <input  type="radio" name="habilitado" id="habilitado" value="1" checked> Deshabilitado
+            {% endif %}
+        {% endif %}
+
+        <label for="submitButton" hidden>Boton de envio:</label>
+        <input type="submit" id="submitButton" name="submitButton">
+
+    </form>
+
+{% endblock %}
+

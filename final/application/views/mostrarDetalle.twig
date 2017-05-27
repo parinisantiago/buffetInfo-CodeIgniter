@@ -1,0 +1,33 @@
+{% extends 'IndexTemplate.twig' %}
+
+{% block main %}
+    <div class="cabeceraTabla sombreado">
+        <div class="paginas ">
+            {% if rol == '2' %}
+                <a class="boton" href="/PedidosController/verPedidos?pag=0">Volver</a>
+            {% else %}
+                <a class="boton" href="/GestionPedidoController/verPedidos?pag=0">Volver</a>
+            {% endif %}
+        </div>
+    </div>        
+    <table class="tablaProductos sombreado">
+        <thead>
+            <tr>
+                <th class="columnaAncha" id="nombre">Nombre</th>
+                <th class="columnaAncha" id="marca">Marca</th>
+                <th class="columnaAncha" id="stock">Stock</th>
+                <th class="columnaAncha" id="precio">precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for detalle in detalles %}
+                <tr class="file">
+                    <td headers="nombre">{{ detalle.nombre }}</td>
+                    <td headers="marca">{{ detalle.marca }}</td>
+                    <td headers="stock">{{ detalle.stock }}</td>
+                    <td headers="precio">{{ detalle.precioVentaUnitario }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

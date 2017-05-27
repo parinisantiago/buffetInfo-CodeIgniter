@@ -1,0 +1,90 @@
+{% extends 'IndexTemplate.twig' %}
+
+{% block main %}
+    <script type="text/javascript" src="../public/script/script.js"></script>
+
+    <div>
+    <form name="formUser" class="formProduc clearfix sombreado" action="/PedidosController/pedidosRango" method="post">
+        <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
+
+        <label for="fechaInicio" class="formProducText">Fecha inicio:</label>
+        <input type="text" name="fechaInicio" id="datepicker1" class="fecha fechaBalance" value="{{ fechaInicio }}"  required> 
+        <script>$( function() {$( "#datepicker1" ).datepicker();} );</script>
+        
+       
+        <label for="fechaFin" class="formProducText">Fecha Fin:</label>
+        <input type="text" name="fechaFin" id="datepicker2" class="fecha fechaBalance" value="{{ fechaFin }}"  required> 
+        <script>$( function() {$( "#datepicker2" ).datepicker();} );</script>
+        
+       
+        <label for="submitButton2" hidden>Boton de envio:</label>
+        <input type="submit" id="submitButton2" name="submitButton2" onclick="ponerFechaDoble()">
+
+    </form>
+    </div>
+    <div class="cabeceraTabla sombreado cabeceraPedidos">
+        <div class="paginas ">
+            <p> Página: {{ pag }}
+            <p>
+                {% if rango %}
+                    {% if pag != 0 %}
+                        <a class="boton" href="/PedidosController/mostrarPedidoRango?pag={{ pag - 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                            anterior</a>
+                    {% endif %}
+                    <a class="boton" href="/PedidosController/mostrarPedidoRango?pag={{ pag + 1 }}&inicio={{ inicio }}&fin={{ fin }}">Página
+                        Siguiente</a>
+                {% else %}
+                {% if pag != 0 %}
+                    <a class="boton" href="/PedidosController/verPedidos?pag={{ pag - 1 }}">Página
+                        anterior</a>
+                {% endif %}
+                <a class="boton" href="/PedidosController/verPedidos?pag={{ pag + 1 }}">Página
+                    Siguiente</a>
+                {% endif %}
+        </div>
+    </div>
+    <table class="tablaProductos sombreado">
+        <thead>
+        <tr>
+            <th  id="estado">Estado</th>
+            <th id="observaciones">Observacioness</th>
+            <th  id="fechaAlta">Fecha de alta</th>
+            <th  id="total">Total</th>
+            <th id="acciones">Cancelar</th>
+            <th id="detalle">Detalle</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        {% for pedido in pedidos %}
+            <tr class="fila">
+                <td headers="estado">{{ pedido.idEstado }}</td>
+                <td headers="observaciones"> {{ pedido.observaciones }}</td>
+                <td headers="fechaAlta"> {{ pedido.fechaAlta }}</td>
+                <td headers="total">{{ pedido.total }}</td>
+                <td headers="acciones">
+                    {% if pedido.idEstado == "pendiente" and pedido.intervalo < 1800 %}
+                        <form method="post" action="/PedidosController/formCancelarPedido">
+                            <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
+                            <button class="botonTabla" type="submit" name="submitButton">
+                                <img class="icono" src="../public/images/eliminar.png" alt="eliminar"/>
+                            </button>
+                        </form>
+                    {% else %}
+                    No se puede cancelar
+                    {% endif %}
+                </td>
+                <td headers="detalle">
+                    <form method="post" action="/PedidosController/verDetalle">
+                        <input name="idPedido" type="hidden" value={{ pedido.idPedido }}>
+                        <button class="botonTabla botonUserOnline" type="submit" name="submitButton">
+                            <img class="icono" src="../public/images/editar.png" alt="detalle"/>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

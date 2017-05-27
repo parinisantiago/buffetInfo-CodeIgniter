@@ -1,0 +1,73 @@
+ {# layaout.twig #}
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="utf-8"/>
+    <meta name="description" content="Proyecto de software" />
+    <meta name="author" content="Grupo 64: Alejandro Alvarez Ferretti, Santiago Parini" />
+    <htitle> {% block title %} Buffet UNLP informática {% endblock %} </htitle>
+    <link rel="stylesheet" type="text/css" href="../public/css/default.css">
+    <link rel="stylesheet" type="text/css" href="../public/css/barrasNavegacion.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="http://proyecto/public/js/validaciones.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    {% block head %}
+
+
+    {% endblock %}
+
+</head>
+
+<body>
+
+<header>
+    {% block header %}
+        <h1 class="headerTitle" id="headerTitle"> {{ config.titulo }}</h1>
+        <p style="text-align: center"> {{ config.descripcion }} </p>
+    {% endblock %}
+</header>
+
+<nav>
+    {% block nav %}
+
+
+    {% endblock %}
+</nav>
+
+{% if mensajeError %}
+<div id="error" class="error sombreado">
+    <p>
+
+            {{ mensajeError }}
+
+    </p>
+</div>
+{% endif %}
+{% if(((config.habilitado == 'false') and (not (rol == '0'))) or (userHabilitado == '1') and(not(rol == '0'))) %}
+    <main><div class="error sombreado"><p> {{ config.mensajeHabilitado }}</p></div></main>
+{% else %}
+
+    <main>
+        {% block main %} {% endblock %}
+    </main>
+{% endif %}
+<aside>
+
+    {% block aside %} {% endblock %}
+
+</aside>
+
+<footer> {% block footer%} {{ config.mail }} {% endblock %}  </footer>
+
+
+</body>
+
+
+</html>

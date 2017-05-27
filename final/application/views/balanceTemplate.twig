@@ -1,0 +1,27 @@
+{% extends 'IndexTemplate.twig' %}
+
+{% block main %}
+    <div>
+        <img src="../public/uploads/demo.png" alt="grafico ganancias">
+        <img src="../public/uploads/demo2.png" alt="grafico productos">
+        {% if fecha %}
+            <form method="post" action="/BalanceController/exportarPDFDia" target="_blank">
+                <label for="fecha" hidden></label>
+                <input  name="fecha" type="hidden" value={{ fecha}}>
+                <button class="botonTabla" type="submit"  name="submitButton"  onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" >
+                    Exportar a PDF
+                </button>
+            </form>
+        {% else %}
+        <form method="post" action="/BalanceController/exportarPDF" target="_blank">
+            <label for="fechaInicio" hidden></label>
+            <input  name="fechaInicio" type="hidden" value={{ fechaInicio }}>
+            <label for="fechaFin" hidden></label>
+            <input  name="fechaFin" type="hidden" value={{ fechaFin }}>
+            <button class="botonTabla" type="submit"  name="submitButton"  onClick="return confirm('¿Está seguro?')" onKeypress="if (event.keyCode == 13) return confirm('¿Está seguro?')" >
+                Exportar a PDF
+            </button>
+        </form>
+        {% endif %}
+    </div>
+{% endblock %}

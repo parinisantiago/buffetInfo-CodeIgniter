@@ -1,0 +1,14 @@
+ <ul class="navbar" id="navbar">
+        <li class="loginNavbar">
+            <form class="login" id="login" method="post" action="/LoginController"
+                  name="login">
+                <label class="loginInputText"  for="user">Nombre de usuario:</label>
+                <input type="text" id="user" name="username" placeholder="nombre de usuario" pattern="^[a-zA-Z]+" maxlength="15"
+                       required>
+                <label class="loginInputText" for="pass">Contraseña: </label>
+                <input type="password" id="pass" name="pass" placeholder="contraseña" pattern="^[a-zA-Z0-9]+" maxlength="15" required>
+                <label for="submit" hidden>Botón de envío</label>
+                <input type="submit" id="submit" name="submit" class="boton" value="acceder">
+            </form>
+        </li>
+ </ul>

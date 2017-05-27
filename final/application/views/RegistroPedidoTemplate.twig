@@ -1,0 +1,40 @@
+{% extends 'IndexTemplate.twig' %}
+
+
+{% block main %}
+    <div class="pedidoOnline">
+        <form name="formUser" class="formProduc clearfix sombreado "
+              action="/PedidosController/validarPedido" method="post">
+            
+            <input type="hidden" id="tokenScrf" name="tokenScrf" value="{{ tokenScrf }}">
+           <input type="hidden" value="{{ idMenu }}" name="idMenu">
+            <table class="tablaProductos tablaPedidos">
+                <thead>
+                    <tr>
+                        <th id="nombre">Nombre</th>
+                        <th id="stock">Stock</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for m in menu %}
+
+                        <tr>
+                            <th headers="nombre">{{ m.nombre }}</th>
+                            <th headers="stock">{{ m.stock }}</th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <label for="numPedidos">Cantidad de pedidos: </label>
+            
+            
+            <select  id="numPedidos" name="numPedidos" class="" required>
+                                <option value="" >-</option>
+                            {% for i in  1 .. minimo.minimo %}
+                                <option value="{{i}}" >{{ i }}</option>
+                            {% endfor %}
+            </select>                
+            <input type="submit" class="boton" id="submit" name="submit">
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'IndexTemplate.twig' %}
+{% block main %}
+
+    <form name="formUser" class="formProduc clearfix sombreado" onsubmit="return valConfig()"  id="config" action="/ConfigController/changeConf" method="post">
+
+        <label for="titulo" class="formProducText">Titulo del sitio:</label>
+        <input value="{{ config.titulo }}" type="text" name="titulo" id="titulo" class="formProducinput"  placeholder="Solo se admiten letras simples y números" maxlength="25" pattern="^[a-zA-Z0-9 ]+$" autofocus required >
+
+        <label for="descripcion" class="formProducText">Descripcion del sitio:</label>
+        <textarea name="descripcion" id="descripcion" class="formProducinput"  maxlength="400" rows="20" cols="40" autofocus required >{{ config.descripcion }}</textarea>
+
+        <label for="email" class="formProducText">Email:</label>
+        <input value="{{ config.mail }}" type="email" name="email" id="email" class="formProducinput"  placeholder="ejemplo@email.com" maxlength="25" pattern="^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$" required >
+
+        <label for="lista" class="formProducText">Cantidad de elementos por lista:</label>
+        <input value="{{ config.cantPagina }}" type="number" name="lista" id="lista" class="formProducinput" placeholder="Un número entre 1 y 99" min="1" max="99" maxlength="2" pattern="^[0-9]+$">
+
+        <label for="habilitado" class="formProducText">Frontend: </label>
+        {% if config.habilitado == 'true' %}
+            <input  type="radio" name="habilitado" id="habilitado" value="true"  checked> Habilitado
+            <input  type="radio" name="habilitado" id="habilitado" value="false"  > Deshabilitado
+
+        {% else %}
+            <input  type="radio" name="habilitado" id="habilitado" value="true"  > Habilitado
+            <input  type="radio" name="habilitado" id="habilitado" value="false" checked> Deshabilitado
+        {% endif %}
+
+        <label for="mensaje" class="formProducText">Mensaje del sitio:</label>
+        <input value="{{ config.mensajeHabilitado }}" type="text" name="mensaje" id="mensaje" class="formProducinput"  placeholder="Solo se admiten letras simples" maxlength="25" pattern="^[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹ ]+$" autofocus required >
+
+        <label for="submitButton" hidden>Boton de envio:</label>
+        <input type="submit" id="submitButton" name="submitButton">
+
+    </form>
+
+{% endblock %}

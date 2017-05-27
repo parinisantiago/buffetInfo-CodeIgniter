@@ -1,0 +1,67 @@
+<ul class="aside">
+    <li class="asideTitleItem">
+        <p> General </p>
+    </li>
+
+    {% if rol == "1" or  rol == "0" %}
+    <li class="asideItem">
+        <a href="/ProductoController/productosAM">Alta de productos</a>
+    </li>
+    
+    <li class="asideItem">
+        <a href="/ProductoController/productosListar?pag=0">Listado de productos</a>
+    </li>
+    
+    <li class="asideItem">
+            <a href="/VenderController/vender?pag=0">Ventas de productos</a>
+    </li>
+
+    <li class="asideItem">
+            <a href="/ComprarController/compraListar?pag=0">Compras de productos</a>
+    </li>
+
+        <li class="asideItem">
+            <a href="/MenuController/menuDia?pag=0&fecha={{"now"|date("Y-m-d") }}">Administracion del Menu</a>
+        </li>
+
+        <li class="asideItem">
+            <a href="/BalanceController/index">Balance</a>
+        </li>
+
+        <li class="asideItem">
+            <a href="/GestionPedidoController/mostrarPedidos">Gestión de Pedidos</a>
+        </li>
+
+
+    {% endif %}
+
+    {% if rol == "1" %}
+        <li class="asideItem">
+            <a href="/VistaProdController/listadoFaltantes?pag=0">Productos faltantes</a>
+        </li>
+        <li class="asideItem">
+            <a href="/VistaProdController/listadoStockMinimo?pag=0">Productos con stock minimo</a>
+        </li>
+    {%endif%}
+    
+
+    {% if rol == "0" %}
+        <li class="asideItem">
+            <a href="/UserController/abmUsuario?pag=0">Usuarios</a>
+        </li>
+
+        <li class="asideItem">
+            <a href="/ConfigController/configuracionSitio">Configuracion del sitio</a>
+        </li>
+    {%endif%}
+    
+    {% if rol == "2" %}
+        <li class="asideItem">
+            <a href="/PedidosController/hacerPedido">Hacer pedido Online</a>
+        </li>
+        <li class="asideItem">
+            <a href="/PedidosController/verPedidos?pag=0">Ver mis pedidos</a>
+        </li>
+    {%endif%}
+
+</ul>
