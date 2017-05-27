@@ -16,7 +16,7 @@
         <p class="titleComida">El menu del día es:</p>
         {% for prod in menu %}
             {% if numProd == 1 %}
-                <img class="imageComida sombreado" src="uploads/{{ prod.foto }}" alt="foto del menu">
+                <img class="imageComida sombreado" src="../public/uploads/{{ prod.foto }}" alt="foto del menu">
            {% endif %} 
             <p class="tituloComida"> Producto Nº {{ numProd }}:</p>
             <p class="textoComida">{{ prod.nombre }} por ${{ prod.precioVentaUnitario }}</p></br>
