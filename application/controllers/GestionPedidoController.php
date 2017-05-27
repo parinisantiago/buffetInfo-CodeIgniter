@@ -9,6 +9,7 @@ class GestionPedidoController extends Controller
         parent::__construct();
         $this->load->model('PedidosModel');
         $this->load->model('VentaModel');
+        $this->load->model('ProductosModel');
     }
 
     public function getPermission()
@@ -57,7 +58,7 @@ class GestionPedidoController extends Controller
             {
                 $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?", 3);
                 $pedido = $this->PedidosModel->getPedido($_POST['idPedido']);
-                if (!$pedido) throw new valException('El pedido no es valido');
+                if (!$pedido) throw new Exception('El pedido no es valido');
                 $this->addData('detalles', $this->PedidosModel->getDetalle($_POST['idPedido']));
                 $this->display("mostrarDetalle.twig");
             }
@@ -85,12 +86,12 @@ class GestionPedidoController extends Controller
         {
             try
             {
-                if (!isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+                if (!isset($_POST['tokenScrf'])) throw new Exception("no hay un token de validación");
+                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new Exception("el token no es valido");
                 $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?", 3);
                 $pedido = $this->PedidosModel->getPedido($_POST['idPedido']);
-                if (!$pedido) throw new valException('El pedido no es valido');
-                if (($pedido->idEstado != "pendiente")) throw new valException("El pedido no cumple los requisitos para ser cancelado");
+                if (!$pedido) throw new Exception('El pedido no es valido');
+                if (($pedido->idEstado != "pendiente")) throw new Exception("El pedido no cumple los requisitos para ser cancelado");
                 $detalles = $this->PedidosModel->getDetalle($_POST['idPedido']);
                 $this->PedidosModel->actualizarEstado("cancelado", $_POST['idPedido']);
 
@@ -98,7 +99,7 @@ class GestionPedidoController extends Controller
 
                 foreach ($detalles as $detalle)
                 {
-                    $this->PedidosModel->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
+                    $this->ProductosModel->actualizarCantProductos($detalle->idProducto, $detalle->stock + $detalle->cantidad);
                 }
 
                 $_GET['pag'] = 0;
@@ -131,12 +132,12 @@ class GestionPedidoController extends Controller
         {
             try
             {
-                if (!isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+                if (!isset($_POST['tokenScrf'])) throw new Exception("no hay un token de validación");
+                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new Exception("el token no es valido");
                 $this->validator->validarNumeros($_POST['idPedido'], "Que estás tocando picaron?", 3);
                 $pedido = $this->PedidosModel->getPedido($_POST['idPedido']);
-                if (!$pedido) throw new valException('El pedido no es valido');
-                if (($pedido->idEstado != "pendiente")) throw new valException("El pedido no cumple los requisitos para ser cancelado");
+                if (!$pedido) throw new Exception('El pedido no es valido');
+                if (($pedido->idEstado != "pendiente")) throw new Exception("El pedido no cumple los requisitos para ser cancelado");
                 $detalles = $this->PedidosModel->getDetalle($_POST['idPedido']);
                 $this->PedidosModel->actualizarEstado("Entregado", $_POST['idPedido']);
 
