@@ -25,7 +25,7 @@ class MainController extends Controller
         }
         else
         {
-            $this->addData('menu', $this->MenuModel->getMenuByDia2(NULL, NULL, NULL));
+            $this->addData('menu', $this->MenuModel->getMenuByDia2(NULL, NULL, date('Y-m-d')));
             $this->display('MainTemplate.twig');
         }
     }
