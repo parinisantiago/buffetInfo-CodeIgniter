@@ -43,7 +43,7 @@
         <input type="file" name="foto" id="foto" class="formProducinput">
         {% if (datos.foto != "")  %}
             <input type='hidden' name='foto2' id="foto2" value="{{ datos.foto }}">
-            <a  href="../public/uploads/uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="../public/uploads/uploads/{{ datos.foto }}" alt="foto del menu"></a>
+            <a  href="../public/uploads/{{ datos.foto }}" target="_blank"><img class="mini" src="../public/uploads/{{ datos.foto }}" alt="foto del menu"></a>
         {% endif %}
 
         <label for="submitButton" hidden>Boton de envio:</label>
