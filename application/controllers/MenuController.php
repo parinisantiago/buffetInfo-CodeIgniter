@@ -166,8 +166,8 @@ class MenuController extends Controller{
         {
             try
             {
-                if (!isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+                if (!isset($_POST['tokenScrf'])) throw new Exception("no hay un token de validación");
+                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new Exception("el token no es valido");
                 $this->token();
                 if (!isset($_POST['fecha']))
                 {
@@ -176,7 +176,7 @@ class MenuController extends Controller{
                 }
                 else $fecha = $_POST['fecha'];
 
-                if (!$this->MenuModel->getMenuDia($fecha)) throw new valException("No existe el menu para modificar");
+                if (!$this->MenuModel->getMenuDia($fecha)) throw new Exception("No existe el menu para modificar");
                 $this->addData('menu', $this->MenuModel->getMenuByDia(99, 0, $fecha));
                 $this->addData('producto', $this->MenuModel->getProdNotInMenu($this->data['menu']['0']->idMenu));
                 $this->addData('datos', $this->data['menu'][0]);
@@ -202,14 +202,14 @@ class MenuController extends Controller{
             //validaciones
             try
             {
-                if (!$miMenu) throw new valException("El menu que desea modificar no existe");
-                if (($menu && $menu->idMenu != $idMenu)) throw new valException("La fecha elegida ya pertenece a otro menu");
-                if (!isset($_POST['habilitado'])) throw new valException("No hay una habilitacion/deshabilitacion");
+                if (!$miMenu) throw new Exception("El menu que desea modificar no existe");
+                if (($menu && $menu->idMenu != $idMenu)) throw new Exception("La fecha elegida ya pertenece a otro menu");
+                if (!isset($_POST['habilitado'])) throw new Exception("No hay una habilitacion/deshabilitacion");
                 if ($_POST['habilitado'] == "true") $habilitado = 0;
                 elseif ($_POST['habilitado'] == "false") $habilitado = 1;
-                else throw new valException("error en habilitado/deshabilitado");
-                if (!isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+                else throw new Exception("error en habilitado/deshabilitado");
+                if (!isset($_POST['tokenScrf'])) throw new Exception("no hay un token de validación");
+                if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new Exception("el token no es valido");
                 if (($_FILES['foto']['size'] == 0)) $foto = $_POST['foto2'];
 
                 else
@@ -218,13 +218,13 @@ class MenuController extends Controller{
                     else
                     {
                         $foto = basename($_FILES['foto']['name']);
-                        if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $foto)) throw new valException("no se pudo guardar la imagen del menu");
+                        if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $foto)) throw new Exception("no se pudo guardar la imagen del menu");
                     }
                 }
 
                 foreach ($_POST['selectProdMult'] as $prod)
                 {
-                    if (!$this->ProductosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
+                    if (!$this->ProductosModel->searchIdProducto($prod)) throw new Exception("Uno de los productos seleccionados no es valido");
                 }
                 $this->MenuModel->eliminarMenu($idMenu);
 
@@ -259,13 +259,13 @@ class MenuController extends Controller{
     public function menuEliminar()
     {
         try{
-            if (! isset($_POST['tokenScrf'])) throw new valException("no hay un token de validación");
-            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new valException("el token no es valido");
+            if (! isset($_POST['tokenScrf'])) throw new Exception("no hay un token de validación");
+            if (! $this->tokenIsValid($_POST['tokenScrf'])) throw new Exception("el token no es valido");
             $this->addData('menuModel', $this ->MenuModel->eliminarMenu($_POST["idMenu"]));
             $_GET['pag'] = 0;
             $this->addData('method', "menu");
             $this->menu();
-        } catch (valException $e){
+        } catch (Exception $e){
             $this->menu();
         }
 
@@ -281,7 +281,7 @@ class MenuController extends Controller{
 
         foreach ($menu['selectProdMult'] as $prod)
         {
-            if (! $this->ProductosModel->searchIdProducto($prod)) throw new valException("Uno de los productos seleccionados no es valido");
+            if (! $this->ProductosModel->searchIdProducto($prod)) throw new Exception("Uno de los productos seleccionados no es valido");
         }
 
     }
@@ -334,7 +334,7 @@ class MenuController extends Controller{
                 $msg['text'] .='.' . PHP_EOL;
             }
             $msg['reply_to_message_id'] = null;
-            $url = 'https://api.telegram.org/bot297573593:AAEL7cFsdN55670XjVr89BMu-XBiEzw3ojw/sendMessage';
+            $url = 'https://api.telegram.org/bot383650181:AAGPzLovM1KS6wRjtlrw7aQaD4RplEUTrto/sendMessage';
             $options = array(
                 'http' => array(
                     'header' => "Content-type: application/x-www-form-urlencoded\r\n",
