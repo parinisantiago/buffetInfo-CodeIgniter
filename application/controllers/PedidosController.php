@@ -23,10 +23,11 @@ class PedidosController extends Controller
     {
         if($this->permissions()) {
             $menuHoy = $this->MenuModel->getMenuByDia2(99, 0, date('Y-m-d'));
+            $minimo = $this->MenuModel->getMinimoMenu(date('Y-m-d'));
             if ($menuHoy)
             {
                 $this->token();
-                $this->addData('minimo', $this->MenuModel->getMinimoMenu(date('Y-m-d')));
+                $this->addData('minimo', $minimo[0]);
                 $this->addData('idMenu', $menuHoy[0]->idMenu);
                 $this->addData('menu', $menuHoy);
                 $this->display("RegistroPedidoTemplate.twig");
