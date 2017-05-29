@@ -12,7 +12,7 @@ nav{
     background-color: #333;
     margin: 0;
     padding: 0;
-    padding-top: 0.1em; 
+    padding-top: 0.1em;
     height: 3.5em;
     -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
@@ -52,11 +52,14 @@ nav{
 
 /* --- LOGIN --- */
 
+.login input{
+    margin-right: -1%;
+}
+
 .loginNavbar{
     padding-top: 1%;
     height: 2em;
     margin-right: 2%;
-    width: 38em;
     float: right;
 }
 .loginInputText{
@@ -64,18 +67,17 @@ nav{
     margin-left: 1%;
 }
 #submit{
-    margin-top: -1%;
     float: right;
 }.botonLink{
     text-decoration:none;
-    color: white; 
+    color: white;
 }
 /* --- LOGOUT --- */
 
 #textoBienvida{
     color: white;
     display: inline-block;
-    width: 50%;  
+    width: 50%;
     margin-top: 1%;
     margin-left: 10%;
 }
@@ -91,7 +93,7 @@ nav{
     #textoBienvida{
         margin-top: 2%;
     }
-} 
+}
 
 /* --- BARRA LATERAL --- */
 
@@ -154,13 +156,13 @@ footer {
         padding:0.5%;
         font-size: 15px;
     }
-   
+
 }
 
 @media screen and (max-width: 851px) {
     .loginNavbar{
         width: 22.5em;
-        margin-top: 1%;     
+        margin-top: 1%;
     }
      .loginInputText{
         display: none;
@@ -168,7 +170,7 @@ footer {
     .boton{
         padding:0.3%;
         font-size: 12px;
-    
+
     }
     .aside{
    font-size: 12px;
