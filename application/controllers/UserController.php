@@ -94,8 +94,7 @@ class UserController extends Controller
             catch (Exception $e)
             {
                 $this->addData('mensajeError', $e->getMessage());
-                $main = new MainController();
-                $main->index();
+                $this->index();
             }
         }
     }
@@ -159,8 +158,7 @@ class UserController extends Controller
         catch (Exception $e)
         {
             $this->addData('mensajeError', $e->getMessage());
-            $main = new MainController();
-            $main->index();
+            $this->index();
         }
     }
 }

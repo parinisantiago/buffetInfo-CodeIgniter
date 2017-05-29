@@ -214,7 +214,7 @@ class MenuController extends Controller{
 
                 else
                 {
-                    if (!($_FILES['foto']['type'] == 'image/png' || $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
+                    if (!($_FILES['foto']['type'] == 'image/png' || $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new Exception("el formato de la imagen no es valido");
                     else
                     {
                         $foto = basename($_FILES['foto']['name']);
@@ -273,7 +273,7 @@ class MenuController extends Controller{
 
     public function validateMenu($menu)
     {
-        if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new valException("el formato de la imagen no es valido");
+        if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new Exception("el formato de la imagen no es valido");
 
         $this->validator->validarFecha($menu['fecha'], "Fecha no valida");
         if(!isset($menu['selectProdMult'])) $menu['selectProdMult'] = NULL;
