@@ -17,7 +17,7 @@ class ConfigController extends Controller
     public function setMensajeError($error)
     {
         $this->addData('mensajeError', $error);
-        $this->index();
+        $this->configuracionSitio();
     }
 
     public function getPermission()
@@ -36,10 +36,17 @@ class ConfigController extends Controller
     {
         if($this->permissions())
         {
+            try
+            {
             $this->validarConf();
             $this->conf->updateConf($_POST);
             $this->addData('config', $this->conf->getConfiguracion());
             $this->display("ConfiguracionTemplate.twig");
+            }
+            catch (Exception $e)
+            {
+                $this->setMensajeError($e->getMessage());
+            }
         }
     }
 
@@ -47,8 +54,7 @@ class ConfigController extends Controller
     {
         if($this->permissions())
         {
-            try
-            {
+
                 if (!isset($_POST['submitButton'])) throw new Exception('Apreta el boton de modificar macho');
                 if (!isset($_POST['titulo'])) throw new Exception('Falta escribir el titulo');
                 elseif (!preg_match("/^[a-zA-Z0-9 ]+$/", $_POST['titulo'])) throw new Exception('Valor del titulo no valido');
@@ -58,12 +64,7 @@ class ConfigController extends Controller
                 elseif (!preg_match("/^[a-zA-Z ]+$/", $_POST['mensaje'])) throw new Exception('Valor del mensaje no valido');
                 if (!isset($_POST['lista'])) throw new Exception('Falta escribir el numero de la lista');
                 elseif (!preg_match("/^[0-9]+$/", $_POST['lista'])) throw new Exception('Valor del numero de la lista no valido');
-            }
-            catch (Exception $e)
-            {
-                $controller = new MainController();
-                $controller->index();
-            }
+
         }
     }
 }
