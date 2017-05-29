@@ -98,7 +98,7 @@ class MenuController extends Controller{
                 if (!isset($_POST['idMenu']))
                 {
                     $this->agregarMenu($_POST);
-                    $this->notificarTelegram($_POST['fecha']);
+                    //$this->notificarTelegram($_POST['fecha']);
                 }
                 else $this->modificarMenu($_POST);
                 if (!isset($_POST['un valor']))
@@ -138,7 +138,7 @@ class MenuController extends Controller{
                 if (!isset($_POST['tokenScrf'])) throw new Exception("no hay un token de validación");
                 if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new Exception("el token no es valido");
 
-               // if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $image)) throw new Exception("no se pudo guardar la imagen del menu");
+                if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $image)) throw new Exception("la imagen no puede poseer un nombre con espacios");
 
                 if ($this->MenuModel->getMenuDia($fecha)) throw new Exception("Ya existe un menu para esta fecha");
 
@@ -274,7 +274,7 @@ class MenuController extends Controller{
     public function validateMenu($menu)
     {
         if(! ($_FILES['foto']['type'] == 'image/png' ||  $_FILES['foto']['type'] == 'image/jpg' || $_FILES['foto']['type'] = 'image/jpge')) throw new Exception("el formato de la imagen no es valido");
-
+        
         $this->validator->validarFecha($menu['fecha'], "Fecha no valida");
         if(!isset($menu['selectProdMult'])) $menu['selectProdMult'] = NULL;
         $this->validator->varSet($menu['selectProdMult'], "Debe seleccionar por lo menos un producto para el menu");
