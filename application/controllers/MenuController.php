@@ -138,7 +138,7 @@ class MenuController extends Controller{
                 if (!isset($_POST['tokenScrf'])) throw new Exception("no hay un token de validación");
                 if (!$this->tokenIsValid($_POST['tokenScrf'])) throw new Exception("el token no es valido");
 
-                if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $image)) throw new Exception("la imagen no puede poseer un nombre con espacios");
+                if (!move_uploaded_file($_FILES['foto']['tmp_name'], files . $image)) throw new Exception("No se pudo cargar la imagen");
 
                 if ($this->MenuModel->getMenuDia($fecha)) throw new Exception("Ya existe un menu para esta fecha");
 
