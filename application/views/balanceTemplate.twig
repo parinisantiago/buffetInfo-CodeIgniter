@@ -2,8 +2,8 @@
 
 {% block main %}
     <div>
-        <img src="../public/uploads/demo.png" alt="grafico ganancias">
-        <img src="../public/uploads/demo2.png" alt="grafico productos">
+        <img src="../public/uploads/demo.png?{{ date().timestamp }}" alt="grafico ganancias">
+        <img src="../public/uploads/demo2.png?{{ date().timestamp }}" alt="grafico productos">
         {% if fecha %}
             <form method="post" action="/BalanceController/exportarPDFDia" target="_blank">
                 <label for="fecha" hidden></label>
