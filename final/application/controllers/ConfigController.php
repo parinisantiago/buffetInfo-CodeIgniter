@@ -34,6 +34,8 @@ class ConfigController extends Controller
 
     public function changeConf()
     {
+        echo("empezamos");
+        die;
         if($this->permissions())
         {
             $this->validarConf();
@@ -61,8 +63,7 @@ class ConfigController extends Controller
             }
             catch (Exception $e)
             {
-                $controller = new MainController();
-                $controller->index();
+                $this->index();
             }
         }
     }

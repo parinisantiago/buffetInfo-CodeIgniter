@@ -98,7 +98,7 @@ class MenuController extends Controller{
                 if (!isset($_POST['idMenu']))
                 {
                     $this->agregarMenu($_POST);
-                    $this->notificarTelegram($_POST['fecha']);
+                    //$this->notificarTelegram($_POST['fecha']);
                 }
                 else $this->modificarMenu($_POST);
                 if (!isset($_POST['un valor']))

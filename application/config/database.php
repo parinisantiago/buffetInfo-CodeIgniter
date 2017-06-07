@@ -74,10 +74,10 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 $db['default'] = array(
-	'dsn'	=> 'mysql:host=localhost; dbname=grupo64; charset=utf8',
+	'dsn'	=> 'mysql:host=localhost; dbname=proyecto; charset=utf8',
 	'hostname' => 'localhost',
-	'username' => 'grupo64',
-	'password' => 'leeGhish8e',
+	'username' => 'root',
+	'password' => 'root',
 	'database' => '',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',

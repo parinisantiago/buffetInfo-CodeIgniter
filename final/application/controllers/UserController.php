@@ -32,12 +32,17 @@ class UserController extends Controller
 
     public function abmUsuario()
     {
-        if($this->permissions())
-        {
+        if($this->permissions()) {
+        try{
             $this->paginaCorrecta($this->UserModel->totalUsuario());
             $this->addData('users', $this->UserModel->getAllUser($this->conf->getConfiguracion()->cantPagina, $_GET['offset']));
             $this->addData('pag', $_GET['pag']);
             $this->display('abmUsuarios.twig');
+        }        catch (Exception $e)
+        {
+            $this->addData('mensajeError', $e->getMessage());
+            $this->index();
+        }
         }
     }
 
@@ -94,8 +99,7 @@ class UserController extends Controller
             catch (Exception $e)
             {
                 $this->addData('mensajeError', $e->getMessage());
-                $main = new MainController();
-                $main->index();
+                $this->index();
             }
         }
     }
@@ -148,19 +152,13 @@ class UserController extends Controller
 
     public function paginaCorrecta($total)
     {
-        try
-        {
+
         if (! isset($_GET['pag'])) throw new Exception('Error:No hay una página que mostrar');
         elseif ($total->total <= $_GET['pag'] *  $this->conf->getConfiguracion()->cantPagina){  $_GET['pag'] = 0; $_GET['offset'] = 0;}
         else $_GET['offset'] = $this->conf->getConfiguracion()->cantPagina * $_GET['pag'];
         if ($_GET['offset'] < 0) $_GET['offset'] = 0;
         $_GET['offset'] .= "";
-        }
-        catch (Exception $e)
-        {
-            $this->addData('mensajeError', $e->getMessage());
-            $main = new MainController();
-            $main->index();
-        }
+
+
     }
 }
